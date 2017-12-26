@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8"/>
+		<title>新建课程</title>
+		<link href="../../css/teacher/TeacherCreateCoursePage.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="../../js/jquery-1.12.4.min.js"></script>
+
+	</head>
+
+	<body>
+		<div class="top">
+			<div class="font">
+				课堂管理系统
+			</div>
+			<div class="icon">
+				<img href="/teacher/home" src="../../Img/home.png"/>首页
+				<img href="/help" src="../../Img/help.png"/>帮助
+				<img href="/signout" src="../../Img/exit.png"/>退出
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="body">
+			<div class="navigation">
+				<div class="title">导航</div>
+				<div class="line"></div>
+				<div class="courseIntroduction">
+					<a class="guidefont" href="#">基本信息</a>
+					<a class="guidefont" href="#">课程信息</a>
+					<a class="guidefont" href="#">新建课程</a>
+				</div>
+			</div>
+			<div class="content">
+
+				<div class="title">新建课程</div>
+				<hr class="line" />
+
+				<br/>
+				<div class="form">
+					<div class="itemName">
+						课程名称*：<input type="text" id="coursename" name="coursename" />
+
+						<br/>
+						<br/> 开始时间*：
+						<input type="date" id="startTime" name="begintime" /> 结束时间*：<input id="endTime" type="date" name="endtime" /><br/><br/> 课程介绍：
+
+						<br/>
+						<textarea id="description" name="courseinfo" cols="80" rows="5"></textarea><br/> 评分规则*： <br/>
+
+						<div class="scorerule">
+							<p> 讨论课分数占比:<input id="report" type="text" name="seminarscore"/>报告分数占比：<input id="presentation" type="text" name="reportscore"/></p>
+
+							<p>五分占比:<input id="c" type="text" name="five"/>四分占比：<input id="b" type="text" name="four"/>三分占比：<input id="a" type="text" name="three"/></p>
+						</div>
+
+						<br/>
+						<div class="buttons">
+
+							<input class="button" type="button" onclick="creatCourseSubmit()" name="submit" /><input class="button" type="button" onclick="resetCourseArea()" name="reset" />
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="clear"></div>
+
+	</body>
+	<script type="text/javascript">
+		function creatCourseSubmit() {
+			var token = localStorage.getItem("jwt");
+			var name = $("#coursename").val();
+			var description = $("#description").text();
+			var startTime = $("#startTime").val();
+			var endTime = $("#endTime").val();
+			var proportion ={
+				report: $("#report").val(),
+				presentation: $("#presentation").val(),
+				a: $("#a").val(),
+				b: $("#b").val(),
+				c: $("#c").val()
+			};
+			$.ajax({
+				type: 'post',
+				url: '/course',
+				data: {
+					"name":name,
+					"description":description,
+					"startTime":startTime,
+					"endTime":endTime,
+					"proportion":proportion
+				},
+				dataType: "json",
+				headers: {
+					"Authorization": token
+				},
+				success: function(r) {
+					if(r.status==200){
+						alert(r.msg);
+						window.location.href="/CreateCourse";
+					}
+					else{
+						alert("r.msg");
+					}
+				}
+			});
+		};
+	</script>
+
+</html>
