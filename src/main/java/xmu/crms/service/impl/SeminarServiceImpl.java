@@ -36,7 +36,7 @@ public class SeminarServiceImpl implements SeminarService {
 		if (courseId==null) {
 			throw new IllegalArgumentException();
 		}
-		Course course=seminarMapper.getCourseById(courseId);
+		Course course=seminarMapper.selectCourseByCourseId(courseId);
 		if (course==null) {
 			throw new CourseNotFoundException();
 		}
@@ -50,7 +50,7 @@ public class SeminarServiceImpl implements SeminarService {
 		if (courseId==null) {
 			throw new IllegalArgumentException();
 		}
-		Course course=seminarMapper.getCourseById(courseId);
+		Course course=seminarMapper.selectCourseByCourseId(courseId);
 		if (course==null) {
 			throw new CourseNotFoundException();
 		}
@@ -58,7 +58,6 @@ public class SeminarServiceImpl implements SeminarService {
 		for (Seminar seminar : list) {
 			//topicService.deleteTopicBySeminarId( seminar.getId());
 			//seminarGroupService.deleteSeminarGroupBySeminarId( seminar.getId());
-			
 		}
 		int flag= seminarMapper.deleteSeminarByCourseId(courseId);
 
@@ -111,7 +110,7 @@ public class SeminarServiceImpl implements SeminarService {
 		if (courseId==null||seminar==null) {
 			throw new IllegalArgumentException();
 		}
-		if (seminarMapper.getCourseById(courseId)==null) {
+		if (seminarMapper.selectCourseByCourseId(courseId)==null) {
 			throw new CourseNotFoundException();
 		}
 		if (seminar.getCourse()==null) {

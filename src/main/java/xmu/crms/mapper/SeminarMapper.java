@@ -21,7 +21,7 @@ public interface SeminarMapper {
 
 	int deleteSeminarByCourseId(BigInteger courseId);
 
-	Course getCourseById(BigInteger courseId);
+	Course selectCourseByCourseId(BigInteger courseId);
 
 
 }

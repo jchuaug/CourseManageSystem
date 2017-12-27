@@ -42,8 +42,9 @@ public class ClassServiceTest {
 
 		try {
 			flag = classService.listClassByCourseId(new BigInteger("1"));
+			System.out.println(flag);
+			flag = classService.listClassByCourseId(new BigInteger("145"));
 		} catch (CourseNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -56,13 +57,15 @@ public class ClassServiceTest {
 
 		try {
 			flag = classService.getClassByClassId(new BigInteger("1"));
+			assertNotNull(flag);
 			System.err.println(flag);
+			flag = classService.getClassByClassId(new BigInteger("156"));
 		} catch (ClassesNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		assertNotNull(flag);
+		
 	}
 
 	@Test
@@ -145,8 +148,6 @@ public class ClassServiceTest {
 	public void deleteClassByCourseId() {
 
 		try {
-			ClassInfo classInfo = new ClassInfo();
-			classInfo.setName("dsdaasdas");
 			classService.deleteClassByCourseId(new BigInteger("1"));
 		} catch (CourseNotFoundException e) {
 			// TODO Auto-generated catch block

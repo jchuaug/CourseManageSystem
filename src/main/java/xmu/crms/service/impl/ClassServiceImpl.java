@@ -39,27 +39,10 @@ public class ClassServiceImpl implements ClassService {
 		int flag = classInfoMapper.deleteClassSelectionByClassId(classId);
 	}
 
-	
-	private List<Course> listCourseByTeacherNameAndCourseName(String teacherName, String courseName)
-			throws UserNotFoundException, CourseNotFoundException {
-		List<Course> courseList = new ArrayList<>();
-		List<User> list = classInfoMapper.listTeacherByTeacherName(teacherName);
-		if (list == null) {
-			throw new UserNotFoundException();
-		}
-		for (User userInfo : list) {
-			List<Course> courses = classInfoMapper.listCourseByCourseNameAndTeacherId(courseName, userInfo.getId());
-			courseList.addAll(courses);
-		}
-		if (courseList.isEmpty()) {
-			throw new CourseNotFoundException();
-		}
-		return courseList;
-	}
 
 	@Override
 	public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
-		if (classInfoMapper.getCourseById(courseId) == null) {
+		if (classInfoMapper.selectCourseByCourseId(courseId)==null) {
 			throw new CourseNotFoundException();
 		}
 		List<ClassInfo> classList = classInfoMapper.listClassByCourseId(courseId);
@@ -68,7 +51,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public ClassInfo getClassByClassId(BigInteger classId) throws ClassesNotFoundException {
-		ClassInfo classInfo = classInfoMapper.selectByPrimaryKey(classId);
+		ClassInfo classInfo = classInfoMapper.selectClassByClassId(classId);
 		if (classInfo == null) {
 			throw new ClassesNotFoundException();
 		}
@@ -77,7 +60,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public void updateClassByClassId(BigInteger classId, ClassInfo classInfo) throws ClassesNotFoundException {
-		ClassInfo classFound = classInfoMapper.selectByPrimaryKey(classId);
+		ClassInfo classFound = classInfoMapper.selectClassByClassId(classId);
 		if (classFound == null) {
 			throw new ClassesNotFoundException();
 		}
@@ -87,7 +70,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public void deleteClassByClassId(BigInteger classId) throws ClassesNotFoundException {
-		ClassInfo classFound = classInfoMapper.selectByPrimaryKey(classId);
+		ClassInfo classFound = classInfoMapper.selectClassByClassId(classId);
 		if (classFound == null) {
 			throw new ClassesNotFoundException();
 		}
@@ -103,27 +86,26 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
 			throws UserNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectByPrimaryKey(classId) != null) {
+		if (classInfoMapper.selectClassByClassId(classId) != null) {
 			throw new ClassesNotFoundException();
 		}
-		if (classInfoMapper.getStudentById(userId) == null) {
+		if (classInfoMapper.selectUserByUserId(userId) == null) {
 			throw new UserNotFoundException();
 		}
 		int flag = classInfoMapper.insertCourseSelectionById(userId, classId);
 		if (flag == 0) {
 			return null;
 		}
-
 		return classInfoMapper.getCourseSelectionId(userId, classId);
 	}
 
 	@Override
 	public void deleteCourseSelectionById(BigInteger userId, BigInteger classId)
 			throws UserNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.getStudentById(userId) == null) {
+		if (classInfoMapper.selectUserByUserId(userId) == null) {
 			throw new UserNotFoundException();
 		}
-		if (classInfoMapper.selectByPrimaryKey(classId) == null) {
+		if (classInfoMapper.selectClassByClassId(classId) == null) {
 			throw new ClassesNotFoundException();
 		}
 		int flag = classInfoMapper.deleteCourseSelectionById(userId, classId);
@@ -140,7 +122,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public BigInteger insertClassById(BigInteger courseId, ClassInfo classInfo) throws CourseNotFoundException {
-		Course course = classInfoMapper.getCourseById(courseId);
+		Course course = classInfoMapper.selectCourseByCourseId(courseId);
 		if (course == null) {
 			throw new CourseNotFoundException();
 		}
@@ -153,7 +135,7 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public void deleteClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
-		Course course = classInfoMapper.getCourseById(courseId);
+		Course course = classInfoMapper.selectCourseByCourseId(courseId);
 		if (course == null) {
 			throw new CourseNotFoundException();
 		}
@@ -167,8 +149,11 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public BigInteger callInRollById(Location location) throws SeminarNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectByPrimaryKey(location.getClassInfo().getId()) == null) {
+		if (classInfoMapper.selectClassByClassId(location.getClassInfo().getId()) == null) {
 			throw new ClassesNotFoundException();
+		}
+		if (classInfoMapper.selectSeminarBySeminarId(location.getSeminar().getId()) == null) {
+			throw new SeminarNotFoundException();
 		}
 		int flag = classInfoMapper.insetLocation(location);
 		return location.getId();
@@ -176,8 +161,11 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public void endCallRollById(BigInteger seminarId,BigInteger classId) throws SeminarNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectByPrimaryKey(seminarId) == null) {
+		if (classInfoMapper.selectClassByClassId(classId) == null) {
 			throw new ClassesNotFoundException();
+		}
+		if (classInfoMapper.selectSeminarBySeminarId(seminarId) == null) {
+			throw new SeminarNotFoundException();
 		}
 		int flag = classInfoMapper.endCallRollLocation(seminarId,classId);
 
@@ -186,6 +174,9 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public List<ClassInfo> listClassByUserId(BigInteger userId)
 			throws IllegalArgumentException, ClassesNotFoundException {
+		if (userId==null) {
+			throw new IllegalArgumentException();
+		}
 		List<ClassInfo> list = classInfoMapper.listClassByUserId(userId);
 		if (list == null) {
 			throw new ClassesNotFoundException();
