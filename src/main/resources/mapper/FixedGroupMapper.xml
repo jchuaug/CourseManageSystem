@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xmu.crms.mapper.FixedGroupMapper">
+	<resultMap id="FixGroupResultMap" type="FixGroup">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<association column="leader_id" property="leader"
+			select="xmu.crms.mapper.ClassInfoMapper.selectUserByUserId" />
+		<association column="class_id" property="classInfo"
+			select="xmu.crms.mapper.ClassInfoMapper.selectClassByClassId" />
+	</resultMap>
+
+	<resultMap id="FixGroupMemberResultMap" type="FixGroupMember">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<association column="fix_group_id" property="fixGroup"
+			select="getFixGroupByFixGroupId" />
+		<association column="student_id" property="student"
+			select="xmu.crms.mapper.ClassInfoMapper.selectUserByUserId" />
+	</resultMap>
+
+
+	<insert id="insertFixGroup" useGeneratedKeys="true" keyProperty="id">
+		insert into fix_group
+		(class_id,leader_id)
+		value(#{classInfo.id},#{leader.id})
+	</insert>
+
+	<delete id="deleteFixGroupMemberByFixGroupId">
+		delete from fix_group_member
+		where fix_group_id=#{id}
+	</delete>
+
+	<delete id="deleteFixGroupUserById">
+		delete from fix_group_member
+		where
+		fix_group_id=#{fixGroupId} and student_id=#{userId}
+	</delete>
+
+	<select id="listFixGroupMemberByGroupId" resultMap="xmu.crms.mapper.ClassInfoMapper.UserResultMap">
+		select
+		user_info.id, phone, wechat_id, openid, avatar, password,
+		school_id,
+		`name`, gender, `type`, `number`, education, title, email
+		from
+		fix_group_member,user_info
+		where student_id=user_info.id and
+		fix_group_id=#{id}
+	</select>
+
+	<select id="getFixGroupByFixGroupId" resultMap="FixGroupResultMap">
+		select
+		id,
+		class_id, leader_id
+		from fix_group
+		where id=#{id}
+	</select>
+
+	<select id="listFixGroupByClassId" resultMap="FixGroupResultMap">
+		select
+		id, class_id,
+		leader_id
+		from fix_group
+		where class_id=#{id}
+	</select>
+
+	<delete id="deleteFixGroupByClassId">
+		delete from fix_group
+		where class_id=#{id}
+	</delete>
+
+	<delete id="deleteFixGroupByGroupId">
+		delete from fix_group
+		where id=#{id}
+	</delete>
+
+	<update id="updateFixGroupByGroupId">
+		update fix_group
+		<set>
+			<if test="classInfo != null">
+				<if test="classInfo.id != null">
+					class_id=#{classInfo.id},
+				</if>
+			</if>
+			<if test="leader != null">
+				<if test="leader.id != null">
+					leader_id=#{leader.id},
+				</if>
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<select id="listFixGroupByGroupId" resultMap="FixGroupMemberResultMap">
+		select
+		id,fix_group_id,student_id
+		from fix_group_member
+		where
+		fix_group_id=#{id}
+	</select>
+
+	<insert id="insertFixGroupMember" useGeneratedKeys="true" keyProperty="id">
+		insert into fix_group_member
+		(fix_group_id,student_id)
+		value(#{fixGroup.id},#{student.id})
+	</insert>
+	
+	<select id="getFixGroupMemberById" resultMap="FixGroupMemberResultMap">
+        select
+        id,fix_group_id,student_id
+        from fix_group_member
+        where
+        fix_group_id=#{groupId} and student_id=#{userId} limit 1
+    </select>
+    
+    <select id="getFixGroupById" resultMap="FixGroupResultMap">
+        select
+        fix_group.id,class_id,leader_id
+        from fix_group_member, fix_group
+        where
+        class_id=#{classId} and student_id=#{userId} limit 1
+    </select>
+
+
+</mapper>
