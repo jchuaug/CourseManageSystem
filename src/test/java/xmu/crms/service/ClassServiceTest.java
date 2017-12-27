@@ -100,7 +100,7 @@ public class ClassServiceTest {
 		BigInteger flag = null;
 
 		try {
-			flag = classService.insertCourseSelectionById(new BigInteger("3"), new BigInteger("1"));
+			flag = classService.insertCourseSelectionById(new BigInteger("1"), new BigInteger("1"));
 		} catch (ClassesNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

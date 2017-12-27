@@ -25,5 +25,9 @@ public class CourseSelection {
 	public void setStudent(User student) {
 		this.student = student;
 	}
+	@Override
+	public String toString() {
+		return "CourseSelection [id=" + id + ", classInfo=" + classInfo + ", student=" + student + "]";
+	}
 
 }

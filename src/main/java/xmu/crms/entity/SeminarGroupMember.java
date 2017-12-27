@@ -25,5 +25,9 @@ public class SeminarGroupMember {
 	public void setStudent(User student) {
 		this.student = student;
 	}
+	@Override
+	public String toString() {
+		return "SeminarGroupMember [id=" + id + ", seminarGroup=" + seminarGroup + ", student=" + student + "]";
+	}
 
 }
