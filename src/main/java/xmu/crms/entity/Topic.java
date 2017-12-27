@@ -46,5 +46,10 @@ public class Topic {
 	public void setSeminar(Seminar seminar) {
 		this.seminar = seminar;
 	}
+	@Override
+	public String toString() {
+		return "Topic [id=" + id + ", name=" + name + ", description=" + description + ", groupNumberLimit="
+				+ groupNumberLimit + ", groupStudentLimit=" + groupStudentLimit + ", seminar=" + seminar + "]";
+	}
 	
 }

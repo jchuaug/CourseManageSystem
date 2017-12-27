@@ -32,5 +32,10 @@ public class SeminarGroupTopic {
 	public void setPresentationGrade(Integer presentationGrade) {
 		this.presentationGrade = presentationGrade;
 	}
+	@Override
+	public String toString() {
+		return "SeminarGroupTopic [id=" + id + ", topic=" + topic + ", seminarGroup=" + seminarGroup
+				+ ", presentationGrade=" + presentationGrade + "]";
+	}
 
 }

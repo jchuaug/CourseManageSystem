@@ -84,4 +84,11 @@ public class SeminarGroup {
 	public void setFixGroup(FixGroup fixGroup) {
 		this.fixGroup = fixGroup;
 	}
+
+	@Override
+	public String toString() {
+		return "SeminarGroup [id=" + id + ", seminar=" + seminar + ", classInfo=" + classInfo + ", report=" + report
+				+ ", reportGrade=" + reportGrade + ", presentationGrade=" + presentationGrade + ", finalGrade="
+				+ finalGrade + ", leader=" + leader + ", fixGroup=" + fixGroup + "]";
+	}
 }
