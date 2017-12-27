@@ -21,6 +21,7 @@ import static junit.framework.TestCase.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CourseManageApplication.class)
+@Sql(scripts = "classpath:schema.sql")
 public class TopicServiceTest {
     @Autowired
     TopicService topicService;
@@ -116,7 +117,6 @@ public class TopicServiceTest {
 
     // deleteTopicByTopicId
     @Test
-    @Sql(scripts = "classpath:schema.sql")
     public void deleteTopicByTopicId() {
         BigInteger topicId = BigInteger.valueOf(1);
         Topic topic = null;
@@ -133,7 +133,6 @@ public class TopicServiceTest {
 
     //deleteSeminarGroupTopicById
     @Test
-    @Sql(scripts = "classpath:schema.sql")
     public void deleteSeminarGroupTopicById() {
         BigInteger topicId = BigInteger.valueOf(1);
         BigInteger groupId = BigInteger.valueOf(1);
@@ -151,7 +150,6 @@ public class TopicServiceTest {
 
     // deleteSeminarGroupTopicByTopicId
     @Test
-    @Sql(scripts = "classpath:schema.sql")
     public void deleteSeminarGroupTopicByTopicId() {
         BigInteger topicId = BigInteger.valueOf(1);
 
@@ -164,7 +162,6 @@ public class TopicServiceTest {
 
     // getSeminarGroupTopicById
     @Test
-    @Sql(scripts = "classpath:schema.sql")
     public void getSeminarGroupTopicById() {
         BigInteger topicId = BigInteger.valueOf(1);
         BigInteger groupId = BigInteger.valueOf(1);
