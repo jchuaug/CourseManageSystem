@@ -72,6 +72,9 @@
 		#{fourPointPercentage},
 		#{threePointPercentage}
 		)
+		<selectKey resultType="java.math.BigInteger" keyProperty="id" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
     </insert>
 
     <select id="getCourseByCourseId" parameterType="java.math.BigInteger" resultMap="CourseResult">

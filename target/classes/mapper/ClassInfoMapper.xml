@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="xmu.crms.mapper.ClassInfoMapper">
+
+	<resultMap id="BaseResultMap" type="xmu.crms.entity.ClassInfo">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<!-- <result column="course_id" property="courseId" jdbcType="BIGINT" /> -->
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="site" property="site" jdbcType="VARCHAR" />
+		<result column="class_time" property="classTime" jdbcType="VARCHAR" />
+		<result column="report_percentage" property="reportPercentage"
+			jdbcType="TINYINT" />
+		<result column="presentation_percentage" property="presentationPercentage"
+			jdbcType="TINYINT" />
+		<result column="five_point_percentage" property="fivePointPercentage"
+			jdbcType="TINYINT" />
+		<result column="four_point_percentage" property="fourPointPercentage"
+			jdbcType="TINYINT" />
+		<result column="three_point_percentage" property="threePointPercentage"
+			jdbcType="TINYINT" />
+		<association column="course_id" property="course"
+			select="selectCourseByCourseId">
+		</association>
+	</resultMap>
+
+	<resultMap id="SeminarResultMap" type="Seminar">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="is_fixed" property="fixed" jdbcType="TINYINT" />
+		<result column="start_time" property="startTime" jdbcType="DATE" />
+		<result column="end_time" property="endTime" jdbcType="DATE" />
+		<association column="course_id" property="course"
+			select="selectCourseByCourseId" />
+	</resultMap>
+
+	<resultMap id="CourseResultMap" type="Course">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="description" property="description" />
+		<result column="report_percentage" property="reportPercentage" />
+		<result column="presentation_percentage" property="presentationPercentage" />
+		<result column="five_point_percentage" property="fivePointPercentage" />
+		<result column="four_point_percentage" property="fourPointPercentage" />
+		<result column="three_point_percentage" property="threePointPercentage" />
+		<association column="teacher_id" property="teacher"
+			select="selectUserByUserId" />
+	</resultMap>
+
+	<resultMap id="UserResultMap" type="User">
+		<id column="id" property="id" />
+		<result column="phone" property="phone" />
+		<result column="wechat_id" property="wechatId" />
+		<result column="openid" property="openid" />
+		<result column="avatar" property="avatar" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="gender" property="gender" />
+		<result column="type" property="type" />
+		<result column="number" property="number" />
+		<result column="education" property="education" />
+		<result column="title" property="title" />
+		<result column="email" property="email" />
+		<association column="school_id" property="school"
+			select="selectSchoolBySchoolId" />
+	</resultMap>
+
+	<resultMap id="LocationResultMap" type="xmu.crms.entity.Location">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="longitude" property="longitude" jdbcType="DECIMAL" />
+		<result column="latitude" property="latitude" jdbcType="DECIMAL" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<association column="class_id" property="classInfo"
+			select="selectClassByClassId" />
+		<association column="seminar_id" property="seminar"
+			select="selectSeminarBySeminarId" />
+	</resultMap>
+
+	<select id="selectSeminarBySeminarId" resultMap="SeminarResultMap">
+		SELECT
+		id,
+		name,
+		description,
+		course_id,
+		is_fixed,
+		start_time,
+		end_time
+		FROM seminar
+		WHERE id
+		= #{id}
+	</select>
+
+	<select id="selectCourseByCourseId" resultMap="CourseResultMap">
+		SELECT
+		id,
+		name,
+		start_date,
+		end_date,
+		teacher_id,
+		description,
+		report_percentage,
+		presentation_percentage,
+		five_point_percentage,
+		four_point_percentage,
+		three_point_percentage
+		FROM course
+		WHERE id = #{id}
+	</select>
+
+	<select id="selectUserByUserId" resultMap="UserResultMap">
+		SELECT
+		id,
+		phone,
+		wechat_id,
+		openid,
+		avatar,
+		password,
+		name,
+		school_id,
+		gender,
+		type,
+		number,
+		education,
+		title,
+		email
+		FROM user_info
+		WHERE id = #{id}
+	</select>
+
+	<select id="selectSchoolBySchoolId" resultType="School">
+		SELECT
+		id,
+		name,
+		province,
+		city
+		FROM school
+		WHERE id = #{id}
+	</select>
+
+
+	<select id="selectClassByClassId" resultMap="BaseResultMap">
+		select
+		id, name,
+		course_id, description, site, class_time,
+		report_percentage,
+		presentation_percentage, five_point_percentage,
+		four_point_percentage,
+		three_point_percentage
+		from class_info
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+
+
+	<delete id="deleteByPrimaryKey" parameterType="java.math.BigInteger">
+		delete from
+		class_info
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="xmu.crms.entity.ClassInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into class_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				name,
+			</if>
+
+			<if test="course != null">
+				<if test="course.id != null">
+					course_id,
+				</if>
+			</if>
+
+			<if test="description != null">
+				description,
+			</if>
+			<if test="site != null">
+				site,
+			</if>
+			<if test="classTime != null">
+				class_time,
+			</if>
+			<if test="reportPercentage != null">
+				report_percentage,
+			</if>
+			<if test="presentationPercentage != null">
+				presentation_percentage,
+			</if>
+			<if test="fivePointPercentage != null">
+				five_point_percentage,
+			</if>
+			<if test="fourPointPercentage != null">
+				four_point_percentage,
+			</if>
+			<if test="threePointPercentage != null">
+				three_point_percentage,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+
+			<if test="course != null">
+				<if test="course.id != null">
+					#{course.id,jdbcType=BIGINT},
+				</if>
+			</if>
+
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="site != null">
+				#{site,jdbcType=VARCHAR},
+			</if>
+			<if test="classTime != null">
+				#{classTime,jdbcType=VARCHAR},
+			</if>
+			<if test="reportPercentage != null">
+				#{reportPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="presentationPercentage != null">
+				#{presentationPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="fivePointPercentage != null">
+				#{fivePointPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="fourPointPercentage != null">
+				#{fourPointPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="threePointPercentage != null">
+				#{threePointPercentage,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="xmu.crms.entity.ClassInfo">
+		update class_info
+		<set>
+
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+
+			<if test="course != null">
+				<if test="course.id != null">
+					course_id = #{course.id,jdbcType=VARCHAR},
+				</if>
+			</if>
+
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+
+
+			<if test="site != null">
+				site = #{site,jdbcType=VARCHAR},
+			</if>
+			<if test="classTime != null">
+				class_time = #{classTime,jdbcType=VARCHAR},
+			</if>
+			<if test="reportPercentage != null">
+				report_percentage = #{reportPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="presentationPercentage != null">
+				presentation_percentage =
+				#{presentationPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="fivePointPercentage != null">
+				five_point_percentage =
+				#{fivePointPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="fourPointPercentage != null">
+				four_point_percentage =
+				#{fourPointPercentage,jdbcType=TINYINT},
+			</if>
+			<if test="threePointPercentage != null">
+				three_point_percentage =
+				#{threePointPercentage,jdbcType=TINYINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<delete id="deleteClassSelectionByClassId">
+		delete
+		from course_selection
+		where class_id =
+		#{classId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insertCourseSelectionById" useGeneratedKeys="true" keyProperty="id">
+		insert into
+		course_selection (student_id, class_id)
+		values (#{userId,jdbcType=BIGINT},
+		#{classId,jdbcType=BIGINT})
+	</insert>
+	<delete id="deleteCourseSelectionById" parameterType="java.math.BigInteger">
+		delete from
+		course_selection
+		where student_id = #{userId,jdbcType=BIGINT} and
+		class_id=#{classId,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteClassByCourseId" parameterType="java.math.BigInteger">
+		delete from
+		class_info
+		where course_id = #{courseId,jdbcType=BIGINT}
+	</delete>
+	<select id="getCourseSelectionId" resultType="java.math.BigInteger">
+		select id from
+		course_selection
+		where student_id=#{userId} and class_id=#{classId}
+	</select>
+
+
+	<select id="listClassByCourseId" resultMap="BaseResultMap">
+		select
+		id, name,
+		course_id, description, site, class_time,
+		report_percentage,
+		presentation_percentage, five_point_percentage,
+		four_point_percentage,
+		three_point_percentage
+		from class_info
+		where course_id=#{courseId}
+	</select>
+
+
+	<select id="getCallStatusById" resultMap="LocationResultMap">
+		select
+		id,longitude,
+		latitude,status
+		from location
+		where
+		class_id=#{classId} and
+		seminar_id=#{seminarId}  limit 1
+	</select>
+	<insert id="insetLocation" useGeneratedKeys="true" keyProperty="id"
+		parameterType="xmu.crms.entity.Location">
+		insert into
+		location
+		(class_id,seminar_id,longitude,latitude,status)
+		values(#{classInfo.id},#{seminar.id},#{longitude},#{latitude},#{status})
+	</insert>
+
+	<update id="endCallRollLocation">
+		update location
+		set
+		status =0
+		where class_id =
+		#{classId,jdbcType=BIGINT} and
+		seminar_id=#{seminarId,jdbcType=BIGINT}
+	</update>
+
+	<select id="listClassByUserId" resultMap="BaseResultMap">
+		select
+		class_info.id, name,
+		course_id, description, site, class_time,
+		report_percentage,
+		presentation_percentage, five_point_percentage,
+		four_point_percentage,
+		three_point_percentage
+		from class_info,course_selection
+		where
+		course_selection.student_id=#{userId}
+		and
+		class_info.id=course_selection.class_id
+	</select>
+</mapper>

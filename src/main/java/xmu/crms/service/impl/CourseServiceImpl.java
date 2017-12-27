@@ -13,6 +13,7 @@ import xmu.crms.service.SeminarService;
 import xmu.crms.service.UserService;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,8 +51,10 @@ ClassService classService;
             throw new IllegalArgumentException("用户ID格式错误！");
         }
         course.getTeacher().setId(userId);
-        Integer courseId = courseMapper.insertCourseByUserId(course);
-        return BigInteger.valueOf(courseId);
+//        Integer courseId = courseMapper.insertCourseByUserId(course);
+        courseMapper.insertCourseByUserId(course);
+
+        return course.getId();
 }
 
     @Override
@@ -93,24 +96,34 @@ ClassService classService;
     public List<ClassInfo> listClassByCourseName(String courseName) {
         try {
             List<Course> courseList = courseMapper.listCourseByCourseName(courseName);
-            BigInteger course_id = courseList.get(0).getId();
-//        todo 下面的classService还没实现
-            List<ClassInfo> classInfoList = classService.listClassByCourseId(course_id);
+            List<ClassInfo> classInfoList = new ArrayList<ClassInfo>();
+            for (int i=0;i<courseList.size();i++){
+                BigInteger course_id = courseList.get(i).getId();
+                classInfoList.addAll(classService.listClassByCourseId(course_id));
+            }
             return classInfoList;
         }catch (CourseNotFoundException e){
             e.printStackTrace();
         }
-//        todo 合并时将下两行删除
-//        List<ClassInfo> classInfoList = new ArrayList<ClassInfo>();
-//        return classInfoList;
         return null;
     }
 
     @Override
     public List<ClassInfo> listClassByTeacherName(String teacherName) {
         try{
-            BigInteger userId = userService.listUserIdByUserName(teacherName).get(0);
-            return this.listClassByUserId(userId);
+            //需要考虑老师同名的情况？
+            List<BigInteger> userIds = userService.listUserIdByUserName(teacherName);
+
+            List<ClassInfo> classInfoList = new ArrayList<>();
+            for (int i=0;i<userIds.size();i++){
+                //第i个老师的所有课程
+                List<Course> courseList = this.listCourseByUserId(userIds.get(i));
+                for (int j=0;j<courseList.size();j++){
+                    BigInteger courseId = courseList.get(j).getId();
+                    classInfoList.addAll(classService.listClassByCourseId(courseId));
+                }
+            }
+            return classInfoList;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -119,12 +132,23 @@ ClassService classService;
 
     @Override
     public List<ClassInfo> listClassByName(String courseName, String teacherName) throws UserNotFoundException, CourseNotFoundException {
-        //todo add method
-        return null;
+        List<ClassInfo> classInfoList = new ArrayList<>();
+        List<ClassInfo> classInfoList1 = this.listClassByCourseName(courseName);
+        if (classInfoList1 == null)
+            throw new CourseNotFoundException();
+        List<ClassInfo> classInfoList2 = this.listClassByTeacherName(teacherName);
+        if (classInfoList2 == null)
+            throw new UserNotFoundException();
+
+        //取交集
+        classInfoList1.retainAll(classInfoList2);
+
+        return classInfoList1;
     }
 
-    private List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, CourseNotFoundException, ClassNotFoundException {
-        BigInteger courseId = this.listCourseByUserId(userId).get(0).getId();
-        return classService.listClassByCourseId(courseId);
-    }
+//    这个函数标准组已经删除
+//    private List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, CourseNotFoundException, ClassNotFoundException {
+//        BigInteger courseId = this.listCourseByUserId(userId).get(0).getId();
+//        return classService.listClassByCourseId(courseId);
+//    }
 }

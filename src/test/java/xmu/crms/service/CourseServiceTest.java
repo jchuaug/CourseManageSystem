@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.User;
 import xmu.crms.service.impl.CourseServiceImpl;
@@ -103,11 +104,25 @@ public class CourseServiceTest {
         List<Course> courseList = courseService.listCourseByCourseName(courseName);
         assertNotNull(courseList);
     }
-//    @Test
-//    public void listClassByCourseName() throws Exception {
-//        String courseName = "课程1";
-//        List<ClassInfo> classList = courseService.listClassByCourseName(courseName);
-//        assertNotNull(classList);
-//    }
+    @Test
+    public void listClassByCourseName() throws Exception {
+        String courseName = "课程1";
+        List<ClassInfo> classList = courseService.listClassByCourseName(courseName);
+        assertNotNull(classList);
+    }
+    @Test
+    public void listClassByTeacherName()throws Exception{
+        String teacherName = "邱明";
+        List<ClassInfo> classInfoList = courseService.listClassByTeacherName(teacherName);
+        assertNotNull(classInfoList);
+    }
+
+    @Test
+    public void listClassByName() throws Exception{
+        String courseName = "课程";
+        String teacherName = "邱明";
+        List<ClassInfo> classInfoList = courseService.listClassByName(courseName,teacherName);
+        assertNotNull(classInfoList);
+    }
 
 }
