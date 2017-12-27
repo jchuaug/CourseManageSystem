@@ -1,134 +1,82 @@
 package xmu.crms.mapper;
 
-import xmu.crms.entity.*;
+import xmu.crms.entity.Course;
+import xmu.crms.entity.Seminar;
 
 import java.math.BigInteger;
 import java.util.List;
 
 /**
- * @author YellowPure
- * @date 2017/12/19
+ * @author: drafting_dreams
  */
 public interface SeminarMapper {
     /**
-     *根据courseId获取seminar列表
+     *根据课程ID查找该课程下的所有讨论课，返回讨论课列表
      *
-     * @param courseId 课程Id
-     * @return List<Seminar> 讨论课列表
-     * @author YellowPure
-     * @date 20:20 2017/12/19
+     * @param courseId courseId
+     * @return List of Seminar
      */
     List<Seminar> listSeminarByCourseId(BigInteger courseId);
 
+
     /**
-     *根据讨论课id获取讨论课
+     * 插入讨论课信息，该讨论课属于的课程为 courseId 所指定的课程
      *
-     * @param seminarId 讨论课Id
+     * @param seminar seminar 信息
+     * @return 新建讨论课的 id， 失败返回 -1
+     */
+    BigInteger insertSeminarByCourseId(Seminar seminar);
+
+    /**
+     * 删除 courseId 对应的课程下的所有讨论课信息，先删除 semianr 下的 topic ，再把相应的 SeminarGroup 删除
+     *
+     * @param courseId courseId
+     * @return 是否删除成功
+     */
+    Boolean deleteSeminarByCourseId(BigInteger courseId);
+
+    /**
+     * delete seminar by seminarId
+     *
+     * @param seminarId seminarId
+     * @return 如果成功删除返回 true，如果没有找到 seminarId 导致删除失败 返回 false
+     */
+    Boolean deleteSeminarBySeminarId(BigInteger seminarId);
+
+    /**
+     * update seminar by seminar ID
+     *
+     * @return 如果成功更新返回 true，如果没有找到 seminarId 导致更新失败 返回 false
+     */
+    Boolean updateSeminarBySeminarId(Seminar seminar);
+
+    /**
+     * get seminar by seminar ID
+     *
+     * @param seminarId seminarId
      * @return Seminar
-     * @author YellowPure
-     * @date 14:11 2017/12/20
      */
     Seminar getSeminarBySeminarId(BigInteger seminarId);
 
     /**
-     *根据讨论课id删除讨论课
+     * delete topic by seminar id
      *
-     * @param seminarId 讨论课Id
-     * @author YellowPure
-     * @date 14:23 2017/12/20
+     * @param id seminar id
      */
-    void deleteSeminarByCourseId(BigInteger seminarId);
+    void deleteTopicBySeminarId(BigInteger id);
 
     /**
-     *根据讨论课id删除话题
+     * delete seminar group by seminar id
      *
-     * @param seminarId 讨论课id
-     * @author YellowPure
-     * @date 14:32 2017/12/20
+     * @param id seminar
      */
-    void deleteTopicBySeminarId(BigInteger seminarId);
+    void deleteSeminarGroupBySeminarId(BigInteger id);
 
     /**
-     *根据讨论课id删除讨论课小组
+     * get course by course id
      *
-     * @param seminarId 讨论课Id
-     * @author YellowPure
-     * @date 14:33 2017/12/20
+     * @param courseId course id
+     * @return the course
      */
-    void deleteSeminarGroupBySeminarId(BigInteger seminarId);
-
-    /**
-     *按讨论课id修改讨论课.
-     *
-     * @param seminar 讨论课信息
-     * @author YellowPure
-     * @date 14:50 2017/12/20
-     */
-    void updateSeminarBySeminarId(Seminar seminar);
-
-    /**
-     *根据user_id查询小组
-     *
-     * @param studentId 学生id
-     * @author YellowPure
-     * @date 22:03 2017/12/20
-     */
-    SeminarGroupMember getSeminarGroupMemberByStudentId(BigInteger studentId);
-    
-    /**
-     *根据seminar_group_id获得seminar_group
-     *
-     * @param id
-     * @return SeminarGroup
-     * @author YellowPure
-     * @date 22:08 2017/12/20
-     */
-    SeminarGroup getSeminarGroupById(BigInteger id);
-
-    /**
-     *根据courseId获得course
-     *
-     * @param id
-     * @return Course
-     * @author YellowPure
-     * @date 22:16 2017/12/20
-     */
-    Course getCourseById(BigInteger id);
-
-    /**
-     *根据id获得teacher
-     *
-     * @param id
-     * @author YellowPure
-     * @date 22:18 2017/12/20
-     */
-    User getUserById(BigInteger id);
-
-    /**
-     *新增讨论课.
-     *
-     * @param seminar 讨论课信息
-     * @author YellowPure
-     * @date 22:23 2017/12/20
-     */
-    int insertSeminarByCourseId(Seminar seminar);
-
-    /**
-     *根据ID删除讨论课
-     *
-     * @param id 讨论课ID
-     * @author YellowPure
-     * @date 14:08 2017/12/21
-     */
-    void deleteSeminarById(BigInteger id);
-
-    /**
-     *根据Id查询学校
-     *
-     * @param id 学校Id
-     * @return School
-     * @author YellowPure
-     * @date 15:56 2017/12/21
-     */
-    School getSchoolById(BigInteger id);
+    Course getCourseById(BigInteger courseId);
 }
