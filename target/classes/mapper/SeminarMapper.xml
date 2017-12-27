@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xmu.crms.mapper.SeminarMapper">
+<<<<<<< HEAD
 	<resultMap id="BaseResultMap" type="Seminar">
 		<id column="id" property="id" jdbcType="BIGINT" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
@@ -205,6 +206,225 @@
 		seminar
 		where course_id = #{courseId,jdbcType=BIGINT}
 	</delete>
+=======
+    <resultMap id="SeminarMap" type="Seminar">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="is_fixed" property="fixed"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <association column="course_id" property="course" select="getCourseById"/>
+    </resultMap>
+
+    <resultMap id="CourseResult" type="Course">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="description" column="description"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <association property="teacher" column="teacher_id" select="getUserById"/>
+    </resultMap>
+
+    <resultMap id="TeacherResult" type="User">
+        <id property="id" column="id"/>
+        <result property="phone" column="phone"/>
+        <result property="wechatId" column="wechatId"/>
+        <result property="openid" column="openid"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="name" column="name"/>
+        <result property="gender" column="gender"/>
+        <result property="type" column="type"/>
+        <result property="number" column="number"/>
+        <result property="education" column="education"/>
+        <result property="title" column="title"/>
+        <result property="email" column="email"/>
+        <association property="school" column="school_id" select="getSchoolById"/>
+    </resultMap>
+
+    <resultMap id="SchoolResult" type="School">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+    </resultMap>
+
+    <select id="getSchoolById" resultMap="SchoolResult">
+        SELECT
+            id,
+            name,
+            province,
+            city
+        FROM school
+        WHERE
+            id = #{id}
+    </select>
+
+    <select id="listSeminarByCourseId" resultMap="SeminarMap">
+        SELECT
+            id,
+            name,
+            description,
+            course_id,
+            is_fixed,
+            start_time,
+            end_time
+        FROM seminar
+        WHERE course_id = #{courseId}
+    </select>
+
+    <select id="getSeminarBySeminarId" resultMap="SeminarMap">
+        SELECT
+            id,
+            name,
+            description,
+            course_id,
+            is_fixed,
+            start_time,
+            end_time
+        FROM seminar
+        WHERE id = #{seminarId}
+    </select>
+
+    <select id="getSeminarDetailBySeminarId" resultMap="SeminarMap">
+        SELECT
+            id,
+            name,
+            description,
+            course_id,
+            is_fixed,
+            start_time,
+            end_time
+        FROM seminar
+        WHERE id = #{seminarId}
+    </select>
+
+    <delete id="deleteSeminarByCourseId">
+        DELETE FROM seminar
+        WHERE course_id = #{courseId}
+    </delete>
+
+    <delete id="deleteTopicBySeminarId">
+        DELETE FROM topic
+        WHERE seminar_id = #{seminarId}
+    </delete>
+
+    <delete id="deleteSeminarGroupBySeminarId">
+        DELETE FROM seminar_group
+        WHERE seminar_id = #{seminarId}
+    </delete>
+
+    <update id="updateSeminarBySeminarId">
+        UPDATE
+            seminar
+        SET
+            name        = #{name},
+            description = #{description},
+            course_id   = #{course.id},
+            is_fixed    = #{fixed},
+            start_time  = #{startTime},
+            end_time    = #{endTime}
+        WHERE
+            id = #{id}
+    </update>
+
+    <select id="getSeminarGroupMemberByStudentId">
+        SELECT
+            id,
+            seminar_group_id,
+            student_id
+        FROM
+            seminar_group_member
+        WHERE
+            student_id = #{studentId}
+    </select>
+
+    <select id="getSeminarGroupById">
+        SELECT
+            id,
+            seminar_id,
+            report_garde,
+            presentation_grade,
+            final_grade,
+            report,
+            class_id,
+            leader_id
+        FROM
+            seminar_group
+        WHERE
+            id = #{id}
+    </select>
+
+    <select id="getCourseById" resultMap="CourseResult">
+        SELECT
+            id,
+            name,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM
+            course
+        WHERE
+            id = #{id}
+    </select>
+
+    <select id="getUserById" resultMap="TeacherResult">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            name,
+            school_id,
+            gender,
+            type,
+            number,
+            education,
+            title,
+            email
+        FROM
+            user_info
+        WHERE
+            id = #{id}
+    </select>
+    <insert id="insertSeminarByCourseId">
+        INSERT INTO
+        seminar (name, description, course_id, is_fixed, start_time, end_time)
+        VALUES (#{name}, #{description}, #{course.id}, #{fixed}, #{startTime}, #{endTime})
+        <selectKey resultType="java.math.BigInteger" keyProperty="id" order="AFTER">
+            SELECT last_insert_id()
+        </selectKey>
+    </insert>
+>>>>>>> 38bdcbf2cbba5785d2ad35fa7f00f441f80bc4fd
 
 
+<<<<<<< HEAD
+=======
+    <delete id="deleteSeminarBySeminarId">
+        DELETE FROM seminar
+        WHERE id = #{id}
+    </delete>
+
+    <select id="getTeacherIdByCourseId">
+        SELECT teacher_id
+        FROM
+            course
+        WHERE
+            id = #{courseId}
+    </select>
+>>>>>>> 38bdcbf2cbba5785d2ad35fa7f00f441f80bc4fd
 </mapper>

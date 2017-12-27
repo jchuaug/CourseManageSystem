@@ -1,129 +1,99 @@
 package xmu.crms.service.impl;
 
-import java.math.BigInteger;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-
-import xmu.crms.entity.*;
-import xmu.crms.exception.*;
+import xmu.crms.entity.Course;
+import xmu.crms.entity.Seminar;
+import xmu.crms.exception.CourseNotFoundException;
+import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.mapper.SeminarMapper;
 import xmu.crms.service.SeminarService;
 
+import java.math.BigInteger;
+import java.util.List;
+
 /**
+ * Demo SeminarServiceImpl
  *
- * @author zhouzhongjun CaoXingmei YeHongjie
- * @version 2.00
- *
+ * @author drafting_dreams
+ * @date 2017/12/24
  */
 @Service
 public class SeminarServiceImpl implements SeminarService {
 
-	@Autowired
-	private SeminarMapper seminarMapper;
-	
-/*	@Autowired
-	private TopicService topicService;*/
-	
-	/*	@Autowired
-	private SeminarGroupService seminarGroupService;*/
+    // todo deleted later
+    @Autowired
+    SeminarMapper seminarMapper;
 
-	@Override
-	public List<Seminar> listSeminarByCourseId(BigInteger courseId)
-			throws IllegalArgumentException, CourseNotFoundException {
-		if (courseId==null) {
-			throw new IllegalArgumentException();
-		}
-		Course course=seminarMapper.selectCourseByCourseId(courseId);
-		if (course==null) {
-			throw new CourseNotFoundException();
-		}
-		List<Seminar> list= seminarMapper.listSeminarByCourseId(courseId);
-		return list;
-	}
 
-	@Override
-	public void deleteSeminarByCourseId(BigInteger courseId)
-			throws IllegalArgumentException, CourseNotFoundException {
-		if (courseId==null) {
-			throw new IllegalArgumentException();
-		}
-		Course course=seminarMapper.selectCourseByCourseId(courseId);
-		if (course==null) {
-			throw new CourseNotFoundException();
-		}
-		List<Seminar> list=listSeminarByCourseId(courseId);
-		for (Seminar seminar : list) {
-			//topicService.deleteTopicBySeminarId( seminar.getId());
-			//seminarGroupService.deleteSeminarGroupBySeminarId( seminar.getId());
-		}
-		int flag= seminarMapper.deleteSeminarByCourseId(courseId);
+    @Override
+    public List<Seminar> listSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
+        if (seminarMapper.getCourseById(courseId) == null) {
+            throw new CourseNotFoundException();
+        }
+        return seminarMapper.listSeminarByCourseId(courseId);
+    }
 
-	}
 
-	@Override
-	public Seminar getSeminarBySeminarId(BigInteger seminarId)
-			throws IllegalArgumentException, SeminarNotFoundException {
-		if (seminarId==null) {
-			throw new IllegalArgumentException();
-		}
-		Seminar seminar=seminarMapper.selectByPrimaryKey(seminarId);
-		if (seminar==null) {
-			throw new SeminarNotFoundException();
-		}
-		return seminar;
-	}
+    @Override
+    public void deleteSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
+        if (seminarMapper.getCourseById(courseId) == null) {
+            throw new CourseNotFoundException();
+        }
 
-	@Override
-	public void updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar)
-			throws IllegalArgumentException, SeminarNotFoundException {
-		if (seminarId==null||seminar==null) {
-			throw new IllegalArgumentException();
-		}
-		if (getSeminarBySeminarId(seminarId)==null) {
-			throw new SeminarNotFoundException();
-		}
-		
-		seminar.setId(seminarId);
-		int flag=seminarMapper.updateByPrimaryKeySelective(seminar);
-	}
+        List<Seminar> seminars = listSeminarByCourseId(courseId);
+        for (int i = 0; i < seminars.size(); i++) {
+            seminarMapper.deleteTopicBySeminarId(seminars.get(i).getId());
+            seminarMapper.deleteSeminarGroupBySeminarId(seminars.get(i).getId());
+        }
 
-	@Override
-	public void deleteSeminarBySeminarId(BigInteger seminarId)
-			throws IllegalArgumentException, SeminarNotFoundException {
-		if (seminarId==null) {
-			throw new IllegalArgumentException();
-		}
-		if (getSeminarBySeminarId(seminarId)==null) {
-			throw new SeminarNotFoundException();
-		}
-		//seminarGroupService.deleteSeminarGroupBySeminarId( seminarId);
-		//topicService.deleteTopicBySeminarId( seminarId);
-		int flag=seminarMapper.deleteByPrimaryKey(seminarId);
-	}
+        seminarMapper.deleteSeminarByCourseId(courseId);
 
-	@Override
-	public BigInteger insertSeminarByCourseId(BigInteger courseId, Seminar seminar)
-			throws IllegalArgumentException, CourseNotFoundException {
-		if (courseId==null||seminar==null) {
-			throw new IllegalArgumentException();
-		}
-		if (seminarMapper.selectCourseByCourseId(courseId)==null) {
-			throw new CourseNotFoundException();
-		}
-		if (seminar.getCourse()==null) {
-			Course course =new Course();
-			course.setId(courseId);
-			seminar.setCourse(course);
-		}else {
-			seminar.getCourse().setId(courseId);
-		}
-		int flag=seminarMapper.insertSelective(seminar);
-		return seminar.getId();
-	}
+    }
 
-	
 
+    @Override
+    public Seminar getSeminarBySeminarId(BigInteger seminarId) throws IllegalArgumentException, SeminarNotFoundException {
+        if (seminarId == null) {
+            throw new IllegalArgumentException();
+        }
+        if (seminarMapper.getSeminarBySeminarId(seminarId) == null) {
+            throw new SeminarNotFoundException();
+        }
+        return seminarMapper.getSeminarBySeminarId(seminarId);
+    }
+
+    @Override
+    public void updateSeminarBySeminarId(BigInteger seminarId, Seminar seminar) throws IllegalArgumentException, SeminarNotFoundException {
+        if (seminarMapper.getSeminarBySeminarId(seminarId) == null) {
+            throw new SeminarNotFoundException();
+        }
+        seminar.setId(seminarId);
+        seminarMapper.updateSeminarBySeminarId(seminar);
+    }
+
+    @Override
+    public void deleteSeminarBySeminarId(BigInteger seminarId) throws IllegalArgumentException, SeminarNotFoundException {
+        if (seminarMapper.getSeminarBySeminarId(seminarId) == null) {
+            throw new SeminarNotFoundException();
+        }
+        //删除讨论课包含的topic信息和小组信息
+        seminarMapper.deleteTopicBySeminarId(seminarId);
+        seminarMapper.deleteSeminarGroupBySeminarId(seminarId);
+        //通过seminarId删除讨论课
+        seminarMapper.deleteSeminarBySeminarId(seminarId);
+    }
+
+    @Override
+    public BigInteger insertSeminarByCourseId(BigInteger courseId, Seminar seminar) throws IllegalArgumentException, CourseNotFoundException {
+        if (seminarMapper.getCourseById(courseId) == null) {
+            throw new CourseNotFoundException();
+        }
+        Course course = new Course();
+        course.setId(courseId);
+        seminar.setCourse(course);
+        seminarMapper.insertSeminarByCourseId(seminar);
+        //todo
+        return null;
+    }
 }

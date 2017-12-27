@@ -1,6 +1,10 @@
 package xmu.crms.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static xmu.crms.service.EntityTestMethods.testSeminar;
+
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -9,131 +13,115 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xmu.crms.CourseManageApplication;
 import xmu.crms.entity.Seminar;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
+import xmu.crms.mapper.SeminarMapper;
 
 /**
- * URL-pattern:prefix="/class"
- * 
- * @author ZDD、Huhui
- * @date 2017-12-04
+ * @author shin jim
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CourseManageApplication.class)
+@Sql(scripts = "classpath:schema.sql")
 public class SeminarServiceTest {
-	@Autowired
-	private SeminarService seminarService;
+    @Autowired
+    private SeminarService seminarService;
+    @Autowired
+    private SeminarMapper seminarMapper;
 
-	@Test
-	public void listSeminarByCourseId() {
-		try {
-			List<Seminar> seminars = seminarService.listSeminarByCourseId(new BigInteger("1"));
-			assertNotNull(seminars);
+    @Test
+    public void listSeminarByCourseId() {
+        try {
+            List<Seminar> seminars = seminarService.listSeminarByCourseId(new BigInteger("1"));
+            assertNotNull(seminars);
+            assertTrue(seminars.size() > 0);
 
-			seminars = seminarService.listSeminarByCourseId(new BigInteger("89"));
-			seminars = seminarService.listSeminarByCourseId(null);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (CourseNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+            Seminar seminar = seminars.get(0);
+            testSeminar(seminar);
+        } catch (IllegalArgumentException | CourseNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Test
-	public void deleteSeminarByCourseId() {
-		try {
-			seminarService.deleteSeminarByCourseId(new BigInteger("1"));
+    @Test
+    public void deleteSeminarByCourseId() {
+        try {
+            BigInteger courseId = BigInteger.valueOf(1);
+            List<Seminar> seminars = seminarService.listSeminarByCourseId(courseId);
 
-			seminarService.deleteSeminarByCourseId(new BigInteger("89"));
-			seminarService.deleteSeminarByCourseId(null);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (CourseNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+            assertTrue(seminars.size() > 0);
+            seminarService.deleteSeminarByCourseId(courseId);
 
-	@Test
-	public void getSeminarBySeminarId() {
-		try {
-			Seminar seminar = seminarService.getSeminarBySeminarId(new BigInteger("1"));
-			assertNotNull(seminar);
-			System.out.println(seminar);
-			seminar = seminarService.getSeminarBySeminarId(new BigInteger("89"));
-			seminar = seminarService.getSeminarBySeminarId(null);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SeminarNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
-	@Test
-	public void updateSeminarBySeminarId() {
-		Seminar seminar = new Seminar();
-		seminar.setName("Myseminar");
-		try {
+            seminars = seminarService.listSeminarByCourseId(courseId);
+            assertTrue(seminars.size() == 0);
 
-			seminarService.updateSeminarBySeminarId(new BigInteger("1"), seminar);
+        } catch (IllegalArgumentException | CourseNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-			seminarService.updateSeminarBySeminarId(new BigInteger("89"), seminar);
-			seminarService.updateSeminarBySeminarId(null, seminar);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SeminarNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    @Test
+    public void getSeminarBySeminarId() {
+        try {
+            Seminar seminar = seminarService.getSeminarBySeminarId(new BigInteger("1"));
+            assertNotNull(seminar);
+            testSeminar(seminar);
+        } catch (SeminarNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Test
-	public void deleteSeminarBySeminarId() {
-		Seminar seminar = new Seminar();
-		seminar.setName("Myseminar");
-		try {
-			seminarService.deleteSeminarBySeminarId(new BigInteger("1"));
+    @Test
+    public void updateSeminarBySeminarId() {
+        BigInteger seminarId = BigInteger.valueOf(1);
+        final String testName = new Date().toString();
 
-			seminarService.deleteSeminarBySeminarId(new BigInteger("89"));
-			seminarService.deleteSeminarBySeminarId(null);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SeminarNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+        Seminar seminar = seminarMapper.getSeminarBySeminarId(seminarId);
+        seminar.setName(testName);
+        try {
+            seminarService.updateSeminarBySeminarId(seminarId, seminar);
 
-	@Test
-	public void insertSeminarByCourseId() {
-		Seminar seminar = new Seminar();
-		seminar.setName("Myseminar");
-		seminar.setStartTime(new Date());
-		seminar.setEndTime(new Date());
-		try {
+            Seminar updatedSeminar = seminarMapper.getSeminarBySeminarId(seminarId);
+            assertEquals(testName, updatedSeminar.getName());
+        } catch (IllegalArgumentException | SeminarNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
-			BigInteger flag = seminarService.insertSeminarByCourseId(new BigInteger("1"), seminar);
-			assertNotNull(flag);
-			System.out.println(flag);
-			flag = seminarService.insertSeminarByCourseId(new BigInteger("89"), seminar);
-			flag = seminarService.insertSeminarByCourseId(null, seminar);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (CourseNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    @Test
+    public void deleteSeminarBySeminarId() {
+        BigInteger seminarId = BigInteger.valueOf(1);
+        try {
+            Seminar seminar = seminarMapper.getSeminarBySeminarId(seminarId);
+            assertNotNull(seminar);
+
+            seminarService.deleteSeminarBySeminarId(seminarId);
+
+            seminar = seminarMapper.getSeminarBySeminarId(seminarId);
+            assertEquals(null, seminar);
+        } catch (IllegalArgumentException | SeminarNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void insertSeminarByCourseId() {
+        Seminar seminar = seminarMapper.getSeminarBySeminarId(BigInteger.valueOf(1));
+        final String testName = new Date().toString();
+        seminar.setId(null);
+        seminar.setName(testName);
+        try {
+            seminarService.insertSeminarByCourseId(new BigInteger("1"), seminar);
+            Seminar insertedSeminar = seminarMapper.getSeminarBySeminarId(seminar.getId());
+            assertEquals(testName, insertedSeminar.getName());
+        } catch (IllegalArgumentException | CourseNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

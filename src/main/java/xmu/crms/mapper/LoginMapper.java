@@ -15,7 +15,7 @@ public interface LoginMapper {
 	/**
 	 * 微信登录后用户绑定. 成功后返回用户Id
 	 */
-	BigInteger signUpWeChat(String phone, String password);
+	Integer signUpWeChat(String phone, String password);
 
 	/**
 	 * 根据手机号获取密码
@@ -30,7 +30,7 @@ public interface LoginMapper {
 	 * 
 	 * @return user 该用户Id
 	 */
-	BigInteger signUpPhone(String phone, String password);
+	Integer signUpPhone(String phone, String password);
 
 	/**
 	 * 用户解绑.
