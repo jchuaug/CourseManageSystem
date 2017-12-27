@@ -145,7 +145,9 @@ public class LoginServiceImpl implements LoginService {
             if (user == null) {
                 throw new UserNotFoundException("LoginService:未找到对应用户");
             }
-            Boolean returnState = loginMapper.unbindTeacherAccount(userId)==1?true:false;
+            Integer unbindReturnVal = loginMapper.unbindTeacherAccount(userId);
+            System.out.println("LoginService:unbindReturnVal is :" + unbindReturnVal);
+            Boolean returnState = unbindReturnVal == 1 ? true : false;
             if (!returnState) {
                 throw new Exception("LoginService:解绑失败");
             }
@@ -187,7 +189,9 @@ public class LoginServiceImpl implements LoginService {
             if (user == null) {
                 throw new UserNotFoundException("LoginService:未找到对应用户");
             }
-            Boolean returnState = loginMapper.unbindStudentAccount(userId) != 1 ? true : false;
+            Integer unbindReturnVal = loginMapper.unbindStudentAccount(userId);
+            System.out.println("LoginService:unbindReturnVal is :" + unbindReturnVal);
+            Boolean returnState = unbindReturnVal == 1 ? true : false;
             if (!returnState) {
                 throw new Exception("LoginService:解绑失败");
             }
