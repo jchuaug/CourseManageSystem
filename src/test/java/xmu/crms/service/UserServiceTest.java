@@ -26,6 +26,7 @@ public class UserServiceTest {
     /**
      * 测试insertAttendanceById
      */
+    // todo fail test
     @Test
     public void insertAttendanceByIdTest() {
         BigInteger classId = BigInteger.valueOf(1);
