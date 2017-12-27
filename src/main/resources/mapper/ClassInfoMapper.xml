@@ -292,7 +292,7 @@
 		where class_id =
 		#{classId,jdbcType=BIGINT}
 	</delete>
-	<insert id="insertCourseSelectionById">
+	<insert id="insertCourseSelectionById" useGeneratedKeys="true" keyProperty="id">
 		insert into
 		course_selection (student_id, class_id)
 		values (#{userId,jdbcType=BIGINT},

@@ -1,5 +1,7 @@
 package xmu.crms.service.impl;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +88,7 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
 			throws UserNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectClassByClassId(classId) != null) {
+		if (classInfoMapper.selectClassByClassId(classId) == null) {
 			throw new ClassesNotFoundException();
 		}
 		if (classInfoMapper.selectUserByUserId(userId) == null) {

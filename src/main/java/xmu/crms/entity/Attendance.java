@@ -62,4 +62,10 @@ public class Attendance {
 		this.attendanceStatus = attendanceStatus;
 	}
 
+	@Override
+	public String toString() {
+		return "Attendance [id=" + id + ", student=" + student + ", classInfo=" + classInfo + ", seminar=" + seminar
+				+ ", attendanceStatus=" + attendanceStatus + "]";
+	}
+
 }

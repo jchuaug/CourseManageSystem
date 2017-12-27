@@ -29,19 +29,23 @@
 	</select>
 
 	<!-- 插入成功返回userid -->
-	<insert id="signUpWeChat" parameterType="xmu.crms.entity.User"
-		useGeneratedKeys="true" keyProperty="id">
+	<insert id="signUpWeChat" parameterType="xmu.crms.entity.User">
 		insert into user_info(phone,
 		password)
 		values (#{phone}, #{password})
+		<selectKey resultType="java.lang.Integer" keyProperty="user_info.id" order="AFTER">
+          select last_insert_id()
+        </selectKey>
 	</insert>
 
 	<!-- 插入成功返回userid -->
-	<insert id="signUpPhone" parameterType="xmu.crms.entity.User"
-		useGeneratedKeys="true" keyProperty="id">
+	<insert id="signUpPhone" parameterType="xmu.crms.entity.User">
 		insert into user_info(phone,
 		password)
 		values (#{phone}, #{password})
+		<selectKey resultType="java.lang.Integer" keyProperty="user_info.id" order="AFTER">
+          select last_insert_id()
+        </selectKey>
 	</insert>
 
 	<select id="getPasswordByPhone" parameterType="java.lang.String"

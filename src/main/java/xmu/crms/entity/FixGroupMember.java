@@ -25,5 +25,9 @@ public class FixGroupMember {
 	public void setStudent(User student) {
 		this.student = student;
 	}
+	@Override
+	public String toString() {
+		return "FixGroupMember [id=" + id + ", fixGroup=" + fixGroup + ", student=" + student + "]";
+	}
 
 }

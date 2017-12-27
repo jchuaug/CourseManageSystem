@@ -41,4 +41,10 @@ public class Event {
     public void setMethodName(String methodName) {
         this.methodName = methodName;
     }
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", beanName=" + beanName + ", methodName=" + methodName + ", parameter=" + parameter
+				+ "]";
+	}
 }
