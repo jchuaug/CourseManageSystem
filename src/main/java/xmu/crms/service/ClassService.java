@@ -172,7 +172,7 @@ public interface ClassService {
      * @throws SeminarNotFoundException 讨论课没有找到
      * @throws ClassesNotFoundException   无此Id的班级
      */
-    void endCallRollById(BigInteger seminarId,BigInteger classId)
+    void endCallRollById(BigInteger seminarId, BigInteger classId)
             throws SeminarNotFoundException, ClassesNotFoundException;
     
     

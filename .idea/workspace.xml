@@ -1,7 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a8d8ef91-f693-49aa-9aaa-7d6a77d61c19" name="Default" comment="" />
+    <list default="true" id="a8d8ef91-f693-49aa-9aaa-7d6a77d61c19" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/dao/TimerServiceDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/mapper/SchoolMapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/mapper/SeminarGroupMapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/mapper/TimerMapper.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SchoolServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SeminarGroupServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/TimerServiceImpl.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/utils/SpringContextsUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/mapper/SchoolMapper.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/mapper/SeminarGroupMapper.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/mapper/TimerMapper.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/xmu/crms/service/SeminarGroupServiceTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/xmu/crms/service/TimerServiceTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/InfoIllegalException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/UnauthorizedException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/UserAlreadyExistException.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/Attendance.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/CourseSelection.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/Event.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/FixGroup.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/FixGroupMember.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/SeminarGroup.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/SeminarGroupMember.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/SeminarGroupTopic.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/StudentScoreGroup.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/entity/Topic.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/mapper/ClassInfoMapper.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/mapper/LoginMapper.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/mapper/SeminarMapper.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/mapper/UserMapper.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/service/impl/ClassServiceImpl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/service/impl/CourseServiceImpl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/service/impl/LoginServiceImpl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/service/impl/SeminarServiceImpl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/service/impl/TopicServiceImpl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/service/impl/UserServiceImpl.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/utils/JWTFilter.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/utils/JWTToken.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/utils/JWTUtil.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/web/controller/RedirectController.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/target/classes/xmu/crms/web/controller/UserController.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/ClassesNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/ClassesNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/CourseNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/CourseNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/FixGroupNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/FixGroupNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/GroupNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/GroupNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/InvalidOperationException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/InvalidOperationException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/SeminarNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/SeminarNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/TopicNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/TopicNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/UserNotFoundException.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/exception/UserNotFoundException.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/ClassService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/ClassService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/CourseService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/CourseService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/FixGroupService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/FixGroupService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/GradeService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/GradeService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/LoginService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/LoginService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/SchoolService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/SchoolService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarGroupService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarGroupService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/TimerService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/TimerService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/TopicService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/TopicService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/UploadService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/UploadService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/UserService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/LoginServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/LoginServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/UserServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/xmu/crms/web/controller/UserController.java" afterPath="$PROJECT_DIR$/src/main/java/xmu/crms/web/controller/UserController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/xmu/crms/service/LoginServiceTest.java" afterPath="$PROJECT_DIR$/src/test/java/xmu/crms/service/LoginServiceTest.java" />
+    </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,63 +80,89 @@
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
     <option name="GROUP_SCHEMA" value="true" />
     <option name="GROUP_CONTENTS" value="false" />
     <option name="SORT_POSITIONED" value="false" />
     <option name="SHOW_TABLE_DETAILS" value="true" />
     <option name="SHOW_EMPTY_GROUPS" value="false" />
     <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <expand>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="cmstest@localhost" type="feb32156:DbDataSourceImpl" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="cmstest@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-      </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="cmstest@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="cmstest: schema" type="c314c289:MysqlImplModel$Schema" />
-      </path>
-    </expand>
+    <expand />
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="CourseService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/CourseService.java">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="SeminarGroupServiceTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/SeminarGroupServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="124" column="48" lean-forward="false" selection-start-line="124" selection-start-column="27" selection-end-line="124" selection-end-column="48" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CourseServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/CourseServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="537">
-              <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+            <state relative-caret-position="368">
+              <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3314#3325#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="application.properties" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <file leaf-file-name="SeminarGroupServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SeminarGroupServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="1282">
+              <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1235#1241#0" expanded="true" />
+                <element signature="e#2603#2610#0" expanded="true" />
+                <element signature="e#2763#2777#0" expanded="true" />
+                <element signature="e#3756#3770#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="UserController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/web/controller/UserController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="451">
+              <caret line="65" column="8" lean-forward="false" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TimerServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/TimerServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="310">
+              <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/LoginServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2709">
+              <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginServiceTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/LoginServiceTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="124">
+              <caret line="75" column="5" lean-forward="false" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -76,82 +170,65 @@
       <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/UserServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
+            <state relative-caret-position="126">
+              <caret line="6" column="26" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TopicServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/TopicServiceImpl.java">
+      <file leaf-file-name="Pattern.java" pinned="false" current-in-tab="false">
+        <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/util/regex/Pattern.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4036">
-              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/ClassService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5260">
-              <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClassServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/ClassServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4765">
-              <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CourseServiceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/CourseServiceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="121" column="31" lean-forward="false" selection-start-line="121" selection-start-column="31" selection-end-line="121" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="class_info" pinned="false" current-in-tab="false">
-        <entry file="das://table:/c3fcee09/854b3719-34e8-4f42-8ef5-a64828a9cc2c/cmstest.class_info">
-          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-            <state>
-              <filtering enabled="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CourseMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/CourseMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="74" column="66" lean-forward="false" selection-start-line="74" selection-start-column="66" selection-end-line="74" selection-end-column="66" />
+            <state relative-caret-position="304">
+              <caret line="1029" column="0" lean-forward="true" selection-start-line="1029" selection-start-column="0" selection-end-line="1029" selection-end-column="0" />
               <folding>
-                <marker date="1514376688250" expanded="true" signature="1869:2030" ph="select id, p... user_info" />
-                <marker date="1514376688250" expanded="true" signature="2113:2321" ph="select id,na... course" />
-                <marker date="1514376688250" expanded="true" signature="2458:2888" ph="insert into course" />
-                <marker date="1514376688250" expanded="true" signature="2980:3003" ph="SELECT last_... " />
-                <marker date="1514376688250" expanded="true" signature="3142:3357" ph="select id,na... course" />
-                <marker date="1514376688250" expanded="true" signature="3419:4120" ph="update course... " />
-                <marker date="1514376688250" expanded="true" signature="4216:4269" ph="delete from course... " />
-                <marker date="1514376688250" expanded="true" signature="4383:4603" ph="select id,na... course" />
+                <element signature="e#48487#48488#0" expanded="true" />
+                <element signature="e#48531#48532#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="SpringContextsUtil.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/utils/SpringContextsUtil.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TimerServiceDao.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/dao/TimerServiceDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Sql</find>
+      <find>return null</find>
+      <find>&quot;.*&quot;</find>
+      <find>compile</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>public static</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -169,6 +246,24 @@
         <option value="$PROJECT_DIR$/src/test/java/xmu/crms/service/CourseServiceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/CourseServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SchoolService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/mapper/SchoolMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mapper/SchoolMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SchoolServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/mapper/SeminarGroupMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarGroupService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/exception/UserNotFoundException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/mapper/TimerMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/ClassService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SeminarGroupServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/test/java/xmu/crms/service/TimerServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/web/controller/UserController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/utils/SpringContextsUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/TimerServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/UserServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/LoginServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/test/java/xmu/crms/service/LoginServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/xmu/crms/service/SeminarGroupServiceTest.java" />
       </list>
     </option>
   </component>
@@ -178,10 +273,12 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="742" />
-    <option name="width" value="1186" />
-    <option name="height" value="1038" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -198,6 +295,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -229,15 +327,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CourseManageSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CourseManageSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
               <item name="crms" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -246,9 +335,8 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
               <item name="crms" type="462c0819:PsiDirectoryNode" />
-              <item name="entity" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CourseManageSystem" type="b2602c69:ProjectViewProjectNode" />
@@ -256,7 +344,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
               <item name="crms" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -266,10 +353,18 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
               <item name="crms" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
               <item name="impl" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CourseManageSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CourseManageSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="crms" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CourseManageSystem" type="b2602c69:ProjectViewProjectNode" />
@@ -305,15 +400,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="CourseManageSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="CourseManageSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
               <item name="crms" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -322,7 +408,15 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="xmu" type="462c0819:PsiDirectoryNode" />
+              <item name="crms" type="462c0819:PsiDirectoryNode" />
+              <item name="mapper" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CourseManageSystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CourseManageSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="crms" type="462c0819:PsiDirectoryNode" />
               <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -330,9 +424,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -351,6 +444,15 @@
     <property name="RequestMappingsPanelWidth2" value="75" />
     <property name="RequestMappingsPanelOrder2" value="2" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/xmu/crms/utils" />
+      <recent name="$PROJECT_DIR$/src/main/java/xmu/crms/dao" />
+      <recent name="$PROJECT_DIR$/src/test/java/xmu/crms/service" />
+      <recent name="$PROJECT_DIR$/src/main/java/xmu/crms/service/" />
+      <recent name="$PROJECT_DIR$/src/main/java/xmu/crms/exception" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -363,25 +465,11 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.CourseServiceTest">
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
+  <component name="RunManager" selected="JUnit.xmu.crms.service in CourseManageSystem">
+    <configuration name="CourseManageApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="xmu.crms.CourseManageApplication" />
+      <module name="CourseManageSystem" />
       <envs />
     </configuration>
     <configuration name="CourseServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
@@ -409,6 +497,26 @@
       <envs />
       <patterns />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -429,18 +537,18 @@
       <envs />
       <patterns />
     </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-    </configuration>
-    <configuration name="CourseManageApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="xmu.crms.CourseManageApplication" />
-      <module name="CourseManageSystem" />
-      <envs />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -469,19 +577,40 @@
       <properties />
       <listeners />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
+    <configuration name="xmu.crms.service in CourseManageSystem" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="xmu.crms.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="CourseManageSystem" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="xmu.crms.service" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Spring Boot.CourseManageApplication" />
       <item index="1" class="java.lang.String" itemvalue="JUnit.CourseServiceTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.xmu.crms.service in CourseManageSystem" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.CourseServiceTest" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="JUnit.xmu.crms.service in CourseManageSystem" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.CourseServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -499,13 +628,11 @@
       <option name="presentableId" value="Default" />
       <updated>1514374153630</updated>
       <workItem from="1514374162442" duration="6110000" />
+      <workItem from="1514390564677" duration="1646000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CourseServiceTest - 2017.12.27 at 20h 27m 14s.xml">
-      <configuration name="CourseServiceTest" configurationId="JUnit" />
-    </history-entry>
     <history-entry file="CourseServiceTest - 2017.12.27 at 20h 41m 45s.xml">
       <configuration name="CourseServiceTest" configurationId="JUnit" />
     </history-entry>
@@ -533,44 +660,50 @@
     <history-entry file="CourseServiceTest - 2017.12.27 at 21h 05m 07s.xml">
       <configuration name="CourseServiceTest" configurationId="JUnit" />
     </history-entry>
+    <history-entry file="xmu_crms_service_in_CourseManageSystem - 2017.12.28 at 00h 30m 13s.xml">
+      <configuration name="xmu.crms.service in CourseManageSystem" configurationId="JUnit" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6110000" />
+    <option name="totallyTimeSpent" value="8462000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41438702" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0718358" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53090173" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15450644" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30430108" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15053764" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24952562" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0718358" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21094641" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.55644244" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19045064" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
-      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Thumbnails" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928064" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -584,12 +717,159 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SeminarServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TopicMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        <state relative-caret-position="327">
+          <caret line="168" column="34" lean-forward="false" selection-start-line="168" selection-start-column="34" selection-end-line="168" selection-end-column="34" />
+          <folding>
+            <marker date="1514337264000" expanded="true" signature="3254:3499" ph="SELECT id, s... seminar_group" />
+            <marker date="1514337264000" expanded="true" signature="3585:3786" ph="SELECT id, n... seminar" />
+            <marker date="1514337264000" expanded="true" signature="3869:4222" ph="SELECT id, n... course" />
+            <marker date="1514337264000" expanded="true" signature="4309:4642" ph="SELECT id, p... user_info" />
+            <marker date="1514337264000" expanded="true" signature="4727:4851" ph="SELECT id, n... school" />
+            <marker date="1514337264000" expanded="true" signature="4957:5154" ph="SELECT id, n... topic" />
+            <marker date="1514337264000" expanded="true" signature="5231:5483" ph="UPDATE topic... " />
+            <marker date="1514337264000" expanded="true" signature="5546:5766" ph="INSERT INTO topic... " />
+            <marker date="1514337264000" expanded="true" signature="5871:5894" ph="SELECT last_... " />
+            <marker date="1514337264000" expanded="true" signature="5969:6011" ph="DELETE FROM " />
+            <marker date="1514337264000" expanded="true" signature="6098:6303" ph="SELECT id, n... topic" />
+            <marker date="1514337264000" expanded="true" signature="6439:6647" ph="SELECT id, t... seminar_group_topic" />
+            <marker date="1514337264000" expanded="true" signature="6749:6926" ph="SELECT id, t... seminar_group_topic" />
+            <marker date="1514337264000" expanded="true" signature="7035:7204" ph="SELECT id, t... seminar_group_topic" />
+            <marker date="1514337264000" expanded="true" signature="7273:7343" ph="DELETE FROM " />
+            <marker date="1514337264000" expanded="true" signature="7409:7510" ph="DELETE FROM " />
+            <marker date="1514337264000" expanded="true" signature="7589:7656" ph="DELETE FROM " />
+            <marker date="1514337264000" expanded="true" signature="7722:7772" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="714">
+          <caret line="98" column="15" lean-forward="false" selection-start-line="98" selection-start-column="15" selection-end-line="98" selection-end-column="15" />
           <folding>
             <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/SeminarMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="203" column="13" lean-forward="false" selection-start-line="203" selection-start-column="13" selection-end-line="203" selection-end-column="13" />
+          <folding>
+            <marker date="1514377337000" expanded="true" signature="2630:2766" ph="SELECT id, n... school" />
+            <marker date="1514377337000" expanded="true" signature="2853:3067" ph="SELECT id, n... seminar" />
+            <marker date="1514377337000" expanded="true" signature="3154:3362" ph="SELECT id, n... seminar" />
+            <marker date="1514377337000" expanded="true" signature="3455:3663" ph="SELECT id, n... seminar" />
+            <marker date="1514377337000" expanded="true" signature="3729:3786" ph="DELETE FROM " />
+            <marker date="1514377337000" expanded="true" signature="3851:3908" ph="DELETE FROM " />
+            <marker date="1514377337000" expanded="true" signature="3980:4045" ph="DELETE FROM " />
+            <marker date="1514377337000" expanded="true" signature="4112:4417" ph="UPDATE semin... " />
+            <marker date="1514377337000" expanded="true" signature="4492:4665" ph="SELECT id, s... seminar_group_member" />
+            <marker date="1514377337000" expanded="true" signature="4727:4996" ph="SELECT id, s... seminar_group" />
+            <marker date="1514377337000" expanded="true" signature="5077:5454" ph="SELECT id, n... course" />
+            <marker date="1514377337000" expanded="true" signature="5534:5891" ph="SELECT id, p... user_info" />
+            <marker date="1514377337000" expanded="true" signature="5956:6137" ph="INSERT INTO seminar" />
+            <marker date="1514377337000" expanded="true" signature="6235:6258" ph="SELECT last_... " />
+            <marker date="1514377337000" expanded="true" signature="6339:6407" ph="DELETE FROM " />
+            <marker date="1514377337000" expanded="true" signature="6474:6518" ph="DELETE FROM " />
+            <marker date="1514377337000" expanded="true" signature="6583:6675" ph="SELECT teach... course" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/SeminarServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="693">
+          <caret line="122" column="24" lean-forward="false" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="337" column="0" lean-forward="false" selection-start-line="337" selection-start-column="0" selection-end-line="337" selection-end-column="0" />
+          <folding>
+            <marker date="1514377593000" expanded="true" signature="5486:5647" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="5757:5924" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="6031:6202" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="6302:6348" ph="update user_... " />
+            <marker date="1514377593000" expanded="true" signature="6455:6622" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="6735:7155" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="6897:6983" ph="select stude... course_selection" />
+            <marker date="1514377593000" expanded="true" signature="7209:7287" ph="update user_... " />
+            <marker date="1514377593000" expanded="true" signature="7387:7688" ph="insert into user_info... " />
+            <marker date="1514377593000" expanded="true" signature="7779:7802" ph="select last_... " />
+            <marker date="1514377593000" expanded="true" signature="7903:7945" ph="delete from " />
+            <marker date="1514377593000" expanded="true" signature="8064:8126" ph="select id, `... school" />
+            <marker date="1514377593000" expanded="true" signature="8243:8311" ph="select id, `... school" />
+            <marker date="1514377593000" expanded="true" signature="8389:8602" ph="select id, `... course" />
+            <marker date="1514377593000" expanded="true" signature="8721:8944" ph="select id, `... course" />
+            <marker date="1514377593000" expanded="true" signature="9065:9472" ph="select cours... course" />
+            <marker date="1514377593000" expanded="true" signature="9589:9792" ph="select id,na... class_info" />
+            <marker date="1514377593000" expanded="true" signature="9886:10008" ph="select id, l... location" />
+            <marker date="1514377593000" expanded="true" signature="10078:10215" ph="insert into attendance... " />
+            <marker date="1514377593000" expanded="true" signature="10316:10339" ph="select last_... " />
+            <marker date="1514377593000" expanded="true" signature="10439:10729" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="10604:10728" ph="select stude... attendance" />
+            <marker date="1514377593000" expanded="true" signature="10827:10949" ph="select id, s... attendance" />
+            <marker date="1514377593000" expanded="true" signature="11024:11314" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="11189:11313" ph="select stude... attendance" />
+            <marker date="1514377593000" expanded="true" signature="11386:11646" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="11552:11645" ph="select stude... attendance" />
+            <marker date="1514377593000" expanded="true" signature="11752:11919" ph="select id, p... user_info" />
+            <marker date="1514377593000" expanded="true" signature="12048:12150" ph="select `id`,... user_info" />
+            <marker date="1514377593000" expanded="true" signature="12231:12278" ph="SELECT * FRO... seminar" />
+            <marker date="1514377593000" expanded="true" signature="12399:12675" ph="select id, `... course" />
+            <marker date="1514377593000" expanded="true" signature="12619:12674" ph="select id fr... user_info" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/LoginMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1514377483000" expanded="true" signature="1431:1493" ph="select id, `... school" />
+            <marker date="1514377483000" expanded="true" signature="1596:1669" ph="insert into user_info... " />
+            <marker date="1514377483000" expanded="true" signature="1766:1789" ph="select last_... " />
+            <marker date="1514377483000" expanded="true" signature="1912:1985" ph="insert into user_info... " />
+            <marker date="1514377483000" expanded="true" signature="2082:2105" ph="select last_... " />
+            <marker date="1514377483000" expanded="true" signature="2240:2297" ph="select passw... user_info" />
+            <marker date="1514377483000" expanded="true" signature="2404:2452" ph="update user_... " />
+            <marker date="1514377483000" expanded="true" signature="2558:2606" ph="update user_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/ClassServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="111" column="24" lean-forward="false" selection-start-line="111" selection-start-column="24" selection-end-line="111" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/TopicServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="17" column="18" lean-forward="false" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SeminarServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="94" column="44" lean-forward="false" selection-start-line="94" selection-start-column="44" selection-end-line="94" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -598,7 +878,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -614,23 +893,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/854b3719-34e8-4f42-8ef5-a64828a9cc2c/console.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/854b3719-34e8-4f42-8ef5-a64828a9cc2c/console.sql" />
     <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/entity/Course.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-66">
           <caret line="5" column="13" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -638,16 +908,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="74" column="66" lean-forward="false" selection-start-line="74" selection-start-column="66" selection-end-line="74" selection-end-column="66" />
-          <folding>
-            <marker date="1514376688250" expanded="true" signature="1869:2030" ph="select id, p... user_info" />
-            <marker date="1514376688250" expanded="true" signature="2113:2321" ph="select id,na... course" />
-            <marker date="1514376688250" expanded="true" signature="2458:2888" ph="insert into course" />
-            <marker date="1514376688250" expanded="true" signature="2980:3003" ph="SELECT last_... " />
-            <marker date="1514376688250" expanded="true" signature="3142:3357" ph="select id,na... course" />
-            <marker date="1514376688250" expanded="true" signature="3419:4120" ph="update course... " />
-            <marker date="1514376688250" expanded="true" signature="4216:4269" ph="delete from course... " />
-            <marker date="1514376688250" expanded="true" signature="4383:4603" ph="select id,na... course" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -655,23 +916,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4765">
           <caret line="30" column="13" lean-forward="false" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/ClassService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5260">
-          <caret line="18" column="17" lean-forward="false" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/UserServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -679,7 +923,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4036">
           <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -691,18 +934,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/c3fcee09/854b3719-34e8-4f42-8ef5-a64828a9cc2c/cmstest.class_info">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="das://table:/c3fcee09/854b3719-34e8-4f42-8ef5-a64828a9cc2c/cmstest.class_info" />
     <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/CourseService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="354">
           <caret line="124" column="48" lean-forward="false" selection-start-line="124" selection-start-column="27" selection-end-line="124" selection-end-column="48" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -712,7 +948,6 @@
           <caret line="144" column="0" lean-forward="false" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3314#3325#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -722,6 +957,307 @@
         <state relative-caret-position="297">
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/GradeServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="36" column="13" lean-forward="false" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/mapper/SchoolMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/SchoolMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <marker date="1514389945000" expanded="true" signature="237:294" ph="SELECT * FRO... school" />
+            <marker date="1514389945000" expanded="true" signature="413:493" ph="INSERT INTO school... " />
+            <marker date="1514389945000" expanded="true" signature="568:603" ph="SELECT provi... school" />
+            <marker date="1514389945000" expanded="true" signature="674:742" ph="SELECT city school" />
+            <marker date="1514389945000" expanded="true" signature="824:877" ph="SELECT * FRO... school" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SchoolServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="24" column="17" lean-forward="false" selection-start-line="24" selection-start-column="17" selection-end-line="24" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#757#758#0" expanded="true" />
+            <element signature="e#807#808#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/mapper/SeminarGroupMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="22" column="20" lean-forward="false" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/SeminarGroupMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1514323902000" expanded="true" signature="672:723" ph="SELECT * FRO... school" />
+            <marker date="1514323902000" expanded="true" signature="2868:2919" ph="SELECT * FRO... course" />
+            <marker date="1514323902000" expanded="true" signature="3804:3859" ph="SELECT * FRO... class_info" />
+            <marker date="1514323902000" expanded="true" signature="5739:5844" ph="UPDATE semin... " />
+            <marker date="1514323902000" expanded="true" signature="5938:6013" ph="SELECT id FR... user_info" />
+            <marker date="1514323902000" expanded="true" signature="6332:6467" ph="SELECT stude... attendance" />
+            <marker date="1514323902000" expanded="true" signature="6676:6754" ph="DELETE FROM " />
+            <marker date="1514323902000" expanded="true" signature="6957:7038" ph="DELETE FROM " />
+            <marker date="1514323902000" expanded="true" signature="7206:7289" ph="DELETE FROM " />
+            <marker date="1514323902000" expanded="true" signature="7362:7497" ph="DELETE FROM " />
+            <marker date="1514323902000" expanded="true" signature="7742:7821" ph="SELECT * FRO... seminar_group" />
+            <marker date="1514323902000" expanded="true" signature="7927:8027" ph="SELECT * FRO... seminar_group_member" />
+            <marker date="1514323902000" expanded="true" signature="8816:8903" ph="SELECT leade... seminar_group" />
+            <marker date="1514323902000" expanded="true" signature="9400:9657" ph="INSERT INTO seminar_group... " />
+            <marker date="1514323902000" expanded="true" signature="9935:10080" ph="INSERT INTO seminar_group_member... " />
+            <marker date="1514323902000" expanded="true" signature="10344:10433" ph="SELECT * FRO... seminar_group" />
+            <marker date="1514323902000" expanded="true" signature="10533:10609" ph="SELECT id FR... seminar" />
+            <marker date="1514323902000" expanded="true" signature="10680:10779" ph="INSERT INTO seminar_group_member... " />
+            <marker date="1514323902000" expanded="true" signature="10899:10957" ph="SELECT * FRO... seminar_group" />
+            <marker date="1514323902000" expanded="true" signature="11029:11083" ph="SELECT * FRO... user_info" />
+            <marker date="1514323902000" expanded="true" signature="11206:11329" ph="SELECT * FRO... seminar_group_member" />
+            <marker date="1514323902000" expanded="true" signature="11480:11562" ph="SELECT * FRO... seminar_group_member" />
+            <marker date="1514323902000" expanded="true" signature="11659:11751" ph="SELECT semin... seminar_group_topic" />
+            <marker date="1514323902000" expanded="true" signature="11828:11880" ph="SELECT * FRO... seminar" />
+            <marker date="1514323902000" expanded="true" signature="11982:12032" ph="SELECT * FRO... topic" />
+            <marker date="1514323902000" expanded="true" signature="12170:12247" ph="SELECT * FRO... seminar_group_topic" />
+            <marker date="1514323902000" expanded="true" signature="12339:12443" ph="INSERT INTO seminar_group_topic... " />
+            <marker date="1514323902000" expanded="true" signature="12502:12605" ph="UPDATE semin... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/mapper/TimerMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/TimerMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1514323902000" expanded="true" signature="752:870" ph="INSERT INTO event... " />
+            <marker date="1514323902000" expanded="true" signature="924:968" ph="UPDATE event... " />
+            <marker date="1514323902000" expanded="true" signature="1046:1127" ph="SELECT id,be... event" />
+            <marker date="1514323902000" expanded="true" signature="1181:1213" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/SeminarNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/ClassesNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="63">
+          <caret line="3" column="13" lean-forward="false" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/FixGroupNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/CourseNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/UserNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/TopicNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/InvalidOperationException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/exception/GroupNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/SeminarGroupService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="256" column="15" lean-forward="false" selection-start-line="256" selection-start-column="15" selection-end-line="256" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/ClassService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="34" column="18" lean-forward="false" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/TimerServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/web/controller/UserController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="451">
+          <caret line="65" column="8" lean-forward="false" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/dao/TimerServiceDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/utils/SpringContextsUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/TimerServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/UserServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="6" column="26" lean-forward="false" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home/src.zip!/java/util/regex/Pattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="1029" column="0" lean-forward="true" selection-start-line="1029" selection-start-column="0" selection-end-line="1029" selection-end-column="0" />
+          <folding>
+            <element signature="e#48487#48488#0" expanded="true" />
+            <element signature="e#48531#48532#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/LoginServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2709">
+          <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/LoginServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="124">
+          <caret line="75" column="5" lean-forward="false" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/xmu/crms/service/impl/SeminarGroupServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1282">
+          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1235#1241#0" expanded="true" />
+            <element signature="e#2603#2610#0" expanded="true" />
+            <element signature="e#2763#2777#0" expanded="true" />
+            <element signature="e#3756#3770#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/xmu/crms/service/SeminarGroupServiceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="424" column="0" lean-forward="false" selection-start-line="424" selection-start-column="0" selection-end-line="424" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

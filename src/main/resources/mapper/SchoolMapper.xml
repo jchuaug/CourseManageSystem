@@ -1,0 +1,32 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.mapper.SchoolMapper">
+    <select id="listSchoolByCity" resultType="School">
+        SELECT *
+        FROM school
+        WHERE city = #{city}
+    </select>
+
+    <insert id="insertSchool" parameterType="School" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO school (name, province, city) VALUES (#{name}, #{province}, #{city})
+    </insert>
+
+    <select id="listProvince" resultType="String">
+        SELECT province
+        FROM school
+    </select>
+
+    <select id="listCity" resultType="String">
+        SELECT city
+        FROM school
+        WHERE province = #{province}
+    </select>
+
+    <select id="getSchoolBySchoolId" resultType="School">
+        SELECT *
+        FROM school
+        WHERE id = #{id}
+    </select>
+
+</mapper>

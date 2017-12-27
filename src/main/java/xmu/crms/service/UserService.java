@@ -33,7 +33,7 @@ public interface UserService {
 	 * @exception UserNotFoundException 未找到对应用户
 	 */
 	BigInteger insertAttendanceById(BigInteger classId, BigInteger seminarId,
-							  BigInteger userId, double longitude, double latitude) throws
+                                    BigInteger userId, double longitude, double latitude) throws
 			IllegalArgumentException,ClassesNotFoundException,SeminarNotFoundException,UserNotFoundException;
 
 	/**
@@ -113,8 +113,8 @@ public interface UserService {
 	 * @exception ClassesNotFoundException throws when 未找到对应班级
 	 * @exception UserNotFoundException throws when 无符合条件的学生
 	 */
-	List<User> listUserByClassId(BigInteger classId,String numBeginWith,
-								 String nameBeginWith) throws IllegalArgumentException,
+	List<User> listUserByClassId(BigInteger classId, String numBeginWith,
+                                 String nameBeginWith) throws IllegalArgumentException,
 			ClassesNotFoundException, UserNotFoundException;
 
 
@@ -159,7 +159,7 @@ public interface UserService {
 	 * @exception ClassesNotFoundException 未找到班级
 	 * @exception SeminarNotFoundException 未找到讨论课 
 	 */
-	List<User> listLateStudent(BigInteger seminarId,BigInteger classId) throws
+	List<User> listLateStudent(BigInteger seminarId, BigInteger classId) throws
 			IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException;
 
 
@@ -175,7 +175,7 @@ public interface UserService {
 	 * @exception ClassesNotFoundException 未找到班级
 	 * @exception SeminarNotFoundException 未找到讨论课
 	 */
-	List<User> listAbsenceStudent(BigInteger seminarId,BigInteger classId) throws
+	List<User> listAbsenceStudent(BigInteger seminarId, BigInteger classId) throws
 			IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException;
 
 	/**

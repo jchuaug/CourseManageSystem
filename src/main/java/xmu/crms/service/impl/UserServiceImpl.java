@@ -48,11 +48,11 @@ public class UserServiceImpl implements UserService {
 		Pattern pattern = Pattern.compile("[0-9]*");
 		try {
 			if (!(pattern.matcher(userId.toString()).matches())) {
-				throw new IllegalArgumentException("UserService:信息不合法，id格式错误");
+				throw new IllegalArgumentException();
 			}
 			user = userMapper.getUserByUserId(userId);
 			if (user == null) {
-				throw new UserNotFoundException("UserService:用户不存在");
+				throw new UserNotFoundException();
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listUsersByName(userName);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException("UserService:用户名不存在");
+				throw new UserNotFoundException();
 			}
 			Iterator<User> iterator = users.iterator();
 			while (iterator.hasNext()) {
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
 		try {
 
 			if (userMapper.getUserByUserId(userId) == null) {
-				throw new UserNotFoundException("UserService:用户不存在");
+				throw new UserNotFoundException();
 			}
 			userMapper.updateUserByUserId(userId, user);
 		} catch (UserNotFoundException e) {
@@ -149,11 +149,11 @@ public class UserServiceImpl implements UserService {
 		List<User> users = new ArrayList<User>();
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
-				throw new ClassesNotFoundException("UserService:班级不存在");
+				throw new ClassesNotFoundException();
 			}
 			users = userMapper.listUserByClassId(classId, numBeginWith, nameBeginWith);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException("UserService:查找失败");
+				throw new UserNotFoundException();
 			}
 		} catch (ClassesNotFoundException e) {
 			e.printStackTrace();
@@ -181,7 +181,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listUsersByName(userName);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException("UserService:用户不存在");
+				throw new UserNotFoundException();
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -217,7 +217,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listPresentStudent(seminarId, classId);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException("UserService:未查找到相关信息");
+				throw new UserNotFoundException();
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -252,7 +252,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listAbsenceStudentById(seminarId, classId);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException("UserService:未查找到相关信息");
+				throw new UserNotFoundException();
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -284,11 +284,11 @@ public class UserServiceImpl implements UserService {
 		List<Course> courses = new ArrayList<>();
 		try {
 			if (userMapper.listUsersByName(teacherName).isEmpty()) {
-				throw new UserNotFoundException("UserService:没有查找到老师信息");
+				throw new UserNotFoundException();
 			}
 			courses = userMapper.listCourseByTeacherName(teacherName);
 			if (courses.isEmpty()) {
-				throw new CourseNotFoundException("UserService:该老师没有开设课程");
+				throw new CourseNotFoundException();
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -325,7 +325,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listLateStudent(seminarId, classId);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException("UserService:未查找到相关信息");
+				throw new UserNotFoundException();
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -366,20 +366,20 @@ public class UserServiceImpl implements UserService {
 		BigInteger insertedRows = null;
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
-				throw new ClassesNotFoundException("UserService:班级不存在");
+				throw new ClassesNotFoundException();
 			}
 			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
-				throw new SeminarNotFoundException("UserService：讨论课不存在");
+				throw new SeminarNotFoundException();
 			}
 			Location location = userMapper.getLocationBySeminarIdAndClassId(seminarId, classId);
 			Integer status = -1;
 			if (!((location.getLatitude() - latitude) > 30 && location.getLongitude() - longitude > 30)) {
-				throw new InvalidOperationException("UserService：未到指定地点签到");
+				throw new InvalidOperationException();
 			}
 			status = 1;
 			insertedRows = userMapper.insertAttendanceById(classId, seminarId, userId, status);
 			if (insertedRows == null) {
-				throw new InvalidOperationException("UserService：插入考勤失败");
+				throw new InvalidOperationException();
 			}
 
 		} catch (ClassesNotFoundException e) {
@@ -399,7 +399,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			user = userMapper.getUserByNumber(userNumber);
 			if (user == null) {
-				throw new UserNotFoundException("UserService：用户不存在");
+				throw new UserNotFoundException();
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -413,14 +413,14 @@ public class UserServiceImpl implements UserService {
 		List<Attendance> attendances = new ArrayList<Attendance>();
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
-				throw new ClassesNotFoundException("UserService:班级不存在");
+				throw new ClassesNotFoundException();
 			}
 			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
-				throw new SeminarNotFoundException("UserService：讨论课不存在");
+				throw new SeminarNotFoundException();
 			}
 			attendances = userMapper.listAttendanceByClassIdAndSeminarId(classId, seminarId);
 			if (attendances.isEmpty()) {
-				throw new Exception("UserService:未查找到相关信息");
+				throw new Exception();
 			}
 		} catch (ClassesNotFoundException e) {
 			e.printStackTrace();

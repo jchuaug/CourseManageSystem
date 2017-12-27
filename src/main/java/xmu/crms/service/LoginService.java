@@ -22,7 +22,7 @@ public interface LoginService {
 	 * @return user 该用户信息
 	 * @exception UserNotFoundException 登录失败时抛出
 	 */
-	 User signInWeChat(BigInteger userId,String code,String state,String successUrl) throws UserNotFoundException;
+	 User signInWeChat(BigInteger userId, String code, String state, String successUrl) throws UserNotFoundException;
 
 	/**
 	 * 微信登录后用户绑定.

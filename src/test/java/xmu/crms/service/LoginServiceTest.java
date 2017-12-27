@@ -17,9 +17,8 @@ import xmu.crms.mapper.UserMapper;
 
 /**
  * LoginService测试
- * 
- * @author JackeyHuang
  *
+ * @author JackeyHuang
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = CourseManageApplication.class)
@@ -46,7 +45,7 @@ public class LoginServiceTest {
             try {
                 User resultUser = loginService.signInPhone(user);
                 if (resultUser == null) {
-                    throw new UserNotFoundException("登录失败");
+                    throw new UserNotFoundException();
                 }
                 System.out.println("登录成功，返回的用信息为：" + resultUser.toString());
 

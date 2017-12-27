@@ -139,7 +139,7 @@ public interface SeminarGroupService {
 	 * @param  userId 成员id
 	 */
 	void deleteSeminarGroupMemberById(BigInteger seminarGroupId,
-                                                 BigInteger userId);
+                                      BigInteger userId);
 
 
 	
