@@ -160,8 +160,7 @@
 		where id = #{id}
 	</update>
 	<!-- 插入成功返回userid -->
-	<insert id="insertUser" parameterType="xmu.crms.entity.User"
-		useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertUser" parameterType="xmu.crms.entity.User">
 		insert into user_info(phone,
 		wechat_id, openid, avatar, password,
 		school_id, name, gender, `type`,
@@ -170,6 +169,9 @@
 		#{openid}, #{avatar}, #{password},
 		#{school.id}, #{name}, #{gender},
 		#{type}, #{number}, #{education}, #{title}, #{email})
+		<selectKey resultType="java.lang.Integer" keyProperty="user_info.id" order="AFTER">
+		  select last_insert_id()
+		</selectKey>
 	</insert>
 
 	<delete id="deleteUserByUserId" parameterType="java.math.BigInteger">
@@ -244,12 +246,15 @@
 		seminar_id = #{seminarId}
 	</select>
 	<!--插入成功返回签到编号 -->
-	<insert id="insertAttendanceById" useGeneratedKeys="true"
-		keyProperty="id">
+	<insert id="insertAttendanceById">
 		insert into attendance(student_id, seminar_id, class_id,
 		attendance_status)
 		values (#{userId}, #{seminarId}, #{classId},
 		#{status})
+		
+		<selectKey resultType="java.lang.Integer" keyProperty="attendance.id" order="AFTER">
+          select last_insert_id()
+        </selectKey>
 	</insert>
 
 	<select id="listAbsenceStudentById" resultMap="UserResultMap">
