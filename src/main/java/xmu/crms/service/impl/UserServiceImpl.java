@@ -363,7 +363,7 @@ public class UserServiceImpl implements UserService {
 	public BigInteger insertAttendanceById(BigInteger classId, BigInteger seminarId, BigInteger userId,
 			double longitude, double latitude)
 			throws IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException, UserNotFoundException {
-		BigInteger returnId = null;
+		BigInteger insertedRows = null;
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
 				throw new ClassesNotFoundException("UserService:班级不存在");
@@ -377,8 +377,8 @@ public class UserServiceImpl implements UserService {
 				throw new InvalidOperationException("UserService：未到指定地点签到");
 			}
 			status = 1;
-			returnId = userMapper.insertAttendanceById(classId, seminarId, userId, status);
-			if (returnId == null) {
+			insertedRows = userMapper.insertAttendanceById(classId, seminarId, userId, status);
+			if (insertedRows == null) {
 				throw new InvalidOperationException("UserService：插入考勤失败");
 			}
 
@@ -390,7 +390,7 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 
-		return returnId;
+		return insertedRows;
 	}
 
 	@Override

@@ -411,6 +411,9 @@ CREATE TABLE `location` (
 -- Records of location
 -- ----------------------------
 
+INSERT INTO location (class_id, seminar_id, longitude, latitude, status)
+VALUES (1, 1, 100, 200, 1);
+
 -- ----------------------------
 -- Table structure for school
 -- ----------------------------

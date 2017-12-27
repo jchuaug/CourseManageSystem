@@ -1,222 +1,210 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xmu.crms.mapper.SeminarMapper">
-    <resultMap id="SeminarMap" type="Seminar">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="description" property="description"/>
-        <result column="is_fixed" property="fixed"/>
-        <result column="start_time" property="startTime"/>
-        <result column="end_time" property="endTime"/>
-        <association column="course_id" property="course" select="getCourseById"/>
-    </resultMap>
+	<resultMap id="BaseResultMap" type="Seminar">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="is_fixed" property="fixed" jdbcType="TINYINT" />
+		<result column="start_time" property="startTime" jdbcType="DATE" />
+		<result column="end_time" property="endTime" jdbcType="DATE" />
+		<association column="course_id" property="course"
+			select="selectCourseByCourseId" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,
+		name,
+		description,
+		course_id,
+		is_fixed,
+		start_time,
+		end_time
+	</sql>
+	<resultMap id="CourseResultMap" type="Course">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="description" property="description" />
+		<result column="report_percentage" property="reportPercentage" />
+		<result column="presentation_percentage" property="presentationPercentage" />
+		<result column="five_point_percentage" property="fivePointPercentage" />
+		<result column="four_point_percentage" property="fourPointPercentage" />
+		<result column="three_point_percentage" property="threePointPercentage" />
+		<association column="teacher_id" property="teacher"
+			select="selectUserByUserId" />
+	</resultMap>
 
-    <resultMap id="CourseResult" type="Course">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="startDate" column="start_date"/>
-        <result property="endDate" column="end_date"/>
-        <result property="description" column="description"/>
-        <result property="reportPercentage" column="report_percentage"/>
-        <result property="presentationPercentage" column="presentation_percentage"/>
-        <result property="fivePointPercentage" column="five_point_percentage"/>
-        <result property="fourPointPercentage" column="four_point_percentage"/>
-        <result property="threePointPercentage" column="three_point_percentage"/>
-        <association property="teacher" column="teacher_id" select="getUserById"/>
-    </resultMap>
+	<resultMap id="UserResultMap" type="User">
+		<id column="id" property="id" />
+		<result column="phone" property="phone" />
+		<result column="wechat_id" property="wechatId" />
+		<result column="openid" property="openid" />
+		<result column="avatar" property="avatar" />
+		<result column="password" property="password" />
+		<result column="name" property="name" />
+		<result column="gender" property="gender" />
+		<result column="type" property="type" />
+		<result column="number" property="number" />
+		<result column="education" property="education" />
+		<result column="title" property="title" />
+		<result column="email" property="email" />
+		<association column="school_id" property="school"
+			select="selectSchoolBySchoolId" />
+	</resultMap>
 
-    <resultMap id="TeacherResult" type="User">
-        <id property="id" column="id"/>
-        <result property="phone" column="phone"/>
-        <result property="wechatId" column="wechatId"/>
-        <result property="openid" column="openid"/>
-        <result property="avatar" column="avatar"/>
-        <result property="password" column="password"/>
-        <result property="name" column="name"/>
-        <result property="gender" column="gender"/>
-        <result property="type" column="type"/>
-        <result property="number" column="number"/>
-        <result property="education" column="education"/>
-        <result property="title" column="title"/>
-        <result property="email" column="email"/>
-        <association property="school" column="school_id" select="getSchoolById"/>
-    </resultMap>
+	<select id="selectCourseByCourseId" resultMap="CourseResultMap">
+		SELECT
+		id,
+		name,
+		start_date,
+		end_date,
+		teacher_id,
+		description,
+		report_percentage,
+		presentation_percentage,
+		five_point_percentage,
+		four_point_percentage,
+		three_point_percentage
+		FROM course
+		WHERE id = #{id}
+	</select>
 
-    <resultMap id="SchoolResult" type="School">
-        <id property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="province" column="province"/>
-        <result property="city" column="city"/>
-    </resultMap>
+	<select id="selectUserByUserId" resultMap="UserResultMap">
+		SELECT
+		id,
+		phone,
+		wechat_id,
+		openid,
+		avatar,
+		password,
+		name,
+		school_id,
+		gender,
+		type,
+		number,
+		education,
+		title,
+		email
+		FROM user_info
+		WHERE id = #{id}
+	</select>
 
-    <select id="getSchoolById" resultMap="SchoolResult">
-        SELECT
-            id,
-            name,
-            province,
-            city
-        FROM school
-        WHERE
-            id = #{id}
-    </select>
+	<select id="selectSchoolBySchoolId" resultType="School">
+		SELECT
+		id,
+		name,
+		province,
+		city
+		FROM school
+		WHERE id = #{id}
+	</select>
 
-    <select id="listSeminarByCourseId" resultMap="SeminarMap">
-        SELECT
-            id,
-            name,
-            description,
-            course_id,
-            is_fixed,
-            start_time,
-            end_time
-        FROM seminar
-        WHERE course_id = #{courseId}
-    </select>
 
-    <select id="getSeminarBySeminarId" resultMap="SeminarMap">
-        SELECT
-            id,
-            name,
-            description,
-            course_id,
-            is_fixed,
-            start_time,
-            end_time
-        FROM seminar
-        WHERE id = #{seminarId}
-    </select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.math.BigInteger">
+		select
+		<include refid="Base_Column_List" />
+		from seminar
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.math.BigInteger">
+		delete from
+		seminar
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
 
-    <select id="getSeminarDetailBySeminarId" resultMap="SeminarMap">
-        SELECT
-            id,
-            name,
-            description,
-            course_id,
-            is_fixed,
-            start_time,
-            end_time
-        FROM seminar
-        WHERE id = #{seminarId}
-    </select>
+	<insert id="insertSelective" parameterType="xmu.crms.entity.Seminar"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into seminar
+		<trim prefix="(" suffix=")" suffixOverrides=",">
 
-    <delete id="deleteSeminarByCourseId">
-        DELETE FROM seminar
-        WHERE course_id = #{courseId}
-    </delete>
+			<if test="name != null">
+				name,
+			</if>
 
-    <delete id="deleteTopicBySeminarId">
-        DELETE FROM topic
-        WHERE seminar_id = #{seminarId}
-    </delete>
+			<if test="description != null">
+				description,
+			</if>
+			<if test="course != null">
+				<if test="course.id != null">
+					course_id,
+				</if>
+			</if>
+			<if test="fixed != null">
+				is_fixed,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
 
-    <delete id="deleteSeminarGroupBySeminarId">
-        DELETE FROM seminar_group
-        WHERE seminar_id = #{seminarId}
-    </delete>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="course != null">
+				<if test="course != null">
+					#{course.id,jdbcType=BIGINT},
+				</if>
+			</if>
+			<if test="fixed != null">
+				#{fixed,jdbcType=TINYINT},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=DATE},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="xmu.crms.entity.Seminar">
+		update seminar
+		<set>
 
-    <update id="updateSeminarBySeminarId">
-        UPDATE
-            seminar
-        SET
-            name        = #{name},
-            description = #{description},
-            course_id   = #{course.id},
-            is_fixed    = #{fixed},
-            start_time  = #{startTime},
-            end_time    = #{endTime}
-        WHERE
-            id = #{id}
-    </update>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="course != null">
+				<if test="course != null">
+					course_id = #{course.id,jdbcType=BIGINT},
+				</if>
+			</if>
+			<if test="fixed != null">
+				is_fixed = #{fixed,jdbcType=TINYINT},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=DATE},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=DATE},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
 
-    <select id="getSeminarGroupMemberByStudentId">
-        SELECT
-            id,
-            seminar_group_id,
-            student_id
-        FROM
-            seminar_group_member
-        WHERE
-            student_id = #{studentId}
-    </select>
+	<select id="listSeminarByCourseId" resultMap="BaseResultMap"
+		parameterType="java.math.BigInteger">
+		select
+		<include refid="Base_Column_List" />
+		from seminar
+		where course_id = #{courseId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteSeminarByCourseId" parameterType="java.math.BigInteger">
+		delete from
+		seminar
+		where course_id = #{courseId,jdbcType=BIGINT}
+	</delete>
 
-    <select id="getSeminarGroupById">
-        SELECT
-            id,
-            seminar_id,
-            report_garde,
-            presentation_grade,
-            final_grade,
-            report,
-            class_id,
-            leader_id
-        FROM
-            seminar_group
-        WHERE
-            id = #{id}
-    </select>
 
-    <select id="getCourseById" resultMap="CourseResult">
-        SELECT
-            id,
-            name,
-            start_date,
-            end_date,
-            teacher_id,
-            description,
-            report_percentage,
-            presentation_percentage,
-            five_point_percentage,
-            four_point_percentage,
-            three_point_percentage
-        FROM
-            course
-        WHERE
-            id = #{id}
-    </select>
-
-    <select id="getUserById" resultMap="TeacherResult">
-        SELECT
-            id,
-            phone,
-            wechat_id,
-            openid,
-            avatar,
-            password,
-            name,
-            school_id,
-            gender,
-            type,
-            number,
-            education,
-            title,
-            email
-        FROM
-            user_info
-        WHERE
-            id = #{id}
-    </select>
-    <insert id="insertSeminarByCourseId">
-        INSERT INTO
-            seminar (name, description, course_id, is_fixed, start_time, end_time)
-        VALUES (#{name}, #{description}, #{course.id}, #{fixed}, #{startTime}, #{endTime})
-    </insert>
-
-    <delete id="deleteSeminarById">
-        DELETE FROM
-            seminar
-        WHERE
-            id = #{id}
-    </delete>
-
-    <select id="getTeacherIdByCourseId">
-        SELECT teacher_id
-        FROM
-            course
-        WHERE
-            id = #{courseId}
-    </select>
 </mapper>
