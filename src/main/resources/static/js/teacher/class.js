@@ -2,6 +2,10 @@ var courseId;
 var classId;
 getId();
 console.log(courseId+classId);
+
+
+var token = window.localStorage.getItem("jwt");
+
 function getId(){
 	var url=location.href;
 	var index1= url.indexOf("course/");
@@ -22,6 +26,9 @@ function getCourse(){
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -41,6 +48,9 @@ function load() {
 	 		type: "get",
 	 		contentType:"application/json;charset=utf-8",
 	 		dataType: "json",
+	 		headers : {
+				"Authorization" : token
+			},
 	 		success: function(data) {
 	 				document.getElementById("class_name").innerHTML=data.name;
 	 				document.getElementById("class_location").innerHTML=data.site;
@@ -69,6 +79,9 @@ function deleteClass(){
  		type: "delete",
  		contentType:"application/json;charset=utf-8",
  		dataType: "json",
+ 		headers : {
+			"Authorization" : token
+		},
  		success: function(data) {
  				alert("删除成功");
  				window.location.href = "/teacherToCourse/" + courseId ;

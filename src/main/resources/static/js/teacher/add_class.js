@@ -1,6 +1,8 @@
 var courseId = getCourseId();
 console.log(courseId);
 
+var token = window.localStorage.getItem("jwt");
+
 function getCourseId() {
 	var url = location.href;
 	var index = url.indexOf("add_class/");
@@ -24,6 +26,9 @@ function getCourse() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -55,6 +60,9 @@ function submit() {
 	$.ajax({
 		url: "/upload/classroster ",
 		type: "post",
+		headers : {
+			"Authorization" : token
+		},
 		data:{"url":"/roster/"+filename},
 		success: function(data) {
 			
@@ -90,6 +98,9 @@ function submit() {
 		url: "/course/" + courseId + "/class",
 		type: "post",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		contentType: "application/json;charset=utf-8",
 		data: JSON.stringify(data),
 		success: function(data) {

@@ -3,6 +3,10 @@ var seminarId;
 getId();
 console.log(groupId + seminarId);
 
+var token = window.localStorage.getItem("jwt");
+
+
+
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("seminar/");
@@ -20,6 +24,9 @@ function load() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			document.getElementById("group_name").innerHTML=data.name;
 			document.getElementById("leader").innerHTML=data.leader.name;
@@ -33,6 +40,9 @@ function load() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			document.getElementById("seminar_name").innerHTML=data.name;
 		}
@@ -49,6 +59,9 @@ function submit() {
 		dataType: "json",
 		type: "put",
 		data:{"grade":grade},
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			alert("打分成功");
 		}

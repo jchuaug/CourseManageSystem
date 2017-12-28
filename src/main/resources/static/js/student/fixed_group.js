@@ -3,6 +3,9 @@ var classId;
 var groupId;
 getId();
 
+var token = window.localStorage.getItem("jwt");
+
+
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
@@ -23,6 +26,10 @@ function getCourse() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -42,6 +49,10 @@ function load() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
+
 		success: function(data) {
 			groupId=data.id;
 			var studentTable = document.getElementById("group_table");
@@ -70,6 +81,10 @@ function getStudents() {
 			dataType: "json",
 			type: "get",
 			contentType: "application/json;charset=utf-8",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 
 				var studentTable = document.getElementById("student_list_table");
@@ -99,6 +114,10 @@ function addMember(student) {
 			type: "put",
 			data:{"groupId":groupId,"studentId":studentId},
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				console.log("返回数据:"+data.id);
 				
@@ -115,6 +134,10 @@ function deleteMember(student){
 			type: "delete",
 			data:{"groupId":groupId,"studentId":studentId},
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				alter("删除成功");
 				

@@ -1,6 +1,10 @@
 
 var courseId=getCourseId();
 
+var token = window.localStorage.getItem("jwt");
+
+
+
 function getCourseId(){
 	var url=location.href;
 var index= url.indexOf("teacherToCourse/");
@@ -19,6 +23,9 @@ function getCourse(){
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -38,6 +45,9 @@ function ajxRequest() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			for(var i = 0; i < data.length; i++) {
 				var newClass = document.createElement("a");
@@ -55,6 +65,9 @@ function ajxRequest() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			for(var i = 0; i < data.length; i++) {
 				var newSenimar = document.createElement("a");

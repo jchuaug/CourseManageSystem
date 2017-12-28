@@ -1,6 +1,10 @@
 var courseId;
 getId();
 
+
+var token = window.localStorage.getItem("jwt");
+
+
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
@@ -20,6 +24,9 @@ function getCourse() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -39,6 +46,9 @@ function load() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			var gradeList=document.getElementById("grade_list");
 			for(var i = 0; i < data.length; i++) {
@@ -79,6 +89,9 @@ function getStudents() {
 		dataType: "json",
 		type: "get",
 		contentType: "application/json;charset=utf-8",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 
 			var studentTable = document.getElementById("student_list_table");
