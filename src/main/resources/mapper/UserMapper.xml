@@ -161,18 +161,20 @@
 		where id = #{id}
 	</update>
 	<!-- 插入成功返回userid -->
-	<insert id="insertUser" parameterType="xmu.crms.entity.User">
+	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
 		insert into user_info(phone,
 		wechat_id, openid, avatar, password,
 		school_id, name, gender, `type`,
 		`number`, education, title, email)
 		values (#{phone}, #{wechatId},
-		#{openid}, #{avatar}, #{password},
-		#{school.id}, #{name}, #{gender},
-		#{type}, #{number}, #{education}, #{title}, #{email})
-		<selectKey resultType="java.lang.Integer" keyProperty="user_info.id" order="AFTER">
-		  select last_insert_id()
-		</selectKey>
+		#{openid},
+		#{avatar}, #{password},
+		#{school.id}, #{name},
+		#{gender},
+		#{type}, #{number}, #{education},
+		#{title}, #{email})
+		<selectKey resultType="java.math.BigInteger" keyProperty="id" 
+			order="AFTER"> select last_insert_id() </selectKey> 
 	</insert>
 
 	<delete id="deleteUserByUserId" parameterType="java.math.BigInteger">
@@ -252,10 +254,11 @@
 		attendance_status)
 		values (#{userId}, #{seminarId}, #{classId},
 		#{status})
-		
-		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
-          select last_insert_id()
-        </selectKey>
+
+		<selectKey resultType="java.lang.Integer" keyProperty="id"
+			order="AFTER">
+			select last_insert_id()
+		</selectKey>
 	</insert>
 
 	<select id="listAbsenceStudentById" resultMap="UserResultMap">

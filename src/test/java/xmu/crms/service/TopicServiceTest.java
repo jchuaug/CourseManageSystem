@@ -42,170 +42,164 @@ public class TopicServiceTest {
         }
     }
 
+	@Test
+	public void getNotExistedTopic() {
+		BigInteger topicId = BigInteger.valueOf(1111);
+		Topic topic = null;
+		Exception caughtException = null;
 
-    @Test
-    public void getNotExistedTopic() {
-        BigInteger topicId = BigInteger.valueOf(1111);
-        Topic topic = null;
-        Exception caughtException = null;
+		try {
+			topic = topicService.getTopicByTopicId(topicId);
+			fail("didn't throw");
+		} catch (Exception e) {
+			caughtException = e;
+		}
 
-        try {
-            topic = topicService.getTopicByTopicId(topicId);
-            fail("didn't throw");
-        } catch (Exception e) {
-            caughtException = e;
-        }
+		Assert.assertTrue(caughtException instanceof TopicNotFoundException);
+	}
 
-        Assert.assertTrue(caughtException instanceof TopicNotFoundException);
-    }
+	// updateTopic
 
+	@Test
+	public void updateTopic() {
+		BigInteger topicId = BigInteger.valueOf(1);
+		Topic topic = new Topic();
+		Topic newTopic = null;
 
-    // updateTopic
+		String testDescription = new Date().toString();
+		topic.setDescription(testDescription);
 
-    @Test
-    public void updateTopic() {
-        BigInteger topicId = BigInteger.valueOf(1);
-        Topic topic = new Topic();
-        Topic newTopic = null;
+		try {
+			topicService.updateTopicByTopicId(topicId, topic);
+			newTopic = topicService.getTopicByTopicId(topicId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        String testDescription = new Date().toString();
-        topic.setDescription(testDescription);
+		Assert.assertNotNull(newTopic);
+		Assert.assertEquals(testDescription, newTopic.getDescription());
+	}
 
-        try {
-            topicService.updateTopicByTopicId(topicId, topic);
-            newTopic = topicService.getTopicByTopicId(topicId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	// insertTopicWithSeminarId
 
-        Assert.assertNotNull(newTopic);
-        Assert.assertEquals(testDescription, newTopic.getDescription());
-    }
+	@Test
+	public void insertTopicWithSeminarId() {
+		BigInteger seminarId = BigInteger.valueOf(1);
+		Topic topic = topicMapper.getTopicById(BigInteger.valueOf(1));
+		String testName = "test String";
 
+		topic.setName(testName);
+		topic.setId(null);
 
-    //insertTopicWithSeminarId
+		BigInteger insertedRow = topicService.insertTopicBySeminarId(seminarId, topic);
+		System.out.println(insertedRow);
+		Topic insertedTopic = topicMapper.getTopicById(topic.getId());
 
-    @Test
-    public void insertTopicWithSeminarId() {
-        BigInteger seminarId = BigInteger.valueOf(1);
-        Topic topic = topicMapper.getTopicById(BigInteger.valueOf(1));
-        String testName = "test String";
+		Assert.assertEquals(BigInteger.valueOf(1), insertedRow);
+		Assert.assertNotNull(insertedTopic);
+		Assert.assertNotNull(topic.getId());
+		Assert.assertEquals(testName, insertedTopic.getName());
+		Assert.assertEquals(seminarId, insertedTopic.getSeminar().getId());
+	}
 
-        topic.setName(testName);
-        topic.setId(null);
+	// listTopicBySeminarId
 
-        BigInteger insertedRow = topicService.insertTopicBySeminarId(seminarId, topic);
-        Topic insertedTopic = topicMapper.getTopicById(topic.getId());
+	@Test
+	public void listTopicBySeminarId() {
+		BigInteger seminarId = BigInteger.valueOf(2);
+		List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
 
-        Assert.assertEquals(BigInteger.valueOf(1), insertedRow);
-        Assert.assertNotNull(insertedTopic);
-        Assert.assertNotNull(topic.getId());
-        Assert.assertEquals(testName, insertedTopic.getName());
-        Assert.assertEquals(seminarId, insertedTopic.getSeminar().getId());
-    }
+		Assert.assertNotNull(topics);
+	}
 
-    //listTopicBySeminarId
+	// deleteTopicByTopicId
+	@Test
+	public void deleteTopicByTopicId() {
+		BigInteger topicId = BigInteger.valueOf(1);
+		Topic topic = null;
+		try {
+			topicService.deleteTopicByTopicId(topicId);
+			topic = topicService.getTopicByTopicId(topicId);
+		} catch (TopicNotFoundException e) {
+			e.printStackTrace();
+		}
 
-    @Test
-    public void listTopicBySeminarId() {
-        BigInteger seminarId = BigInteger.valueOf(2);
-        List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
+		Assert.assertEquals(null, topic);
+	}
 
-        Assert.assertNotNull(topics);
-    }
+	// deleteSeminarGroupTopicById
+	@Test
+	public void deleteSeminarGroupTopicById() {
+		BigInteger topicId = BigInteger.valueOf(1);
+		BigInteger groupId = BigInteger.valueOf(1);
 
+		SeminarGroupTopic info = topicMapper.getTopicInfoOfGroup(topicId, groupId);
+		Assert.assertNotNull(info);
 
-    // deleteTopicByTopicId
-    @Test
-    public void deleteTopicByTopicId() {
-        BigInteger topicId = BigInteger.valueOf(1);
-        Topic topic = null;
-        try {
-            topicService.deleteTopicByTopicId(topicId);
-            topic = topicService.getTopicByTopicId(topicId);
-        } catch (TopicNotFoundException e) {
-            e.printStackTrace();
-        }
+		topicService.deleteSeminarGroupTopicById(topicId, groupId);
+		info = topicMapper.getTopicInfoOfGroup(topicId, groupId);
 
-        Assert.assertEquals(null, topic);
-    }
+		Assert.assertEquals(null, info);
+	}
 
+	// deleteSeminarGroupTopicByTopicId
+	@Test
+	public void deleteSeminarGroupTopicByTopicId() {
+		BigInteger topicId = BigInteger.valueOf(1);
 
-    //deleteSeminarGroupTopicById
-    @Test
-    public void deleteSeminarGroupTopicById() {
-        BigInteger topicId = BigInteger.valueOf(1);
-        BigInteger groupId = BigInteger.valueOf(1);
+		topicService.deleteSeminarGroupTopicByTopicId(topicId);
 
+		// due to flaw of design, test again
+		int deletedNum = topicMapper.deleteAllSeminarGroupTopicsByTopicId(topicId);
+		Assert.assertEquals(0, deletedNum);
+	}
 
-        SeminarGroupTopic info = topicMapper.getTopicInfoOfGroup(topicId, groupId);
-        Assert.assertNotNull(info);
+	// getSeminarGroupTopicById
+	@Test
+	public void getSeminarGroupTopicById() {
+		BigInteger topicId = BigInteger.valueOf(1);
+		BigInteger groupId = BigInteger.valueOf(1);
 
-        topicService.deleteSeminarGroupTopicById(topicId, groupId);
-        info = topicMapper.getTopicInfoOfGroup(topicId, groupId);
+		SeminarGroupTopic info = topicService.getSeminarGroupTopicById(topicId, groupId);
+		Assert.assertEquals(4, info.getPresentationGrade().intValue());
+		Assert.assertEquals(1, info.getTopic().getId().intValue());
+		Assert.assertEquals(1, info.getSeminarGroup().getId().intValue());
+	}
 
-        Assert.assertEquals(null, info);
-    }
+	// listSeminarGroupTopicByGroupId
+	@Test
+	public void listSeminarGroupTopicByGroupId() {
+		BigInteger groupId = BigInteger.valueOf(1);
 
+		List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(groupId);
 
-    // deleteSeminarGroupTopicByTopicId
-    @Test
-    public void deleteSeminarGroupTopicByTopicId() {
-        BigInteger topicId = BigInteger.valueOf(1);
+		Assert.assertNotNull(topics);
+		Assert.assertTrue(topics.size() > 0);
+	}
 
-        topicService.deleteSeminarGroupTopicByTopicId(topicId);
-
-        // due to flaw of design, test again
-        int deletedNum = topicMapper.deleteAllSeminarGroupTopicsByTopicId(topicId);
-        Assert.assertEquals(0, deletedNum);
-    }
-
-    // getSeminarGroupTopicById
-    @Test
-    public void getSeminarGroupTopicById() {
-        BigInteger topicId = BigInteger.valueOf(1);
-        BigInteger groupId = BigInteger.valueOf(1);
-
-        SeminarGroupTopic info = topicService.getSeminarGroupTopicById(topicId, groupId);
-        Assert.assertEquals(4, info.getPresentationGrade().intValue());
-        Assert.assertEquals(1, info.getTopic().getId().intValue());
-        Assert.assertEquals(1, info.getSeminarGroup().getId().intValue());
-    }
-
-    // listSeminarGroupTopicByGroupId
-    @Test
-    public void listSeminarGroupTopicByGroupId() {
-        BigInteger groupId = BigInteger.valueOf(1);
-
-        List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(groupId);
-
-        Assert.assertNotNull(topics);
-        Assert.assertTrue(topics.size() > 0);
-    }
-
-    // deleteTopicBySeminarId
-//    @Test
-//    @DirtiesContext
-    public void deleteTopicBySeminarId() {
-//        BigInteger seminarId = BigInteger.valueOf(1);
-//        GradeService gradeService = mock(GradeService.class);
-//
-//        //given
-//        given(gradeService.deleteStudentScoreGroupByTopicId(any(BigInteger.class)));
-//
-//
-//        //when
-//        List<Topic> topics = topicMapper.getTopicsBySeminarId(seminarId);
-//        Assert.assertTrue(topics.size() > 0);
-//
-//
-//        service.deleteTopicBySeminarId(seminarId);
-//
-//
-//        //then
-//        then(gradeService).should(calls(any())).deleteStudentScoreGroupByTopicId(any());
-//        topics = topicMapper.getTopicsBySeminarId(seminarId);
-//        Assert.assertEquals(0, topics.size());
-    }
+	// deleteTopicBySeminarId
+	// @Test
+	// @DirtiesContext
+	public void deleteTopicBySeminarId() {
+		// BigInteger seminarId = BigInteger.valueOf(1);
+		// GradeService gradeService = mock(GradeService.class);
+		//
+		// //given
+		// given(gradeService.deleteStudentScoreGroupByTopicId(any(BigInteger.class)));
+		//
+		//
+		// //when
+		// List<Topic> topics = topicMapper.getTopicsBySeminarId(seminarId);
+		// Assert.assertTrue(topics.size() > 0);
+		//
+		//
+		// service.deleteTopicBySeminarId(seminarId);
+		//
+		//
+		// //then
+		// then(gradeService).should(calls(any())).deleteStudentScoreGroupByTopicId(any());
+		// topics = topicMapper.getTopicsBySeminarId(seminarId);
+		// Assert.assertEquals(0, topics.size());
+	}
 
 }

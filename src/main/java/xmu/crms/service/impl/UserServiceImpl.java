@@ -372,12 +372,13 @@ public class UserServiceImpl implements UserService {
                 throw new SeminarNotFoundException("UserService:No available seminar was found");
             }
             Location location = userMapper.getLocationBySeminarIdAndClassId(seminarId, classId);
+            System.out.println(location);
             Integer status = -1;
-            if (!((location.getLatitude() - latitude) > 30 && location.getLongitude() - longitude > 30)) {
-                throw new InvalidOperationException("UserService:illegal input type");
+            if (Math.abs(location.getLatitude() - latitude) > 30 || Math.abs(location.getLongitude()-longitude) > 30) {
+                throw new InvalidOperationException("UserService:illegal location");
             }
             status = 1;
-            insertedRows = BigInteger.valueOf(userMapper.insertAttendanceById(classId, seminarId, userId, status));
+			insertedRows = BigInteger.valueOf(userMapper.insertAttendanceById(classId, seminarId, userId, status));
             if (insertedRows == null) {
                 throw new InvalidOperationException();
             }
@@ -389,7 +390,7 @@ public class UserServiceImpl implements UserService {
         } catch (InvalidOperationException e) {
             e.printStackTrace();
         }
-        System.out.println("");
+        System.out.println("insertRow="+insertedRows);
         return insertedRows;
     }
 
