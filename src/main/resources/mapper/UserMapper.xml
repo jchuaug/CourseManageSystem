@@ -71,7 +71,7 @@
 		<result column="four_point_percentage" property="fourPointPercentage" />
 		<result column="three_point_percentage" property="threePointPercentage" />
 		<association column="course_id" property="course"
-			select="selectCourseByCourseId" />
+			select="getCourseByCourseId" />
 	</resultMap>
 
 	<resultMap type="xmu.crms.entity.Seminar" id="SeminarResultMap">
@@ -82,7 +82,7 @@
 		<result column="start_time" property="startTime" />
 		<result column="end_time" property="endTime" />
 		<association column="course_id" property="course"
-			select="selectCourseByCourseId"></association>
+			select="getCourseByCourseId"></association>
 	</resultMap>
 
 
@@ -253,7 +253,7 @@
 		values (#{userId}, #{seminarId}, #{classId},
 		#{status})
 		
-		<selectKey resultType="java.lang.Integer" keyProperty="attendance.id" order="AFTER">
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
           select last_insert_id()
         </selectKey>
 	</insert>
