@@ -3,7 +3,6 @@ var seminarId;
 getId();
 console.log(courseId + "  " + seminarId);
 
-var token = window.localStorage.getItem("jwt");
 
 function getId() {
 	var url = location.href;
@@ -14,6 +13,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if ((storage.getItem("name") != null)
 			&& (storage.getItem("desciption") != null)) {
@@ -44,6 +44,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$
 			.ajax({

@@ -3,7 +3,6 @@ var classId;
 var groupId;
 getId();
 
-var token = window.localStorage.getItem("jwt");
 
 
 function getId() {
@@ -15,6 +14,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -42,6 +42,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/class/" + classId + "/classgroup",
@@ -73,6 +74,7 @@ function load() {
 }
 
 function getStudents() {
+	var token = window.localStorage.getItem("jwt");
 
 	var name = $("#student_name").val();
 	var no = $("#student_number").val();
@@ -106,7 +108,7 @@ function getStudents() {
 }
 
 function addMember(student) {
-	
+	var token = window.localStorage.getItem("jwt");
 	var studentId=student.parentNode.parentNode.firstChild.innerHTML;
 	console.log(studentId);
 	$.ajax({
@@ -127,6 +129,7 @@ function addMember(student) {
 }
 
 function deleteMember(student){
+	var token = window.localStorage.getItem("jwt");
 	var studentId=student.parentNode.parentNode.firstChild.innerHTML;
 	console.log(studentId);
 	$.ajax({

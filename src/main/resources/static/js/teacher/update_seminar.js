@@ -15,6 +15,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -41,6 +42,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/seminar/" + seminarId,
@@ -68,6 +70,7 @@ function load() {
 }
 
 function submit() {
+	var token = window.localStorage.getItem("jwt");
 	var groupingMethod=$("#groupingMethod option:selected").val();
 	if (groupingMethod=="固定分组") {
 		groupingMethod="fixed";

@@ -1,6 +1,5 @@
 var courseId = getCourseId();
 console.log(courseId);
-var token = window.localStorage.getItem("jwt");
 
 function getCourseId() {
 	var url = location.href;
@@ -12,6 +11,7 @@ function load() {
 	getCourse();
 }
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if ((storage.getItem("name") != null)
 			&& (storage.getItem("desciption") != null)) {
@@ -42,6 +42,7 @@ function getCourse() {
 }
 
 function addClassTime() {
+
 	var classTimeList = document.getElementById("class_time_list");
 	var classTime = document.getElementById("class_time");
 	var cloneClassTime = classTime.cloneNode(true);
@@ -56,7 +57,7 @@ function resetForm() {
 }
 
 function submit() {
-
+	var token = window.localStorage.getItem("jwt");
 	var name = $(" #seminar_name ").val();
 	var description = $(" #seminar_description ").val();
 	var groupingMethod = $("#groupingMethod option:selected").val();

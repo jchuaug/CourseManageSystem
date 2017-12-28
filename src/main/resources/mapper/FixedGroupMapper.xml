@@ -80,11 +80,7 @@
 					class_id=#{classInfo.id},
 				</if>
 			</if>
-			<if test="leader != null">
-				<if test="leader.id != null">
 					leader_id=#{leader.id},
-				</if>
-			</if>
 		</set>
 		where id=#{id}
 	</update>

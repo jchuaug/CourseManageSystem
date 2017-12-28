@@ -1,8 +1,6 @@
 var courseId = getCourseId();
 console.log(courseId);
 
-var token = window.localStorage.getItem("jwt");
-
 function getCourseId() {
 	var url = location.href;
 	var index = url.indexOf("add_class/");
@@ -16,27 +14,32 @@ function load() {
 
 function getCourse() {
 	var storage = window.localStorage;
-	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
-		document.getElementById("course_name").innerHTML = storage.getItem("name");
-		document.getElementById("course_description").innerHTML = storage.getItem("description")           
+	var token = window.localStorage.getItem("jwt");
+	if ((storage.getItem("name") != null)
+			&& (storage.getItem("desciption") != null)) {
+		document.getElementById("course_name").innerHTML = storage
+				.getItem("name");
+		document.getElementById("course_description").innerHTML = storage
+				.getItem("description")
 	} else {
-		$.ajax({
-			url: "/course/" + courseId,
-			dataType: "json",
-			type: "get",
-			contentType: "application/json;charset=utf-8",
-			dataType: "json",
-			headers : {
-				"Authorization" : token
-			},
-			success: function(data) {
-				document.getElementById("course_name").innerHTML = data.name;
-				document.getElementById("course_description").innerHTML = data.description;
-				storage.setItem("name", data.name);  
-				storage.setItem("description", data.description); 
-			}
+		$
+				.ajax({
+					url : "/course/" + courseId,
+					dataType : "json",
+					type : "get",
+					contentType : "application/json;charset=utf-8",
+					dataType : "json",
+					headers : {
+						"Authorization" : token
+					},
+					success : function(data) {
+						document.getElementById("course_name").innerHTML = data.name;
+						document.getElementById("course_description").innerHTML = data.description;
+						storage.setItem("name", data.name);
+						storage.setItem("description", data.description);
+					}
 
-		});
+				});
 	}
 }
 
@@ -45,27 +48,30 @@ function addClassTime() {
 	var classTime = document.getElementById("class_time");
 	var cloneClassTime = classTime.cloneNode(true);
 	var addBotton = document.getElementById("add_button");
-	var nodebr = document.createElement('br'); //创建一个li节点
+	var nodebr = document.createElement('br'); // 创建一个li节点
 	document.getElementById("class_time_list").appendChild(nodebr);
 	document.getElementById("class_time_list").appendChild(cloneClassTime);
 }
 
 function submit() {
+	var token = window.localStorage.getItem("jwt");
 	var file = document.getElementById("file_upload");
-	var filename="";
-	if(file.files[0] == undefined){
-            }else{   
-               filename=file.files[0].name;  
-            }  
+	var filename = "";
+	if (file.files[0] == undefined) {
+	} else {
+		filename = file.files[0].name;
+	}
 	$.ajax({
-		url: "/upload/classroster ",
-		type: "post",
+		url : "/upload/classroster ",
+		type : "post",
 		headers : {
 			"Authorization" : token
 		},
-		data:{"url":"/roster/"+filename},
-		success: function(data) {
-			
+		data : {
+			"url" : "/roster/" + filename
+		},
+		success : function(data) {
+
 		}
 
 	});
@@ -81,29 +87,29 @@ function submit() {
 	var presentation = $(" #presentation").val();
 
 	var data = {
-		"name": name,
-		"site": site,
-		"time": week + day + time,
-		"roster":"/roster/"+filename,
-		"proportions": {
-			"c": three,
-			"b": four,
-			"a": five,
-			"report": report,
-			"presentation": presentation
+		"name" : name,
+		"site" : site,
+		"time" : week + day + time,
+		"roster" : "/roster/" + filename,
+		"proportions" : {
+			"c" : three,
+			"b" : four,
+			"a" : five,
+			"report" : report,
+			"presentation" : presentation
 		}
 
 	};
 	$.ajax({
-		url: "/course/" + courseId + "/class",
-		type: "post",
-		dataType: "json",
+		url : "/course/" + courseId + "/class",
+		type : "post",
+		dataType : "json",
 		headers : {
 			"Authorization" : token
 		},
-		contentType: "application/json;charset=utf-8",
-		data: JSON.stringify(data),
-		success: function(data) {
+		contentType : "application/json;charset=utf-8",
+		data : JSON.stringify(data),
+		success : function(data) {
 			alert("添加成功");
 		}
 	});

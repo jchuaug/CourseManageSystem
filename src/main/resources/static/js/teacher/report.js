@@ -3,7 +3,6 @@ var seminarId;
 getId();
 console.log(groupId + seminarId);
 
-var token = window.localStorage.getItem("jwt");
 
 
 
@@ -18,6 +17,7 @@ function getId() {
 
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	$.ajax({
 		url: "/group/" + groupId,
 		dataType: "json",
@@ -53,6 +53,7 @@ function load() {
 }
 
 function submit() {
+	var token = window.localStorage.getItem("jwt");
 	var grade=document.getElementById("grade_value").value;
 	$.ajax({
 		url: "/group/" + groupId+"/grade",

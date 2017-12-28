@@ -1,7 +1,6 @@
 
 var courseId=getCourseId();
 
-var token = window.localStorage.getItem("jwt");
 
 
 
@@ -13,6 +12,7 @@ return url.substring(index+16);
 
 function getCourse(){
 	var storage = window.localStorage;
+	var token = window.localStorage.getItem("jwt");
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
 		document.getElementById("course_description").innerHTML = storage.getItem("description")           
@@ -38,6 +38,7 @@ function getCourse(){
 }
 
 function ajxRequest() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/course/"+courseId+"/class",

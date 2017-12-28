@@ -2,9 +2,6 @@ var courseId;
 getId();
 
 
-var token = window.localStorage.getItem("jwt");
-
-
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
@@ -13,6 +10,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -39,6 +37,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/course/" + courseId + "/grade",
@@ -81,7 +80,7 @@ function load() {
 }
 
 function getStudents() {
-
+	var token = window.localStorage.getItem("jwt");
 	var name = $("#student_name").val();
 	var no = $("#student_number").val();
 	$.ajax({

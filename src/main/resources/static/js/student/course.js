@@ -1,5 +1,4 @@
 var courseId = getCourseId();
-var token = window.localStorage.getItem("jwt");
 function getCourseId() {
 	var url = location.href;
 	var index = url.indexOf("studentToCourse/");
@@ -7,6 +6,7 @@ function getCourseId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	
 
@@ -39,6 +39,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url : "/course/" + courseId + "/seminar",

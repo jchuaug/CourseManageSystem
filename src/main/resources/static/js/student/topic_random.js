@@ -2,7 +2,6 @@ var courseId;
 var topicId;
 getId();
 
-var token = window.localStorage.getItem("jwt");
 
 function getId() {
 	var url = location.href;
@@ -13,6 +12,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if ((storage.getItem("name") != null)
 			&& (storage.getItem("desciption") != null)) {
@@ -43,6 +43,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$
 			.ajax({
@@ -67,6 +68,7 @@ function load() {
 }
 
 function chooseTopic() {
+	var token = window.localStorage.getItem("jwt");
 	var groupId = 1;
 	$.ajax({
 		url : "/group/" + groupId + "/topic",

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
+import xmu.crms.entity.CourseSelection;
 import xmu.crms.entity.Location;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
@@ -88,17 +89,20 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
 			throws UserNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectClassByClassId(classId) == null) {
+		ClassInfo classInfo=classInfoMapper.selectClassByClassId(classId);
+		if (classInfo == null) {
 			throw new ClassesNotFoundException();
 		}
-		if (classInfoMapper.selectUserByUserId(userId) == null) {
+		User student=classInfoMapper.selectUserByUserId(userId);
+		if (student == null) {
 			throw new UserNotFoundException();
 		}
-		int flag = classInfoMapper.insertCourseSelectionById(userId, classId);
-		if (flag == 0) {
-			return null;
-		}
-		return classInfoMapper.getCourseSelectionId(userId, classId);
+		CourseSelection courseSelection=new CourseSelection();
+		courseSelection.setClassInfo(classInfo);
+		courseSelection.setStudent(student);
+		int flag = classInfoMapper.insertCourseSelectionById(courseSelection);
+		
+		return courseSelection.getId();
 	}
 
 	@Override

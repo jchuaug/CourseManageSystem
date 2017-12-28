@@ -3,7 +3,6 @@ var seminarId;
 getId();
 console.log(courseId + seminarId);
 
-var token = window.localStorage.getItem("jwt");
 
 
 
@@ -16,6 +15,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -42,6 +42,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/seminar/" + seminarId,
@@ -100,6 +101,7 @@ function updateSeminar() {
 }
 
 function deleteSeminar() {
+	var token = window.localStorage.getItem("jwt");
 	$.ajax({
 		url: "/seminar/" + seminarId,
 		dataType: "json",
