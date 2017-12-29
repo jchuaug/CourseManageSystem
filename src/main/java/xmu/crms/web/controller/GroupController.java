@@ -12,6 +12,7 @@ import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.TopicService;
 import xmu.crms.web.VO.GroupResponseVO;
 import xmu.crms.web.VO.TopicResponseVO;
+import xmu.crms.web.VO.UserRequestVO;
 import xmu.crms.web.VO.UserResponseVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,11 +67,16 @@ public class GroupController {
         return group;
     }
 
-//    @PutMapping(value = "/group/{groupID}")
-//    public void modifyGroup(@PathVariable Integer groupID, @RequestBody Group group) {
-//        boolean success = MockDb.modifyGroup(groupID, group);
-//    }
-//
+    /**
+     * leader resign
+     * @param groupID group id
+     * @param user leader
+     */
+    @PutMapping(value = "/group/{groupID}/resign")
+    public void leaderResign(@PathVariable Integer groupID, @RequestBody UserRequestVO user) {
+
+    }
+
 //    @PostMapping(value = "/group/{groupID}/topic")
 //    public void chooseToopic(@PathVariable Integer groupID, @RequestBody Topic topic) {
 //        boolean success = MockDb.chooseTopic(groupID, topic);
