@@ -11,6 +11,7 @@ import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.TopicService;
 import xmu.crms.web.VO.GroupResponseVO;
+import xmu.crms.web.VO.TopicResponseVO;
 import xmu.crms.web.VO.UserResponseVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class GroupController {
 
     @Autowired
@@ -35,20 +36,29 @@ public class GroupController {
             BigInteger groupId = BigInteger.valueOf(groupID);
             SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(groupId);
 
-//            group.setId(seminarGroup.getId().intValue());
-            group.setLeader(new UserResponseVO(seminarGroup.getLeader()));
 
             // build member
             List<User> members = seminarGroupService.listSeminarGroupMemberByGroupId(groupId);
             List<UserResponseVO> membersResponse = new ArrayList<>();
+            //todo members may include leader
             members.forEach(user -> {
                 membersResponse.add(new UserResponseVO(user));
             });
-            group.setMembers(membersResponse);
 
             // build topics
             List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(groupId);
+            List<TopicResponseVO> topicResponses = new ArrayList<>();
+            topics.forEach(topic -> {
+                topicResponses.add(TopicResponseVO.simpleTopic(topic.getTopic()));
+            });
 
+            group.setId(seminarGroup.getId());
+            group.setLeader(new UserResponseVO(seminarGroup.getLeader()));
+            //todo what's the name
+            group.setName(seminarGroup.getId().toString());
+            group.setMembers(membersResponse);
+            group.setTopics(topicResponses);
+            group.setReport(seminarGroup.getReport());
 
         } catch (GroupNotFoundException e) {
             e.printStackTrace();

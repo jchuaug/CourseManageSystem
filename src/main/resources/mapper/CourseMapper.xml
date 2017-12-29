@@ -41,10 +41,16 @@
 		where id = #{id}
 	</select>
 
-    <select id="listCourseByUserId" resultMap="CourseResult">
+    <select id="listCourseByTeacherId" resultMap="CourseResult">
         select id,name,start_date,end_date,description,report_percentage,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage
         from course
         where teacher_id = #{id}
+    </select>
+
+    <select id="listCourseIdByStudentId" resultMap="CourseResult">
+        SELECT id
+        FROM course_selection
+        WHERE student_id = #{id}
     </select>
 
     <insert id="insertCourseByUserId" parameterType="xmu.crms.entity.Course" useGeneratedKeys="true" keyProperty="id">

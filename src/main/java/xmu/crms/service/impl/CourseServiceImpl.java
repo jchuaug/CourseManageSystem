@@ -35,14 +35,27 @@ ClassService classService;
 
     @Override
     public List<Course> listCourseByUserId(BigInteger userId) throws IllegalArgumentException, CourseNotFoundException {
-        if(!(userId.intValue() > 0)) {
-            throw new IllegalArgumentException("用户ID格式错误！");
+        try {
+            if(!(userId.intValue() > 0)) {
+                throw new IllegalArgumentException("用户ID格式错误！");
+            }
+            List<Course> courseList = null;
+            if(userService.getUserByUserId(userId).getType() == 1) {
+                 courseList = courseMapper.listCourseByTeacherId(userId);
+            }else {
+                List<BigInteger> courseListIds = courseMapper.listCourseIdByStudentId(userId);
+                for(int i =0 ;i<courseListIds.size();i++){
+                    courseList.add(courseMapper.getCourseByCourseId(courseListIds.get(i)));
+                }
+            }
+            if(courseList == null) {
+                throw new CourseNotFoundException();
+            }
+            return courseList;
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        List<Course> courseList = courseMapper.listCourseByUserId(userId);
-        if(courseList == null) {
-            throw new CourseNotFoundException();
-        }
-        return courseList;
+        return null;
     }
 
 
