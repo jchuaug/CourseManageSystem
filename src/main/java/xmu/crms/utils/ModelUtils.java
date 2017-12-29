@@ -1,11 +1,10 @@
 package xmu.crms.utils;
 
-import java.lang.reflect.Array;
-import java.security.acl.Group;
+import static org.assertj.core.api.Assertions.contentOf;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import xmu.crms.entity.ClassInfo;
@@ -14,12 +13,13 @@ import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
-import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
 import xmu.crms.web.VO.ClassRequestVO;
 import xmu.crms.web.VO.ClassResponseVO;
+import xmu.crms.web.VO.CourseRequestVO;
+import xmu.crms.web.VO.CourseResponseVO;
 import xmu.crms.web.VO.GroupResponseVO;
 import xmu.crms.web.VO.MySeminarResponseVO;
 import xmu.crms.web.VO.Proportion;
@@ -28,8 +28,14 @@ import xmu.crms.web.VO.SeminarResponseVO;
 import xmu.crms.web.VO.TopicResponseVO;
 import xmu.crms.web.VO.UserResponseVO;
 
+/**
+ * 
+ * @author yjj
+ * @date 2017/12/29
+ */
 public class ModelUtils {
-	public static ClassResponseVO ClassInfoToClassResponseVO(ClassInfo classInfo, User teacher, Integer numStudent) {
+	public static ClassResponseVO ClassInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
+		User teacher=classInfo.getCourse().getTeacher();
 		Course course = classInfo.getCourse();
 		ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), numStudent,
 				classInfo.getClassTime(), classInfo.getSite(), course.getName(), teacher.getName());
@@ -67,7 +73,7 @@ public class ModelUtils {
 		return groupResponseVO;
 	}
 
-	public static SeminarResponseVO SeminarInfoToSeminarResponseVO(Seminar seminar, List<Topic> topics) {
+	public static SeminarResponseVO SeminarInfoToSeminarResponseVO(Seminar seminar, List<Topic> topics,Integer grade) {
 		SeminarResponseVO responseVO = new SeminarResponseVO();
 		responseVO.setId(seminar.getId());
 		responseVO.setName(seminar.getName());
@@ -80,9 +86,14 @@ public class ModelUtils {
 		time = sdf.format(seminar.getEndTime());
 		responseVO.setEndTime(time);
 		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
-		for (Topic topic : topics) {
-			TopicResponseVO topicResponseVO = TopicToTopicResponseVO(topic, null);
-			topicResponseVOs.add(topicResponseVO);
+		if (topics!=null) {
+			for (Topic topic : topics) {
+				TopicResponseVO topicResponseVO = TopicToTopicResponseVO(topic, null);
+				topicResponseVOs.add(topicResponseVO);
+			}
+		}
+		if (grade!=null) {
+			responseVO.setGrade(grade);
 		}
 		responseVO.setTopics(topicResponseVOs);
 		return responseVO;
@@ -122,9 +133,10 @@ public class ModelUtils {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-
-		seminar2.setCourse(forSeminar.getCourse());
-		seminar2.setFixed(forSeminar.getFixed());
+		if (forSeminar!=null) {
+			seminar2.setCourse(forSeminar.getCourse());
+		}
+		
 		return seminar2;
 	}
 
@@ -198,5 +210,49 @@ public class ModelUtils {
 		}
 		groupResponseVO.setTopics(topicResponseVOs);
 		return groupResponseVO;
+	}
+
+	public static CourseResponseVO CourseToCourseResponseVO(Course course, Integer numClass, Integer numStudent) {
+		CourseResponseVO courseResponseVO = new CourseResponseVO();
+		courseResponseVO.setId(course.getId());
+		courseResponseVO.setName(course.getName());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String time = sdf.format(course.getStartDate());
+		courseResponseVO.setStartTime(time);
+		time = sdf.format(course.getEndDate());
+		courseResponseVO.setEndTime(time);
+		courseResponseVO.setNumClass(numClass);
+		courseResponseVO.setNumStudent(numStudent);
+		if (course.getTeacher()!=null) {
+			courseResponseVO.setTeacherEmail(course.getTeacher().getEmail());
+			courseResponseVO.setTeacherName(course.getTeacher().getName());
+		}
+		return courseResponseVO;
+	}
+
+	public static Course CourseRequestVOToCourse(CourseRequestVO courseRequestVO) {
+		Course course = new Course();
+		course.setName(courseRequestVO.getName());
+		course.setDescription(courseRequestVO.getDescription());
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String dstr = courseRequestVO.getStartTime();
+		java.util.Date date;
+		try {
+			date = sdf.parse(dstr);
+			course.setStartDate(date);
+			date = sdf.parse(courseRequestVO.getEndTime());
+			course.setEndDate(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		Proportion proportions = courseRequestVO.getProportions();
+		course.setReportPercentage(proportions.getReport());
+		course.setPresentationPercentage(proportions.getPresentation());
+		course.setFivePointPercentage(proportions.getA());
+		course.setFourPointPercentage(proportions.getB());
+		course.setThreePointPercentage(proportions.getC());
+		return course;
 	}
 }

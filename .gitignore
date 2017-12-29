@@ -6,7 +6,7 @@ application.properties
 
 ### Eclipse ###
 .idea
-
+application.properties
 .metadata
 bin/
 tmp/

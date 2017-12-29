@@ -69,8 +69,7 @@ public class ClassController {
 			classInfos = classService.listClassByUserId(userId);
 			for (ClassInfo classInfo : classInfos) {
 				Integer numStudent = userService.listUserByClassId(classInfo.getId(), "", "").size();
-				classVOs.add(ModelUtils.ClassInfoToClassResponseVO(classInfo, classInfo.getCourse().getTeacher(),
-						numStudent));
+				classVOs.add(ModelUtils.ClassInfoToClassResponseVO(classInfo, numStudent));
 			}
 		} catch (UserNotFoundException | ClassesNotFoundException e) {
 			e.printStackTrace();
@@ -83,6 +82,7 @@ public class ClassController {
 		return new ResponseEntity<List<ClassResponseVO>>(classVOs, new HttpHeaders(), HttpStatus.OK);
 	}
 
+	
 	@GetMapping("/{classId}")
 	public ResponseEntity<ClassResponseVO> getClassByClassId(@PathVariable("classId") BigInteger classId,
 			@RequestHeader HttpHeaders headers) {
@@ -92,8 +92,7 @@ public class ClassController {
 		try {
 			class1 = classService.getClassByClassId(classId);
 			Integer numStudent = userService.listUserByClassId(classId, "", "").size();
-			classResponseVO = ModelUtils.ClassInfoToClassResponseVO(class1, class1.getCourse().getTeacher(),
-					numStudent);
+			classResponseVO = ModelUtils.ClassInfoToClassResponseVO(class1, numStudent);
 		} catch (ClassesNotFoundException | UserNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<ClassResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
