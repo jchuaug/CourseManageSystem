@@ -1,9 +1,6 @@
 package xmu.crms.service.impl;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +13,12 @@ import xmu.crms.entity.Location;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
-import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.mapper.ClassInfoMapper;
 import xmu.crms.service.ClassService;
+import xmu.crms.service.FixGroupService;
+import xmu.crms.service.SeminarGroupService;
 
 /**
  * 
@@ -33,19 +31,20 @@ public class ClassServiceImpl implements ClassService {
 	@Autowired
 	private ClassInfoMapper classInfoMapper;
 
-	/*
-	 * @Autowired private FixGroupService FixGroupService;
-	 */
+	@Autowired
+	private SeminarGroupService seminarGroupService;
+
+	@Autowired
+	private FixGroupService fixGroupService;
 
 	@Override
 	public void deleteClassSelectionByClassId(BigInteger classId) {
-		int flag = classInfoMapper.deleteClassSelectionByClassId(classId);
+		classInfoMapper.deleteClassSelectionByClassId(classId);
 	}
-
 
 	@Override
 	public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
-		if (classInfoMapper.selectCourseByCourseId(courseId)==null) {
+		if (classInfoMapper.selectCourseByCourseId(courseId) == null) {
 			throw new CourseNotFoundException();
 		}
 		List<ClassInfo> classList = classInfoMapper.listClassByCourseId(courseId);
@@ -68,7 +67,7 @@ public class ClassServiceImpl implements ClassService {
 			throw new ClassesNotFoundException();
 		}
 		classInfo.setId(classId);
-		int flag = classInfoMapper.updateByPrimaryKeySelective(classInfo);
+		classInfoMapper.updateByPrimaryKeySelective(classInfo);
 	}
 
 	@Override
@@ -78,8 +77,9 @@ public class ClassServiceImpl implements ClassService {
 			throw new ClassesNotFoundException();
 		}
 		deleteClassSelectionByClassId(classId);
-		// FixGroupService.deleteFixGroupByClassId( classId);
-		// SeminarGroupService.deleteSeminarGroupByClaaId(classId);
+		fixGroupService.deleteFixGroupByClassId(classId);
+		// 待定
+		// seminarGroupService.deleteSeminarGroupByClassId(classId);
 		int flag = classInfoMapper.deleteByPrimaryKey(classId);
 		if (flag == 0) {
 			throw new ClassesNotFoundException();
@@ -89,19 +89,19 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
 			throws UserNotFoundException, ClassesNotFoundException {
-		ClassInfo classInfo=classInfoMapper.selectClassByClassId(classId);
+		ClassInfo classInfo = classInfoMapper.selectClassByClassId(classId);
 		if (classInfo == null) {
 			throw new ClassesNotFoundException();
 		}
-		User student=classInfoMapper.selectUserByUserId(userId);
+		User student = classInfoMapper.selectUserByUserId(userId);
 		if (student == null) {
 			throw new UserNotFoundException();
 		}
-		CourseSelection courseSelection=new CourseSelection();
+		CourseSelection courseSelection = new CourseSelection();
 		courseSelection.setClassInfo(classInfo);
 		courseSelection.setStudent(student);
-		int flag = classInfoMapper.insertCourseSelectionById(courseSelection);
-		
+		classInfoMapper.insertCourseSelectionById(courseSelection);
+
 		return courseSelection.getId();
 	}
 
@@ -114,7 +114,7 @@ public class ClassServiceImpl implements ClassService {
 		if (classInfoMapper.selectClassByClassId(classId) == null) {
 			throw new ClassesNotFoundException();
 		}
-		int flag = classInfoMapper.deleteCourseSelectionById(userId, classId);
+		classInfoMapper.deleteCourseSelectionById(userId, classId);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class ClassServiceImpl implements ClassService {
 		if (classInfo.getCourse() == null) {
 			classInfo.setCourse(course);
 		}
-		int flag = classInfoMapper.insertSelective(classInfo);
+		classInfoMapper.insertSelective(classInfo);
 		return classInfo.getId();
 	}
 
@@ -148,9 +148,15 @@ public class ClassServiceImpl implements ClassService {
 		List<ClassInfo> classInfos = listClassByCourseId(courseId);
 		for (ClassInfo classInfo : classInfos) {
 			deleteClassSelectionByClassId(classInfo.getId());
-			// FixGroupService.deleteFixGroupByClassId(classInfo.getId());
+			try {
+				fixGroupService.deleteFixGroupByClassId(classInfo.getId());
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (ClassesNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		int flag = classInfoMapper.deleteClassByCourseId(courseId);
+		classInfoMapper.deleteClassByCourseId(courseId);
 	}
 
 	@Override
@@ -161,26 +167,27 @@ public class ClassServiceImpl implements ClassService {
 		if (classInfoMapper.selectSeminarBySeminarId(location.getSeminar().getId()) == null) {
 			throw new SeminarNotFoundException();
 		}
-		int flag = classInfoMapper.insetLocation(location);
+		classInfoMapper.insetLocation(location);
 		return location.getId();
 	}
 
 	@Override
-	public void endCallRollById(BigInteger seminarId,BigInteger classId) throws SeminarNotFoundException, ClassesNotFoundException {
+	public void endCallRollById(BigInteger seminarId, BigInteger classId)
+			throws SeminarNotFoundException, ClassesNotFoundException {
 		if (classInfoMapper.selectClassByClassId(classId) == null) {
 			throw new ClassesNotFoundException();
 		}
 		if (classInfoMapper.selectSeminarBySeminarId(seminarId) == null) {
 			throw new SeminarNotFoundException();
 		}
-		int flag = classInfoMapper.endCallRollLocation(seminarId,classId);
+		classInfoMapper.endCallRollLocation(seminarId, classId);
 
 	}
 
 	@Override
 	public List<ClassInfo> listClassByUserId(BigInteger userId)
 			throws IllegalArgumentException, ClassesNotFoundException {
-		if (userId==null) {
+		if (userId == null) {
 			throw new IllegalArgumentException();
 		}
 		List<ClassInfo> list = classInfoMapper.listClassByUserId(userId);

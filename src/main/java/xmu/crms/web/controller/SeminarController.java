@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
 
+import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.Location;
@@ -46,6 +47,7 @@ import xmu.crms.utils.JWTUtil;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.CourseService;
 import xmu.crms.service.FixGroupService;
+import xmu.crms.service.GradeService;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.SeminarService;
 import xmu.crms.service.TopicService;
@@ -55,41 +57,43 @@ import xmu.crms.web.VO.GroupResponseVO;
 import xmu.crms.web.VO.MySeminarResponseVO;
 import xmu.crms.web.VO.SeminarDetailResponseVO;
 import xmu.crms.web.VO.SeminarResponseVO;
+import xmu.crms.web.VO.TopicResponseVO;
 import xmu.crms.web.VO.UserRequestVO;
 import xmu.crms.web.VO.UserResponseVO;
 
 @RestController
 @RequestMapping("/seminar")
 public class SeminarController {
-	
+
 	@Autowired
 	private SeminarService seminarService;
-	
 
 	@Autowired
 	private CourseService courseService;
 
 	@Autowired
-	 private FixGroupService fixGroupService;
-	
+	private FixGroupService fixGroupService;
+
 	@Autowired
-	 private SeminarGroupService seminarGroupService;
+	private SeminarGroupService seminarGroupService;
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private TopicService topicService;
-	
+
 	@Autowired
 	private ClassService classService;
-	
-	
 
+	@Autowired
+	private GradeService gradeService;
 	
+	private final String TEACHER = "teacher";
+	private final String STUDENT = "student";
 
 	@GetMapping("/{seminarId}")
-	public ResponseEntity<SeminarResponseVO> getseminarByseminarId(@PathVariable("seminarId") BigInteger seminarId,
+	public ResponseEntity<SeminarResponseVO> getSeminarByseminarId(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
@@ -106,7 +110,7 @@ public class SeminarController {
 		SeminarResponseVO seminarResponseVO = null;
 		try {
 			seminar1 = seminarService.getSeminarBySeminarId(seminarId);
-			List<Topic> topics=topicService.listTopicBySeminarId(seminarId);
+			List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
 			seminarResponseVO = ModelUtils.SeminarInfoToSeminarResponseVO(seminar1, topics);
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
@@ -117,7 +121,7 @@ public class SeminarController {
 	}
 
 	@PutMapping("/{seminarId}")
-	public ResponseEntity<String> updateseminar(@PathVariable("seminarId") Integer seminarId,
+	public ResponseEntity<String> updateSeminar(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestBody SeminarResponseVO seminar, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
@@ -130,17 +134,21 @@ public class SeminarController {
 		}
 		String username = JWTUtil.getUsername(token);
 		if (type == 0) {
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
 		try {
-			Seminar seminar2= ModelUtils.SeminarResponseVOToSeminar(seminar);
-			seminarService.updateSeminarBySeminarId(seminar2.getId(), seminar2);
+			Seminar forSeminar = seminarService.getSeminarBySeminarId(seminarId);
+			if (!(forSeminar.getCourse().getTeacher().getId().equals(userId))) {
+				return new ResponseEntity<String>("不是创建该讨论课的教师，权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
+			}
+			Seminar seminar2 = ModelUtils.SeminarResponseVOToSeminar(seminar, forSeminar);
+			seminarService.updateSeminarBySeminarId(seminarId, seminar2);
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("没有找到讨论课", new HttpHeaders(), HttpStatus.NOT_FOUND);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("格式错误", new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
 	}
@@ -159,32 +167,30 @@ public class SeminarController {
 		}
 		String username = JWTUtil.getUsername(token);
 		if (type == 0) {
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
 
 		try {
 			Seminar seminarInfo1 = seminarService.getSeminarBySeminarId(seminarId);
-			User teacher = courseService.getCourseByCourseId(seminarInfo1.getCourse().getId()).getTeacher();
+			User teacher = seminarInfo1.getCourse().getTeacher();
 			if (!(teacher.getId().equals(userId))) {
-				return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+				return new ResponseEntity<String>("不是创建该讨论课的教师，权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 			}
 			seminarService.deleteSeminarBySeminarId(seminarId);
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<String>("没有找到讨论课", new HttpHeaders(), HttpStatus.NOT_FOUND);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (CourseNotFoundException e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<String>("格式错误", new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
 	}
 
 	// 未完成
 	@GetMapping("/{seminarId}/my")
-	public ResponseEntity<MySeminarResponseVO> getMySeminar(@PathVariable("seminarId") BigInteger seminarId,@RequestHeader HttpHeaders headers) {
+	public ResponseEntity<MySeminarResponseVO> getMySeminar(@PathVariable("seminarId") BigInteger seminarId,
+			@RequestHeader HttpHeaders headers) {
 
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
@@ -199,82 +205,33 @@ public class SeminarController {
 		if (type == 1) {
 			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
-		MySeminarResponseVO mySeminarResponseVO=null;
+		MySeminarResponseVO mySeminarResponseVO = null;
 		try {
-			Seminar seminar=seminarService.getSeminarBySeminarId(seminarId);
-			SeminarGroup group=seminarGroupService.getSeminarGroupById(seminarId, userId);
-			Boolean isLeader=group.getLeader().getId().equals(userId);
-			Boolean areTopicsSeletced=null;
-			List<SeminarGroupTopic> topics= topicService.listSeminarGroupTopicByGroupId(group.getId());
-			if (topics==null) {
-				areTopicsSeletced=false;
-			}else if (topics.isEmpty()) {
-				areTopicsSeletced=false;
-			}else {
-				areTopicsSeletced=true;
+			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			SeminarGroup group = seminarGroupService.getSeminarGroupById(seminarId, userId);
+			Boolean isLeader = group.getLeader().getId().equals(userId);
+			Boolean areTopicsSeletced = null;
+			List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(group.getId());
+			if (topics == null) {
+				areTopicsSeletced = false;
+			} else if (topics.isEmpty()) {
+				areTopicsSeletced = false;
+			} else {
+				areTopicsSeletced = true;
 			}
-			 mySeminarResponseVO=ModelUtils.SeminarToMySeminarResponseVO(seminar,isLeader,areTopicsSeletced);
-		}  catch (IllegalArgumentException e) {
+			mySeminarResponseVO = ModelUtils.SeminarToMySeminarResponseVO(seminar, isLeader, areTopicsSeletced);
+		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (SeminarNotFoundException|GroupNotFoundException e) {
+		} catch (SeminarNotFoundException | GroupNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-		}  
+		}
 		return new ResponseEntity<MySeminarResponseVO>(mySeminarResponseVO, new HttpHeaders(), HttpStatus.OK);
 	}
 
-	// 未完成
 	@GetMapping("/{seminarId}/detail")
-	public ResponseEntity<SeminarDetailResponseVO> getSeminarDetail(@PathVariable("seminarId") BigInteger seminarId,@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		String username = JWTUtil.getUsername(token);
-		SeminarDetailResponseVO seminarDetailResponseVO=null;
-		try {
-			Seminar seminar=seminarService.getSeminarBySeminarId(seminarId);
-			User teacher=userService.getUserByUserId(courseService.getCourseByCourseId(seminar.getCourse().getId()).getTeacher().getId());
-			seminarDetailResponseVO=ModelUtils.SeminarToSeminarDetailResponseVO(seminar,teacher);
-		} catch (SeminarNotFoundException|CourseNotFoundException|UserNotFoundException e) {
-			e.printStackTrace();
-			return new ResponseEntity<SeminarDetailResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-			return new ResponseEntity<SeminarDetailResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<SeminarDetailResponseVO>(seminarDetailResponseVO, new HttpHeaders(), HttpStatus.OK);
-	}
-
-	@DeleteMapping("/{seminarId}/student/{studentId}")
-	public ResponseEntity<String> deleteSelectseminar(@PathVariable("seminarId") BigInteger seminarId,
-			@PathVariable("studentId") BigInteger studentId, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		String username = JWTUtil.getUsername(token);
-		if (!userId.equals(studentId)) {
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
-		}
-
-		
-		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
-	}
-
-	@GetMapping("/{seminarId}/seminargroup")
-	public ResponseEntity<GroupResponseVO> getseminarGroup(@PathVariable("seminarId") Integer seminarId,
+	public ResponseEntity<SeminarDetailResponseVO> getSeminarDetail(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
@@ -285,33 +242,25 @@ public class SeminarController {
 		} else if (typeString.equals("student")) {
 			type = 0;
 		}
-		if (type == 1) {
-			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		String username = JWTUtil.getUsername(token);
+		SeminarDetailResponseVO seminarDetailResponseVO = null;
+		try {
+			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			seminarDetailResponseVO = ModelUtils.SeminarToSeminarDetailResponseVO(seminar);
+			System.err.println(seminar);
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<SeminarDetailResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<SeminarDetailResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
-
-		FixGroup fixGroup = null;
-		GroupResponseVO groupResponseVO = null;
-		BigInteger studentId = userId;
-
-		/*
-		 * try { fixGroup = FixGroupService.getFixedGroupById(studentId, seminarId);
-		 * List<FixGroupMember> students =
-		 * FixGroupService.listFixGroupByGroupId(fixGroup.getId()); groupResponseVO =
-		 * ModelUtils.FixGroupToGroupResponseVO(fixGroup, students); } catch
-		 * (seminaresNotFoundException e) { e.printStackTrace(); } catch
-		 * (UserNotFoundException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (IllegalArgumentException e) {
-		 * e.printStackTrace(); return new ResponseEntity<GroupResponseVO>(null, new
-		 * HttpHeaders(), HttpStatus.BAD_REQUEST); }
-		 */
-
-		return new ResponseEntity<GroupResponseVO>(groupResponseVO, new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<SeminarDetailResponseVO>(seminarDetailResponseVO, new HttpHeaders(), HttpStatus.OK);
 	}
 
-	// 未完成
-	@PutMapping("/{seminarId}/seminargroup/resign")
-	public ResponseEntity<String> groupLeaderResign(@PathVariable("seminarId") Integer seminarId,
-			@RequestParam("id") BigInteger studentId, @RequestHeader HttpHeaders headers) {
+	@GetMapping("/{seminarId}/topic")
+	public ResponseEntity<List<TopicResponseVO>> getSeminarTopicBySeminarId(
+			@PathVariable("seminarId") BigInteger seminarId, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
@@ -321,137 +270,89 @@ public class SeminarController {
 		} else if (typeString.equals("student")) {
 			type = 0;
 		}
-		if (!userId.equals(studentId)) {
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		String username = JWTUtil.getUsername(token);
+		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
+		try {
+			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
+			for (Topic topic : topics) {
+				topicResponseVOs.add(ModelUtils.TopicToTopicResponseVO(topic, null));
+			}
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<List<TopicResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<TopicResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		}
-
-		FixGroup fixGroup = null;
-
-		/*
-		 * try { fixGroup = FixGroupService.getFixedGroupById(studentId, seminarId);
-		 * fixGroup.setLeader(new User()); if
-		 * (!(fixGroup.getLeader().getId().equals(studentId))) { return new
-		 * ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN); }
-		 * FixGroupService.updateFixGroupByGroupId(fixGroup.getId(), fixGroup); } catch
-		 * (IllegalArgumentException|UserNotFoundException e) { e.printStackTrace();
-		 * return new ResponseEntity<String>("成功", new HttpHeaders(),
-		 * HttpStatus.BAD_REQUEST); } catch (seminaresNotFoundException e) {
-		 * e.printStackTrace(); }
-		 */
-
-		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<List<TopicResponseVO>>(topicResponseVOs, new HttpHeaders(), HttpStatus.OK);
 	}
 
-	@PutMapping("/{seminarId}/seminargroup/assign")
-	public ResponseEntity<String> groupLeaderAssign(@PathVariable("seminarId") Integer seminarId,
-			@RequestParam("id") BigInteger studentId, @RequestHeader HttpHeaders headers) {
-
+	// wait TopicSeivce add serial 的相关操作
+	@PostMapping("/{seminarId}/topic")
+	public ResponseEntity<BigInteger> insertSeminarTopicBySeminarId(@PathVariable("seminarId") BigInteger seminarId,
+			@RequestBody TopicResponseVO topic, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (TEACHER.equals(typeString)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
-		if (!userId.equals(studentId)) {
-			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		if (type == 0) {
+			return new ResponseEntity<BigInteger>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-
-		FixGroup fixGroup = null;
-		/*
-		 * try { fixGroup = FixGroupService.getFixedGroupById(studentId, seminarId); if
-		 * (fixGroup.getLeader() != null) { return new ResponseEntity<String>("已经有组长了",
-		 * new HttpHeaders(), HttpStatus.CONFLICT); } List<FixGroupMember> members =
-		 * FixGroupService.listFixGroupByGroupId(fixGroup.getId()); boolean flag =
-		 * false; for (FixGroupMember fixGroupMember : members) { if
-		 * (fixGroupMember.getId().equals(studentId)) { flag = true; } } if (flag ==
-		 * false) { return new ResponseEntity<String>("权限不足（不是该小组的成员）", new
-		 * HttpHeaders(), HttpStatus.FORBIDDEN); } User leader =
-		 * userService.getUserByUserId(studentId); fixGroup.setLeader(leader);
-		 * FixGroupService.updateFixGroupByGroupId(fixGroup.getId(), fixGroup); } catch
-		 * (UserNotFoundException|IllegalArgumentException|seminaresNotFoundException e) {
-		 * // TODO Auto-generatedcatch block e.printStackTrace(); return new
-		 * ResponseEntity<String>("错误的ID格式、成为组长的学生不存在", new HttpHeaders(),
-		 * HttpStatus.BAD_REQUEST); }
-		 */
-
-		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.OK);
+		String username = JWTUtil.getUsername(token);
+		BigInteger topicId = null;
+		try {
+			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			if (!seminar.getCourse().getTeacher().getId().equals(userId)) {
+				return new ResponseEntity<BigInteger>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+			}
+			Topic topic2 = ModelUtils.TopicResponseVOToTopic(topic);
+			topic2.setSeminar(seminar);
+			topicId = topicService.insertTopicBySeminarId(seminarId, topic2);
+		} catch (IllegalArgumentException e) {
+			return new ResponseEntity<BigInteger>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<BigInteger>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<BigInteger>(topicId, new HttpHeaders(), HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{seminarId}/seminargroup/add")
-	public ResponseEntity<String> addStudentToGroup(@RequestParam("groupId") Integer groupId,
-			@RequestParam("id") Integer studentId, @RequestHeader HttpHeaders headers) {
+	@GetMapping("/{seminarId}/group")
+	public ResponseEntity<List<GroupResponseVO>> getGroup(@PathVariable("seminarId") BigInteger seminarId,
+			@RequestParam("classId") String classId, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (TEACHER.equals(typeString)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
 
-		FixGroup fixGroup = null;
-
-		/*
-		 * try { List<FixGroupMember> members =
-		 * FixGroupService.listFixGroupByGroupId(fixGroup.getId()); boolean flag =
-		 * false; for (FixGroupMember fixGroupMember : members) { if
-		 * (fixGroupMember.getId().equals(userId)) { flag = true; } } if (flag == false)
-		 * { return new ResponseEntity<String>("权限不足（不是该小组的成员）", new HttpHeaders(),
-		 * HttpStatus.FORBIDDEN); }
-		 * 
-		 * BigInteger flag = FixGroupService.insertStudentIntoGroup(studentId, groupId);
-		 * } catch (UserNotFoundException | FixGroupNotFoundException |
-		 * IllegalArgumentException e) { e.printStackTrace(); return new
-		 * ResponseEntity<String>("错误的ID格式、成为组长的学生不存在", new HttpHeaders(),
-		 * HttpStatus.BAD_REQUEST); } catch (InvalidOperationException e) {
-		 * e.printStackTrace(); return new ResponseEntity<String>("待添加学生已经在小组里了", new
-		 * HttpHeaders(), HttpStatus.CONFLICT); }
-		 */
-
-		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.OK);
-	}
-
-	@PutMapping("/{seminarId}/seminargroup/remove")
-	public ResponseEntity<String> removeStudentFromGroup(@RequestParam("groupId") Integer groupId,
-			@RequestParam("id") Integer studentId, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-
-		FixGroup fixGroup = null;
-
-		/*try {
-			List<FixGroupMember> members = FixGroupService.listFixGroupByGroupId(fixGroup.getId());
-			boolean flag = false;
-			for (FixGroupMember fixGroupMember : members) {
-				if (fixGroupMember.getId().equals(userId)) {
-					flag = true;
+		List<GroupResponseVO> groupResponseVOs=new ArrayList<>();
+		try {
+			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			List<SeminarGroup> groups=seminarGroupService.listSeminarGroupBySeminarId(seminarId);
+			
+			for (SeminarGroup seminarGroup : groups) {
+				System.err.println(seminarGroup);
+				if (new BigInteger(classId.toString()).equals(seminarGroup.getClassInfo().getId())) {
+					List<SeminarGroupTopic> topics= topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
+					groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup,topics));
 				}
 			}
-			if (flag == false) {
-				return new ResponseEntity<String>("权限不足（不是该小组的成员/组长）", new HttpHeaders(), HttpStatus.FORBIDDEN);
-			}
-
-			BigInteger flag = FixGroupService.deleteFixGroupUserById(groupId, studentId);
-		} catch (UserNotFoundException | FixGroupNotFoundException | IllegalArgumentException e) {
+			
+		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
-			return new ResponseEntity<String>("错误的ID格式、成为组长的学生不存在", new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (InvalidOperationException e) {
-			e.printStackTrace();
-			return new ResponseEntity<String>("待添加学生已经在小组里了", new HttpHeaders(), HttpStatus.CONFLICT);
-		}*/
-
-		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.OK);
+			return new ResponseEntity<List<GroupResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<GroupResponseVO>>(groupResponseVOs, new HttpHeaders(), HttpStatus.OK);
 	}
 
 }

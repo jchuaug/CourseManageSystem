@@ -1,27 +1,22 @@
 package xmu.crms.service.impl;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Course;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
-import xmu.crms.entity.Location;
 import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
-import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.exception.UserNotFoundException;
-import xmu.crms.mapper.ClassInfoMapper;
 import xmu.crms.mapper.FixedGroupMapper;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.FixGroupService;
@@ -32,7 +27,7 @@ import xmu.crms.service.UserService;
 /**
  * 
  * @author yjj
- * @version 2.00
+ * @date 2017/12/28
  *
  */
 @Service
@@ -43,13 +38,13 @@ public class FixedGroupServiceImpl implements FixGroupService {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ClassService classService;
-	
+
 	@Autowired
 	private SeminarService seminarService;
-	
+
 	@Autowired
 	private SeminarGroupService seminarGroupService;
 
@@ -69,7 +64,7 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		fixGroup.setLeader(student);
 		fixGroup.setClassInfo(classInfo);
 
-		int flag = fixedGroupMapper.insertFixGroup(fixGroup);
+		fixedGroupMapper.insertFixGroup(fixGroup);
 		return fixGroup.getId();
 	}
 
@@ -94,15 +89,15 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		if (userService.getUserByUserId(userId) == null) {
 			throw new UserNotFoundException();
 		}
-		FixGroup fixGroup=fixedGroupMapper.getFixGroupByFixGroupId(fixGroupId);
-		if (fixGroup==null) {
+		FixGroup fixGroup = fixedGroupMapper.getFixGroupByFixGroupId(fixGroupId);
+		if (fixGroup == null) {
 			throw new FixGroupNotFoundException("该固定分组不存在");
 		}
 		if (fixGroup.getLeader().getId().equals(userId)) {
 			fixGroup.setLeader(null);
 			fixedGroupMapper.updateFixGroupByGroupId(fixGroup);
 		}
-		int flag = fixedGroupMapper.deleteFixGroupUserById(fixGroupId, userId);
+		fixedGroupMapper.deleteFixGroupUserById(fixGroupId, userId);
 	}
 
 	@Override
@@ -111,12 +106,12 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		if (groupId == null) {
 			throw new IllegalArgumentException();
 		}
-		FixGroup fixGroup= fixedGroupMapper.getFixGroupByFixGroupId(groupId);
-		if (fixGroup==null) {
+		FixGroup fixGroup = fixedGroupMapper.getFixGroupByFixGroupId(groupId);
+		if (fixGroup == null) {
 			throw new FixGroupNotFoundException();
 		}
-		List<User> members=fixedGroupMapper.listFixGroupMemberByGroupId( groupId);
-		
+		List<User> members = fixedGroupMapper.listFixGroupMemberByGroupId(groupId);
+
 		return members;
 	}
 
@@ -126,7 +121,7 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		if (classId == null) {
 			throw new IllegalArgumentException();
 		}
-		List<FixGroup> fixGroups=fixedGroupMapper.listFixGroupByClassId( classId);
+		List<FixGroup> fixGroups = fixedGroupMapper.listFixGroupByClassId(classId);
 		return fixGroups;
 	}
 
@@ -135,16 +130,15 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		if (classId == null) {
 			throw new IllegalArgumentException();
 		}
-		List< FixGroup> fixGroups=listFixGroupByClassId(classId);
+		List<FixGroup> fixGroups = listFixGroupByClassId(classId);
 		for (FixGroup fixGroup : fixGroups) {
 			try {
 				deleteFixGroupMemberByFixGroupId(fixGroup.getId());
 			} catch (FixGroupNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		int flag=fixedGroupMapper.deleteFixGroupByClassId( classId);
+		fixedGroupMapper.deleteFixGroupByClassId(classId);
 	}
 
 	@Override
@@ -153,21 +147,21 @@ public class FixedGroupServiceImpl implements FixGroupService {
 			throw new IllegalArgumentException();
 		}
 		deleteFixGroupMemberByFixGroupId(groupId);
-		int flag= fixedGroupMapper.deleteFixGroupByGroupId(groupId);
+		fixedGroupMapper.deleteFixGroupByGroupId(groupId);
 	}
 
 	@Override
 	public void updateFixGroupByGroupId(BigInteger groupId, FixGroup fixGroupBO)
 			throws IllegalArgumentException, FixGroupNotFoundException {
-		if (groupId == null|fixGroupBO==null) {
+		if (groupId == null | fixGroupBO == null) {
 			throw new IllegalArgumentException();
 		}
-		if (fixedGroupMapper.getFixGroupByFixGroupId(groupId)==null) {
+		if (fixedGroupMapper.getFixGroupByFixGroupId(groupId) == null) {
 			throw new FixGroupNotFoundException();
 		}
 		fixGroupBO.setId(groupId);
-		int flag=fixedGroupMapper.updateFixGroupByGroupId(fixGroupBO);
-		
+		fixedGroupMapper.updateFixGroupByGroupId(fixGroupBO);
+
 	}
 
 	@Override
@@ -176,76 +170,76 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		if (groupId == null) {
 			throw new IllegalArgumentException();
 		}
-		List<FixGroupMember> members=fixedGroupMapper.listFixGroupByGroupId(groupId);
+		List<FixGroupMember> members = fixedGroupMapper.listFixGroupByGroupId(groupId);
 		if (members.isEmpty()) {
 			return null;
-		}else {
+		} else {
 			return members;
 		}
-		
+
 	}
 
 	@Override
 	public BigInteger insertStudentIntoGroup(BigInteger userId, BigInteger groupId) throws IllegalArgumentException,
 			FixGroupNotFoundException, UserNotFoundException, InvalidOperationException {
-		if (userId == null|groupId==null) {
+		if (userId == null | groupId == null) {
 			throw new IllegalArgumentException();
 		}
-		User student= userService.getUserByUserId(userId);
-		FixGroup fixGroup=fixedGroupMapper.getFixGroupByFixGroupId(groupId);
-		if (student==null) {
+		User student = userService.getUserByUserId(userId);
+		FixGroup fixGroup = fixedGroupMapper.getFixGroupByFixGroupId(groupId);
+		if (student == null) {
 			throw new UserNotFoundException();
 		}
-		FixGroupMember fixGroupMemberTest =fixedGroupMapper.getFixGroupMemberById(userId,groupId);
-		if (fixGroupMemberTest!=null) {
+		FixGroupMember fixGroupMemberTest = fixedGroupMapper.getFixGroupMemberById(userId, groupId);
+		if (fixGroupMemberTest != null) {
 			throw new InvalidOperationException();
 		}
-		FixGroupMember fixGroupMember=new FixGroupMember();
+		FixGroupMember fixGroupMember = new FixGroupMember();
 		fixGroupMember.setStudent(student);
 		fixGroupMember.setFixGroup(fixGroup);
-		int flag=fixedGroupMapper.insertFixGroupMember(fixGroupMember);
+		fixedGroupMapper.insertFixGroupMember(fixGroupMember);
 		return fixGroupMember.getId();
 	}
 
 	@Override
 	public FixGroup getFixedGroupById(BigInteger userId, BigInteger classId)
 			throws IllegalArgumentException, ClassesNotFoundException, UserNotFoundException {
-		if (userId == null|classId==null) {
+		if (userId == null | classId == null) {
 			throw new IllegalArgumentException();
 		}
-		if (userService.getUserByUserId(userId)==null) {
+		if (userService.getUserByUserId(userId) == null) {
 			throw new UserNotFoundException();
 		}
-		if (classService.getClassByClassId(classId)==null) {
+		if (classService.getClassByClassId(classId) == null) {
 			throw new ClassesNotFoundException();
 		}
-		FixGroup fixGroup=fixedGroupMapper.getFixGroupById(userId,classId);
+		FixGroup fixGroup = fixedGroupMapper.getFixGroupById(userId, classId);
 		return fixGroup;
 	}
 
 	@Override
 	public void fixedGroupToSeminarGroup(BigInteger seminarId, BigInteger fixedGroupId)
 			throws IllegalArgumentException, FixGroupNotFoundException, SeminarNotFoundException {
-		if (seminarId == null|fixedGroupId==null) {
+		if (seminarId == null | fixedGroupId == null) {
 			throw new IllegalArgumentException();
 		}
-		FixGroup fixGroup=fixedGroupMapper.getFixGroupByFixGroupId(fixedGroupId);
-		if (fixGroup==null) {
+		FixGroup fixGroup = fixedGroupMapper.getFixGroupByFixGroupId(fixedGroupId);
+		if (fixGroup == null) {
 			throw new FixGroupNotFoundException();
 		}
-		if (seminarService.getSeminarBySeminarId(seminarId)==null) {
+		if (seminarService.getSeminarBySeminarId(seminarId) == null) {
 			throw new SeminarNotFoundException();
 		}
-		SeminarGroup seminarGroup=new SeminarGroup();
+		SeminarGroup seminarGroup = new SeminarGroup();
 		seminarGroup.setLeader(fixGroup.getLeader());
 		seminarGroup.setClassInfo(fixGroup.getClassInfo());
-		BigInteger seminarGroupId= seminarGroupService.insertSeminarGroupBySeminarId(seminarId, fixGroup.getClassInfo().getId(), seminarGroup);
-		List<FixGroupMember> members=listFixGroupByGroupId(fixedGroupId);
+		BigInteger seminarGroupId = seminarGroupService.insertSeminarGroupBySeminarId(seminarId,
+				fixGroup.getClassInfo().getId(), seminarGroup);
+		List<FixGroupMember> members = listFixGroupByGroupId(fixedGroupId);
 		for (FixGroupMember fixGroupMember : members) {
 			try {
 				seminarGroupService.insertSeminarGroupMemberById(fixGroupMember.getStudent().getId(), seminarGroupId);
 			} catch (GroupNotFoundException | UserNotFoundException | InvalidOperationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

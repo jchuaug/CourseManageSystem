@@ -12,27 +12,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.annotation.RequestScope;
-
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
-import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.utils.JWTUtil;
 import xmu.crms.service.ClassService;
-import xmu.crms.service.CourseService;
 import xmu.crms.service.FixGroupService;
 import xmu.crms.service.UserService;
 import xmu.crms.utils.ModelUtils;
@@ -41,6 +35,12 @@ import xmu.crms.web.VO.ClassResponseVO;
 import xmu.crms.web.VO.GroupResponseVO;
 import xmu.crms.web.VO.UserResponseVO;
 
+/**
+ * 
+ * @author yjj
+ * @date 2017/12/28
+ *
+ */
 @RestController
 @RequestMapping("/class")
 public class ClassController {
@@ -49,43 +49,33 @@ public class ClassController {
 	private ClassService classService;
 
 	@Autowired
-	private CourseService courseService;
-
-	@Autowired
 	private FixGroupService fixGroupService;
 
 	@Autowired
 	private UserService userService;
 
-	// 未完成
+	private final String STUDENT = "student";
+	private final String TEACHER = "teacher";
 
 	@GetMapping("/")
-	public ResponseEntity<List<ClassResponseVO>> getAllClass(@RequestParam(required=false) String courseName, @RequestParam(required=false) String courseTeacher,@RequestHeader HttpHeaders headers) {
+	public ResponseEntity<List<ClassResponseVO>> getAllClass(@RequestParam(required = false) String courseName,
+			@RequestParam(required = false) String courseTeacher, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		
-		String username = JWTUtil.getUsername(token);
-		
+
 		List<ClassResponseVO> classVOs = new ArrayList<>();
 		List<ClassInfo> classInfos = null;
 		try {
 			classInfos = classService.listClassByUserId(userId);
 			for (ClassInfo classInfo : classInfos) {
 				Integer numStudent = userService.listUserByClassId(classInfo.getId(), "", "").size();
-				classVOs.add(ModelUtils.ClassInfoToClassResponseVO(classInfo, classInfo.getCourse().getTeacher(), numStudent));
+				classVOs.add(ModelUtils.ClassInfoToClassResponseVO(classInfo, classInfo.getCourse().getTeacher(),
+						numStudent));
 			}
-		} catch (UserNotFoundException|ClassesNotFoundException e) {
+		} catch (UserNotFoundException | ClassesNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<ClassResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity<List<ClassResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
@@ -96,16 +86,6 @@ public class ClassController {
 	@GetMapping("/{classId}")
 	public ResponseEntity<ClassResponseVO> getClassByClassId(@PathVariable("classId") BigInteger classId,
 			@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		String username = JWTUtil.getUsername(token);
 
 		ClassInfo class1 = null;
 		ClassResponseVO classResponseVO = null;
@@ -130,13 +110,12 @@ public class ClassController {
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (typeString.equals(TEACHER)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (typeString.equals(STUDENT)) {
 			type = 0;
 		}
 		System.out.println(typeString);
-		String username = JWTUtil.getUsername(token);
 		if (type == 0) {
 			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -167,12 +146,11 @@ public class ClassController {
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (typeString.equals(TEACHER)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (typeString.equals(STUDENT)) {
 			type = 0;
 		}
-		String username = JWTUtil.getUsername(token);
 		if (type == 0) {
 			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -224,14 +202,6 @@ public class ClassController {
 		BigInteger studentId = new BigInteger(id);
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		String username = JWTUtil.getUsername(token);
 		if (!userId.equals(studentId)) {
 			return new ResponseEntity<String>("非本人操作", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -243,7 +213,7 @@ public class ClassController {
 					return new ResponseEntity<String>("已选过该课程", new HttpHeaders(), HttpStatus.CONFLICT);
 				}
 			}
-			BigInteger flag = classService.insertCourseSelectionById(studentId, classId);
+			classService.insertCourseSelectionById(studentId, classId);
 
 		} catch (ClassesNotFoundException | UserNotFoundException e) {
 			e.printStackTrace();
@@ -257,18 +227,9 @@ public class ClassController {
 			@PathVariable("studentId") BigInteger studentId, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		String username = JWTUtil.getUsername(token);
 		if (!userId.equals(studentId)) {
 			return new ResponseEntity<String>("非本人操作", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-
 		try {
 			classService.deleteCourseSelectionById(studentId, classId);
 		} catch (ClassesNotFoundException | UserNotFoundException e) {
@@ -285,9 +246,9 @@ public class ClassController {
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (TEACHER.equals(typeString)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
 		if (type == 1) {
@@ -320,13 +281,7 @@ public class ClassController {
 		BigInteger studentId = new BigInteger(sId);
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
+
 		if (!userId.equals(studentId)) {
 			return new ResponseEntity<String>("非本人操作", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -358,13 +313,6 @@ public class ClassController {
 		BigInteger studentId = new BigInteger(sId);
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
 		if (!userId.equals(studentId)) {
 			return new ResponseEntity<String>("非本人操作", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -406,13 +354,6 @@ public class ClassController {
 		BigInteger studentId = new BigInteger(sId);
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
 
 		try {
 			if (fixGroupService.getFixedGroupById(studentId, classId) != null) {
@@ -430,7 +371,7 @@ public class ClassController {
 				return new ResponseEntity<String>("权限不足（不是该小组的成员）", new HttpHeaders(), HttpStatus.FORBIDDEN);
 			}
 
-			BigInteger flag2 = fixGroupService.insertStudentIntoGroup(studentId, fixGroup.getId());
+			fixGroupService.insertStudentIntoGroup(studentId, fixGroup.getId());
 		} catch (UserNotFoundException | FixGroupNotFoundException | IllegalArgumentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>("错误的ID格式、成为组长的学生不存在", new HttpHeaders(), HttpStatus.BAD_REQUEST);
@@ -452,13 +393,6 @@ public class ClassController {
 		BigInteger studentId = new BigInteger(sId);
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
 
 		try {
 			FixGroup fixGroup = fixGroupService.getFixedGroupById(userId, classId);
