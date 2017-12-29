@@ -4,12 +4,19 @@ import java.math.BigInteger;
 
 public class Topic {
 	private BigInteger id;
+	private String serial;
 	private String name;
 	private String description;
 	private Integer groupNumberLimit;
 	private Integer groupStudentLimit;
 	private Seminar seminar;
 	
+	public String getSerial() {
+		return serial;
+	}
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
 	public BigInteger getId() {
 		return id;
 	}
