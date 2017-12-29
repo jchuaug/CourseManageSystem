@@ -173,8 +173,8 @@
 		#{gender},
 		#{type}, #{number}, #{education},
 		#{title}, #{email})
-		<selectKey resultType="java.math.BigInteger" keyProperty="id" 
-			order="AFTER"> select last_insert_id() </selectKey> 
+		<selectKey resultType="java.math.BigInteger" keyProperty="id"
+			order="AFTER"> select last_insert_id() </selectKey>
 	</insert>
 
 	<delete id="deleteUserByUserId" parameterType="java.math.BigInteger">
@@ -272,7 +272,7 @@
 		student_id from attendance
 		where seminar_id =#{seminarId} and class_id
 		= #{classId} and
-		attendance_status = 2)
+		attendance_status = 2) and type=0
 	</select>
 
 	<select id="listAttendanceByClassIdAndSeminarId" resultMap="AttendanceResultMap">
@@ -294,7 +294,7 @@
 		student_id from attendance
 		where seminar_id =#{seminarId} and class_id
 		= #{classId} and
-		attendance_status = 0)
+		attendance_status = 0) and type=0
 	</select>
 
 	<select id="listLateStudent" resultMap="UserResultMap">
@@ -303,10 +303,10 @@
 		school_id, `name`, gender, `type`,
 		`number`, education, title, email
 		from user_info
-		where id not in (select
+		where id in (select
 		student_id from attendance
 		where seminar_id=#{seminarId} and
-		class_id=#{classId})
+		class_id=#{classId} and attendance_status=1 ) and type=0
 	</select>
 
 	<select id="getUserByPhone" parameterType="java.lang.String"
