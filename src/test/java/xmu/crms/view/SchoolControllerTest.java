@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  *
  */
 @RunWith(SpringRunner.class)
-@WebMvcTest()
+@SpringBootTest
+@AutoConfigureMockMvc
 public class SchoolControllerTest {
 	@Autowired
 	private MockMvc mvc;
@@ -31,7 +34,7 @@ public class SchoolControllerTest {
 	 */
 	@Test
 	public void testGetSchoolList() throws Exception{
-		mvc.perform(get("/school").param("city", "厦门"))
+		mvc.perform(get("/school").param("city", "重庆"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$[0].id").isNumber())
 			.andExpect(jsonPath("$[0].name").isString())
