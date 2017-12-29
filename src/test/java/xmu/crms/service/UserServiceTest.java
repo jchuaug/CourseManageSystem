@@ -30,6 +30,9 @@ public class UserServiceTest {
 	/**
 	 * test failed problem:can't get id after insert operation,it turns out to 1 all
 	 * the time
+	 * 
+	 * 
+	 * fixed the return value problem by jackey on 2017/12/29
 	 */
 
 	@Test
