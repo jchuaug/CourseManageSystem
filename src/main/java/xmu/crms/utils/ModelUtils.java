@@ -14,6 +14,7 @@ import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
+import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
@@ -62,8 +63,7 @@ public class ModelUtils {
 				studentVOs.add(ModelUtils.UserToUserResponseVO(student));
 			}
 		}
-		UserResponseVO[] members = (UserResponseVO[]) studentVOs.toArray(new UserResponseVO[studentVOs.size()]);
-		groupResponseVO.setMembers(members);
+		groupResponseVO.setMembers(studentVOs);
 		return groupResponseVO;
 	}
 
@@ -81,14 +81,14 @@ public class ModelUtils {
 		responseVO.setEndTime(time);
 		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
 		for (Topic topic : topics) {
-			TopicResponseVO topicResponseVO = TopicToTopicResponseVO(topic,null);
+			TopicResponseVO topicResponseVO = TopicToTopicResponseVO(topic, null);
 			topicResponseVOs.add(topicResponseVO);
 		}
 		responseVO.setTopics(topicResponseVOs);
 		return responseVO;
 	}
 
-	public static TopicResponseVO TopicToTopicResponseVO(Topic topic,Integer groupLeft) {
+	public static TopicResponseVO TopicToTopicResponseVO(Topic topic, Integer groupLeft) {
 		TopicResponseVO topicResponseVO = new TopicResponseVO();
 		topicResponseVO.setId(topic.getId());
 		topicResponseVO.setName(topic.getName());
@@ -155,7 +155,7 @@ public class ModelUtils {
 	}
 
 	public static SeminarDetailResponseVO SeminarToSeminarDetailResponseVO(Seminar seminar) {
-		User teacher=seminar.getCourse().getTeacher();
+		User teacher = seminar.getCourse().getTeacher();
 		SeminarDetailResponseVO seminarDetailResponseVO = new SeminarDetailResponseVO();
 		seminarDetailResponseVO.setId(seminar.getId());
 		seminarDetailResponseVO.setName(seminar.getName());
@@ -170,7 +170,7 @@ public class ModelUtils {
 	}
 
 	public static Topic TopicResponseVOToTopic(TopicResponseVO topic) {
-		Topic topic2=new Topic();
+		Topic topic2 = new Topic();
 		topic2.setName(topic.getName());
 		topic2.setDescription(topic.getDescription());
 		topic2.setGroupNumberLimit(topic.getGroupLimit());
@@ -180,11 +180,19 @@ public class ModelUtils {
 	}
 
 	public static GroupResponseVO SeminarGroupToGroupResponseVO(SeminarGroup seminarGroup,
-			List<SeminarGroupTopic> topics) {
-		GroupResponseVO groupResponseVO=new GroupResponseVO();
+			List<SeminarGroupTopic> topics, List<User> seminarGroupMembers) {
+		GroupResponseVO groupResponseVO = new GroupResponseVO();
+		groupResponseVO.setLeader(ModelUtils.UserToUserResponseVO(seminarGroup.getLeader()));
+		List<UserResponseVO> members = new ArrayList<>();
+		if (seminarGroupMembers != null) {
+			for (User seminarGroupMember : seminarGroupMembers) {
+				members.add(UserToUserResponseVO(seminarGroupMember));
+			}
+		}
+
 		groupResponseVO.setId(seminarGroup.getId());
 		groupResponseVO.setName(seminarGroup.getId().toString());
-		List<TopicResponseVO> topicResponseVOs=new ArrayList<>();
+		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
 		for (SeminarGroupTopic seminarGroupTopic : topics) {
 			topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
 		}

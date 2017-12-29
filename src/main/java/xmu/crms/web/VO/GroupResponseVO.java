@@ -7,7 +7,7 @@ public class GroupResponseVO {
 	private BigInteger id;
 	private String name;
 	private UserResponseVO leader;
-	private UserResponseVO[] members;
+	private List<UserResponseVO> members;
 	private List<TopicResponseVO> topics;
 
 	public List<TopicResponseVO> getTopics() {
@@ -44,12 +44,14 @@ public class GroupResponseVO {
 		this.leader = leader;
 	}
 
-	public UserResponseVO[] getMembers() {
+	public List<UserResponseVO> getMembers() {
 		return members;
 	}
 
-	public void setMembers(UserResponseVO[] members) {
+	public void setMembers(List<UserResponseVO> members) {
 		this.members = members;
 	}
+
+	
 
 }

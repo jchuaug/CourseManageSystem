@@ -34,6 +34,7 @@ import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.Location;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
+import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
@@ -88,7 +89,7 @@ public class SeminarController {
 
 	@Autowired
 	private GradeService gradeService;
-	
+
 	private final String TEACHER = "teacher";
 	private final String STUDENT = "student";
 
@@ -335,24 +336,59 @@ public class SeminarController {
 			type = 0;
 		}
 
-		List<GroupResponseVO> groupResponseVOs=new ArrayList<>();
+		List<GroupResponseVO> groupResponseVOs = new ArrayList<>();
 		try {
 			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
-			List<SeminarGroup> groups=seminarGroupService.listSeminarGroupBySeminarId(seminarId);
-			
+			List<SeminarGroup> groups = seminarGroupService.listSeminarGroupBySeminarId(seminarId);
+
 			for (SeminarGroup seminarGroup : groups) {
 				System.err.println(seminarGroup);
 				if (new BigInteger(classId.toString()).equals(seminarGroup.getClassInfo().getId())) {
-					List<SeminarGroupTopic> topics= topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
-					groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup,topics));
+					List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
+					groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup, topics,null));
 				}
 			}
-			
+
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<GroupResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<List<GroupResponseVO>>(groupResponseVOs, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{seminarId}/group/my")
+	public ResponseEntity<GroupResponseVO> getMyGroup(@PathVariable("seminarId") BigInteger seminarId,
+			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String typeString = JWTUtil.getUserType(token);
+		Integer type = null;
+		if (TEACHER.equals(typeString)) {
+			type = 1;
+		} else if (STUDENT.equals(typeString)) {
+			type = 0;
+		}
+
+		GroupResponseVO groupResponseVO = null;
+		try {
+			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			SeminarGroup group = seminarGroupService.getSeminarGroupById(seminarId, userId);
+
+			List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(group.getId());
+			List<User> members=seminarGroupService.listSeminarGroupMemberByGroupId(group.getId());
+			groupResponseVO=ModelUtils.SeminarGroupToGroupResponseVO(group, topics,members);
+
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GroupNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<GroupResponseVO>(groupResponseVO, new HttpHeaders(), HttpStatus.OK);
 	}
 
 }
