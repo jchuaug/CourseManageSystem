@@ -21,8 +21,8 @@ import xmu.crms.security.UnauthorizedEntryPoint;
  * @author mads
  */
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
