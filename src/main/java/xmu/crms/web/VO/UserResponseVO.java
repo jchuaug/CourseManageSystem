@@ -12,7 +12,6 @@ public class UserResponseVO {
     public UserResponseVO(User user) {
         id = user.getId();
         name = user.getName();
-        number = user.getNumber();
     }
 
     public BigInteger getId() {
