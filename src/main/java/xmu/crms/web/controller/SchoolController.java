@@ -7,6 +7,7 @@ package xmu.crms.web.controller;
  *
  */
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequestMapping("/school")
 public class SchoolController {
-    // @Autowired
+     @Autowired
     SchoolService schoolService;
 
 
