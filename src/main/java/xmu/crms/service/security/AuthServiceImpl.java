@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import xmu.crms.dao.AuthDao;
 import xmu.crms.dao.LoginDao;
 import xmu.crms.security.MyAuthenticationProvider;
 import xmu.crms.security.MyAuthenticationToken;
 import xmu.crms.entity.User;
-import xmu.crms.security.UserDetailsServiceImpl;
 import xmu.crms.utils.JwtTokenUtil;
 import xmu.crms.utils.MD5Utils;
 
@@ -37,8 +35,6 @@ public class AuthServiceImpl implements AuthService {
     MyAuthenticationProvider myAuthenticationProvider;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-    @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired(required = false)
@@ -51,12 +47,9 @@ public class AuthServiceImpl implements AuthService {
     private String secret;
 
 
-    @Autowired(required = false)
-    private AuthDao authMapper;
-
     @Override
     public User register(User userToAdd) {
-        final String username = userToAdd.getNumber();
+        userToAdd.getNumber();
         final String rawPassword = userToAdd.getPassword();
         userToAdd.setPassword(MD5Utils.MD5encode(rawPassword));
         User user = loginDao.signUpPhone(userToAdd);

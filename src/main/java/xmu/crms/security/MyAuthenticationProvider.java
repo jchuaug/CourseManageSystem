@@ -15,6 +15,7 @@ import java.util.List;
  * 重写Spring Security的权限提供者
  * @author LiuXuezhang
  */
+
 public class MyAuthenticationProvider implements AuthenticationProvider{
 
     @Autowired
