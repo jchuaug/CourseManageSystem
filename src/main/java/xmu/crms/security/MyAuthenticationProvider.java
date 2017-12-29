@@ -31,7 +31,7 @@ public class MyAuthenticationProvider implements AuthenticationProvider{
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         MyAuthenticationToken myAuthenticationToken =
                 (MyAuthenticationToken) authentication;
-        UserDetails userDetails;
+        JwtUserDetails userDetails;
         if(myAuthenticationToken.getOpenid() == null) {
             // web端认证
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -49,24 +49,24 @@ public class MyAuthenticationProvider implements AuthenticationProvider{
         if (simpleGrantedAuthority == null) {
             throw new BadCredentialsException("没有权限");
         } else {
-            Integer type = ((UserDetailsImpl) userDetails).getType();
+            Integer type = (userDetails).getType();
             String typeString = "";
             if (type == 0) {
                 typeString = "student";
             } else if (type == 1) {
                 typeString = "teacher";
             }
-            if(((UserDetailsImpl) userDetails).getOpenid() == null){
-                return new MyAuthenticationToken(((UserDetailsImpl) userDetails).getId(),
-                        ((UserDetailsImpl) userDetails).getNumber(),
-                        ((UserDetailsImpl) userDetails).getPhone(),
+            if(( userDetails).getOpenid() == null){
+                return new MyAuthenticationToken((userDetails).getId(),
+                        ( userDetails).getNumber(),
+                        (userDetails).getPhone(),
                         myAuthenticationToken.getPassword(), typeString,
                         simpleGrantedAuthority);
             }else{
-                return new MyAuthenticationToken(((UserDetailsImpl) userDetails).getOpenid(),
-                        ((UserDetailsImpl) userDetails).getId(),
-                        ((UserDetailsImpl) userDetails).getNumber(),
-                        ((UserDetailsImpl) userDetails).getPhone()
+                return new MyAuthenticationToken(( userDetails).getOpenid(),
+                        ( userDetails).getId(),
+                        (userDetails).getNumber(),
+                        (userDetails).getPhone()
                         , typeString,
                         simpleGrantedAuthority);
             }

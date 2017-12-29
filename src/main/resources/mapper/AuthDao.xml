@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xmu.crms.dao.AuthDao">
+
+
+	<resultMap id="JwtUserDetailResultMap" type="xmu.crms.security.JwtUserDetails">
+		<id property="id" column="id" javaType="java.math.BigInteger" />
+		<result property="phone" column="phone" />
+		<result property="openid" column="openid" />
+		<result property="password" column="password" />
+		<result property="name" column="name" javaType="java.lang.String" />
+		<result property="type" column="type" />
+		<result property="number" column="number" javaType="java.lang.String" />
+	</resultMap>
+
+
+	<select id="getUserByPhone" parameterType="java.lang.String"
+		resultMap="JwtUserDetailResultMap">
+		select id,phone,openid, password,name,type,number
+		from
+		user_info
+		where phone
+		= #{phone}
+	</select>
+
+	<select id="getUserByOpenId" parameterType="java.lang.String"
+		resultMap="JwtUserDetailResultMap">
+		select id,phone,openid, password,name,type,number
+		from
+		user_info
+		where openid
+		= #{openid}
+	</select>
+
+</mapper>
