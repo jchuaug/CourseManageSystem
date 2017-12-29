@@ -8,6 +8,8 @@ import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
 import xmu.crms.exception.GroupNotFoundException;
+import xmu.crms.exception.InvalidOperationException;
+import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.TopicService;
 import xmu.crms.web.VO.GroupResponseVO;
@@ -69,12 +71,24 @@ public class GroupController {
 
     /**
      * leader resign
+     *
      * @param groupID group id
-     * @param user leader
+     * @param user    leader
      */
     @PutMapping(value = "/group/{groupID}/resign")
     public void leaderResign(@PathVariable Integer groupID, @RequestBody UserRequestVO user) {
-
+        BigInteger groupId = BigInteger.valueOf(groupID);
+        try {
+            SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(groupId);
+            seminarGroup.setLeader(null);
+            seminarGroupService.resignLeaderById(groupId, BigInteger.valueOf(user.getId()));
+        } catch (GroupNotFoundException e) {
+            e.printStackTrace();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        } catch (InvalidOperationException e) {
+            e.printStackTrace();
+        }
     }
 
 //    @PostMapping(value = "/group/{groupID}/topic")

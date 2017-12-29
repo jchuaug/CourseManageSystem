@@ -1,6 +1,7 @@
 package xmu.crms.web.VO;
 
 public class UserRequestVO {
+    private Integer id;
     private String phone;
     private String password;
     public String getPhone() {
@@ -20,6 +21,13 @@ public class UserRequestVO {
         this.phone = phone;
         this.password = password;
     }
-    
 
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
