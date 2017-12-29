@@ -11,6 +11,16 @@ public class SeminarResponseVO {
     private String startTime;
     private String endTime;
     private List<TopicResponseVO> topics;
+    
+    private Integer grade;
+    
+    
+	public Integer getGrade() {
+		return grade;
+	}
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
 	public BigInteger getId() {
 		return id;
 	}

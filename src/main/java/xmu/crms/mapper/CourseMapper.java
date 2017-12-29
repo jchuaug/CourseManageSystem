@@ -11,7 +11,8 @@ import java.util.List;
  */
 @Component
 public interface CourseMapper {
-    List<Course> listCourseByUserId(BigInteger userId);
+    List<Course> listCourseByTeacherId(BigInteger userId);
+    List<BigInteger> listCourseIdByStudentId(BigInteger userId);
     Integer insertCourseByUserId(Course course);
     Course getCourseByCourseId(BigInteger courseId);
     int updateCourseByCourseId(Course course);

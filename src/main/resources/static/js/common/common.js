@@ -13,11 +13,11 @@ $(function() {
 			},
 			dataType : "json",
 			headers : {
-				"Authorization" : token
+				"Authorization" : "Bearer" + token
 			},
 			success : function(result) {
 				var msg = result.msg;
-				window.localStorage.setItem("jwt",result.jwt);
+				window.localStorage.setItem("jwt", result.jwt);
 				console.log(result.jwt);
 				if (result.code == 200) {
 					/* 登陆成功跳转 */
