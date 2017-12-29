@@ -1,20 +1,12 @@
 package xmu.crms.web.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,31 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.auth0.jwt.JWT;
-
-import xmu.crms.entity.Attendance;
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.FixGroup;
-import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.Location;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
-import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
-import xmu.crms.exception.CourseNotFoundException;
-import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
-import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.utils.JWTUtil;
 import xmu.crms.service.ClassService;
-import xmu.crms.service.CourseService;
-import xmu.crms.service.FixGroupService;
-import xmu.crms.service.GradeService;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.SeminarService;
 import xmu.crms.service.TopicService;
@@ -63,21 +42,19 @@ import xmu.crms.web.VO.MySeminarResponseVO;
 import xmu.crms.web.VO.SeminarDetailResponseVO;
 import xmu.crms.web.VO.SeminarResponseVO;
 import xmu.crms.web.VO.TopicResponseVO;
-import xmu.crms.web.VO.UserRequestVO;
 import xmu.crms.web.VO.UserResponseVO;
 
+/**
+ * 
+ * @author yjj
+ * @date 2017/12/29
+ */
 @RestController
 @RequestMapping("/seminar")
 public class SeminarController {
 
 	@Autowired
 	private SeminarService seminarService;
-
-	@Autowired
-	private CourseService courseService;
-
-	@Autowired
-	private FixGroupService fixGroupService;
 
 	@Autowired
 	private SeminarGroupService seminarGroupService;
@@ -91,32 +68,19 @@ public class SeminarController {
 	@Autowired
 	private ClassService classService;
 
-	@Autowired
-	private GradeService gradeService;
-
 	private final String TEACHER = "teacher";
 	private final String STUDENT = "student";
 
 	@GetMapping("/{seminarId}")
 	public ResponseEntity<SeminarResponseVO> getSeminarByseminarId(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
-		}
-		String username = JWTUtil.getUsername(token);
-
+		
 		Seminar seminar1 = null;
 		SeminarResponseVO seminarResponseVO = null;
 		try {
 			seminar1 = seminarService.getSeminarBySeminarId(seminarId);
 			List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
-			seminarResponseVO = ModelUtils.SeminarInfoToSeminarResponseVO(seminar1, topics);
+			seminarResponseVO = ModelUtils.SeminarInfoToSeminarResponseVO(seminar1, topics,null);
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<SeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
@@ -132,12 +96,12 @@ public class SeminarController {
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (TEACHER.equals(typeString)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
-		String username = JWTUtil.getUsername(token);
+		JWTUtil.getUsername(token);
 		if (type == 0) {
 			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -165,12 +129,11 @@ public class SeminarController {
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (TEACHER.equals(typeString)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
-		String username = JWTUtil.getUsername(token);
 		if (type == 0) {
 			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
@@ -192,7 +155,6 @@ public class SeminarController {
 		return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
 	}
 
-	// 未完成
 	@GetMapping("/{seminarId}/my")
 	public ResponseEntity<MySeminarResponseVO> getMySeminar(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
@@ -201,12 +163,12 @@ public class SeminarController {
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
 		Integer type = null;
-		if (typeString.equals("teacher")) {
+		if (TEACHER.equals(typeString)) {
 			type = 1;
-		} else if (typeString.equals("student")) {
+		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
-		String username = JWTUtil.getUsername(token);
+		JWTUtil.getUsername(token);
 		if (type == 1) {
 			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
@@ -239,15 +201,12 @@ public class SeminarController {
 	public ResponseEntity<SeminarDetailResponseVO> getSeminarDetail(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
+		if (TEACHER.equals(typeString)) {
+		} else if (STUDENT.equals(typeString)) {
 		}
-		String username = JWTUtil.getUsername(token);
+		JWTUtil.getUsername(token);
 		SeminarDetailResponseVO seminarDetailResponseVO = null;
 		try {
 			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
@@ -267,18 +226,15 @@ public class SeminarController {
 	public ResponseEntity<List<TopicResponseVO>> getSeminarTopicBySeminarId(
 			@PathVariable("seminarId") BigInteger seminarId, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (typeString.equals("teacher")) {
-			type = 1;
-		} else if (typeString.equals("student")) {
-			type = 0;
+		if (TEACHER.equals(typeString)) {
+		} else if (STUDENT.equals(typeString)) {
 		}
-		String username = JWTUtil.getUsername(token);
+		JWTUtil.getUsername(token);
 		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
 		try {
-			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			seminarService.getSeminarBySeminarId(seminarId);
 			List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
 			for (Topic topic : topics) {
 				topicResponseVOs.add(ModelUtils.TopicToTopicResponseVO(topic, null));
@@ -308,7 +264,7 @@ public class SeminarController {
 		if (type == 0) {
 			return new ResponseEntity<BigInteger>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-		String username = JWTUtil.getUsername(token);
+		JWTUtil.getUsername(token);
 		BigInteger topicId = null;
 		try {
 			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
@@ -331,18 +287,15 @@ public class SeminarController {
 	public ResponseEntity<List<GroupResponseVO>> getGroup(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestParam("classId") String classId, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
 		if (TEACHER.equals(typeString)) {
-			type = 1;
 		} else if (STUDENT.equals(typeString)) {
-			type = 0;
 		}
 
 		List<GroupResponseVO> groupResponseVOs = new ArrayList<>();
 		try {
-			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			seminarService.getSeminarBySeminarId(seminarId);
 			List<SeminarGroup> groups = seminarGroupService.listSeminarGroupBySeminarId(seminarId);
 
 			for (SeminarGroup seminarGroup : groups) {
@@ -378,7 +331,7 @@ public class SeminarController {
 
 		GroupResponseVO groupResponseVO = null;
 		try {
-			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+			seminarService.getSeminarBySeminarId(seminarId);
 			SeminarGroup group = seminarGroupService.getSeminarGroupById(seminarId, userId);
 
 			List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(group.getId());
@@ -403,13 +356,10 @@ public class SeminarController {
 			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
 		if (TEACHER.equals(typeString)) {
-			type = 1;
 		} else if (STUDENT.equals(typeString)) {
-			type = 0;
 		}
 		AttendanceResponseVO attendanceResponseVO = null;
 		try {
@@ -435,16 +385,13 @@ public class SeminarController {
 			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
 		if (TEACHER.equals(typeString)) {
-			type = 1;
 		} else if (STUDENT.equals(typeString)) {
-			type = 0;
 		}
 		List<UserResponseVO> userResponseVOs = new ArrayList<>();
-	
+
 		try {
 			List<User> students = userService.listPresentStudent(seminarId, classId);
 			for (User user : students) {
@@ -453,30 +400,26 @@ public class SeminarController {
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (ClassesNotFoundException|SeminarNotFoundException e) {
+		} catch (ClassesNotFoundException | SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-		} 
-		
+		}
 
 		return new ResponseEntity<List<UserResponseVO>>(userResponseVOs, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{seminarId}/class/{classId}/attendance/late")
 	public ResponseEntity<List<UserResponseVO>> getLateStudentBySeminarIdAndClassId(
 			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
 		if (TEACHER.equals(typeString)) {
-			type = 1;
 		} else if (STUDENT.equals(typeString)) {
-			type = 0;
 		}
 		List<UserResponseVO> userResponseVOs = new ArrayList<>();
-	
+
 		try {
 			List<User> students = userService.listLateStudent(seminarId, classId);
 			for (User user : students) {
@@ -485,30 +428,26 @@ public class SeminarController {
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (ClassesNotFoundException|SeminarNotFoundException e) {
+		} catch (ClassesNotFoundException | SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-		} 
-		
+		}
 
 		return new ResponseEntity<List<UserResponseVO>>(userResponseVOs, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{seminarId}/class/{classId}/attendance/absent")
 	public ResponseEntity<List<UserResponseVO>> getAbsentStudentBySeminarIdAndClassId(
 			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
-		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
 		if (TEACHER.equals(typeString)) {
-			type = 1;
 		} else if (STUDENT.equals(typeString)) {
-			type = 0;
 		}
 		List<UserResponseVO> userResponseVOs = new ArrayList<>();
-	
+
 		try {
 			List<User> students = userService.listAbsenceStudent(seminarId, classId);
 			for (User user : students) {
@@ -517,46 +456,41 @@ public class SeminarController {
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (ClassesNotFoundException|SeminarNotFoundException e) {
+		} catch (ClassesNotFoundException | SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-		} 
-		
+		}
 
 		return new ResponseEntity<List<UserResponseVO>>(userResponseVOs, new HttpHeaders(), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/{seminarId}/class/{classId}/attendance/{studentId}")
 	public ResponseEntity<AttendanceResponseVO> insertAttendanceBySeminarIdAndClassId(
 			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
-			@PathVariable("studentId") BigInteger studentId,@RequestBody AttendanceRequestVO attendance,
+			@PathVariable("studentId") BigInteger studentId, @RequestBody AttendanceRequestVO attendance,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
 		if (TEACHER.equals(typeString)) {
-			type = 1;
 		} else if (STUDENT.equals(typeString)) {
-			type = 0;
 		}
 		if (!userId.equals(studentId)) {
 			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-		AttendanceResponseVO attendanceResponseVO=new AttendanceResponseVO();
-	
+		AttendanceResponseVO attendanceResponseVO = new AttendanceResponseVO();
+
 		try {
-			BigInteger id =userService.insertAttendanceById( classId,  seminarId,
-                     userId,  attendance.getLongitude(),  attendance.getLatitude());
-			
-		}  catch (UserNotFoundException|ClassesNotFoundException|SeminarNotFoundException e) {
+			userService.insertAttendanceById(classId, seminarId, userId, attendance.getLongitude(),
+					attendance.getLatitude());
+
+		} catch (UserNotFoundException | ClassesNotFoundException | SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
-		
 
 		return new ResponseEntity<AttendanceResponseVO>(attendanceResponseVO, new HttpHeaders(), HttpStatus.OK);
 	}
