@@ -21,70 +21,219 @@
 
 				});
 	} */
+
 	function getClass() {
+
 		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+	function updateClassTest() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			data : JSON.stringify({
+				"name" : "周三1-2节",
+				"numStudent" : 120,
+				"time" : "周三12节 周一34节",
+				"site" : "海韵201，公寓405",
+				"calling" : -1,
+				"roster" : "/roster/周三12班.xlsx",
+				"proportions" : {
+					"report" : 50,
+					"presentation" : 50,
+					"c" : 20,
+					"b" : 60,
+					"a" : 20
+				}
+			}),
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				alert("修改成功");
+			}
+		});
+	}
+	function deleteClass() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "delete",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				alert("删除成功");
+			}
+		});
+	}
+
+	function deleteSelectClass() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/2/student/31",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "delete",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				alert("删除成功");
+			}
+		});
+	}
+
+	function listStudentByNameAndId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/student",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			data : {
+				"nameBeginWith" : "",
+				"numBeginWith" : ""
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function selectClass() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/student",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "post",
+			headers : {
+				"Authorization" : token
+			},
+			data : "32",
+			success : function(data) {
+				alert("选择成功");
+			}
+		});
+	}
+	function deleteSelectClass() {
+        var token = window.localStorage.getItem("jwt");
         $.ajax({
-            url: "/class/1",
-            dataType: "json",
-            contentType: "application/json;charset=utf-8",
-            type: "get",
+            url : "/class/1/student/4",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "delete",
             headers : {
                 "Authorization" : token
             },
-            success: function(data) {
-                
-            }
-        });
-    }
-	function updateClassTest() {
-		$.ajax({
-	        url: "/class/1",
-	        dataType: "json",
-	        contentType: "application/json;charset=utf-8",
-	        type: "put",
-	        data:  JSON.stringify({
-	        	"name": "周三1-2节",
-	        	  "numStudent": 120,
-	        	  "time": "周三12节 周一34节",
-	        	  "site": "海韵201，公寓405",
-	        	  "calling": -1,
-	        	  "roster": "/roster/周三12班.xlsx",
-	        	  "proportions": {
-	        	    "report": 50,
-	        	    "presentation": 50,
-	        	    "c": 20,
-	        	    "b": 60,
-	        	    "a": 20
-	                }
-	            })
-	        ,
-	        success: function(data) {
-	            alert("修改成功");
-	        }
-	    });
-    }
-	function deleteClass() {
-        $.ajax({
-            url: "/class/1",
-            dataType: "json",
-            contentType: "application/json;charset=utf-8",
-            type: "delete",
-     
-            success: function(data) {
-                alert("删除成功");
+            success : function(data) {
+            	alert("删除成功");
             }
         });
     }
 	
-	function deleteSelectClass() {
+	function getClassGroup() {
+        var token = window.localStorage.getItem("jwt");
         $.ajax({
-            url: "/class/2/student/31",
-            dataType: "json",
-            contentType: "application/json;charset=utf-8",
-            type: "delete",
-     
-            success: function(data) {
-                alert("删除成功");
+            url : "/class/1/classgroup",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "get",
+            headers : {
+                "Authorization" : token
+            },
+            success : function(data) {
+            	document.getElementById("show").innerHTML = JSON
+                .stringify(data);
+            }
+        });
+    }
+	function groupLeaderResign() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/class/1/classgroup/resign",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "put",
+            headers : {
+                "Authorization" : token
+            },
+            data :"3",
+            success : function(data) {
+              
+            }
+        });
+    }
+	
+	function groupLeaderAssign() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/class/1/classgroup/assign",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "put",
+            headers : {
+                "Authorization" : token
+            },
+            data :"3",
+            success : function(data) {
+                
+            }
+        });
+    }
+	
+	function addStudentToGroup() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/class/1/classgroup/add",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "put",
+            headers : {
+                "Authorization" : token
+            },
+            data :"89",
+            success : function(data) {
+                
+            }
+        });
+    }
+	
+	function removeStudentFromGroup() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/class/1/classgroup/remove",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "put",
+            headers : {
+                "Authorization" : token
+            },
+            data :"3",
+            success : function(data) {
+                
             }
         });
     }
@@ -93,18 +242,43 @@
 
 <body>
 	<!-- <button onclick="getAllClassTest()">getAllClassTest</button> -->
-    <br>
-    <button onclick="getClass()">getClass</button>
-    <br>
+	<br>
+	<button onclick="getClass()">getClass</button>
+	<br>
 	<button onclick="updateClassTest()">updateClassTest</button>
 
-    <br>
-    <button onclick="deleteClass()">deleteClass</button>
+	<br>
+	<button onclick="deleteClass()">deleteClass</button>
+
+	<br>
+	<button onclick="deleteSelectClass()">deleteSelectClass</button>
+
+	<br>
+	<button onclick="listStudentByNameAndId()">listStudentByNameAndId</button>
+
+	<br>
+    <button onclick="selectClass()">selectClass</button>
+    
     
     <br>
     <button onclick="deleteSelectClass()">deleteSelectClass</button>
     
+    <br>
+    <button onclick="getClassGroup()">getClassGroup</button>
     
+    <br>
+    <button onclick="groupLeaderResign()">groupLeaderResign</button>
+    
+    <br>
+    <button onclick="groupLeaderAssign()">groupLeaderAssign</button>
+    
+    <br>
+    <button onclick="addStudentToGroup()">addStudentToGroup</button>
+    
+    <br>
+    <button onclick="removeStudentFromGroup()">removeStudentFromGroup</button>
+
+
 	<p id="show"></p>
 </body>
 

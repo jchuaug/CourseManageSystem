@@ -94,10 +94,15 @@ public class FixedGroupServiceImpl implements FixGroupService {
 		if (userService.getUserByUserId(userId) == null) {
 			throw new UserNotFoundException();
 		}
-		int flag = fixedGroupMapper.deleteFixGroupUserById(fixGroupId, userId);
-		if (flag == 0) {
-			throw new FixGroupNotFoundException();
+		FixGroup fixGroup=fixedGroupMapper.getFixGroupByFixGroupId(fixGroupId);
+		if (fixGroup==null) {
+			throw new FixGroupNotFoundException("该固定分组不存在");
 		}
+		if (fixGroup.getLeader().getId().equals(userId)) {
+			fixGroup.setLeader(null);
+			fixedGroupMapper.updateFixGroupByGroupId(fixGroup);
+		}
+		int flag = fixedGroupMapper.deleteFixGroupUserById(fixGroupId, userId);
 	}
 
 	@Override

@@ -1,6 +1,9 @@
 
 var courseId=getCourseId();
 
+
+
+
 function getCourseId(){
 	var url=location.href;
 var index= url.indexOf("teacherToCourse/");
@@ -9,6 +12,7 @@ return url.substring(index+16);
 
 function getCourse(){
 	var storage = window.localStorage;
+	var token = window.localStorage.getItem("jwt");
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
 		document.getElementById("course_description").innerHTML = storage.getItem("description")           
@@ -19,6 +23,9 @@ function getCourse(){
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -31,6 +38,7 @@ function getCourse(){
 }
 
 function ajxRequest() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/course/"+courseId+"/class",
@@ -38,6 +46,9 @@ function ajxRequest() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			for(var i = 0; i < data.length; i++) {
 				var newClass = document.createElement("a");
@@ -55,6 +66,9 @@ function ajxRequest() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			for(var i = 0; i < data.length; i++) {
 				var newSenimar = document.createElement("a");

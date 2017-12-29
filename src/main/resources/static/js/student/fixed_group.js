@@ -3,6 +3,8 @@ var classId;
 var groupId;
 getId();
 
+
+
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
@@ -12,6 +14,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -23,6 +26,10 @@ function getCourse() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -35,6 +42,7 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/class/" + classId + "/classgroup",
@@ -42,6 +50,10 @@ function load() {
 		type: "get",
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
+
 		success: function(data) {
 			groupId=data.id;
 			var studentTable = document.getElementById("group_table");
@@ -62,6 +74,7 @@ function load() {
 }
 
 function getStudents() {
+	var token = window.localStorage.getItem("jwt");
 
 	var name = $("#student_name").val();
 	var no = $("#student_number").val();
@@ -70,6 +83,10 @@ function getStudents() {
 			dataType: "json",
 			type: "get",
 			contentType: "application/json;charset=utf-8",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 
 				var studentTable = document.getElementById("student_list_table");
@@ -91,7 +108,7 @@ function getStudents() {
 }
 
 function addMember(student) {
-	
+	var token = window.localStorage.getItem("jwt");
 	var studentId=student.parentNode.parentNode.firstChild.innerHTML;
 	console.log(studentId);
 	$.ajax({
@@ -99,6 +116,10 @@ function addMember(student) {
 			type: "put",
 			data:{"groupId":groupId,"studentId":studentId},
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				console.log("返回数据:"+data.id);
 				
@@ -108,6 +129,7 @@ function addMember(student) {
 }
 
 function deleteMember(student){
+	var token = window.localStorage.getItem("jwt");
 	var studentId=student.parentNode.parentNode.firstChild.innerHTML;
 	console.log(studentId);
 	$.ajax({
@@ -115,6 +137,10 @@ function deleteMember(student){
 			type: "delete",
 			data:{"groupId":groupId,"studentId":studentId},
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				alter("删除成功");
 				

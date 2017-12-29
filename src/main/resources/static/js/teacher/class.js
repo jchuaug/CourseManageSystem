@@ -2,6 +2,8 @@ var courseId;
 var classId;
 getId();
 console.log(courseId+classId);
+
+
 function getId(){
 	var url=location.href;
 	var index1= url.indexOf("course/");
@@ -11,6 +13,7 @@ function getId(){
 }
 
 function getCourse(){
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -22,6 +25,9 @@ function getCourse(){
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -34,6 +40,7 @@ function getCourse(){
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 	 		url: "/class/"+classId,
@@ -41,6 +48,9 @@ function load() {
 	 		type: "get",
 	 		contentType:"application/json;charset=utf-8",
 	 		dataType: "json",
+	 		headers : {
+				"Authorization" : token
+			},
 	 		success: function(data) {
 	 				document.getElementById("class_name").innerHTML=data.name;
 	 				document.getElementById("class_location").innerHTML=data.site;
@@ -63,12 +73,16 @@ function updateClass(){
 }
 
 function deleteClass(){
+	var token = window.localStorage.getItem("jwt");
 	$.ajax({
  		url: "/class/"+classId,
  		dataType: "json",
  		type: "delete",
  		contentType:"application/json;charset=utf-8",
  		dataType: "json",
+ 		headers : {
+			"Authorization" : token
+		},
  		success: function(data) {
  				alert("删除成功");
  				window.location.href = "/teacherToCourse/" + courseId ;

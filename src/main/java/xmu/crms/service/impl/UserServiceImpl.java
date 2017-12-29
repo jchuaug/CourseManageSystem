@@ -1,5 +1,7 @@
 package xmu.crms.service.impl;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,11 +50,11 @@ public class UserServiceImpl implements UserService {
 		Pattern pattern = Pattern.compile("[0-9]*");
 		try {
 			if (!(pattern.matcher(userId.toString()).matches())) {
-				throw new IllegalArgumentException();
+				throw new IllegalArgumentException("UserService:illegal input");
 			}
 			user = userMapper.getUserByUserId(userId);
 			if (user == null) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listUsersByName(userName);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 			Iterator<User> iterator = users.iterator();
 			while (iterator.hasNext()) {
@@ -115,7 +117,7 @@ public class UserServiceImpl implements UserService {
 		try {
 
 			if (userMapper.getUserByUserId(userId) == null) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 			userMapper.updateUserByUserId(userId, user);
 		} catch (UserNotFoundException e) {
@@ -149,11 +151,11 @@ public class UserServiceImpl implements UserService {
 		List<User> users = new ArrayList<User>();
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
-				throw new ClassesNotFoundException();
+				throw new ClassesNotFoundException("UserService:No available class was found");
 			}
 			users = userMapper.listUserByClassId(classId, numBeginWith, nameBeginWith);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (ClassesNotFoundException e) {
 			e.printStackTrace();
@@ -181,7 +183,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			users = userMapper.listUsersByName(userName);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -215,13 +217,24 @@ public class UserServiceImpl implements UserService {
 			throws IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException {
 		List<User> users = new ArrayList<User>();
 		try {
+			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
+				throw new SeminarNotFoundException("UserService:No available seminar was found");
+			}
+			if (userMapper.getClassByClassId(classId) == null) {
+				throw new ClassesNotFoundException("UserService:No available class was found");
+			}
 			users = userMapper.listPresentStudent(seminarId, classId);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
+			e.printStackTrace();
 		}
+
 		return users;
 	}
 
@@ -250,11 +263,21 @@ public class UserServiceImpl implements UserService {
 			throws IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException {
 		List<User> users = new ArrayList<User>();
 		try {
+			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
+				throw new SeminarNotFoundException("UserService:No available seminar was found");
+			}
+			if (userMapper.getClassByClassId(classId) == null) {
+				throw new ClassesNotFoundException("UserService:No available class was found");
+			}
 			users = userMapper.listAbsenceStudentById(seminarId, classId);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
 			e.printStackTrace();
 		}
 		return users;
@@ -284,11 +307,11 @@ public class UserServiceImpl implements UserService {
 		List<Course> courses = new ArrayList<>();
 		try {
 			if (userMapper.listUsersByName(teacherName).isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 			courses = userMapper.listCourseByTeacherName(teacherName);
 			if (courses.isEmpty()) {
-				throw new CourseNotFoundException();
+				throw new CourseNotFoundException("UserService:No available course was found");
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -323,11 +346,21 @@ public class UserServiceImpl implements UserService {
 			throws IllegalArgumentException, ClassesNotFoundException, SeminarNotFoundException {
 		List<User> users = new ArrayList<User>();
 		try {
+			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
+				throw new SeminarNotFoundException("UserService:No available seminar was found");
+			}
+			if (userMapper.getClassByClassId(classId) == null) {
+				throw new ClassesNotFoundException("UserService:No available class was found");
+			}
 			users = userMapper.listLateStudent(seminarId, classId);
 			if (users.isEmpty()) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
 			e.printStackTrace();
 		}
 		return users;
@@ -366,18 +399,20 @@ public class UserServiceImpl implements UserService {
 		BigInteger insertedRows = null;
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
-				throw new ClassesNotFoundException();
+				throw new ClassesNotFoundException("UserService:No available class was found");
 			}
 			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
-				throw new SeminarNotFoundException();
+				throw new SeminarNotFoundException("UserService:No available seminar was found");
 			}
 			Location location = userMapper.getLocationBySeminarIdAndClassId(seminarId, classId);
+			System.out.println(location);
 			Integer status = -1;
-			if (!((location.getLatitude() - latitude) > 30 && location.getLongitude() - longitude > 30)) {
-				throw new InvalidOperationException();
+			if (Math.abs(location.getLatitude() - latitude) > 30
+					|| Math.abs(location.getLongitude() - longitude) > 30) {
+				throw new InvalidOperationException("UserService:illegal location");
 			}
 			status = 1;
-			insertedRows = userMapper.insertAttendanceById(classId, seminarId, userId, status);
+			insertedRows = BigInteger.valueOf(userMapper.insertAttendanceById(classId, seminarId, userId, status));
 			if (insertedRows == null) {
 				throw new InvalidOperationException();
 			}
@@ -389,7 +424,7 @@ public class UserServiceImpl implements UserService {
 		} catch (InvalidOperationException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("insertRow=" + insertedRows);
 		return insertedRows;
 	}
 
@@ -399,7 +434,7 @@ public class UserServiceImpl implements UserService {
 		try {
 			user = userMapper.getUserByNumber(userNumber);
 			if (user == null) {
-				throw new UserNotFoundException();
+				throw new UserNotFoundException("UserService:No available user was found");
 			}
 		} catch (UserNotFoundException e) {
 			e.printStackTrace();
@@ -413,10 +448,10 @@ public class UserServiceImpl implements UserService {
 		List<Attendance> attendances = new ArrayList<Attendance>();
 		try {
 			if (userMapper.getClassByClassId(classId) == null) {
-				throw new ClassesNotFoundException();
+				throw new ClassesNotFoundException("UserService:No available class was found");
 			}
 			if (userMapper.getSeminarBySeminarId(seminarId) == null) {
-				throw new SeminarNotFoundException();
+				throw new SeminarNotFoundException("UserService:No available seminar was found");
 			}
 			attendances = userMapper.listAttendanceByClassIdAndSeminarId(classId, seminarId);
 			if (attendances.isEmpty()) {

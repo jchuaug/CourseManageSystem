@@ -185,7 +185,7 @@ public interface UserMapper {
 	 * @param attendanceDO
 	 * @return
 	 */
-	BigInteger insertAttendanceById(@Param("classId") BigInteger classId, @Param("seminarId") BigInteger seminarId,
+	Integer insertAttendanceById(@Param("classId") BigInteger classId, @Param("seminarId") BigInteger seminarId,
 			@Param("userId") BigInteger userId, @Param("status") Integer status);
 
 	/**

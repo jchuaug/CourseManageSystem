@@ -3,6 +3,8 @@ var seminarId;
 var topicId;
 getId();
 
+
+
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
@@ -14,6 +16,7 @@ function getId() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 			url: "/topic/" + topicId,
@@ -21,6 +24,10 @@ function load() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				document.getElementById("topic_name").innerHTML = data.name;
 				document.getElementById("topic_description").innerHTML = data.description;
@@ -33,6 +40,7 @@ function load() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -44,6 +52,10 @@ function getCourse() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -59,12 +71,17 @@ function updateTopic() {
 	window.location.href = "/course/"+courseId+"/updateTopic/"+topicId;
 }
 function deleteTopic() {
+	var token = window.localStorage.getItem("jwt");
 	$.ajax({
 			url: "/topic/" + topicId,
 			dataType: "json",
 			type: "delete",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
+
 			success: function(data) {
 				alert("删除成功"); 
 				window.location.href = "/course/"+courseId+"/toSeminar/"+seminarId;

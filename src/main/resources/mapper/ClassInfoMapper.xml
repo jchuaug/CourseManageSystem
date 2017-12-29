@@ -295,8 +295,8 @@
 	<insert id="insertCourseSelectionById" useGeneratedKeys="true" keyProperty="id">
 		insert into
 		course_selection (student_id, class_id)
-		values (#{userId,jdbcType=BIGINT},
-		#{classId,jdbcType=BIGINT})
+		values (#{student.id,jdbcType=BIGINT},
+		#{classInfo.id,jdbcType=BIGINT})
 	</insert>
 	<delete id="deleteCourseSelectionById" parameterType="java.math.BigInteger">
 		delete from

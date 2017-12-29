@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
+import xmu.crms.entity.CourseSelection;
 import xmu.crms.entity.Location;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.User;
@@ -24,11 +25,8 @@ public interface ClassInfoMapper {
 
 	List<ClassInfo> listClassByCourseId(BigInteger courseId);
 
-	int insertCourseSelectionById(@Param("userId") BigInteger userId, @Param("classId") BigInteger classId);
-
 	int deleteCourseSelectionById(@Param("userId") BigInteger userId, @Param("classId") BigInteger classId);
 
-	BigInteger getCourseSelectionId(@Param("userId") BigInteger userId, @Param("classId") BigInteger classId);
 
 	int deleteClassByCourseId(BigInteger courseId);
 
@@ -46,4 +44,6 @@ public interface ClassInfoMapper {
 	Location getCallStatusById(@Param("classId")BigInteger classId,@Param("seminarId") BigInteger seminarId);
 
 	Seminar selectSeminarBySeminarId(BigInteger id);
+
+	int insertCourseSelectionById(CourseSelection courseSelection);
 }

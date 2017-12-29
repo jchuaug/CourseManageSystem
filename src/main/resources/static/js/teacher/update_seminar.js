@@ -2,6 +2,10 @@ var courseId;
 var seminarId;
 getId();
 
+var token = window.localStorage.getItem("jwt");
+
+
+
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
@@ -11,6 +15,7 @@ function getId() {
 }
 
 function getCourse() {
+	var token = window.localStorage.getItem("jwt");
 	var storage = window.localStorage;
 	if((storage.getItem("name") != null) && (storage.getItem("desciption") != null)) {      
 		document.getElementById("course_name").innerHTML = storage.getItem("name");
@@ -22,6 +27,9 @@ function getCourse() {
 			type: "get",
 			contentType: "application/json;charset=utf-8",
 			dataType: "json",
+			headers : {
+				"Authorization" : token
+			},
 			success: function(data) {
 				document.getElementById("course_name").innerHTML = data.name;
 				document.getElementById("course_description").innerHTML = data.description;
@@ -34,12 +42,16 @@ function getCourse() {
 }
 
 function load() {
+	var token = window.localStorage.getItem("jwt");
 	getCourse();
 	$.ajax({
 		url: "/seminar/" + seminarId,
 		dataType: "json",
 		type: "get",
 		contentType: "application/json;charset=utf-8",
+		headers : {
+			"Authorization" : token
+		},
 		success: function(data) {
 			document.getElementById("seminar_name").setAttribute("value", data.name);
 			document.getElementById("seminar_description").setAttribute("value", data.description);
@@ -58,6 +70,7 @@ function load() {
 }
 
 function submit() {
+	var token = window.localStorage.getItem("jwt");
 	var groupingMethod=$("#groupingMethod option:selected").val();
 	if (groupingMethod=="固定分组") {
 		groupingMethod="fixed";
@@ -70,6 +83,9 @@ function submit() {
 		contentType: "application/json;charset=utf-8",
 		dataType: "json",
 		type: "put",
+		headers : {
+			"Authorization" : token
+		},
 		data: JSON.stringify({
 				"name": document.getElementById("seminar_name").value,
 				"description": document.getElementById("seminar_description").value,

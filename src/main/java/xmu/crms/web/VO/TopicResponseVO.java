@@ -2,10 +2,9 @@ package xmu.crms.web.VO;
 
 import java.math.BigInteger;
 
-public class UserResponseVO {
+public class TopicResponseVO {
 	private BigInteger id;
 	private String name;
-	private String number;
 	public BigInteger getId() {
 		return id;
 	}
@@ -17,12 +16,6 @@ public class UserResponseVO {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
-		this.number = number;
 	}
 	
 }
