@@ -53,15 +53,15 @@ public class SchoolController {
 //                "    \"city\": \"厦门\"\n" +
 //                "  }\n" +
 //                "]";
-        return ResponseEntity.status(201).contentType(MediaType.APPLICATION_JSON_UTF8).body(schools);
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(schools);
     }
 
 
     @RequestMapping(method = POST)
     @ResponseBody
-    public ResponseEntity addSchool(@RequestBody SchoolRequestVO addSchoolVO) {
+    public ResponseEntity addSchool(@RequestBody SchoolRequestVO schoolRequest) {
 
-        School school = new School(null, addSchoolVO.getName(), addSchoolVO.getProvince(), addSchoolVO.getCity());
+        School school = new School(null, schoolRequest.getName(), schoolRequest.getProvince(), schoolRequest.getCity());
         BigInteger id = schoolService.insertSchool(school);
         return ResponseEntity.status(201).contentType(MediaType.APPLICATION_JSON_UTF8).body(id);
     }
