@@ -1,7 +1,5 @@
 package xmu.crms.service.impl;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,22 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Course;
-import xmu.crms.entity.Location;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupTopic;
-import xmu.crms.entity.User;
-import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
-import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.SeminarNotFoundException;
-import xmu.crms.exception.UserNotFoundException;
-import xmu.crms.mapper.ClassInfoMapper;
 import xmu.crms.mapper.GradeMapper;
-import xmu.crms.service.ClassService;
 import xmu.crms.service.GradeService;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.SeminarService;
@@ -50,7 +39,7 @@ public class GradeServiceImpl implements GradeService {
 		if (seminarGroupTopicId == null) {
 			throw new IllegalArgumentException();
 		}
-		int flag = gradeMapper.deleteStudentScoreGroupByTopicId(seminarGroupTopicId);
+		gradeMapper.deleteStudentScoreGroupByTopicId(seminarGroupTopicId);
 	}
 
 	@Override
@@ -109,7 +98,7 @@ public class GradeServiceImpl implements GradeService {
 		if (topicId == null | userId == null | groupId == null | grade == null) {
 			throw new IllegalArgumentException();
 		}
-		int flag = gradeMapper.insertGroupGradeByUserId(topicId, userId, groupId, grade);
+		 gradeMapper.insertGroupGradeByUserId(topicId, userId, groupId, grade);
 
 	}
 
@@ -134,7 +123,6 @@ public class GradeServiceImpl implements GradeService {
 		try {
 			seminarGroups = seminarGroupService.listSeminarGroupBySeminarId(seminarId);
 		} catch (SeminarNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}

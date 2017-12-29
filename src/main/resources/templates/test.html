@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8" />
-<title>教师课程内页</title>
+<title>测试网页</title>
 <script src="/js/jquery-1.12.4.min.js"></script>
 <script>
 	/* function getAllClassTest() {
@@ -139,104 +139,367 @@
 		});
 	}
 	function deleteSelectClass() {
-        var token = window.localStorage.getItem("jwt");
-        $.ajax({
-            url : "/class/1/student/4",
-            dataType : "json",
-            contentType : "application/json;charset=utf-8",
-            type : "delete",
-            headers : {
-                "Authorization" : token
-            },
-            success : function(data) {
-            	alert("删除成功");
-            }
-        });
-    }
-	
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/student/4",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "delete",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				alert("删除成功");
+			}
+		});
+	}
+
 	function getClassGroup() {
-        var token = window.localStorage.getItem("jwt");
-        $.ajax({
-            url : "/class/1/classgroup",
-            dataType : "json",
-            contentType : "application/json;charset=utf-8",
-            type : "get",
-            headers : {
-                "Authorization" : token
-            },
-            success : function(data) {
-            	document.getElementById("show").innerHTML = JSON
-                .stringify(data);
-            }
-        });
-    }
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/classgroup",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
 	function groupLeaderResign() {
-        var token = window.localStorage.getItem("jwt");
-        $.ajax({
-            url : "/class/1/classgroup/resign",
-            dataType : "json",
-            contentType : "application/json;charset=utf-8",
-            type : "put",
-            headers : {
-                "Authorization" : token
-            },
-            data :"3",
-            success : function(data) {
-              
-            }
-        });
-    }
-	
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/classgroup/resign",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data : "3",
+			success : function(data) {
+
+			}
+		});
+	}
+
 	function groupLeaderAssign() {
-        var token = window.localStorage.getItem("jwt");
-        $.ajax({
-            url : "/class/1/classgroup/assign",
-            dataType : "json",
-            contentType : "application/json;charset=utf-8",
-            type : "put",
-            headers : {
-                "Authorization" : token
-            },
-            data :"3",
-            success : function(data) {
-                
-            }
-        });
-    }
-	
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/classgroup/assign",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data : "3",
+			success : function(data) {
+
+			}
+		});
+	}
+
 	function addStudentToGroup() {
-        var token = window.localStorage.getItem("jwt");
-        $.ajax({
-            url : "/class/1/classgroup/add",
-            dataType : "json",
-            contentType : "application/json;charset=utf-8",
-            type : "put",
-            headers : {
-                "Authorization" : token
-            },
-            data :"89",
-            success : function(data) {
-                
-            }
-        });
-    }
-	
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/classgroup/add",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data : "89",
+			success : function(data) {
+
+			}
+		});
+	}
+
 	function removeStudentFromGroup() {
-        var token = window.localStorage.getItem("jwt");
-        $.ajax({
-            url : "/class/1/classgroup/remove",
-            dataType : "json",
-            contentType : "application/json;charset=utf-8",
-            type : "put",
-            headers : {
-                "Authorization" : token
-            },
-            data :"3",
-            success : function(data) {
-                
-            }
-        });
-    }
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/class/1/classgroup/remove",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data : "3",
+			success : function(data) {
+
+			}
+		});
+	}
+
+	function getSeminarByseminarId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function updateseminar() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data : JSON.stringify({
+				"name" : "概要设计",
+				"description" : "模型层与数据库设计",
+				"groupingMethod" : "fixed",
+				"startTime" : "2017-10-11",
+				"endTime" : "2017-10-24"
+
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function deleteSeminar() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "delete",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getMySeminar() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/my",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getSeminarDetail() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/detail",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getSeminarTopicBySeminarId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/topic",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function insertSeminarTopicBySeminarId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/topic",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "post",
+			headers : {
+				"Authorization" : token
+			},
+			data : JSON.stringify({
+				"serial" : "A",
+				"name" : "领域模型与模块",
+				"description" : "Domain model与模块划分",
+				"groupLimit" : 5,
+				"groupMemberLimit" : 6
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getGroup() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/group",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			data : {
+				"gradeable" : "false",
+				"classId" : "1"
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getMyGroup() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/group/my",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getAttendanceBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getPresentStudentBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/present",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getLateStudentBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/late",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+	function getAbsentStudentBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/absent",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function insertAttendanceBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/3",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data :JSON.stringify( {
+				"longitude" : 118.1132721,
+				"latitude" : 24.4307197,
+				"elevation" : 18.42
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+
 </script>
 </head>
 
@@ -257,26 +520,70 @@
 	<button onclick="listStudentByNameAndId()">listStudentByNameAndId</button>
 
 	<br>
-    <button onclick="selectClass()">selectClass</button>
-    
-    
-    <br>
-    <button onclick="deleteSelectClass()">deleteSelectClass</button>
-    
-    <br>
-    <button onclick="getClassGroup()">getClassGroup</button>
-    
-    <br>
-    <button onclick="groupLeaderResign()">groupLeaderResign</button>
-    
-    <br>
-    <button onclick="groupLeaderAssign()">groupLeaderAssign</button>
-    
-    <br>
-    <button onclick="addStudentToGroup()">addStudentToGroup</button>
-    
-    <br>
-    <button onclick="removeStudentFromGroup()">removeStudentFromGroup</button>
+	<button onclick="selectClass()">selectClass</button>
+
+
+	<br>
+	<button onclick="deleteSelectClass()">deleteSelectClass</button>
+
+	<br>
+	<button onclick="getClassGroup()">getClassGroup</button>
+
+	<br>
+	<button onclick="groupLeaderResign()">groupLeaderResign</button>
+
+	<br>
+	<button onclick="groupLeaderAssign()">groupLeaderAssign</button>
+
+	<br>
+	<button onclick="addStudentToGroup()">addStudentToGroup</button>
+
+	<br>
+	<button onclick="removeStudentFromGroup()">removeStudentFromGroup</button>
+
+	<br>
+	<button onclick="getSeminarByseminarId()">getSeminarByseminarId</button>
+
+
+	<br>
+	<button onclick="updateseminar()">updateseminar</button>
+
+	<br>
+	<button onclick="deleteSeminar()">deleteSeminar</button>
+
+	<br>
+	<button onclick="getMySeminar()">getMySeminar</button>
+
+	<br>
+	<button onclick="getSeminarDetail()">getSeminarDetail</button>
+
+	<br>
+	<button onclick="getSeminarTopicBySeminarId()">getSeminarTopicBySeminarId</button>
+
+	<br>
+	<button onclick="insertSeminarTopicBySeminarId()">insertSeminarTopicBySeminarId</button>
+
+	<br>
+	<button onclick="getGroup()">getGroup</button>
+
+	<br>
+	<button onclick="getMyGroup()">getMyGroup</button>
+
+	<br>
+	<button onclick="getAttendanceBySeminarIdAndClassId()">getAttendanceBySeminarIdAndClassId</button>
+
+
+	<br>
+	<button onclick="getPresentStudentBySeminarIdAndClassId()">getPresentStudentBySeminarIdAndClassId</button>
+
+	<br>
+	<button onclick="getLateStudentBySeminarIdAndClassId()">getLateStudentBySeminarIdAndClassId</button>
+
+	<br>
+	<button onclick="getAbsentStudentBySeminarIdAndClassId()">getAbsentStudentBySeminarIdAndClassId</button>
+	<br>
+	<button onclick="insertAttendanceBySeminarIdAndClassId()">insertAttendanceBySeminarIdAndClassId</button>
+
 
 
 	<p id="show"></p>
