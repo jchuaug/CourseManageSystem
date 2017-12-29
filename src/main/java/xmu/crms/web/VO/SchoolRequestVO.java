@@ -11,7 +11,12 @@ public class SchoolRequestVO {
     private String province;
     private String city;
 
+    public SchoolRequestVO(){
+        super();
+    }
+
     public SchoolRequestVO(String name, String province, String city) {
+        super();
         this.name = name;
         this.province = province;
         this.city = city;
