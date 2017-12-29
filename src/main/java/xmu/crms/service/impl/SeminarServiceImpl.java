@@ -21,7 +21,6 @@ import java.util.List;
 @Service
 public class SeminarServiceImpl implements SeminarService {
 
-    // todo deleted later
     @Autowired
     SeminarMapper seminarMapper;
 
