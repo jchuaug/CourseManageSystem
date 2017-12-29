@@ -6,11 +6,20 @@ import java.util.List;
 public class GroupResponseVO {
     private BigInteger id;
     private UserResponseVO leader;
+
     private String name;
     private List<UserResponseVO> members;
     private List<TopicResponseVO> topics;
     private String report;
 
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public UserResponseVO getLeader() {
         return leader;

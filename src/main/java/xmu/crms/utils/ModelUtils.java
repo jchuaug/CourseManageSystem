@@ -46,7 +46,7 @@ public class ModelUtils {
 	}
 
 	public static UserResponseVO UserToUserResponseVO(User user) {
-		UserResponseVO userResponseVO = new UserResponseVO();
+		UserResponseVO userResponseVO = new UserResponseVO(user);
 		userResponseVO.setId(user.getId());
 		userResponseVO.setName(user.getName());
 		userResponseVO.setNumber(user.getNumber());

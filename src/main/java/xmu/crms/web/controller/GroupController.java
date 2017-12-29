@@ -35,7 +35,7 @@ public class GroupController {
             BigInteger groupId = BigInteger.valueOf(groupID);
             SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(groupId);
 
-            group.setId(seminarGroup.getId().intValue());
+//            group.setId(seminarGroup.getId().intValue());
             group.setLeader(new UserResponseVO(seminarGroup.getLeader()));
 
             // build member
@@ -56,13 +56,13 @@ public class GroupController {
         return group;
     }
 
-    @PutMapping(value = "/group/{groupID}")
-    public void modifyGroup(@PathVariable Integer groupID, @RequestBody Group group) {
-        boolean success = MockDb.modifyGroup(groupID, group);
-    }
-
-    @PostMapping(value = "/group/{groupID}/topic")
-    public void chooseToopic(@PathVariable Integer groupID, @RequestBody Topic topic) {
-        boolean success = MockDb.chooseTopic(groupID, topic);
-    }
+//    @PutMapping(value = "/group/{groupID}")
+//    public void modifyGroup(@PathVariable Integer groupID, @RequestBody Group group) {
+//        boolean success = MockDb.modifyGroup(groupID, group);
+//    }
+//
+//    @PostMapping(value = "/group/{groupID}/topic")
+//    public void chooseToopic(@PathVariable Integer groupID, @RequestBody Topic topic) {
+//        boolean success = MockDb.chooseTopic(groupID, topic);
+//    }
 }

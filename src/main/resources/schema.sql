@@ -10,30 +10,25 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2017-12-16 12:32:48
+Date: 2017-12-24 20:04:57
 */
 
-SET FOREIGN_KEY_CHECKS = 0;
-CREATE DATABASE IF NOT EXISTS cms;
-USE cms;
+SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
 -- Table structure for attendance
 -- ----------------------------
 DROP TABLE IF EXISTS `attendance`;
 CREATE TABLE `attendance` (
-  `id`                BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`        DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`      DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `student_id`        BIGINT(20) UNSIGNED NOT NULL,
-  `seminar_id`        BIGINT(20) UNSIGNED NOT NULL,
-  `class_id`          BIGINT(20) UNSIGNED NOT NULL,
-  `attendance_status` TINYINT(3) UNSIGNED          DEFAULT '0',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `student_id` bigint(20) unsigned NOT NULL,
+  `seminar_id` bigint(20) unsigned NOT NULL,
+  `class_id` bigint(20) unsigned NOT NULL,
+  `attendance_status` tinyint(3) unsigned DEFAULT '0',
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 29
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of attendance
@@ -72,87 +67,68 @@ INSERT INTO `attendance` VALUES ('28', '2017-12-16 12:10:23', '2017-12-16 12:10:
 -- ----------------------------
 DROP TABLE IF EXISTS `class_info`;
 CREATE TABLE `class_info` (
-  `id`                      BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`              DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`            DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name`                    VARCHAR(255)        NOT NULL,
-  `course_id`               BIGINT(20) UNSIGNED          DEFAULT 1,
-  `description`             VARCHAR(5000)                DEFAULT '',
-  `site`                    VARCHAR(255)                 DEFAULT '',
-  `class_time`              VARCHAR(255)                 DEFAULT '',
-  `report_percentage`       TINYINT(3) UNSIGNED          DEFAULT 1,
-  `presentation_percentage` TINYINT(3) UNSIGNED          DEFAULT 1,
-  `five_point_percentage`   TINYINT(3) UNSIGNED          DEFAULT 1,
-  `four_point_percentage`   TINYINT(3) UNSIGNED          DEFAULT 1,
-  `three_point_percentage`  TINYINT(3) UNSIGNED          DEFAULT 1,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `name` varchar(255) NOT NULL,
+  `course_id` bigint(20) unsigned DEFAULT NULL,
+  `description` varchar(5000) DEFAULT NULL,
+  `site` varchar(255) DEFAULT NULL,
+  `class_time` varchar(255) DEFAULT NULL,
+  `report_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `presentation_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `five_point_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `four_point_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `three_point_percentage` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 3
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of class_info
 -- ----------------------------
-INSERT INTO `class_info` VALUES
-  ('1', '2017-12-15 22:18:47', '2017-12-15 22:18:47', 'OOAD英文班', '1', '英文班课程说明', '海韵201', '星期一下午五六节课', '50', '50', '20',
-   '30', '50');
-INSERT INTO `class_info` VALUES
-  ('2', '2017-12-15 22:18:47', '2017-12-15 22:18:47', 'OOAD中文班', '1', '中文班课程说明', '海韵201', '星期一下午七八节课', '50', '50', '20',
-   '30', '50');
+INSERT INTO `class_info` VALUES ('1', '2017-12-15 22:18:47', '2017-12-15 22:18:47', 'OOAD英文班', '1', '英文班课程说明', '海韵201', '星期一下午五六节课', '50', '50', '20', '30', '50');
+INSERT INTO `class_info` VALUES ('2', '2017-12-15 22:18:47', '2017-12-15 22:18:47', 'OOAD中文班', '1', '中文班课程说明', '海韵201', '星期一下午七八节课', '50', '50', '20', '30', '50');
 
 -- ----------------------------
 -- Table structure for course
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-  `id`                      BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`              DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`            DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name`                    VARCHAR(30)         NOT NULL,
-  `start_date`              DATE                         DEFAULT '1000-01-01',
-  `end_date`                DATE                         DEFAULT '1000-01-01',
-  `teacher_id`              BIGINT(20) UNSIGNED          DEFAULT 1,
-  `description`             VARCHAR(50)                  DEFAULT '',
-  `report_percentage`       TINYINT(3) UNSIGNED          DEFAULT 1,
-  `presentation_percentage` TINYINT(3) UNSIGNED          DEFAULT 1,
-  `five_point_percentage`   TINYINT(3) UNSIGNED          DEFAULT 1,
-  `four_point_percentage`   TINYINT(3) UNSIGNED          DEFAULT 1,
-  `three_point_percentage`  TINYINT(3) UNSIGNED          DEFAULT 1,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `name` varchar(30) NOT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `teacher_id` bigint(20) unsigned DEFAULT NULL,
+  `description` varchar(50) DEFAULT NULL,
+  `report_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `presentation_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `five_point_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `four_point_percentage` tinyint(3) unsigned DEFAULT NULL,
+  `three_point_percentage` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 4
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of course
 -- ----------------------------
-INSERT INTO `course` VALUES
-  ('1', '2017-12-15 22:21:56', '2017-12-15 22:21:56', '课程1', '2017-09-10', '2018-02-01', '1', '课程1说明', '50', '50', '10',
-   '30', '60');
-INSERT INTO `course` VALUES
-  ('2', '2017-12-15 22:21:56', '2017-12-15 22:21:56', '课程2', '2017-09-10', '2018-02-01', '1', '课程2说明', '50', '50', '10',
-   '30', '60');
-INSERT INTO `course` VALUES
-  ('3', '2017-12-15 22:21:56', '2017-12-15 22:21:56', '课程3', '2017-09-10', '2018-02-01', '2', '课程3说明', '50', '50', '10',
-   '30', '60');
+INSERT INTO `course` VALUES ('1', '2017-12-15 22:21:56', '2017-12-15 22:21:56', '课程1', '2017-09-10', '2018-02-01', '1', '课程1说明', '50', '50', '10', '30', '60');
+INSERT INTO `course` VALUES ('2', '2017-12-15 22:21:56', '2017-12-15 22:21:56', '课程2', '2017-09-10', '2018-02-01', '1', '课程2说明', '50', '50', '10', '30', '60');
+INSERT INTO `course` VALUES ('3', '2017-12-15 22:21:56', '2017-12-15 22:21:56', '课程3', '2017-09-10', '2018-02-01', '2', '课程3说明', '50', '50', '10', '30', '60');
 
 -- ----------------------------
 -- Table structure for course_selection
 -- ----------------------------
 DROP TABLE IF EXISTS `course_selection`;
 CREATE TABLE `course_selection` (
-  `id`           BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `class_id`     BIGINT(20) UNSIGNED          DEFAULT 1,
-  `student_id`   BIGINT(20) UNSIGNED          DEFAULT 1,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `class_id` bigint(20) unsigned DEFAULT NULL,
+  `student_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 88
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=88 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of course_selection
@@ -246,20 +222,36 @@ INSERT INTO `course_selection` VALUES ('86', '2017-12-15 22:23:55', '2017-12-15 
 INSERT INTO `course_selection` VALUES ('87', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '2', '89');
 
 -- ----------------------------
+-- Table structure for event
+-- ----------------------------
+DROP TABLE IF EXISTS `event`;
+CREATE TABLE `event` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `bean_name` varchar(255) DEFAULT NULL,
+  `method_name` varchar(255) DEFAULT NULL,
+  `parameter` varchar(255) DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of event
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for fix_group
 -- ----------------------------
 DROP TABLE IF EXISTS `fix_group`;
 CREATE TABLE `fix_group` (
-  `id`           BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME            DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `class_id`     BIGINT(20) UNSIGNED DEFAULT 1,
-  `leader_id`    BIGINT(20) UNSIGNED DEFAULT 1,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `class_id` bigint(20) unsigned DEFAULT NULL,
+  `leader_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 19
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fix_group
@@ -288,16 +280,13 @@ INSERT INTO `fix_group` VALUES ('18', '2017-12-16 12:11:11', '2017-12-16 12:11:1
 -- ----------------------------
 DROP TABLE IF EXISTS `fix_group_member`;
 CREATE TABLE `fix_group_member` (
-  `id`           BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME            DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `fix_group_id` BIGINT(20) UNSIGNED DEFAULT 1,
-  `student_id`   BIGINT(20) UNSIGNED DEFAULT 1,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fix_group_id` bigint(20) unsigned DEFAULT NULL,
+  `student_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 87
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fix_group_member
@@ -390,46 +379,56 @@ INSERT INTO `fix_group_member` VALUES ('85', '2017-12-16 12:11:39', '2017-12-16 
 INSERT INTO `fix_group_member` VALUES ('86', '2017-12-16 12:11:39', '2017-12-16 12:11:39', '18', '88');
 
 -- ----------------------------
+-- Table structure for fix_group_topic
+-- ----------------------------
+DROP TABLE IF EXISTS `fix_group_topic`;
+CREATE TABLE `fix_group_topic` (
+  `id` bigint(20) unsigned NOT NULL,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fix_group_id` bigint(20) unsigned DEFAULT NULL,
+  `topic_id` bigint(20) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fix_group_topic
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for location
 -- ----------------------------
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
-  `id`           BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `class_id`     BIGINT(20) UNSIGNED          DEFAULT 1,
-  `seminar_id`   BIGINT(20) UNSIGNED          DEFAULT 1,
-  `longitude`    DECIMAL(10, 6)               DEFAULT 1,
-  `latitude`     DECIMAL(10, 6)               DEFAULT 1,
-  `status`       TINYINT(3) UNSIGNED          DEFAULT 1,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `class_id` bigint(20) unsigned DEFAULT NULL,
+  `seminar_id` bigint(20) unsigned DEFAULT NULL,
+  `longitude` decimal(10,6) DEFAULT NULL,
+  `latitude` decimal(10,6) DEFAULT NULL,
+  `status` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of location
 -- ----------------------------
-
-INSERT INTO location (class_id, seminar_id, longitude, latitude, status)
-VALUES (1, 1, 100, 200, 1);
 
 -- ----------------------------
 -- Table structure for school
 -- ----------------------------
 DROP TABLE IF EXISTS `school`;
 CREATE TABLE `school` (
-  `id`           BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name`         VARCHAR(20)         NOT NULL,
-  `province`     VARCHAR(10)         NOT NULL,
-  `city`         VARCHAR(10)         NOT NULL,
-  PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 11
-  DEFAULT CHARSET = utf8;
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `name` varchar(20) NOT NULL,
+  `province` varchar(10) NOT NULL,
+  `city` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`,`province`,`city`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of school
@@ -450,143 +449,95 @@ INSERT INTO `school` VALUES ('10', '2017-12-15 22:25:31', '2017-12-15 22:25:31',
 -- ----------------------------
 DROP TABLE IF EXISTS `seminar`;
 CREATE TABLE `seminar` (
-  `id`           BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name`         VARCHAR(300)        NOT NULL,
-  `description`  VARCHAR(5000)                DEFAULT '',
-  `course_id`    BIGINT(20) UNSIGNED          DEFAULT 1,
-  `is_fixed`     TINYINT(3) UNSIGNED          DEFAULT '0',
-  `start_time`   DATE                NOT NULL,
-  `end_time`     DATE                NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `name` varchar(300) NOT NULL,
+  `description` varchar(5000) DEFAULT NULL,
+  `course_id` bigint(20) unsigned DEFAULT NULL,
+  `is_fixed` tinyint(3) unsigned DEFAULT '0',
+  `start_time` date NOT NULL,
+  `end_time` date NOT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 4
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of seminar
 -- ----------------------------
-INSERT INTO `seminar`
-VALUES ('1', '2017-12-15 22:27:02', '2017-12-15 22:27:02', '讨论课1', '讨论课1说明', '1', '1', '2017-12-15', '2017-12-15');
-INSERT INTO `seminar`
-VALUES ('2', '2017-12-15 22:27:02', '2017-12-15 22:27:02', '讨论课2', '讨论课2说明', '1', '1', '2017-12-15', '2017-12-23');
-INSERT INTO `seminar`
-VALUES ('3', '2017-12-15 22:27:02', '2017-12-15 22:27:02', '讨论课3', '讨论课3说明', '1', '0', '2017-12-15', '2017-12-23');
+INSERT INTO `seminar` VALUES ('1', '2017-12-15 22:27:02', '2017-12-15 22:27:02', '讨论课1', '讨论课1说明', '1', '1', '2017-12-15', '2017-12-15');
+INSERT INTO `seminar` VALUES ('2', '2017-12-15 22:27:02', '2017-12-15 22:27:02', '讨论课2', '讨论课2说明', '1', '1', '2017-12-15', '2017-12-23');
+INSERT INTO `seminar` VALUES ('3', '2017-12-15 22:27:02', '2017-12-15 22:27:02', '讨论课3', '讨论课3说明', '1', '0', '2017-12-15', '2017-12-23');
 
 -- ----------------------------
 -- Table structure for seminar_group
 -- ----------------------------
 DROP TABLE IF EXISTS `seminar_group`;
 CREATE TABLE `seminar_group` (
-  `id`                 BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `gmt_create`         DATETIME            DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`       DATETIME            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `seminar_id`         BIGINT(20) UNSIGNED DEFAULT 1,
-  `report_garde`       INT(10) UNSIGNED    DEFAULT 1,
-  `presentation_grade` INT(10) UNSIGNED    DEFAULT 1,
-  `final_grade`        INT(10) UNSIGNED    DEFAULT 1,
-  `report`             VARCHAR(100)        DEFAULT '',
-  `class_id`           BIGINT(20) UNSIGNED DEFAULT 1,
-  `leader_id`          BIGINT(20) UNSIGNED DEFAULT 1,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `seminar_id` bigint(20) unsigned DEFAULT NULL,
+  `report_grade` int(10) unsigned DEFAULT NULL,
+  `presentation_grade` int(10) unsigned DEFAULT NULL,
+  `final_grade` int(10) unsigned DEFAULT NULL,
+  `report` varchar(100) DEFAULT NULL,
+  `class_id` bigint(20) unsigned DEFAULT NULL,
+  `leader_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 37
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of seminar_group
 -- ----------------------------
-INSERT INTO `seminar_group`
-VALUES ('1', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '1', '3');
-INSERT INTO `seminar_group`
-VALUES ('2', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '1', '8');
-INSERT INTO `seminar_group`
-VALUES ('3', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '4', '5', '', '1', '13');
-INSERT INTO `seminar_group`
-VALUES ('4', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '3', '4', '', '1', '18');
-INSERT INTO `seminar_group`
-VALUES ('5', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '1', '23');
-INSERT INTO `seminar_group`
-VALUES ('6', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '3', '4', '4', '', '1', '27');
-INSERT INTO `seminar_group`
-VALUES ('7', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '4', '5', '', '2', '31');
-INSERT INTO `seminar_group`
-VALUES ('8', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '4', '4', '', '2', '36');
-INSERT INTO `seminar_group`
-VALUES ('9', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '2', '41');
-INSERT INTO `seminar_group`
-VALUES ('10', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '2', '46');
-INSERT INTO `seminar_group`
-VALUES ('11', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '2', '51');
-INSERT INTO `seminar_group`
-VALUES ('12', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '3', '3', '3', '', '2', '56');
-INSERT INTO `seminar_group`
-VALUES ('13', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '3', '4', '', '2', '61');
-INSERT INTO `seminar_group`
-VALUES ('14', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '2', '66');
-INSERT INTO `seminar_group`
-VALUES ('15', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '4', '5', '', '2', '71');
-INSERT INTO `seminar_group`
-VALUES ('16', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '2', '76');
-INSERT INTO `seminar_group`
-VALUES ('17', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '4', '4', '', '2', '81');
-INSERT INTO `seminar_group`
-VALUES ('18', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '3', '5', '4', '', '2', '85');
-INSERT INTO `seminar_group`
-VALUES ('19', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '31');
-INSERT INTO `seminar_group`
-VALUES ('20', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '36');
-INSERT INTO `seminar_group`
-VALUES ('21', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '41');
-INSERT INTO `seminar_group`
-VALUES ('22', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '46');
-INSERT INTO `seminar_group`
-VALUES ('23', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '51');
-INSERT INTO `seminar_group`
-VALUES ('24', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '56');
-INSERT INTO `seminar_group`
-VALUES ('25', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '61');
-INSERT INTO `seminar_group`
-VALUES ('26', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '66');
-INSERT INTO `seminar_group`
-VALUES ('27', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '71');
-INSERT INTO `seminar_group`
-VALUES ('28', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '76');
-INSERT INTO `seminar_group`
-VALUES ('29', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '81');
-INSERT INTO `seminar_group`
-VALUES ('30', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', NULL, NULL, NULL, '', '2', '85');
-INSERT INTO `seminar_group`
-VALUES ('31', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '3');
-INSERT INTO `seminar_group`
-VALUES ('32', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '8');
-INSERT INTO `seminar_group`
-VALUES ('33', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '13');
-INSERT INTO `seminar_group`
-VALUES ('34', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '18');
-INSERT INTO `seminar_group`
-VALUES ('35', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '23');
-INSERT INTO `seminar_group`
-VALUES ('36', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '27');
+INSERT INTO `seminar_group` VALUES ('1', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '1', '3');
+INSERT INTO `seminar_group` VALUES ('2', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '1', '8');
+INSERT INTO `seminar_group` VALUES ('3', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '4', '5', '', '1', '13');
+INSERT INTO `seminar_group` VALUES ('4', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '3', '4', '', '1', '18');
+INSERT INTO `seminar_group` VALUES ('5', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '1', '23');
+INSERT INTO `seminar_group` VALUES ('6', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '3', '4', '4', '', '1', '27');
+INSERT INTO `seminar_group` VALUES ('7', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '4', '5', '', '2', '31');
+INSERT INTO `seminar_group` VALUES ('8', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '4', '4', '', '2', '36');
+INSERT INTO `seminar_group` VALUES ('9', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '2', '41');
+INSERT INTO `seminar_group` VALUES ('10', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '2', '46');
+INSERT INTO `seminar_group` VALUES ('11', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '2', '51');
+INSERT INTO `seminar_group` VALUES ('12', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '3', '3', '3', '', '2', '56');
+INSERT INTO `seminar_group` VALUES ('13', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '3', '4', '', '2', '61');
+INSERT INTO `seminar_group` VALUES ('14', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '5', '5', '', '2', '66');
+INSERT INTO `seminar_group` VALUES ('15', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '4', '5', '', '2', '71');
+INSERT INTO `seminar_group` VALUES ('16', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '5', '5', '5', '', '2', '76');
+INSERT INTO `seminar_group` VALUES ('17', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '4', '4', '4', '', '2', '81');
+INSERT INTO `seminar_group` VALUES ('18', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '1', '3', '5', '4', '', '2', '85');
+INSERT INTO `seminar_group` VALUES ('19', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '31');
+INSERT INTO `seminar_group` VALUES ('20', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '36');
+INSERT INTO `seminar_group` VALUES ('21', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '41');
+INSERT INTO `seminar_group` VALUES ('22', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '46');
+INSERT INTO `seminar_group` VALUES ('23', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '51');
+INSERT INTO `seminar_group` VALUES ('24', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '56');
+INSERT INTO `seminar_group` VALUES ('25', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '61');
+INSERT INTO `seminar_group` VALUES ('26', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '66');
+INSERT INTO `seminar_group` VALUES ('27', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '71');
+INSERT INTO `seminar_group` VALUES ('28', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '76');
+INSERT INTO `seminar_group` VALUES ('29', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '81');
+INSERT INTO `seminar_group` VALUES ('30', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '2', null, null, null, '', '2', '85');
+INSERT INTO `seminar_group` VALUES ('31', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', null, null, null, '', '1', '3');
+INSERT INTO `seminar_group` VALUES ('32', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', null, null, null, '', '1', '8');
+INSERT INTO `seminar_group` VALUES ('33', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', null, null, null, '', '1', '13');
+INSERT INTO `seminar_group` VALUES ('34', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', null, null, null, '', '1', '18');
+INSERT INTO `seminar_group` VALUES ('35', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', null, null, null, '', '1', '23');
+INSERT INTO `seminar_group` VALUES ('36', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', null, null, null, '', '1', '27');
 
 -- ----------------------------
 -- Table structure for seminar_group_member
 -- ----------------------------
 DROP TABLE IF EXISTS `seminar_group_member`;
 CREATE TABLE `seminar_group_member` (
-  `id`               BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `gmt_create`       DATETIME            DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`     DATETIME            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `seminar_group_id` BIGINT(20) UNSIGNED DEFAULT 1,
-  `student_id`       BIGINT(20) UNSIGNED DEFAULT 1,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `seminar_group_id` bigint(20) unsigned DEFAULT NULL,
+  `student_id` bigint(20) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 171
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=171 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of seminar_group_member
@@ -767,17 +718,14 @@ INSERT INTO `seminar_group_member` VALUES ('170', '2017-12-16 12:12:45', '2017-1
 -- ----------------------------
 DROP TABLE IF EXISTS `seminar_group_topic`;
 CREATE TABLE `seminar_group_topic` (
-  `id`                 BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `gmt_create`         DATETIME            DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`       DATETIME            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `topic_id`           BIGINT(20) UNSIGNED DEFAULT 1,
-  `seminar_group_id`   BIGINT(20) UNSIGNED DEFAULT 1,
-  `presentation_grade` INT(10) UNSIGNED    DEFAULT 1,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `topic_id` bigint(20) unsigned DEFAULT NULL,
+  `seminar_group_id` bigint(20) unsigned DEFAULT NULL,
+  `presentation_grade` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 49
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of seminar_group_topic
@@ -806,47 +754,44 @@ INSERT INTO `seminar_group_topic` VALUES ('21', '2017-12-16 12:13:03', '2017-12-
 INSERT INTO `seminar_group_topic` VALUES ('22', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '2', '16', '4');
 INSERT INTO `seminar_group_topic` VALUES ('23', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '2', '17', '3');
 INSERT INTO `seminar_group_topic` VALUES ('24', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '2', '18', '5');
-INSERT INTO `seminar_group_topic` VALUES ('25', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '19', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('26', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '20', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('27', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '21', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('28', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '22', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('29', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '23', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('30', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '24', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('31', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '25', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('32', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '26', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('33', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '27', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('34', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '28', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('35', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '29', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('36', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '30', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('37', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '31', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('38', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '32', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('39', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '33', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('40', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '34', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('41', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '35', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('42', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '36', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('43', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '31', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('44', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '32', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('45', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '33', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('46', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '34', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('47', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '35', NULL);
-INSERT INTO `seminar_group_topic` VALUES ('48', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '36', NULL);
+INSERT INTO `seminar_group_topic` VALUES ('25', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '19', null);
+INSERT INTO `seminar_group_topic` VALUES ('26', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '20', null);
+INSERT INTO `seminar_group_topic` VALUES ('27', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '21', null);
+INSERT INTO `seminar_group_topic` VALUES ('28', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '22', null);
+INSERT INTO `seminar_group_topic` VALUES ('29', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '23', null);
+INSERT INTO `seminar_group_topic` VALUES ('30', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '3', '24', null);
+INSERT INTO `seminar_group_topic` VALUES ('31', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '25', null);
+INSERT INTO `seminar_group_topic` VALUES ('32', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '26', null);
+INSERT INTO `seminar_group_topic` VALUES ('33', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '27', null);
+INSERT INTO `seminar_group_topic` VALUES ('34', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '28', null);
+INSERT INTO `seminar_group_topic` VALUES ('35', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '29', null);
+INSERT INTO `seminar_group_topic` VALUES ('36', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '4', '30', null);
+INSERT INTO `seminar_group_topic` VALUES ('37', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '31', null);
+INSERT INTO `seminar_group_topic` VALUES ('38', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '32', null);
+INSERT INTO `seminar_group_topic` VALUES ('39', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '33', null);
+INSERT INTO `seminar_group_topic` VALUES ('40', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '34', null);
+INSERT INTO `seminar_group_topic` VALUES ('41', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '35', null);
+INSERT INTO `seminar_group_topic` VALUES ('42', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '5', '36', null);
+INSERT INTO `seminar_group_topic` VALUES ('43', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '31', null);
+INSERT INTO `seminar_group_topic` VALUES ('44', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '32', null);
+INSERT INTO `seminar_group_topic` VALUES ('45', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '33', null);
+INSERT INTO `seminar_group_topic` VALUES ('46', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '34', null);
+INSERT INTO `seminar_group_topic` VALUES ('47', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '35', null);
+INSERT INTO `seminar_group_topic` VALUES ('48', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '36', null);
 
 -- ----------------------------
 -- Table structure for student_score_group
 -- ----------------------------
 DROP TABLE IF EXISTS `student_score_group`;
 CREATE TABLE `student_score_group` (
-  `id`                     BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `gmt_create`             DATETIME            DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`           DATETIME            DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `student_id`             BIGINT(20) UNSIGNED DEFAULT 1,
-  `seminar_group_topic_id` BIGINT(20) UNSIGNED DEFAULT 1,
-  `grade`                  TINYINT(3) UNSIGNED DEFAULT 1,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `student_id` bigint(20) unsigned DEFAULT NULL,
+  `seminar_group_topic_id` bigint(20) unsigned DEFAULT NULL,
+  `grade` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 571
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=571 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student_score_group
@@ -1427,327 +1372,142 @@ INSERT INTO `student_score_group` VALUES ('570', '2017-12-16 12:13:21', '2017-12
 -- ----------------------------
 DROP TABLE IF EXISTS `topic`;
 CREATE TABLE `topic` (
-  `id`                  BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`          DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified`        DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name`                VARCHAR(300)        NOT NULL,
-  `description`         VARCHAR(5000)                DEFAULT '',
-  `group_number_limit`  TINYINT(3) UNSIGNED NOT NULL,
-  `group_student_limit` TINYINT(3) UNSIGNED NOT NULL,
-  `seminar_id`          BIGINT(20) UNSIGNED NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `serial` varchar(10) NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `description` varchar(5000) DEFAULT NULL,
+  `group_number_limit` tinyint(3) unsigned NOT NULL,
+  `group_student_limit` tinyint(3) unsigned NOT NULL,
+  `seminar_id` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 7
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of topic
 -- ----------------------------
-INSERT INTO `topic` VALUES ('1', '2017-12-15 22:29:16', '2017-12-15 22:29:16', '话题1', '话题说明1', '9', '5', '1');
-INSERT INTO `topic` VALUES ('2', '2017-12-15 22:29:16', '2017-12-15 22:29:16', '话题2', '话题说明2', '9', '5', '1');
-INSERT INTO `topic` VALUES ('3', '2017-12-15 22:29:16', '2017-12-15 22:29:16', '话题3', '话题说明3', '6', '5', '2');
-INSERT INTO `topic` VALUES ('4', '2017-12-15 22:29:16', '2017-12-15 22:29:16', '话题4', '话题说明4', '6', '5', '2');
-INSERT INTO `topic` VALUES ('5', '2017-12-15 22:29:16', '2017-12-15 22:29:16', '话题5', '话题说明5', '3', '5', '3');
-INSERT INTO `topic` VALUES ('6', '2017-12-15 22:29:16', '2017-12-15 22:29:16', '话题6', '话题说明6', '3', '5', '3');
+INSERT INTO `topic` VALUES ('1', '2017-12-15 22:29:16', '2017-12-24 20:04:32', 'A', '话题1', '话题说明1', '9', '5', '1');
+INSERT INTO `topic` VALUES ('2', '2017-12-15 22:29:16', '2017-12-24 20:04:37', 'B', '话题2', '话题说明2', '9', '5', '1');
+INSERT INTO `topic` VALUES ('3', '2017-12-15 22:29:16', '2017-12-24 20:04:39', 'A', '话题3', '话题说明3', '6', '5', '2');
+INSERT INTO `topic` VALUES ('4', '2017-12-15 22:29:16', '2017-12-24 20:04:41', 'B', '话题4', '话题说明4', '6', '5', '2');
+INSERT INTO `topic` VALUES ('5', '2017-12-15 22:29:16', '2017-12-24 20:04:42', 'A', '话题5', '话题说明5', '3', '5', '3');
+INSERT INTO `topic` VALUES ('6', '2017-12-15 22:29:16', '2017-12-24 20:04:49', 'B', '话题6', '话题说明6', '3', '5', '3');
 
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
-  `id`           BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `gmt_create`   DATETIME                     DEFAULT CURRENT_TIMESTAMP,
-  `gmt_modified` DATETIME                     DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `phone`        CHAR(11)            NOT NULL,
-  `wechat_id`    VARCHAR(50)                  DEFAULT '1',
-  `openid`       VARCHAR(50)                  DEFAULT '',
-  `avatar`       VARCHAR(50)                  DEFAULT '',
-  `password`     VARCHAR(16)         NOT NULL,
-  `name`         VARCHAR(10)                  DEFAULT '',
-  `school_id`    BIGINT(20) UNSIGNED          DEFAULT 1,
-  `gender`       TINYINT(1) UNSIGNED          DEFAULT 1,
-  `type`         TINYINT(1) UNSIGNED          DEFAULT 1,
-  `number`       VARCHAR(20)                  DEFAULT '',
-  `education`    TINYINT(1) UNSIGNED          DEFAULT 1,
-  `title`        VARCHAR(10)                  DEFAULT '',
-  `email`        VARCHAR(50)                  DEFAULT '',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `gmt_create` datetime DEFAULT CURRENT_TIMESTAMP,
+  `gmt_modified` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `phone` char(11) DEFAULT NULL,
+  `wechat_id` varchar(50) DEFAULT NULL,
+  `openid` varchar(50) DEFAULT NULL,
+  `avatar` varchar(50) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL,
+  `name` varchar(10) DEFAULT NULL,
+  `school_id` bigint(20) unsigned DEFAULT NULL,
+  `gender` tinyint(3) unsigned DEFAULT NULL,
+  `type` tinyint(3) unsigned DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `education` tinyint(3) unsigned DEFAULT NULL,
+  `title` tinyint(3) unsigned DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-)
-  ENGINE = MyISAM
-  AUTO_INCREMENT = 91
-  DEFAULT CHARSET = utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES
-  ('1', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335800', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '邱明', '1',
-        '0', '1', '20170315', '3', '1', '20170315@xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('2', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335801', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '王美红', '1',
-        '1', '1', '20170518', '3', '1', '20170518@xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('3', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335803', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生1', '1',
-        '0', '0', '24320152202700', '1', '', '24320152202700@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('4', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335804', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生2', '1',
-        '0', '0', '24320152202701', '1', '', '24320152202701@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('5', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335805', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生3', '1',
-        '0', '0', '24320152202702', '1', '', '24320152202702@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('6', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335806', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生4', '1',
-        '0', '0', '24320152202703', '1', '', '24320152202703@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('7', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335807', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生5', '1',
-        '0', '0', '24320152202704', '1', '', '24320152202704@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('8', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335808', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生6', '1',
-        '0', '0', '24320152202705', '1', '', '24320152202705@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('9', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335809', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生7', '1',
-        '0', '0', '24320152202706', '1', '', '24320152202706@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('10', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335810', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生8', '1',
-         '0', '0', '24320152202707', '1', '', '24320152202707@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('11', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335811', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生9', '1',
-         '0', '0', '24320152202708', '1', '', '24320152202708@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('12', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335812', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生10', '1',
-         '0', '0', '24320152202709', '1', '', '24320152202709@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('13', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335813', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生11', '1',
-         '0', '0', '24320152202710', '1', '', '24320152202710@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('14', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335814', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生12', '1',
-         '0', '0', '24320152202711', '1', '', '24320152202711@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('15', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335815', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生13', '1',
-         '0', '0', '24320152202712', '1', '', '24320152202712@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('16', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335816', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生14', '1',
-         '0', '0', '24320152202713', '1', '', '24320152202713@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('17', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335817', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生15', '1',
-         '0', '0', '24320152202714', '1', '', '24320152202714@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('18', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335818', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生16', '1',
-         '0', '0', '24320152202715', '1', '', '24320152202715@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('19', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335819', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生17', '1',
-         '0', '0', '24320152202716', '1', '', '24320152202716@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('20', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335820', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生18', '1',
-         '0', '0', '24320152202717', '1', '', '24320152202717@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('21', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335821', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生19', '1',
-         '0', '0', '24320152202718', '1', '', '24320152202718@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('22', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335822', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生20', '1',
-         '0', '0', '24320152202719', '1', '', '24320152202719@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('23', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335823', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生21', '1',
-         '0', '0', '24320152202720', '1', '', '24320152202720@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('24', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335824', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生22', '1',
-         '0', '0', '24320152202721', '1', '', '24320152202721@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('25', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335825', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生23', '1',
-         '0', '0', '24320152202722', '1', '', '24320152202722@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('26', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335826', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生24', '1',
-         '0', '0', '24320152202723', '1', '', '24320152202723@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('27', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335827', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生25', '1',
-         '0', '0', '24320152202724', '1', '', '24320152202724@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('28', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335828', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生26', '1',
-         '0', '0', '24320152202725', '1', '', '24320152202725@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('29', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335829', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生27', '1',
-         '0', '0', '24320152202726', '1', '', '24320152202726@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('30', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335830', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生28', '1',
-         '0', '0', '24320152202727', '1', '', '24320152202727@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('31', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335831', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生29', '1',
-         '0', '0', '24320152202728', '1', '', '24320152202728@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('32', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335832', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生30', '1',
-         '0', '0', '24320152202729', '1', '', '24320152202729@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('33', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335833', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生31', '1',
-         '0', '0', '24320152202730', '1', '', '24320152202730@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('34', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335834', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生32', '1',
-         '0', '0', '24320152202731', '1', '', '24320152202731@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('35', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335835', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生33', '1',
-         '0', '0', '24320152202732', '1', '', '24320152202732@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('36', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335836', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生34', '1',
-         '0', '0', '24320152202733', '1', '', '24320152202733@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('37', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335837', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生35', '1',
-         '0', '0', '24320152202734', '1', '', '24320152202734@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('38', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335838', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生36', '1',
-         '0', '0', '24320152202735', '1', '', '24320152202735@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('39', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335839', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生37', '1',
-         '0', '0', '24320152202736', '1', '', '24320152202736@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('40', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335840', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生38', '1',
-         '0', '0', '24320152202737', '1', '', '24320152202737@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('41', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335841', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生39', '1',
-         '0', '0', '24320152202738', '1', '', '24320152202738@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('42', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335842', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生40', '1',
-         '0', '0', '24320152202739', '1', '', '24320152202739@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('43', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335843', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生41', '1',
-         '0', '0', '24320152202740', '1', '', '24320152202740@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('44', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335844', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生42', '1',
-         '0', '0', '24320152202741', '1', '', '24320152202741@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('45', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335845', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生43', '1',
-         '0', '0', '24320152202742', '1', '', '24320152202742@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('46', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335846', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生44', '1',
-         '0', '0', '24320152202743', '1', '', '24320152202743@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('47', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335847', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生45', '1',
-         '0', '0', '24320152202744', '1', '', '24320152202744@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('48', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335848', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生46', '1',
-         '0', '0', '24320152202745', '1', '', '24320152202745@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('49', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335849', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生47', '1',
-         '0', '0', '24320152202746', '1', '', '24320152202746@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('50', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335850', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生48', '1',
-         '0', '0', '24320152202747', '1', '', '24320152202747@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('51', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335851', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生49', '1',
-         '0', '0', '24320152202748', '1', '', '24320152202748@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('52', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335852', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生50', '1',
-         '0', '0', '24320152202749', '1', '', '24320152202749@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('53', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335853', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生51', '1',
-         '0', '0', '24320152202750', '1', '', '24320152202750@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('54', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335854', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生52', '1',
-         '0', '0', '24320152202751', '1', '', '24320152202751@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('55', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335855', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生53', '1',
-         '0', '0', '24320152202752', '1', '', '24320152202752@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('56', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335856', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生54', '1',
-         '0', '0', '24320152202753', '1', '', '24320152202753@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('57', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335857', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生55', '1',
-         '0', '0', '24320152202754', '1', '', '24320152202754@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('58', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335858', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生56', '1',
-         '1', '0', '24320152202755', '1', '', '24320152202755@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('59', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335859', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生57', '1',
-         '1', '0', '24320152202756', '1', '', '24320152202756@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('60', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335860', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生58', '1',
-         '1', '0', '24320152202757', '1', '', '24320152202757@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('61', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335861', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生59', '1',
-         '1', '0', '24320152202758', '1', '', '24320152202758@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('62', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335862', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生60', '1',
-         '1', '0', '24320152202759', '1', '', '24320152202759@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('63', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335863', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生61', '1',
-         '1', '0', '24320152202760', '1', '', '24320152202760@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('64', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335864', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生62', '1',
-         '1', '0', '24320152202761', '1', '', '24320152202761@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('65', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335865', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生63', '1',
-         '1', '0', '24320152202762', '1', '', '24320152202762@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('66', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335866', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生64', '1',
-         '1', '0', '24320152202763', '1', '', '24320152202763@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('67', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335867', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生65', '1',
-         '1', '0', '24320152202764', '1', '', '24320152202764@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('68', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335868', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生66', '1',
-         '1', '0', '24320152202765', '1', '', '24320152202765@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('69', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335869', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生67', '1',
-         '1', '0', '24320152202766', '1', '', '24320152202766@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('70', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335870', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生68', '1',
-         '1', '0', '24320152202767', '1', '', '24320152202767@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('71', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335871', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生69', '1',
-         '1', '0', '24320152202768', '1', '', '24320152202768@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('72', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335872', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生70', '1',
-         '1', '0', '24320152202769', '1', '', '24320152202769@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('73', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335873', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生71', '1',
-         '1', '0', '24320152202770', '1', '', '24320152202770@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('74', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335874', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生72', '1',
-         '1', '0', '24320152202771', '1', '', '24320152202771@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('75', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335875', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生73', '1',
-         '1', '0', '24320152202772', '1', '', '24320152202772@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('76', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335876', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生74', '1',
-         '1', '0', '24320152202773', '1', '', '24320152202773@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('77', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335877', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生75', '1',
-         '1', '0', '24320152202774', '1', '', '24320152202774@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('78', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335878', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生76', '1',
-         '1', '0', '24320152202775', '1', '', '24320152202775@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('79', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335879', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生77', '1',
-         '1', '0', '24320152202776', '1', '', '24320152202776@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('80', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335880', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生78', '1',
-         '1', '0', '24320152202777', '1', '', '24320152202777@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('81', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335881', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生79', '1',
-         '1', '0', '24320152202778', '1', '', '24320152202778@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('82', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335882', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生80', '1',
-         '1', '0', '24320152202779', '1', '', '24320152202779@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('83', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335883', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生81', '1',
-         '1', '0', '24320152202780', '1', '', '24320152202780@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('84', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335884', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生82', '1',
-         '1', '0', '24320152202781', '1', '', '24320152202781@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('85', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335885', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生83', '1',
-         '1', '0', '24320152202782', '1', '', '24320152202782@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('86', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335886', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生84', '1',
-         '1', '0', '24320152202783', '1', '', '24320152202783@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('87', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335887', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生85', '1',
-         '1', '0', '24320152202784', '1', '', '24320152202784@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('88', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335888', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生86', '1',
-         '1', '0', '24320152202785', '1', '', '24320152202785@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('89', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335889', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '学生87', '1',
-         '1', '0', '24320152202786', '1', '', '24320152202786@stu.xmu.edu.cn');
-INSERT INTO `user_info` VALUES
-  ('90', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335802', NULL, NULL, NULL, 'BE8791B8BE6DEC10', '吴清强', '1',
-         '0', '1', '20173492', '3', '0', '20173492@xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('1', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335800', null, null, null, 'BE8791B8BE6DEC10', '邱明', '1', '0', '1', '20170315', '3', '1', '20170315@xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('2', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335801', null, null, null, 'BE8791B8BE6DEC10', '王美红', '1', '1', '1', '20170518', '3', '1', '20170518@xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('3', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335803', null, null, null, 'BE8791B8BE6DEC10', '学生1', '1', '0', '0', '24320152202700', '1', null, '24320152202700@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('4', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335804', null, null, null, 'BE8791B8BE6DEC10', '学生2', '1', '0', '0', '24320152202701', '1', null, '24320152202701@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('5', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335805', null, null, null, 'BE8791B8BE6DEC10', '学生3', '1', '0', '0', '24320152202702', '1', null, '24320152202702@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('6', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335806', null, null, null, 'BE8791B8BE6DEC10', '学生4', '1', '0', '0', '24320152202703', '1', null, '24320152202703@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('7', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335807', null, null, null, 'BE8791B8BE6DEC10', '学生5', '1', '0', '0', '24320152202704', '1', null, '24320152202704@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('8', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335808', null, null, null, 'BE8791B8BE6DEC10', '学生6', '1', '0', '0', '24320152202705', '1', null, '24320152202705@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('9', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335809', null, null, null, 'BE8791B8BE6DEC10', '学生7', '1', '0', '0', '24320152202706', '1', null, '24320152202706@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('10', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335810', null, null, null, 'BE8791B8BE6DEC10', '学生8', '1', '0', '0', '24320152202707', '1', null, '24320152202707@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('11', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335811', null, null, null, 'BE8791B8BE6DEC10', '学生9', '1', '0', '0', '24320152202708', '1', null, '24320152202708@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('12', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335812', null, null, null, 'BE8791B8BE6DEC10', '学生10', '1', '0', '0', '24320152202709', '1', null, '24320152202709@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('13', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335813', null, null, null, 'BE8791B8BE6DEC10', '学生11', '1', '0', '0', '24320152202710', '1', null, '24320152202710@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('14', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335814', null, null, null, 'BE8791B8BE6DEC10', '学生12', '1', '0', '0', '24320152202711', '1', null, '24320152202711@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('15', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335815', null, null, null, 'BE8791B8BE6DEC10', '学生13', '1', '0', '0', '24320152202712', '1', null, '24320152202712@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('16', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335816', null, null, null, 'BE8791B8BE6DEC10', '学生14', '1', '0', '0', '24320152202713', '1', null, '24320152202713@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('17', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335817', null, null, null, 'BE8791B8BE6DEC10', '学生15', '1', '0', '0', '24320152202714', '1', null, '24320152202714@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('18', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335818', null, null, null, 'BE8791B8BE6DEC10', '学生16', '1', '0', '0', '24320152202715', '1', null, '24320152202715@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('19', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335819', null, null, null, 'BE8791B8BE6DEC10', '学生17', '1', '0', '0', '24320152202716', '1', null, '24320152202716@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('20', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335820', null, null, null, 'BE8791B8BE6DEC10', '学生18', '1', '0', '0', '24320152202717', '1', null, '24320152202717@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('21', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335821', null, null, null, 'BE8791B8BE6DEC10', '学生19', '1', '0', '0', '24320152202718', '1', null, '24320152202718@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('22', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335822', null, null, null, 'BE8791B8BE6DEC10', '学生20', '1', '0', '0', '24320152202719', '1', null, '24320152202719@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('23', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335823', null, null, null, 'BE8791B8BE6DEC10', '学生21', '1', '0', '0', '24320152202720', '1', null, '24320152202720@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('24', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335824', null, null, null, 'BE8791B8BE6DEC10', '学生22', '1', '0', '0', '24320152202721', '1', null, '24320152202721@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('25', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335825', null, null, null, 'BE8791B8BE6DEC10', '学生23', '1', '0', '0', '24320152202722', '1', null, '24320152202722@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('26', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335826', null, null, null, 'BE8791B8BE6DEC10', '学生24', '1', '0', '0', '24320152202723', '1', null, '24320152202723@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('27', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335827', null, null, null, 'BE8791B8BE6DEC10', '学生25', '1', '0', '0', '24320152202724', '1', null, '24320152202724@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('28', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335828', null, null, null, 'BE8791B8BE6DEC10', '学生26', '1', '0', '0', '24320152202725', '1', null, '24320152202725@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('29', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335829', null, null, null, 'BE8791B8BE6DEC10', '学生27', '1', '0', '0', '24320152202726', '1', null, '24320152202726@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('30', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335830', null, null, null, 'BE8791B8BE6DEC10', '学生28', '1', '0', '0', '24320152202727', '1', null, '24320152202727@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('31', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335831', null, null, null, 'BE8791B8BE6DEC10', '学生29', '1', '0', '0', '24320152202728', '1', null, '24320152202728@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('32', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335832', null, null, null, 'BE8791B8BE6DEC10', '学生30', '1', '0', '0', '24320152202729', '1', null, '24320152202729@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('33', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335833', null, null, null, 'BE8791B8BE6DEC10', '学生31', '1', '0', '0', '24320152202730', '1', null, '24320152202730@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('34', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335834', null, null, null, 'BE8791B8BE6DEC10', '学生32', '1', '0', '0', '24320152202731', '1', null, '24320152202731@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('35', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335835', null, null, null, 'BE8791B8BE6DEC10', '学生33', '1', '0', '0', '24320152202732', '1', null, '24320152202732@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('36', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335836', null, null, null, 'BE8791B8BE6DEC10', '学生34', '1', '0', '0', '24320152202733', '1', null, '24320152202733@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('37', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335837', null, null, null, 'BE8791B8BE6DEC10', '学生35', '1', '0', '0', '24320152202734', '1', null, '24320152202734@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('38', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335838', null, null, null, 'BE8791B8BE6DEC10', '学生36', '1', '0', '0', '24320152202735', '1', null, '24320152202735@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('39', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335839', null, null, null, 'BE8791B8BE6DEC10', '学生37', '1', '0', '0', '24320152202736', '1', null, '24320152202736@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('40', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335840', null, null, null, 'BE8791B8BE6DEC10', '学生38', '1', '0', '0', '24320152202737', '1', null, '24320152202737@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('41', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335841', null, null, null, 'BE8791B8BE6DEC10', '学生39', '1', '0', '0', '24320152202738', '1', null, '24320152202738@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('42', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335842', null, null, null, 'BE8791B8BE6DEC10', '学生40', '1', '0', '0', '24320152202739', '1', null, '24320152202739@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('43', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335843', null, null, null, 'BE8791B8BE6DEC10', '学生41', '1', '0', '0', '24320152202740', '1', null, '24320152202740@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('44', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335844', null, null, null, 'BE8791B8BE6DEC10', '学生42', '1', '0', '0', '24320152202741', '1', null, '24320152202741@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('45', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335845', null, null, null, 'BE8791B8BE6DEC10', '学生43', '1', '0', '0', '24320152202742', '1', null, '24320152202742@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('46', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335846', null, null, null, 'BE8791B8BE6DEC10', '学生44', '1', '0', '0', '24320152202743', '1', null, '24320152202743@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('47', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335847', null, null, null, 'BE8791B8BE6DEC10', '学生45', '1', '0', '0', '24320152202744', '1', null, '24320152202744@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('48', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335848', null, null, null, 'BE8791B8BE6DEC10', '学生46', '1', '0', '0', '24320152202745', '1', null, '24320152202745@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('49', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335849', null, null, null, 'BE8791B8BE6DEC10', '学生47', '1', '0', '0', '24320152202746', '1', null, '24320152202746@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('50', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335850', null, null, null, 'BE8791B8BE6DEC10', '学生48', '1', '0', '0', '24320152202747', '1', null, '24320152202747@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('51', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335851', null, null, null, 'BE8791B8BE6DEC10', '学生49', '1', '0', '0', '24320152202748', '1', null, '24320152202748@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('52', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335852', null, null, null, 'BE8791B8BE6DEC10', '学生50', '1', '0', '0', '24320152202749', '1', null, '24320152202749@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('53', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335853', null, null, null, 'BE8791B8BE6DEC10', '学生51', '1', '0', '0', '24320152202750', '1', null, '24320152202750@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('54', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335854', null, null, null, 'BE8791B8BE6DEC10', '学生52', '1', '0', '0', '24320152202751', '1', null, '24320152202751@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('55', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335855', null, null, null, 'BE8791B8BE6DEC10', '学生53', '1', '0', '0', '24320152202752', '1', null, '24320152202752@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('56', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335856', null, null, null, 'BE8791B8BE6DEC10', '学生54', '1', '0', '0', '24320152202753', '1', null, '24320152202753@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('57', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335857', null, null, null, 'BE8791B8BE6DEC10', '学生55', '1', '0', '0', '24320152202754', '1', null, '24320152202754@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('58', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335858', null, null, null, 'BE8791B8BE6DEC10', '学生56', '1', '1', '0', '24320152202755', '1', null, '24320152202755@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('59', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335859', null, null, null, 'BE8791B8BE6DEC10', '学生57', '1', '1', '0', '24320152202756', '1', null, '24320152202756@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('60', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335860', null, null, null, 'BE8791B8BE6DEC10', '学生58', '1', '1', '0', '24320152202757', '1', null, '24320152202757@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('61', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335861', null, null, null, 'BE8791B8BE6DEC10', '学生59', '1', '1', '0', '24320152202758', '1', null, '24320152202758@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('62', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335862', null, null, null, 'BE8791B8BE6DEC10', '学生60', '1', '1', '0', '24320152202759', '1', null, '24320152202759@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('63', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335863', null, null, null, 'BE8791B8BE6DEC10', '学生61', '1', '1', '0', '24320152202760', '1', null, '24320152202760@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('64', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335864', null, null, null, 'BE8791B8BE6DEC10', '学生62', '1', '1', '0', '24320152202761', '1', null, '24320152202761@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('65', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335865', null, null, null, 'BE8791B8BE6DEC10', '学生63', '1', '1', '0', '24320152202762', '1', null, '24320152202762@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('66', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335866', null, null, null, 'BE8791B8BE6DEC10', '学生64', '1', '1', '0', '24320152202763', '1', null, '24320152202763@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('67', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335867', null, null, null, 'BE8791B8BE6DEC10', '学生65', '1', '1', '0', '24320152202764', '1', null, '24320152202764@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('68', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335868', null, null, null, 'BE8791B8BE6DEC10', '学生66', '1', '1', '0', '24320152202765', '1', null, '24320152202765@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('69', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335869', null, null, null, 'BE8791B8BE6DEC10', '学生67', '1', '1', '0', '24320152202766', '1', null, '24320152202766@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('70', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335870', null, null, null, 'BE8791B8BE6DEC10', '学生68', '1', '1', '0', '24320152202767', '1', null, '24320152202767@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('71', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335871', null, null, null, 'BE8791B8BE6DEC10', '学生69', '1', '1', '0', '24320152202768', '1', null, '24320152202768@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('72', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335872', null, null, null, 'BE8791B8BE6DEC10', '学生70', '1', '1', '0', '24320152202769', '1', null, '24320152202769@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('73', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335873', null, null, null, 'BE8791B8BE6DEC10', '学生71', '1', '1', '0', '24320152202770', '1', null, '24320152202770@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('74', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335874', null, null, null, 'BE8791B8BE6DEC10', '学生72', '1', '1', '0', '24320152202771', '1', null, '24320152202771@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('75', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335875', null, null, null, 'BE8791B8BE6DEC10', '学生73', '1', '1', '0', '24320152202772', '1', null, '24320152202772@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('76', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335876', null, null, null, 'BE8791B8BE6DEC10', '学生74', '1', '1', '0', '24320152202773', '1', null, '24320152202773@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('77', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335877', null, null, null, 'BE8791B8BE6DEC10', '学生75', '1', '1', '0', '24320152202774', '1', null, '24320152202774@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('78', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335878', null, null, null, 'BE8791B8BE6DEC10', '学生76', '1', '1', '0', '24320152202775', '1', null, '24320152202775@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('79', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335879', null, null, null, 'BE8791B8BE6DEC10', '学生77', '1', '1', '0', '24320152202776', '1', null, '24320152202776@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('80', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335880', null, null, null, 'BE8791B8BE6DEC10', '学生78', '1', '1', '0', '24320152202777', '1', null, '24320152202777@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('81', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335881', null, null, null, 'BE8791B8BE6DEC10', '学生79', '1', '1', '0', '24320152202778', '1', null, '24320152202778@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('82', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335882', null, null, null, 'BE8791B8BE6DEC10', '学生80', '1', '1', '0', '24320152202779', '1', null, '24320152202779@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('83', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335883', null, null, null, 'BE8791B8BE6DEC10', '学生81', '1', '1', '0', '24320152202780', '1', null, '24320152202780@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('84', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335884', null, null, null, 'BE8791B8BE6DEC10', '学生82', '1', '1', '0', '24320152202781', '1', null, '24320152202781@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('85', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335885', null, null, null, 'BE8791B8BE6DEC10', '学生83', '1', '1', '0', '24320152202782', '1', null, '24320152202782@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('86', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335886', null, null, null, 'BE8791B8BE6DEC10', '学生84', '1', '1', '0', '24320152202783', '1', null, '24320152202783@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('87', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335887', null, null, null, 'BE8791B8BE6DEC10', '学生85', '1', '1', '0', '24320152202784', '1', null, '24320152202784@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('88', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335888', null, null, null, 'BE8791B8BE6DEC10', '学生86', '1', '1', '0', '24320152202785', '1', null, '24320152202785@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('89', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335889', null, null, null, 'BE8791B8BE6DEC10', '学生87', '1', '1', '0', '24320152202786', '1', null, '24320152202786@stu.xmu.edu.cn');
+INSERT INTO `user_info` VALUES ('90', '2017-12-16 12:14:09', '2017-12-16 12:14:09', '15720335802', null, null, null, 'BE8791B8BE6DEC10', '吴清强', '1', '0', '1', '20173492', '3', '0', '20173492@xmu.edu.cn');
