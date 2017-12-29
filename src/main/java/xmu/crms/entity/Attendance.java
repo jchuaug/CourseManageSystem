@@ -22,6 +22,14 @@ public class Attendance {
 		this.attendanceStatus = attendanceStatus;
 	}
 
+	public Attendance(User student, ClassInfo classInfo, Seminar seminar, Integer attendanceStatus) {
+		super();
+		this.student = student;
+		this.classInfo = classInfo;
+		this.seminar = seminar;
+		this.attendanceStatus = attendanceStatus;
+	}
+
 	public BigInteger getId() {
 		return id;
 	}

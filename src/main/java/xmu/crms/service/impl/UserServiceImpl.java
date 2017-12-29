@@ -1,7 +1,5 @@
 package xmu.crms.service.impl;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -406,15 +404,18 @@ public class UserServiceImpl implements UserService {
 			}
 			Location location = userMapper.getLocationBySeminarIdAndClassId(seminarId, classId);
 			System.out.println(location);
-			Integer status = -1;
+			Integer status = 2;
 			if (Math.abs(location.getLatitude() - latitude) > 30
 					|| Math.abs(location.getLongitude() - longitude) > 30) {
 				throw new InvalidOperationException("UserService:illegal location");
 			}
-			status = 1;
-			insertedRows = BigInteger.valueOf(userMapper.insertAttendanceById(classId, seminarId, userId, status));
+			status = 0;
+			Attendance attendance = new Attendance(userMapper.getUserByUserId(userId),
+					userMapper.getClassByClassId(classId), userMapper.getSeminarBySeminarId(seminarId), status);
+			userMapper.insertAttendanceById(attendance);
+//			insertedRows = attendance.getId();
 			if (insertedRows == null) {
-				throw new InvalidOperationException();
+				throw new InvalidOperationException("no availiable return value");
 			}
 
 		} catch (ClassesNotFoundException e) {
@@ -424,7 +425,6 @@ public class UserServiceImpl implements UserService {
 		} catch (InvalidOperationException e) {
 			e.printStackTrace();
 		}
-		System.out.println("insertRow=" + insertedRows);
 		return insertedRows;
 	}
 

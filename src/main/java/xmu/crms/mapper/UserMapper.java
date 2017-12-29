@@ -185,8 +185,9 @@ public interface UserMapper {
 	 * @param attendanceDO
 	 * @return
 	 */
-	Integer insertAttendanceById(@Param("classId") BigInteger classId, @Param("seminarId") BigInteger seminarId,
-			@Param("userId") BigInteger userId, @Param("status") Integer status);
+//	Integer insertAttendanceById(@Param("classId") BigInteger classId, @Param("seminarId") BigInteger seminarId,
+//			@Param("userId") BigInteger userId, @Param("status") Integer status);
+	Integer insertAttendanceById(Attendance attendance);
 
 	/**
 	 * 获取讨论课所在的缺勤学生名单 status==2
