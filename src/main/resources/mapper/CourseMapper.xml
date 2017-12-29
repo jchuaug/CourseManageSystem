@@ -11,7 +11,7 @@
         <result column="name" property="name"/>
         <result column="start_date" property="startDate"/>
         <result column="end_date" property="endDate"/>
-        <result column="decription" property="decription"/>
+        <result column="description" property="description"/>
         <result column="report_percentage" property="reportPercentage"/>
         <result column="presentation_percentage" property="presentationPercentage"/>
         <result column="five_point_percentage" property="fivePointPercentage"/>
@@ -34,17 +34,46 @@
     </resultMap>
 
     <!--helper select-->
-    <select id="getUserByUserId" parameterType="java.math.BigInteger" resultType="User">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`, `number`, education, title, email
-		from user_info
-		where id = #{id}
-	</select>
+    <select id="getUserByUserId" parameterType="java.math.BigInteger"
+            resultMap="xmu.crms.mapper.UserMapper.UserResultMap">
+        SELECT
+            id,
+            gmt_create,
+            gmt_modified,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            name,
+            school_id,
+            gender,
+            type,
+            number,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE id = #{id}
+    </select>
 
     <select id="listCourseByTeacherId" resultMap="CourseResult">
-        select id,name,start_date,end_date,description,report_percentage,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage
-        from course
-        where teacher_id = #{id}
+        SELECT
+            id,
+            gmt_create,
+            gmt_modified,
+            name,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM course
+        WHERE teacher_id = #{id}
     </select>
 
     <select id="listCourseIdByStudentId" resultMap="CourseResult">
@@ -54,40 +83,51 @@
     </select>
 
     <insert id="insertCourseByUserId" parameterType="xmu.crms.entity.Course" useGeneratedKeys="true" keyProperty="id">
-		insert into
-		course(
-		`name`,
-		start_date,
-		end_date,
-		teacher_id,
-		description,
-		report_percentage,
-		presentation_percentage,
-		five_point_percentage,
-		four_point_percentage,
-		three_point_percentage)
-		values(
-		#{name},
-		#{startDate},
-		#{endDate},
-		#{teacher.id},
-		#{description},
-		#{reportPercentage},
-		#{presentationPercentage},
-		#{fivePointPercentage},
-		#{fourPointPercentage},
-		#{threePointPercentage}
-		)
-		<selectKey resultType="java.math.BigInteger" keyProperty="id" order="AFTER">
+        insert into
+        course(
+        `name`,
+        start_date,
+        end_date,
+        teacher_id,
+        description,
+        report_percentage,
+        presentation_percentage,
+        five_point_percentage,
+        four_point_percentage,
+        three_point_percentage)
+        values(
+        #{name},
+        #{startDate},
+        #{endDate},
+        #{teacher.id},
+        #{description},
+        #{reportPercentage},
+        #{presentationPercentage},
+        #{fivePointPercentage},
+        #{fourPointPercentage},
+        #{threePointPercentage}
+        )
+        <selectKey resultType="java.math.BigInteger" keyProperty="id" order="AFTER">
             SELECT last_insert_id()
         </selectKey>
     </insert>
 
     <select id="getCourseByCourseId" parameterType="java.math.BigInteger" resultMap="CourseResult">
-		select id,name,start_date,end_date,teacher_id,description,report_percentage,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage
-		from course
-		where id = #{id,jdbcType=BIGINT}
-	</select>
+        SELECT
+            id,
+            name,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM course
+        WHERE id = #{id,jdbcType=BIGINT}
+    </select>
 
     <update id="updateCourseByCourseId">
         update course
@@ -106,14 +146,25 @@
     </update>
 
     <delete id="deleteCourseByCourseId" parameterType="java.math.BigInteger">
-		delete from course
-		where id = #{id,jdbcType=BIGINT}
-	</delete>
+        DELETE FROM course
+        WHERE id = #{id,jdbcType=BIGINT}
+    </delete>
 
     <select id="listCourseByCourseName" parameterType="java.lang.String" resultMap="CourseResult">
-		select id,name,start_date,end_date,teacher_id,description,report_percentage,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage
-		from course
-		where name = #{name,jdbcType=VARCHAR}
-	</select>
+        SELECT
+            id,
+            name,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM course
+        WHERE name = #{name,jdbcType=VARCHAR}
+    </select>
 
 </mapper>
