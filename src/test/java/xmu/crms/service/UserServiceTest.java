@@ -8,12 +8,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import xmu.crms.CourseManageApplication;
+import xmu.crms.entity.Course;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
+import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.mapper.UserMapper;
@@ -27,9 +28,10 @@ public class UserServiceTest {
 	UserMapper userMapper;
 
 	/**
-	 * 测试insertAttendanceById
+	 * test failed problem:can't get id after insert operation,it turns out to 1 all
+	 * the time
 	 */
-	// test fail
+
 	@Test
 	public void insertAttendanceByIdTest() {
 		BigInteger classId = BigInteger.valueOf(1);
@@ -52,6 +54,9 @@ public class UserServiceTest {
 		}
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listAttendanceByIdTest() {
 		BigInteger classId = BigInteger.valueOf(1);
@@ -67,6 +72,10 @@ public class UserServiceTest {
 
 	}
 
+	/**
+	 * test success
+	 */
+
 	@Test
 	public void getUserByUserIdTest() throws IllegalArgumentException, UserNotFoundException {
 		BigInteger[] idArray = { BigInteger.valueOf(1), BigInteger.valueOf(2), BigInteger.valueOf(33),
@@ -80,6 +89,9 @@ public class UserServiceTest {
 		System.out.println("Testing getUserByUserIdTest done!");
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listUserIdByUserNameTest() throws UserNotFoundException {
 
@@ -93,45 +105,203 @@ public class UserServiceTest {
 		System.out.println("Testing listUserIdByUserNameTest done!");
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void updateUserByUserIdTest() throws UserNotFoundException {
-		User user = new User("12345678912", "test update");
-		Integer returnId=userMapper.insertUser(user);
-		System.out.println(returnId);
-		BigInteger id = BigInteger.valueOf(returnId);
-		System.out.println("Inserted id is:" + id);
-/*		User temp = userMapper.getUserByUserId(BigInteger.valueOf(1));
-		user = temp;
-		System.out.println("updated user is:" + user);
-		user.setId(id);
-		user.setPhone("12345678912");
+		User user = userMapper.getUserByUserId(BigInteger.valueOf(1));
+		User tempUser = user;// backups
+		System.out.println("user going to be update is:" + user);
+		BigInteger id = user.getId();
+		user.setWechatId("test1");
 		userService.updateUserByUserId(id, user);
-		System.out.println("Testing updateUserByUserIdTest done!");*/
+		User newUser = userMapper.getUserByUserId(BigInteger.valueOf(1));
+		System.out.println("updated wecaht id is:" + newUser.getWechatId());
+		userService.updateUserByUserId(id, tempUser);// recover
+		System.out.println("Testing updateUserByUserIdTest done!");
 
 	}
+
+	/**
+	 * test success
+	 */
 
 	@Test
 	public void listUserByClassIdTest() {
+		List<User> users = new ArrayList<>();
+		List<User> users2 = new ArrayList<>();
+		List<User> users3 = new ArrayList<>();
+		List<User> users4 = new ArrayList<>();
+		try {
+			users = userService.listUserByClassId(BigInteger.valueOf(1), "243", "学");
+			System.out.println(users);
+			users = userService.listUserByClassId(BigInteger.valueOf(4), "243", "学");
+			System.out.println(users2);
+			users = userService.listUserByClassId(BigInteger.valueOf(1), "00243", "学");
+			System.out.println(users3);
+			users = userService.listUserByClassId(BigInteger.valueOf(1), "243", "8学");
+			System.out.println(users4);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UserNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Testing listUserByClassIdTest done!");
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listUserByUserNameTest() {
+		List<User> user1 = new ArrayList<>();
+		List<User> user2 = new ArrayList<>();
+		List<User> user3 = new ArrayList<>();
+		List<User> user4 = new ArrayList<>();
+
+		try {
+			user1 = userService.listUserByUserName("邱明");
+			System.out.println(user1);
+			user2 = userService.listUserByUserName("明");
+			System.out.println(user2);
+			user3 = userService.listUserByUserName("秋明");
+			System.out.println(user3);
+			user4 = userService.listUserByUserName("学生1");
+			System.out.println(user4);
+		} catch (UserNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Testing listUserByUserNameTest done!");
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listPresentStudentTest() {
+		List<User> users1 = new ArrayList<>();
+		List<User> users2 = new ArrayList<>();
+		List<User> users3 = new ArrayList<>();
+		List<User> users4 = new ArrayList<>();
+
+		try {
+			users1 = userService.listPresentStudent(BigInteger.valueOf(3), BigInteger.valueOf(1));
+			System.out.println("user1:" + users1);
+			users1 = userService.listPresentStudent(BigInteger.valueOf(4), BigInteger.valueOf(1));
+			System.out.println("user2:" + users2);
+			users1 = userService.listPresentStudent(BigInteger.valueOf(3), BigInteger.valueOf(4));
+			System.out.println("user3:" + users3);
+			users1 = userService.listPresentStudent(BigInteger.valueOf(6), BigInteger.valueOf(6));
+			System.out.println("user4:" + users4);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Testing listPresentStudentTest done!");
+
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listLateStudentTest() {
+		List<User> users1 = new ArrayList<>();
+		List<User> users2 = new ArrayList<>();
+		List<User> users3 = new ArrayList<>();
+		List<User> users4 = new ArrayList<>();
+
+		try {
+			users1 = userService.listLateStudent(BigInteger.valueOf(3), BigInteger.valueOf(1));
+			System.out.println("user1:" + users1);
+			users1 = userService.listLateStudent(BigInteger.valueOf(4), BigInteger.valueOf(1));
+			System.out.println("user2:" + users2);
+			users1 = userService.listLateStudent(BigInteger.valueOf(3), BigInteger.valueOf(4));
+			System.out.println("user3:" + users3);
+			users1 = userService.listLateStudent(BigInteger.valueOf(6), BigInteger.valueOf(6));
+			System.out.println("user4:" + users4);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Testing listLateStudentTest done!");
+
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listAbsenceStudentTest() {
+		List<User> users1 = new ArrayList<>();
+		List<User> users2 = new ArrayList<>();
+		List<User> users3 = new ArrayList<>();
+		List<User> users4 = new ArrayList<>();
+
+		try {
+			users1 = userService.listAbsenceStudent(BigInteger.valueOf(3), BigInteger.valueOf(1));
+			System.out.println("user1:" + users1);
+			users1 = userService.listAbsenceStudent(BigInteger.valueOf(4), BigInteger.valueOf(1));
+			System.out.println("user2:" + users2);
+			users1 = userService.listAbsenceStudent(BigInteger.valueOf(3), BigInteger.valueOf(4));
+			System.out.println("user3:" + users3);
+			users1 = userService.listAbsenceStudent(BigInteger.valueOf(6), BigInteger.valueOf(6));
+			System.out.println("user4:" + users4);
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Testing listAbsenceStudentTest done!");
 	}
 
+	/**
+	 * test success
+	 */
 	@Test
 	public void listCourseByTeacherNameTest() {
+		String[] names = { "邱明", "王美红", "学生1", "学生2" };
+		for (String name : names) {
+			List<Course> courses = new ArrayList<>();
+			try {
+				courses = userService.listCourseByTeacherName(name);
+				System.out.println(name + "'s courses are:" + courses);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UserNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (CourseNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Testing listCourseByTeacherNameTest done!");
 	}
 
 }

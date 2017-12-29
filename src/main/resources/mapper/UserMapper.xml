@@ -329,14 +329,14 @@
 		seminar WHERE id = #{seminarId}
 	</select>
 
-	<select id="listCourseByTeacherName" parameterType="java.math.BigInteger"
+	<select id="listCourseByTeacherName" parameterType="java.lang.String"
 		resultMap="CourseResultMap">
 		select id, `name`, start_date, end_date, teacher_id,
 		description,
 		report_percentage, presentation_percentage,
 		five_point_percentage, four_point_percentage, three_point_percentage
 		from course where teacher_id in (select id from user_info where
-		user_info.name=#{name})
+		user_info.name=#{name} and user_info.type=1)
 	</select>
 
 </mapper>
