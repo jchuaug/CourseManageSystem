@@ -2,6 +2,7 @@ package xmu.crms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
 import xmu.crms.exception.CourseNotFoundException;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * @author caistrong
  */
-@Component
+@Service
 public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseMapper courseMapper;
