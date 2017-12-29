@@ -88,11 +88,9 @@ public class TopicServiceImpl implements TopicService {
             throw new IllegalArgumentException();
         }
 
-        try {
+
             topicMapper.deleteById(topicId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override
