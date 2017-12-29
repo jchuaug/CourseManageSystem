@@ -392,6 +392,114 @@
 			}
 		});
 	}
+
+	function getMyGroup() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/1/group/my",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getAttendanceBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getPresentStudentBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/present",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getLateStudentBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/late",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+	function getAbsentStudentBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/absent",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function insertAttendanceBySeminarIdAndClassId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/seminar/3/class/1/attendance/3",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data :JSON.stringify( {
+				"longitude" : 118.1132721,
+				"latitude" : 24.4307197,
+				"elevation" : 18.42
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+
 </script>
 </head>
 
@@ -457,6 +565,26 @@
 
 	<br>
 	<button onclick="getGroup()">getGroup</button>
+
+	<br>
+	<button onclick="getMyGroup()">getMyGroup</button>
+
+	<br>
+	<button onclick="getAttendanceBySeminarIdAndClassId()">getAttendanceBySeminarIdAndClassId</button>
+
+
+	<br>
+	<button onclick="getPresentStudentBySeminarIdAndClassId()">getPresentStudentBySeminarIdAndClassId</button>
+
+	<br>
+	<button onclick="getLateStudentBySeminarIdAndClassId()">getLateStudentBySeminarIdAndClassId</button>
+
+	<br>
+	<button onclick="getAbsentStudentBySeminarIdAndClassId()">getAbsentStudentBySeminarIdAndClassId</button>
+	<br>
+	<button onclick="insertAttendanceBySeminarIdAndClassId()">insertAttendanceBySeminarIdAndClassId</button>
+
+
 
 	<p id="show"></p>
 </body>

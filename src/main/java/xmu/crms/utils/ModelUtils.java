@@ -189,7 +189,7 @@ public class ModelUtils {
 				members.add(UserToUserResponseVO(seminarGroupMember));
 			}
 		}
-
+		groupResponseVO.setMembers(members);
 		groupResponseVO.setId(seminarGroup.getId());
 		groupResponseVO.setName(seminarGroup.getId().toString());
 		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();

@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
 
+import xmu.crms.entity.Attendance;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
@@ -38,6 +39,7 @@ import xmu.crms.entity.SeminarGroupMember;
 import xmu.crms.entity.SeminarGroupTopic;
 import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
+import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
@@ -54,6 +56,8 @@ import xmu.crms.service.SeminarService;
 import xmu.crms.service.TopicService;
 import xmu.crms.service.UserService;
 import xmu.crms.utils.ModelUtils;
+import xmu.crms.web.VO.AttendanceRequestVO;
+import xmu.crms.web.VO.AttendanceResponseVO;
 import xmu.crms.web.VO.GroupResponseVO;
 import xmu.crms.web.VO.MySeminarResponseVO;
 import xmu.crms.web.VO.SeminarDetailResponseVO;
@@ -345,7 +349,7 @@ public class SeminarController {
 				System.err.println(seminarGroup);
 				if (new BigInteger(classId.toString()).equals(seminarGroup.getClassInfo().getId())) {
 					List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
-					groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup, topics,null));
+					groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup, topics, null));
 				}
 			}
 
@@ -368,6 +372,9 @@ public class SeminarController {
 		} else if (STUDENT.equals(typeString)) {
 			type = 0;
 		}
+		if (type == 1) {
+			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 
 		GroupResponseVO groupResponseVO = null;
 		try {
@@ -375,20 +382,183 @@ public class SeminarController {
 			SeminarGroup group = seminarGroupService.getSeminarGroupById(seminarId, userId);
 
 			List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(group.getId());
-			List<User> members=seminarGroupService.listSeminarGroupMemberByGroupId(group.getId());
-			groupResponseVO=ModelUtils.SeminarGroupToGroupResponseVO(group, topics,members);
+			List<User> members = seminarGroupService.listSeminarGroupMemberByGroupId(group.getId());
+			groupResponseVO = ModelUtils.SeminarGroupToGroupResponseVO(group, topics, members);
 
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		} catch (GroupNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<GroupResponseVO>(groupResponseVO, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{seminarId}/class/{classId}/attendance")
+	public ResponseEntity<AttendanceResponseVO> getAttendanceBySeminarIdAndClassId(
+			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
+			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String typeString = JWTUtil.getUserType(token);
+		Integer type = null;
+		if (TEACHER.equals(typeString)) {
+			type = 1;
+		} else if (STUDENT.equals(typeString)) {
+			type = 0;
+		}
+		AttendanceResponseVO attendanceResponseVO = null;
+		try {
+			Integer numPresent = userService.listPresentStudent(seminarId, classId).size();
+			Integer numStudent = userService.listUserByClassId(classId, "", "").size();
+			Location location = classService.getCallStatusById(classId, seminarId);
+			String status = location.getStatus() == 1 ? "calling" : "notcalling";
+			String group = " ";
+			attendanceResponseVO = new AttendanceResponseVO(numPresent, numStudent, status, group);
+
+		} catch (SeminarNotFoundException | ClassesNotFoundException | UserNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<AttendanceResponseVO>(attendanceResponseVO, new HttpHeaders(), HttpStatus.OK);
+	}
+
+	@GetMapping("/{seminarId}/class/{classId}/attendance/present")
+	public ResponseEntity<List<UserResponseVO>> getPresentStudentBySeminarIdAndClassId(
+			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
+			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String typeString = JWTUtil.getUserType(token);
+		Integer type = null;
+		if (TEACHER.equals(typeString)) {
+			type = 1;
+		} else if (STUDENT.equals(typeString)) {
+			type = 0;
+		}
+		List<UserResponseVO> userResponseVOs = new ArrayList<>();
+	
+		try {
+			List<User> students = userService.listPresentStudent(seminarId, classId);
+			for (User user : students) {
+				userResponseVOs.add(ModelUtils.UserToUserResponseVO(user));
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		} catch (ClassesNotFoundException|SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} 
+		
+
+		return new ResponseEntity<List<UserResponseVO>>(userResponseVOs, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{seminarId}/class/{classId}/attendance/late")
+	public ResponseEntity<List<UserResponseVO>> getLateStudentBySeminarIdAndClassId(
+			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
+			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String typeString = JWTUtil.getUserType(token);
+		Integer type = null;
+		if (TEACHER.equals(typeString)) {
+			type = 1;
+		} else if (STUDENT.equals(typeString)) {
+			type = 0;
+		}
+		List<UserResponseVO> userResponseVOs = new ArrayList<>();
+	
+		try {
+			List<User> students = userService.listLateStudent(seminarId, classId);
+			for (User user : students) {
+				userResponseVOs.add(ModelUtils.UserToUserResponseVO(user));
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		} catch (ClassesNotFoundException|SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} 
+		
+
+		return new ResponseEntity<List<UserResponseVO>>(userResponseVOs, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{seminarId}/class/{classId}/attendance/absent")
+	public ResponseEntity<List<UserResponseVO>> getAbsentStudentBySeminarIdAndClassId(
+			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
+			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String typeString = JWTUtil.getUserType(token);
+		Integer type = null;
+		if (TEACHER.equals(typeString)) {
+			type = 1;
+		} else if (STUDENT.equals(typeString)) {
+			type = 0;
+		}
+		List<UserResponseVO> userResponseVOs = new ArrayList<>();
+	
+		try {
+			List<User> students = userService.listAbsenceStudent(seminarId, classId);
+			for (User user : students) {
+				userResponseVOs.add(ModelUtils.UserToUserResponseVO(user));
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		} catch (ClassesNotFoundException|SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<List<UserResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} 
+		
+
+		return new ResponseEntity<List<UserResponseVO>>(userResponseVOs, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	@PutMapping("/{seminarId}/class/{classId}/attendance/{studentId}")
+	public ResponseEntity<AttendanceResponseVO> insertAttendanceBySeminarIdAndClassId(
+			@PathVariable("seminarId") BigInteger seminarId, @PathVariable("classId") BigInteger classId,
+			@PathVariable("studentId") BigInteger studentId,@RequestBody AttendanceRequestVO attendance,
+			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String typeString = JWTUtil.getUserType(token);
+		Integer type = null;
+		if (TEACHER.equals(typeString)) {
+			type = 1;
+		} else if (STUDENT.equals(typeString)) {
+			type = 0;
+		}
+		if (!userId.equals(studentId)) {
+			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
+		AttendanceResponseVO attendanceResponseVO=new AttendanceResponseVO();
+	
+		try {
+			BigInteger id =userService.insertAttendanceById( classId,  seminarId,
+                     userId,  attendance.getLongitude(),  attendance.getLatitude());
+			
+		}  catch (UserNotFoundException|ClassesNotFoundException|SeminarNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+		}
+		
+
+		return new ResponseEntity<AttendanceResponseVO>(attendanceResponseVO, new HttpHeaders(), HttpStatus.OK);
 	}
 
 }
