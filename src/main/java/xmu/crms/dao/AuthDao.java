@@ -1,24 +1,29 @@
 package xmu.crms.dao;
 
-import org.apache.ibatis.annotations.Param;
-import xmu.crms.security.UserDetailsImpl;
+import org.apache.ibatis.annotations.Mapper;
+
+import xmu.crms.security.JwtUserDetails;
 
 /**
- * @author mads
- * @date 2017/12/28 20:15
+ *
+ * @author JackeyHuang
+ *
  */
+@Mapper
 public interface AuthDao {
-    /**
-     * 根据手机号找用户
-     * @param phone
-     * @return
-     */
-    UserDetailsImpl getUserByNumber(@Param("phone") String phone);
+	/**
+	 * 根据手机号登录
+	 * 
+	 * @param phone
+	 * @return
+	 */
+	JwtUserDetails getUserByPhone(String phone);
 
-    /**
-     * 根据openid登录用
-     * @param openid
-     * @return
-     */
-    UserDetailsImpl getUserByOpenId(@Param("openid") String openid);
+	/**
+	 * 根据openid登录
+	 * 
+	 * @param openid
+	 * @return
+	 */
+	JwtUserDetails getUserByOpenId(String openid);
 }

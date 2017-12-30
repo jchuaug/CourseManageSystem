@@ -21,7 +21,7 @@ import xmu.crms.security.UnauthorizedEntryPoint;
  * @author mads
  */
 
-//@Configuration
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -60,14 +60,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**","/img/**","/js/**","/student/**","/teacher/**","/register","/school/**");
+        web.ignoring().antMatchers("/css/**","/Img/**","/js/**","/student/**","/teacher/**","/register","/school/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-       /* http
+        http
             .authorizeRequests()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/signin/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -85,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().cacheControl();
-        http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);*/
+        http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Autowired
