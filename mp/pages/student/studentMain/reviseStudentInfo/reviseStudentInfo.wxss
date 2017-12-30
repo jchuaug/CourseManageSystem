@@ -1,0 +1,62 @@
+/* pages/student/reviseStudentInfo/reviseStudentInfo.wxss */
+page {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.user-card {
+    height: 420rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.image-bg {
+    width: 100%;
+    height: 400rpx;
+    margin: auto;
+    display: block;
+    opacity: 0.5;
+    position: absolute;
+    z-index: 0;
+    /*padding-bottom: 60%;*/
+}
+
+.avator{
+    display: block;
+    margin: 0 auto;
+    z-index: 1;
+
+
+}
+.user-pic{
+    height: 200rpx;
+    width: 200rpx;
+}
+
+.user-info {
+    background-color: #73D2FF;
+    height: 100vh;
+}
+
+.key {
+    width: 50%;
+    display: inline-block;
+    text-align: right;
+    padding: 20rpx 50rpx;
+    box-sizing: border-box;
+    color: white;
+}
+
+.value {
+    width: 50%;
+    display: inline-block;
+}
+
+.bt-unbind{
+   position: fixed;
+    bottom: 100rpx;
+    width: 80%;
+    left: 10%;
+}
+

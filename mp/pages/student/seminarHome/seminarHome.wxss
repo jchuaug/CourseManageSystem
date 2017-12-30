@@ -1,0 +1,45 @@
+/* pages/student/courseHome/courseHome.wxss */
+
+.seminar .head20 {
+    width: 100%;
+    height: 15vh;
+    position: relative;
+    background-color: #66CCFF;
+}
+
+.seminar .action-wrapper {
+    display: flex;
+    flex-direction: row;
+    height: 80vh;
+    margin-top: 2.5vh;
+    justify-content: space-around;
+}
+
+.seminar .action-wrapper .wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.seminar .action {
+    width: 45vw;
+    /*padding-top: 50%;*/
+    /*padding-bottom: 50%;*/
+    height: 47.5%;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.inactive {
+    background-color: #CCCCCC;
+}
+.active{
+    background-color: #66CCFF;
+}
+
+.action-score {
+    flex-grow: 2;
+}

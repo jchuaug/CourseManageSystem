@@ -1,0 +1,63 @@
+/* pages/StudentClass/CourseUI/Seminar/Grade/grade.wxss */
+@charset "utf-8";
+/* CSS Document */
+/* 背景色 字体 */
+page{
+  background-color: rgba(102,204,255,0.5);
+  font-family:"微软雅黑";
+}
+/* 左上角讨论课信息块 */
+.seminarblock{
+	height:15%;
+	margin:3% 7%;
+	font-size:1.125rem;
+	position:relative;
+  float: left;
+  width: 100%;
+}
+/*打分部分的边缘长度*/
+.scoremargin{
+	margin:10%;
+}
+/* “提交”按钮 */
+.btnsubmit{
+	margin: auto;
+	margin-top:20%;
+	background-color:#66ccff;
+	color:#FFF;
+	font-size:1.5rem;
+	border-radius:0.9375rem;
+	width:50%;
+	border-style: none; 
+}
+.seminarimg{
+   height: 3rem;
+   width: 3rem;
+   display: inline-block;
+}
+.greyword{
+  height: 3rem;
+  width: 14rem;
+  font-size:0.9375rem; 
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 3rem;
+}
+.column0{
+	float:left;
+	width:15%
+}
+.text{
+  height: 1.5rem;
+  width: 1.5rem;
+  display: inline-block;
+  margin-left: 10%;
+}
+.heart{
+  line-height: 0.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 3%;
+}

@@ -1,0 +1,25 @@
+<page>
+    <view class="blueUsersView">
+        <i class="fa fa-users fa-4x"/>
+        <strong>请为您的队伍选题</strong>
+    </view>
+
+
+    <block wx:for="{{topics}}">
+        <view class="topic-view {{item.groupLeft>0?'active':''}}" bindtap="{{item.groupLeft>0?'chooseTopic':''}}"
+              id="{{item.id}}">
+            <view class="flex-center">
+                <span class="topic">话题{{item.id}}</span>
+            </view>
+            <view class="flex-center right">
+                <view class="topicName">{{item.name}}</view>
+                <view class="left-number">剩余 ： {{item.groupLeft}}/{{item.groupLimit}}</view>
+            </view>
+            <view class="fa fa-arrows-alt fa-1x flex-center i-expand" bindtap="expand" id="{{item.id}}"/>
+        </view>
+        <view wx:if="{{opened[item.id]}}" class="detail">
+            {{item.description}}
+        </view>
+    </block>
+
+</page>

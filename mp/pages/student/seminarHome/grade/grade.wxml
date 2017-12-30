@@ -1,0 +1,19 @@
+<!--pages/StudentClass/CourseUI/Seminar/Grade/grade.wxml-->
+<page>
+    <view class="seminarblock">
+        <span class="column0">
+            <image class="seminarimg" src="users.png"/>
+        </span>
+        <label class='greyword'>请为别的小组展示打分</label>
+    </view>
+    <block wx:for="{{groups}}" wx:for-item="group">
+        <!--id is index of group in the array, because groupId may not start with 0-->
+        <view id="{{index}}" bindtap='selectHeart'>
+            <label class='text'>{{group.name}}</label>
+            <block wx:for="{{[1,2,3,4,5]}}">
+                <image class='heart' data-score="{{item}}" src="{{item<=group.score?heart_chosen:heart_empty}}"/>
+            </block>
+        </view>
+    </block>
+    <button class="btnsubmit" catchtap="submit">提交</button>
+</page>

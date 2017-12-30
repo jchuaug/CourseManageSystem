@@ -1,172 +1,193 @@
 package xmu.crms.entity;
 
 import java.math.BigInteger;
+import java.util.Map;
 
 public class User {
-	private BigInteger id;
-	private String phone;
-	private String wechatId;
-	private String openid;
-	private String avatar;
-	private String password;
-	private String name;
-	private School school;
-	private Integer gender;
-	private Integer type;
-	private String number;
-	private Integer education;
-	private Integer title;
-	private String email;
+    private BigInteger id;
+    private String phone;
+    private String wechatId;
+    private String openid;
+    private String avatar;
+    private String password;
+    private String name;
+    private School school;
+    private Integer gender;
+    private Integer type;
+    private String number;
+    private Integer education;
+    private Integer title;
+    private String email;
 
-	public User() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    public User() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	public User(String phone, String password) {
-		super();
-		this.phone = phone;
-		this.password = password;
-	}
+    public User(Map<String, Object> jsonUser) {
+        this.password = (String) (jsonUser.get("password"));
+        this.id = null;
+        this.type = (Integer) jsonUser.get("type");
+        this.name = (String) jsonUser.get("name");
+        this.number = (String) jsonUser.get("id");
+        this.phone = (String) jsonUser.get("phone");
+        this.email = (String) jsonUser.get("email");
+        if (jsonUser.get("gender") != null) {
+            this.gender = (((String) jsonUser.get("gender")).equals("男")) ? 0 : 1;
+        }
+        //todo what's the school for
+//        this.school = new School(new SchoolVO(null, (String) jsonUser.get("school")));
+        if (jsonUser.get("title") != null) {
+            this.title = ((String) jsonUser.get("title")).equals("教授") ? 1 : 0;
+        }
+        this.education = null;
+        this.avatar = (String) jsonUser.get("avatar");
+    }
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", phone=" + phone + ", wechatId=" + wechatId + ", openid=" + openid + ", avatar="
-				+ avatar + ", password=" + password + ", name=" + name + ", school=" + school + ", gender=" + gender
-				+ ", type=" + type + ", number=" + number + ", education=" + education + ", title=" + title + ", email="
-				+ email + "]";
-	}
+    public User(String phone, String password) {
+        super();
+        this.phone = phone;
+        this.password = password;
+    }
 
-	public User(BigInteger id, String phone, String wechatId, String openid, String avatar, String password,
-			String name, School school, Integer gender, Integer type, String number, Integer education, Integer title,
-			String email) {
-		super();
-		this.id = id;
-		this.phone = phone;
-		this.wechatId = wechatId;
-		this.openid = openid;
-		this.avatar = avatar;
-		this.password = password;
-		this.name = name;
-		this.school = school;
-		this.gender = gender;
-		this.type = type;
-		this.number = number;
-		this.education = education;
-		this.title = title;
-		this.email = email;
-	}
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", phone=" + phone + ", wechatId=" + wechatId + ", openid=" + openid + ", avatar="
+                + avatar + ", password=" + password + ", name=" + name + ", school=" + school + ", gender=" + gender
+                + ", type=" + type + ", number=" + number + ", education=" + education + ", title=" + title + ", email="
+                + email + "]";
+    }
 
-	public BigInteger getId() {
-		return id;
-	}
+    public User(BigInteger id, String phone, String wechatId, String openid, String avatar, String password,
+                String name, School school, Integer gender, Integer type, String number, Integer education, Integer title,
+                String email) {
+        super();
+        this.id = id;
+        this.phone = phone;
+        this.wechatId = wechatId;
+        this.openid = openid;
+        this.avatar = avatar;
+        this.password = password;
+        this.name = name;
+        this.school = school;
+        this.gender = gender;
+        this.type = type;
+        this.number = number;
+        this.education = education;
+        this.title = title;
+        this.email = email;
+    }
 
-	public void setId(BigInteger id) {
-		this.id = id;
-	}
+    public BigInteger getId() {
+        return id;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setId(BigInteger id) {
+        this.id = id;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public String getWechatId() {
-		return wechatId;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setWechatId(String wechatId) {
-		this.wechatId = wechatId;
-	}
+    public String getWechatId() {
+        return wechatId;
+    }
 
-	public String getOpenid() {
-		return openid;
-	}
+    public void setWechatId(String wechatId) {
+        this.wechatId = wechatId;
+    }
 
-	public void setOpenid(String openid) {
-		this.openid = openid;
-	}
+    public String getOpenid() {
+        return openid;
+    }
 
-	public String getAvatar() {
-		return avatar;
-	}
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
+    public String getAvatar() {
+        return avatar;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public School getSchool() {
-		return school;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setSchool(School school) {
-		this.school = school;
-	}
+    public School getSchool() {
+        return school;
+    }
 
-	public Integer getGender() {
-		return gender;
-	}
+    public void setSchool(School school) {
+        this.school = school;
+    }
 
-	public void setGender(Integer gender) {
-		this.gender = gender;
-	}
+    public Integer getGender() {
+        return gender;
+    }
 
-	public Integer getType() {
-		return type;
-	}
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    public Integer getType() {
+        return type;
+    }
 
-	public String getNumber() {
-		return number;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
+    public String getNumber() {
+        return number;
+    }
 
-	public Integer getEducation() {
-		return education;
-	}
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-	public void setEducation(Integer education) {
-		this.education = education;
-	}
+    public Integer getEducation() {
+        return education;
+    }
 
-	public Integer getTitle() {
-		return title;
-	}
+    public void setEducation(Integer education) {
+        this.education = education;
+    }
 
-	public void setTitle(Integer title) {
-		this.title = title;
-	}
+    public Integer getTitle() {
+        return title;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setTitle(Integer title) {
+        this.title = title;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
 }

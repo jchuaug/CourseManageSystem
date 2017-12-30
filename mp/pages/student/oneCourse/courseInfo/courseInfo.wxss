@@ -1,0 +1,8 @@
+.fa{
+	width: 30rpx;
+
+}
+
+.FONT3{
+	word-wrap: break-word;
+}

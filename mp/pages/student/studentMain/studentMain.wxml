@@ -1,0 +1,19 @@
+<!--pages/student/studentMain/studentMain.wxml-->
+<page>
+    <view class="box5" style="position:relative;">
+        <!-- 背景图的view -->
+        <image class="img2" src="../../../images/titleBackground.jpg"/>
+        <image class="img1" src="../../../images/figureAvatar.png"
+               bindtap="goRevise"/>
+        <view class="FONT4" style="position:absolute; z-index:2; top:10px">姓名：{{me.name}}</view>
+        <view class="FONT4" style="position:absolute; z-index:2; top:40px">学号：{{me.id}}</view>
+    </view>
+
+    <scroll-view scroll-y style="height:880rpx">
+        <view class="box3" wx:for="{{classes}}" wx:for-item="course" catchtap="chooseCourse"
+              data-course-id="{{course.id}}">
+            <text class='course_name' class="FONT11">{{course.name}}</text>
+            <text class='course_teacher' class="FONT51">老师：{{course.teacher}}</text>
+        </view>
+    </scroll-view>
+</page>

@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import xmu.crms.entity.*;
 import xmu.crms.exception.*;
+import xmu.crms.security.UserDetailsImpl;
 
 /**
  * @author Huhui AiXing
@@ -40,7 +41,7 @@ public interface LoginService {
 	 * @return user 该用户信息
 	 * @exception UserNotFoundException 登录失败时抛出
 	 */
-	 User signInPhone(User user) throws UserNotFoundException;
+	 UserDetailsImpl signInPhone(User user) throws UserNotFoundException;
 	
 	/**
 	 * 手机号注册.

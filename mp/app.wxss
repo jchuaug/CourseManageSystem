@@ -1,0 +1,327 @@
+/**app.wxss**/
+@import './font-awesome/font-awesome.wxss';
+
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 200 rpx 0;
+    box-sizing: border-box;
+}
+
+input, picker {
+    border-radius: 10 rpx;
+    border: solid 1px silver;
+    padding: 5px;
+}
+
+.info {
+    width: 80%;
+    margin: auto;
+    border: solid 1px silver;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+image {
+    display: block;
+    margin: 0;
+}
+
+/* pages/student/oneCourse/oneCourse.wxss */
+/* pages/index/CourseUI.wxss */
+
+.img1 {
+    position: absolute;
+    width: 80 rpx;
+    height: 80 rpx;
+    margin-left: 12%;
+    margin-top: 10%;
+}
+
+.img2 {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+/* 人物头像icon */
+.img3 {
+    float: left;
+    margin-left: 16%;
+    margin-top: 1%;
+    width: 34 rpx;
+    height: 34 rpx;
+}
+
+/* 邮件icon */
+.img4 {
+    float: left;
+    margin-left: 15%;
+    margin-top: 2%;
+    width: 42 rpx;
+    height: 34 rpx;
+}
+
+/* 房子icon */
+.img5 {
+    width: 34 rpx;
+    height: 34 rpx;
+    float: left;
+    margin-left: 16%;
+    margin-top: 2%;
+}
+
+.img6 {
+    width: 34 rpx;
+    height: 34 rpx;
+    float: left;
+    margin-left: 16%;
+    margin-top: 2%;
+}
+
+/* img7 灯泡 */
+.img7 {
+    position: absolute;
+    margin-left: 15%;
+    margin-top: 8%;
+    width: 9%;
+    height: 19%;
+}
+
+/* img8 背景 */
+.img8 {
+    width: 100%;
+    height: 100%;
+}
+
+/*page的 基本*/
+.body {
+    height: 100%
+}
+
+.fullbackground {
+    background-color: #66CCFF
+}
+
+/* 主标题蓝色顶条的view */
+.head20 {
+    width: 100%;
+    height: 90px;
+    position: relative;
+    background-color: #66CCFF;
+}
+
+/* 主标题的字体 */
+.FONT1 {
+    font-size: 6vw;
+    position: absolute;
+    color: #FFFFFF;
+    margin-top: 23px;
+    width: 100%;
+    text-align: center;
+}
+
+.FONT11 {
+    font-size: 6vw;
+    position: absolute;
+    color: #FFFFFF;
+    height: 10px;
+    margin-left: 10%;
+    margin-top: 60 rpx
+}
+
+.FONT12 {
+    font-size: 6vw;
+    position: absolute;
+    color: #FFFFFF;
+    height: 10px;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.FONT2 {
+    font-size: 2vw;
+    position: absolute;
+    color: #FFFFFF;
+    margin-left: 63%;
+    margin-top: 50px;
+}
+
+.FONT21 {
+    font-size: 3vw;
+    position: absolute;
+    color: #FFFFFF;
+    margin-top: 45%;
+    width: 100%;
+    text-align: center;
+}
+
+.FONT3 {
+    margin-left: 4%;
+    color: #000000;
+    margin-top: 1%;
+    font-size: 4vw;
+}
+
+.FONT4 {
+    margin-left: 30%;
+    color: #000000;
+    margin-top: 8%;
+    font-size: 2vw;
+}
+
+.FONT41 {
+    margin-left: 27%;
+    color: #000000;
+    margin-top: 8%;
+    font-size: 3vw;
+    position: absolute;
+    z-index: 2;
+    top: 7%
+}
+
+.FONT5 {
+    font-size: 4vw;
+    position: absolute;
+    color: #666666;
+    margin-left: 63%;
+    margin-top: 50px;
+}
+
+.FONT51 {
+    font-size: 4vw;
+    position: absolute;
+    color: #666666;
+    margin-left: 60%;
+    margin-top: 11%;
+}
+
+/* 小字 */
+.FONT6 {
+    font-size: 3vw;
+    position: relative;
+    color: #000000;
+    margin-left: 63%;
+    margin-top: 5%;
+}
+
+.box1 {
+    position: relative;
+    float: left;
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: #66CCFF;
+    margin-top: 5%;
+    width: 40%;
+    padding-bottom: 40%;
+    border-radius: 15px;
+
+}
+
+.box2 {
+    position: relative;
+    float: right;
+    margin-right: 5%;
+    background-color: #66CCFF;
+    margin-top: 5%;
+    width: 40%;
+    padding-bottom: 85%;
+    border-radius: 15px;
+}
+
+/*box3 蓝色选择框*/
+.box3 {
+    position: relative;
+    margin-left: 5%;
+    width: 90%;
+    background-color: #66CCFF;
+    margin-top: 5%;
+    padding-bottom: 25%;
+    border-radius: 15px;
+}
+
+/*box4 灰色选择框*/
+.box4 {
+    position: relative;
+    margin-left: 5%;
+    width: 90%;
+    background-color: #CCCCCC;
+    margin-top: 5%;
+    padding-bottom: 25%;
+    border-radius: 15px;
+
+}
+
+/* box5 背景图的view*/
+.box5 {
+    left: 0 rpx;
+    position: absolute;
+    width: 100%;
+    height: 300 rpx;
+}
+
+/* box6 省份、州市、学校 标题蓝条*/
+.box6 {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 11%;
+    background-color: #66CCFF;
+}
+
+/* box7 省份、州市、学校的选择view*/
+.box7 {
+    position: absolute;
+    background-color: #ffffff;
+    left: 0px;
+    width: 100%;
+    height: 50%;
+    margin-top: 15%;
+}
+
+/* button1 省份、州市、学校 的按钮*/
+.button1 {
+    background-color: #66CCFF;
+    font-size: 3vw;
+    position: relative;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    padding: 15px 32px;
+    height: 100%;
+    width: 32%;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.1);
+}
+
+.box8 {
+    left: 0px;
+    width: 100%;
+    height: 50px;
+}
+
+.button2 {
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 3vw;
+    border: none;
+    display: inline-block;
+    padding: 13px;
+    margin-top: 1%;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+.text-less-obvious{
+    color: gray;
+    font-size: 30rpx;
+
+
+}
+.text-center-horizontal{
+    width: 100%;
+    text-align: center;
+    display: block;
+}

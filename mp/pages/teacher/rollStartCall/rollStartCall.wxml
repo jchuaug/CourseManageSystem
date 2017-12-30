@@ -1,0 +1,40 @@
+<!--pages/teacher/rollStartCall.wxml-->
+
+<view class='container' xmlns:wx="http://www.w3.org/1999/xhtml">
+    <view class='info_banner'>
+        <image src='/images/bulletin.png' class="blueBoardIcon"/>
+        <view class='class_info'>
+            <text class='class_name'>{{currentClass.name}}</text>
+            <text class='class_num'>学生总数:{{currentClass.numStudent}}</text>
+        </view>
+    </view>
+    <view class='roll'>
+        <view class='roll_info'>
+            <image src='/images/users.png' class='usersIcon'/>
+            <text class='roll_info_text'>已签到学生0/{{currentClass.numStudent}}</text>
+
+            <button wx:if="{{call.status=='calling'}}" class='blue_button' bindtap='checkCall'
+                    data-classid="{{classid}}" data-cursemid="{{currentSeminarId}}" data-callstatus="{{call.status}}">
+                签到名单
+            </button>
+        </view>
+
+        <view class='roll_call'>
+            <button class="{{call.status=='calling'?'red_button':'blue_button'}}"
+                    bindtap='changeStatus' data-classid="{{classid}}" data-cursemid="{{currentSeminarId}}"
+                    data-callstatus="{{call.status}}">
+                {{call.btnStatusText}}
+            </button>
+        </view>
+
+        <view class='roll_group'>
+            <button disabled="{{currentSeminar.groupingMethod != 'fixed' && call.status != 'end'}}"
+                    class='green_button' bindtap='checkGroup' data-classid="{{classid}}"
+                    data-cursemid="{{currentSeminarId}}" data-groupmethod="{{groupingMethod}}">查看分组
+            </button>
+            <text wx:if="{{currentSeminar.groupingMethod != 'fixed' && call.status != 'end'}}" class='alert_text'>
+                随机分组还未开始不能查看分组
+            </text>
+        </view>
+    </view>
+</view> 

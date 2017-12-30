@@ -1,0 +1,71 @@
+<!--pages/StudentClass/CourseUI/Seminar/FixedGroup/group.wxml-->
+<view>
+    <view class="seminarblock">
+        <span class="column0">
+            <image src="users.png"/>
+        </span>
+        <label>
+            <label class="seminarword">讨论课</label>
+            <label class="seminarword">固定分组</label>
+        </label>
+    </view>
+
+    <view class="whiteword">
+        <span class="column4">分组信息：</span>
+        <block wx:if="{{isLeader}}">
+            <span class="column3">
+                <button class="btnquit" bindtap="quitLeader">辞职</button>
+            </span>
+        </block>
+    </view>
+
+    <view wx:if="{{leader}}" class='block'>
+        <span class="column1">
+            <image src="user.png"/>
+        </span>
+        <view class="column2">
+            <span class="seminarword">{{leader.name}}</span>
+            <span class='seminarword'>{{leader.id}}</span>
+        </view>
+        <span class="column3 rightblueword">队长</span>
+    </view>
+
+
+    <block wx:for="{{members}}">
+        <view class="block">
+            <span class="column1">
+                <image src="user.png"/>
+            </span>
+            <view class="column2">
+                <span class="seminarword">{{item.name}}</span>
+                <span class='seminarword'>{{item.id}}</span>
+            </view>
+        </view>
+    </block>
+
+    <view class="whiteword">
+        <view>
+            <block wx:if="{{topics}}">
+                <label>选题：</label>
+                <view wx:for="{{topics}}">
+                    <view class="topic">{{item.name}}</view>
+                </view>
+                <button class="btn-choose-topic" bindtap="chooseTopic">继续选题</button>
+            </block>
+
+            <block wx:else>
+                <button class="btn-choose-topic" bindtap="chooseTopic">选题</button>
+            </block>
+        </view>
+        <!--// todo button-->
+    </view>
+
+
+    <block wx:if="{{!leader}}">
+        <view class="middlediv" catchtap="becomeLeader">
+            <button class="btnleader">成为队长</button>
+            <p class="midgreyword">您的队伍还没有队长，您可以选择成为队长。</p>
+        </view>
+    </block>
+
+</view>

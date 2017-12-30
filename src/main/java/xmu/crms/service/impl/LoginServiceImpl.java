@@ -1,19 +1,19 @@
 package xmu.crms.service.impl;
 
-import java.math.BigInteger;
-import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import xmu.crms.entity.User;
 import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.mapper.LoginMapper;
 import xmu.crms.mapper.UserMapper;
+import xmu.crms.security.UserDetailsImpl;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.CourseService;
 import xmu.crms.service.LoginService;
+
+import java.math.BigInteger;
+import java.util.regex.Pattern;
 
 /**
  * LoginServiceImpl实现
@@ -58,9 +58,9 @@ public class LoginServiceImpl implements LoginService {
      * @author qinlingyun
      */
     @Override
-    public User signInPhone(User user) throws UserNotFoundException {
+    public UserDetailsImpl signInPhone(User user) throws UserNotFoundException {
         String phone = user.getPhone();
-        User userResult = null;
+        UserDetailsImpl userResult = null;
         try {
             userResult = userMapper.getUserByPhone(phone);
             System.out.println(userResult);

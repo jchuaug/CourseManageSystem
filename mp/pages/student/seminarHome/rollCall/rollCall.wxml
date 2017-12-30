@@ -1,0 +1,59 @@
+<page>
+    <!--设置左上角的blueBoardIcon-->
+    <view class="blueUsersView">
+        <image src="蓝色板.png" class='blueUsersIcon'/>
+        <!--<i class="blueUsersIcon fa fa-file-text-o fa-3x"/>-->
+        <strong>讨论课信息</strong>
+    </view>
+
+    <view class="hrView">
+    </view>
+
+    <view class="courseInfoView">
+        <i class="courseInfoIcon fa fa-user fa-3x"/>
+        <strong>邱明</strong>
+    </view>
+    <view class="courseInfoView">
+        <i class="courseInfoIcon fa fa-envelope fa-2x"/>
+        <strong>mingqiu@gmail.com</strong>
+    </view>
+    <view class="courseInfoView">
+        <i class="courseInfoIcon fa fa-calendar fa-2x"/>
+        <strong>2017-11-11</strong>
+    </view>
+    <view class="courseInfoView">
+        <i class="courseInfoIcon fa fa-map-marker fa-2x"/>
+        <strong>海韵教学楼201</strong>
+    </view>
+
+
+    <!--签到成功
+    <view class="successCall">
+          <image src="闹钟.png" class='courseInfoIcon'/>
+          <strong>签到成功</strong>
+     </view>
+    -->
+
+    <!--迟到签到成功
+    <view class="lateCall">
+          <image src="闹钟.png" class='courseInfoIcon'/>
+          <strong>迟到签到成功</strong>
+     </view>
+    -->
+
+    <view wx:if="{{state}}">
+        <view class="successCall">
+            <i class="fa fa-bell fa-2x"/>
+            <strong>签到成功</strong>
+        </view>
+    </view>
+    <view wx:else>
+        <view>
+            <button type="button" class="blueBigBtn" bindtap="iAmHere">
+                签到
+            </button>
+        </view>
+    </view>
+
+
+</page>

@@ -1,0 +1,50 @@
+/* pages/teacher/classManage/classManage.wxss */
+
+.banner{
+  background-color: #6cf;
+  height: 200rpx;
+  color:#fff; 
+  padding-top: 8%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.course_title{
+  font-size: 80rpx;
+}
+.course_seminar{
+  font-size: 28rpx;
+  margin-left: 400rpx;
+}
+.infobar{
+  display: flex;
+  justify-content: space-around
+}
+
+.classes{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.flex_column{
+  display: flex;
+  flex-direction: column;
+}
+.single_class{
+  margin-top: 100rpx;
+  text-align: center;
+  width: 370rpx;
+  height: 300rpx;
+} 
+
+/*来自标准组的wxss  */
+.clockAndGroupIcon {
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+}
+.classIcon{
+  width: 100%;
+  height: 70%;
+}

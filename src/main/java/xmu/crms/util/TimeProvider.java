@@ -1,4 +1,4 @@
-package xmu.crms.utils;
+package xmu.crms.util;
 
 import org.springframework.stereotype.Component;
 
