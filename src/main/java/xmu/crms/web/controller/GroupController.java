@@ -1,11 +1,11 @@
 package xmu.crms.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.SeminarGroup;
 import xmu.crms.entity.SeminarGroupTopic;
-import xmu.crms.entity.Topic;
 import xmu.crms.entity.User;
 import xmu.crms.exception.GroupNotFoundException;
 import xmu.crms.exception.InvalidOperationException;
@@ -76,7 +76,7 @@ public class GroupController {
      * @param user    leader
      */
     @PutMapping(value = "/group/{groupID}/resign")
-    public void leaderResign(@PathVariable Integer groupID, @RequestBody UserRequestVO user) {
+    public ResponseEntity leaderResign(@PathVariable Integer groupID, @RequestBody UserRequestVO user) {
         BigInteger groupId = BigInteger.valueOf(groupID);
         try {
             SeminarGroup seminarGroup = seminarGroupService.getSeminarGroupByGroupId(groupId);
@@ -84,11 +84,14 @@ public class GroupController {
             seminarGroupService.resignLeaderById(groupId, BigInteger.valueOf(user.getId()));
         } catch (GroupNotFoundException e) {
             e.printStackTrace();
+            return ResponseEntity.ok(HttpStatus.NOT_FOUND);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (InvalidOperationException e) {
             e.printStackTrace();
         }
+
+        return ResponseEntity.ok(HttpStatus.NO_CONTENT);
     }
 
 //    @PostMapping(value = "/group/{groupID}/topic")

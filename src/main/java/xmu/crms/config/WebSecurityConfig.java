@@ -18,6 +18,7 @@ import xmu.crms.security.UnauthorizedEntryPoint;
 
 /**
  * Spring Security Configuration
+ *
  * @author mads
  */
 
@@ -30,6 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 注入授权管理器
+     *
      * @return
      * @throws Exception
      */
@@ -41,49 +43,52 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 授权管理器分配给认证管理器管理认证
+     *
      * @return
      */
     @Bean
-    public MyAuthenticationProvider myAuthenticationProvider(){
+    public MyAuthenticationProvider myAuthenticationProvider() {
         return new MyAuthenticationProvider();
     }
 
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
     }
 
     /**
      * 配置不需要授权的uri
+     *
      * @param web
      * @throws Exception
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**","/Img/**","/js/**","/student/**","/teacher/**","/register","/school/**");
+        web.ignoring().antMatchers("/css/**", "/Img/**", "/js/**", "/student/**", "/teacher/**", "/register", "/school/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
+                .authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/signin/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+                .formLogin()
                 .loginPage("/")
                 .failureHandler(new AjaxAuthFailHandler())
                 .and()
-            .logout()
+                .logout()
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-            .exceptionHandling()
+                .exceptionHandling()
                 .accessDeniedPage("/?error")
                 .authenticationEntryPoint(unauthorizedEntryPoint)
                 .and()
                 .csrf().disable()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.headers().cacheControl();
         http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
