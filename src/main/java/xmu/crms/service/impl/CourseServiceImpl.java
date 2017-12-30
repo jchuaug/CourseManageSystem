@@ -1,7 +1,6 @@
 package xmu.crms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
@@ -24,35 +23,34 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
     @Autowired
     CourseMapper courseMapper;
-//    todo 合并时将false去掉
-    @Autowired(required = false)
-ClassService classService;
-    @Autowired(required = false)
+    @Autowired
+    ClassService classService;
+    @Autowired
     UserService userService;
-    @Autowired(required = false)
+    @Autowired
     SeminarService seminarService;
 
 
     @Override
     public List<Course> listCourseByUserId(BigInteger userId) throws IllegalArgumentException, CourseNotFoundException {
         try {
-            if(!(userId.intValue() > 0)) {
+            if (!(userId.intValue() > 0)) {
                 throw new IllegalArgumentException("用户ID格式错误！");
             }
             List<Course> courseList = null;
-            if(userService.getUserByUserId(userId).getType() == 1) {
-                 courseList = courseMapper.listCourseByTeacherId(userId);
-            }else {
+            if (userService.getUserByUserId(userId).getType() == 1) {
+                courseList = courseMapper.listCourseByTeacherId(userId);
+            } else {
                 List<BigInteger> courseListIds = courseMapper.listCourseIdByStudentId(userId);
-                for(int i =0 ;i<courseListIds.size();i++){
+                for (int i = 0; i < courseListIds.size(); i++) {
                     courseList.add(courseMapper.getCourseByCourseId(courseListIds.get(i)));
                 }
             }
-            if(courseList == null) {
+            if (courseList == null) {
                 throw new CourseNotFoundException();
             }
             return courseList;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -60,8 +58,8 @@ ClassService classService;
 
 
     @Override
-    public BigInteger insertCourseByUserId(BigInteger userId,Course course) throws IllegalArgumentException {
-        if(!(userId.intValue() > 0)) {
+    public BigInteger insertCourseByUserId(BigInteger userId, Course course) throws IllegalArgumentException {
+        if (!(userId.intValue() > 0)) {
             throw new IllegalArgumentException("用户ID格式错误！");
         }
         course.getTeacher().setId(userId);
@@ -69,11 +67,11 @@ ClassService classService;
         courseMapper.insertCourseByUserId(course);
 
         return course.getId();
-}
+    }
 
     @Override
     public Course getCourseByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
-        if(!(courseId.intValue() > 0)) {
+        if (!(courseId.intValue() > 0)) {
             throw new IllegalArgumentException("课程ID格式错误！");
         }
         Course course = courseMapper.getCourseByCourseId(courseId);
@@ -91,12 +89,16 @@ ClassService classService;
 
     @Override
     public void deleteCourseByCourseId(BigInteger courseId) throws IllegalArgumentException {
-        if(!(courseId.intValue() > 0)) {
+        if (!(courseId.intValue() > 0)) {
             throw new IllegalArgumentException("用户ID格式错误！");
         }
 //        todo Seminar实现后将下行代码注释去掉
 //        删除课程前先将该课程的seminar去掉
-//        seminarService.deleteSeminarByCourseId(courseId);
+        try {
+            seminarService.deleteSeminarByCourseId(courseId);
+        } catch (CourseNotFoundException e) {
+            e.printStackTrace();
+        }
         int matchDeleteLines = courseMapper.deleteCourseByCourseId(courseId);
     }
 
@@ -111,12 +113,12 @@ ClassService classService;
         try {
             List<Course> courseList = courseMapper.listCourseByCourseName(courseName);
             List<ClassInfo> classInfoList = new ArrayList<ClassInfo>();
-            for (int i=0;i<courseList.size();i++){
+            for (int i = 0; i < courseList.size(); i++) {
                 BigInteger course_id = courseList.get(i).getId();
                 classInfoList.addAll(classService.listClassByCourseId(course_id));
             }
             return classInfoList;
-        }catch (CourseNotFoundException e){
+        } catch (CourseNotFoundException e) {
             e.printStackTrace();
         }
         return null;
@@ -124,21 +126,21 @@ ClassService classService;
 
     @Override
     public List<ClassInfo> listClassByTeacherName(String teacherName) {
-        try{
+        try {
             //需要考虑老师同名的情况？
             List<BigInteger> userIds = userService.listUserIdByUserName(teacherName);
 
             List<ClassInfo> classInfoList = new ArrayList<>();
-            for (int i=0;i<userIds.size();i++){
+            for (int i = 0; i < userIds.size(); i++) {
                 //第i个老师的所有课程
                 List<Course> courseList = this.listCourseByUserId(userIds.get(i));
-                for (int j=0;j<courseList.size();j++){
+                for (int j = 0; j < courseList.size(); j++) {
                     BigInteger courseId = courseList.get(j).getId();
                     classInfoList.addAll(classService.listClassByCourseId(courseId));
                 }
             }
             return classInfoList;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -148,11 +150,13 @@ ClassService classService;
     public List<ClassInfo> listClassByName(String courseName, String teacherName) throws UserNotFoundException, CourseNotFoundException {
         List<ClassInfo> classInfoList = new ArrayList<>();
         List<ClassInfo> classInfoList1 = this.listClassByCourseName(courseName);
-        if (classInfoList1 == null)
+        if (classInfoList1 == null) {
             throw new CourseNotFoundException();
+        }
         List<ClassInfo> classInfoList2 = this.listClassByTeacherName(teacherName);
-        if (classInfoList2 == null)
+        if (classInfoList2 == null) {
             throw new UserNotFoundException();
+        }
 
         //取交集
         classInfoList1.retainAll(classInfoList2);
