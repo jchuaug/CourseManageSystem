@@ -3,7 +3,6 @@ package xmu.crms.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.SeminarGroup;
@@ -35,7 +34,6 @@ public class TopicController {
     @Autowired
     SeminarGroupService seminarGroupService;
 
-    @PreAuthorize("hasRole(TEACHER) or hasRole(STUDENT)")
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity getTopicByID (@PathVariable BigInteger topicID) {
@@ -61,7 +59,6 @@ public class TopicController {
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(topicResponse);
     }
 
-    @PreAuthorize("hasRole(TEACHER)")
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity updateTopicByID (@RequestBody TopicResponseVO requestBody, @PathVariable BigInteger topicID) {
@@ -84,7 +81,6 @@ public class TopicController {
         }
     }
 
-    @PreAuthorize("hasRole(TEACHER)")
     @RequestMapping(method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity deleteTopicByID (@PathVariable BigInteger topicID) {
@@ -102,7 +98,6 @@ public class TopicController {
         }
     }
 
-    @PreAuthorize("hasRole(TEACHER) or hasRole(STUDENT)")
     @RequestMapping(value = "/group")
     @ResponseBody
     public ResponseEntity selectGroupsByTopicID (@PathVariable BigInteger topicID) {
