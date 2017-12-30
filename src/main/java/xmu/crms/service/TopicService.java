@@ -1,10 +1,12 @@
 package xmu.crms.service;
 
+import org.apache.ibatis.annotations.Param;
+import xmu.crms.entity.SeminarGroupTopic;
+import xmu.crms.entity.Topic;
+import xmu.crms.exception.TopicNotFoundException;
+
 import java.math.BigInteger;
 import java.util.List;
-
-import xmu.crms.entity.*;
-import xmu.crms.exception.*;
 
 
 /**
@@ -130,4 +132,5 @@ public interface TopicService {
      */
     void deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException;
 
+    int getSelectedGroupCount(@Param("classId") BigInteger classId, @Param("topicId") BigInteger topicId);
 }

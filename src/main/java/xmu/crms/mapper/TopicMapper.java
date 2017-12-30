@@ -113,4 +113,14 @@ public interface TopicMapper {
      * @return list of seminarGroupTopic
      */
     List<SeminarGroupTopic> getSeminarGroupTopicsByTopicId(BigInteger topicId);
+
+    /**
+     * get number of group which select certain topic
+     *
+     * @param groupId group id
+     * @param classId class id
+     * @return count
+     */
+    int getSelectedGroupCount(@Param("topicId") BigInteger topicId, @Param("classId") BigInteger classId);
+
 }

@@ -238,4 +238,12 @@
         DELETE FROM topic
         WHERE seminar_id = #{id}
     </delete>
+
+    <select id="getSelectedGroupCount" resultType="int">
+        SELECT COUNT(A.id)
+        FROM seminar_group_topic A INNER JOIN seminar_group B
+        WHERE A.seminar_group_id = B.id
+              AND A.topic_id = #{topicId}
+              AND B.class_id = #{classId};
+    </select>
 </mapper>

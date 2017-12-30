@@ -93,7 +93,7 @@ public class GradeServiceImpl implements GradeService {
 	}
 
 	@Override
-	public void insertGroupGradeByUserId(BigInteger topicId, BigInteger userId, BigInteger groupId, BigInteger grade)
+	public void insertGroupGradeByUserId(BigInteger topicId, BigInteger userId, BigInteger groupId, Integer grade)
 			throws IllegalArgumentException {
 		if (topicId == null | userId == null | groupId == null | grade == null) {
 			throw new IllegalArgumentException();
@@ -158,5 +158,4 @@ public class GradeServiceImpl implements GradeService {
 		}
 		countPresentationGrade(seminarId);
 	}
-
 }

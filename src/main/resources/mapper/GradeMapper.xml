@@ -1,110 +1,127 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xmu.crms.mapper.GradeMapper">
-	<resultMap id="SeminarGroupResultMap" type="SeminarGroup">
-		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="report_grade" property="reportGrade" jdbcType="INTEGER" />
-		<result column="presentation_grade" property="presentationGrade"
-			jdbcType="INTEGER" />
-		<result column="final_grade" property="finalGrade" jdbcType="INTEGER" />
-		<result column="report" property="report" jdbcType="VARCHAR" />
-		<association column="seminar_id" property="seminar"
-			select="xmu.crms.mapper.ClassInfoMapper.selectSeminarBySeminarId" />
-		<association column="leader_id" property="leader"
-			select="xmu.crms.mapper.ClassInfoMapper.selectUserByUserId" />
-		<association column="class_id" property="classInfo"
-			select="xmu.crms.mapper.ClassInfoMapper.selectClassByClassId" />
-	</resultMap>
+    <resultMap id="SeminarGroupResultMap" type="SeminarGroup">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="report_grade" property="reportGrade" jdbcType="INTEGER"/>
+        <result column="presentation_grade" property="presentationGrade"
+                jdbcType="INTEGER"/>
+        <result column="final_grade" property="finalGrade" jdbcType="INTEGER"/>
+        <result column="report" property="report" jdbcType="VARCHAR"/>
+        <association column="seminar_id" property="seminar"
+                     select="xmu.crms.mapper.ClassInfoMapper.selectSeminarBySeminarId"/>
+        <association column="leader_id" property="leader"
+                     select="xmu.crms.mapper.ClassInfoMapper.selectUserByUserId"/>
+        <association column="class_id" property="classInfo"
+                     select="xmu.crms.mapper.ClassInfoMapper.selectClassByClassId"/>
+    </resultMap>
 
-	<resultMap id="SeminarGroupTopicResultMap" type="SeminarGroupTopic">
-		<id column="id" property="id" jdbcType="BIGINT" />
-		<result column="presentation_grade" property="presentationGrade"
-			jdbcType="INTEGER" />
-		<association column="topic_id" property="topic"
-			select="selectTopicByTopicId" />
-		<association column="seminar_group_id" property="semminarGroup"
-			select="getSeminarGroupBySeminarGroupId" />
-	</resultMap>
+    <resultMap id="SeminarGroupTopicResultMap" type="SeminarGroupTopic">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="presentation_grade" property="presentationGrade"
+                jdbcType="INTEGER"/>
+        <association column="topic_id" property="topic"
+                     select="xmu.crms.mapper.TopicMapper.getTopicById"/>
+        <association column="seminar_group_id" property="seminarGroup"
+                     select="getSeminarGroupBySeminarGroupId"/>
+    </resultMap>
 
     <delete id="deleteStudentScoreGroupByTopicId">
-        delete from student_score_group
-        where seminar_group_topic_id=#{id}
+        DELETE FROM student_score_group
+        WHERE seminar_group_topic_id = #{id}
 
     </delete>
 
-	<select id="getSeminarGroupBySeminarGroupId" resultMap="SeminarGroupResultMap">
-		select
-		id, report_grade, presentation_grade, final_grade,
-		report,
-		seminar_id,leader_id,class_id
-		from
-		seminar_group
-		where
-		id=#{id}
-	</select>
+    <select id="getSeminarGroupBySeminarGroupId" resultMap="SeminarGroupResultMap">
+        SELECT
+            id,
+            report_grade,
+            presentation_grade,
+            final_grade,
+            report,
+            seminar_id,
+            leader_id,
+            class_id
+        FROM
+            seminar_group
+        WHERE
+            id = #{id}
+    </select>
 
-	<select id="listSeminarGradeByUserId" resultMap="SeminarGroupResultMap">
-		select
-		seminar_group.id, report_grade, presentation_grade, final_grade,
-		report, seminar_id,leader_id,class_id
-		from
-		seminar_group
-		,seminar_group_member
-		where
-		seminar_group.id=seminar_group_member.seminar_group_id
-		and
-		student_id=#{id}
-	</select>
+    <select id="listSeminarGradeByUserId" resultMap="SeminarGroupResultMap">
+        SELECT
+            seminar_group.id,
+            report_grade,
+            presentation_grade,
+            final_grade,
+            report,
+            seminar_id,
+            leader_id,
+            class_id
+        FROM
+            seminar_group
+            , seminar_group_member
+        WHERE
+            seminar_group.id = seminar_group_member.seminar_group_id
+            AND
+            student_id = #{id}
+    </select>
 
-	<insert id="insertGroupGradeByUserId">
-		insert into student_score_group
-		(student_id,seminar_group_topic_id,grade)
-		select #{userId},id ,#{grade}
-		from seminar_group_topic where seminar_group_id=#{groupId} and
-		topic_id=#{topicId} limit 1
+    <insert id="insertGroupGradeByUserId">
+        INSERT INTO student_score_group
+        (student_id, seminar_group_topic_id, grade)
+            SELECT
+                #{userId},
+                id,
+                #{grade}
+            FROM seminar_group_topic
+            WHERE seminar_group_id = #{groupId} AND
+                  topic_id = #{topicId}
+            LIMIT 1
 
-	</insert>
+    </insert>
 
-	<update id="updateGroupByGroupId">
-		update seminar_group
-		<set>
-			final_grade=#{grade}
-		</set>
-		where id=#{seminarGroupId}
-	</update>
+    <update id="updateGroupByGroupId">
+        update seminar_group
+        <set>
+            final_grade=#{grade}
+        </set>
+        where id=#{seminarGroupId}
+    </update>
 
-	<select id="listSeminarGroupTopic" resultMap="SeminarGroupTopicResultMap">
-		select
-		id, topic_id,
-		seminar_group_id,presentation_grade
-		from
-		seminar_group_topic
-		where
-		seminar_group_id=#{id}
-	</select>
+    <select id="listSeminarGroupTopic" resultMap="SeminarGroupTopicResultMap">
+        SELECT
+            id,
+            topic_id,
+            seminar_group_id,
+            presentation_grade
+        FROM
+            seminar_group_topic
+        WHERE
+            seminar_group_id = #{id}
+    </select>
 
-	<select id="listGradeBySeminarGroupTopicId" resultType="java.lang.Integer">
-		select
-		grade
-		from
-		student_score_group
-		where seminar_group_topic_id=#{id}
-	</select>
+    <select id="listGradeBySeminarGroupTopicId" resultType="java.lang.Integer">
+        SELECT grade
+        FROM
+            student_score_group
+        WHERE seminar_group_topic_id = #{id}
+    </select>
 
-	<update id="insertGroupPresentationGradeByUserId">
-		update seminar_group
-		<set>
-			presentation_grade=#{grade}
-		</set>
-		where id=#{id}
-	</update>
+    <update id="insertGroupPresentationGradeByUserId">
+        update seminar_group
+        <set>
+            presentation_grade=#{grade}
+        </set>
+        where id=#{id}
+    </update>
 
-	<update id="insertGroupTopicGradeByUserId">
-		update seminar_group_topic
-		<set>
-			presentation_grade=#{grade}
-		</set>
-		where id=#{id}
-	</update>
+    <update id="insertGroupTopicGradeByUserId">
+        update seminar_group_topic
+        <set>
+            presentation_grade=#{grade}
+        </set>
+        where id=#{id}
+    </update>
 
 </mapper>

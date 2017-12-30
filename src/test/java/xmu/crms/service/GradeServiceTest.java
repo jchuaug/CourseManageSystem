@@ -1,27 +1,16 @@
 package xmu.crms.service;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.math.BigInteger;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xmu.crms.CourseManageApplication;
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Location;
-import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
-import xmu.crms.exception.ClassesNotFoundException;
-import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
-import xmu.crms.exception.InvalidOperationException;
-import xmu.crms.exception.SeminarNotFoundException;
-import xmu.crms.exception.UserNotFoundException;
-import xmu.crms.service.ClassService;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * @author yjj
@@ -75,7 +64,7 @@ public class GradeServiceTest {
     @Test
     public void insertGroupGradeByUserId() {
         try {
-            gradeService.insertGroupGradeByUserId(new BigInteger("1"), new BigInteger("2"), new BigInteger("1"), new BigInteger("6"));
+            gradeService.insertGroupGradeByUserId(new BigInteger("1"), new BigInteger("2"), new BigInteger("1"), 6);
             gradeService.insertGroupGradeByUserId(null, null, null, null);
 
         } catch (IllegalArgumentException e) {

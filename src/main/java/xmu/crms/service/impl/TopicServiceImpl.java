@@ -172,4 +172,9 @@ public class TopicServiceImpl implements TopicService {
 
         topicMapper.deleteTopicsBySeminarId(seminarId);
     }
+
+    @Override
+    public int getSelectedGroupCount(BigInteger classId, BigInteger topicId) {
+        return topicMapper.getSelectedGroupCount(topicId, classId);
+    }
 }

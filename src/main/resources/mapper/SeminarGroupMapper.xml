@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="xmu.crms.mapper.SeminarGroupMapper" >
+<mapper namespace="xmu.crms.mapper.SeminarGroupMapper">
 
     <!--<select id="listSeminarByCourseId" resultType="SeminarMap">-->
     <!--SELECT * FROM seminar WHERE course_id = #{courseId}-->
@@ -9,12 +9,12 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="province" column="province"/>
-        <result property="city" column="city" />
+        <result property="city" column="city"/>
     </resultMap>
     <select id="getSchoolById" resultMap="School">
         SELECT *
         FROM school
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
     <resultMap type="User" id="User">
         <id property="id" column="id"/>
@@ -43,7 +43,7 @@
         <result property="fivePointPercentage" column="five_point_percentage"/>
         <result property="fourPointPercentage" column="four_point_percentage"/>
         <result property="threePointPercentage" column="three_point_percentage"/>
-        <association property="teacher" column="teacher_id"  select="getUserById"/>
+        <association property="teacher" column="teacher_id" select="getUserById"/>
     </resultMap>
     <resultMap type="Seminar" id="Seminar">
         <id property="id" column="id"/>
@@ -57,7 +57,7 @@
     <select id="getCourseById" resultMap="Course">
         SELECT *
         FROM course
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
     <resultMap type="ClassInfo" id="ClassInfo">
         <id property="id" column="id"/>
@@ -75,7 +75,7 @@
     <select id="getClassInfoById" resultMap="ClassInfo">
         SELECT *
         FROM class_info
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
     <resultMap type="SeminarGroup" id="SeminarGroup">
         <id property="id" column="id" jdbcType="BIGINT"/>
@@ -83,7 +83,7 @@
         <result property="reportGrade" column="report_grade"/>
         <result property="presentationGrade" column="presentation_grade"/>
         <result property="finalGrade" column="final_grade"/>
-        <association property="seminar" column="seminar_id" select="getSeminarById" />
+        <association property="seminar" column="seminar_id" select="getSeminarById"/>
         <association property="classInfo" column="class_id" select="getClassInfoById"/>
         <association property="leader" column="leader_id" select="getUserById"/>
     </resultMap>
@@ -106,60 +106,61 @@
         <association property="topic" column="topic_id" select="getTopicById"/>
         <association property="seminarGroup" column="seminar_group_id" select="getSeminarGroupById"/>
     </resultMap>
-    <update id="assignLeaderById" >
-        UPDATE seminar_group SET leader_id= #{userId,jdbcType=BIGINT}
-        WHERE id=#{groupId,jdbcType=BIGINT}
+    <update id="assignLeaderById">
+        UPDATE seminar_group
+        SET leader_id = #{userId,jdbcType=BIGINT}
+        WHERE id = #{groupId,jdbcType=BIGINT}
     </update>
-    <select id="getUserIdByUserId"  resultType="java.math.BigInteger">
+    <select id="getUserIdByUserId" resultType="java.math.BigInteger">
         SELECT id
         FROM user_info
-        WHERE id=#{userId,jdbcType=BIGINT}
+        WHERE id = #{userId,jdbcType=BIGINT}
     </select>
     <!--void automaticallyGrouping(@Param("seminarId")BigInteger seminarId, @Param("classId")BigInteger classId)-->
     <!--throws IllegalArgumentException,ClazzNotFoundException,SeminarNotFoundException;-->
-    <select id="listStudentIdBySeminarIdAndClassId"  resultType="java.math.BigInteger">
+    <select id="listStudentIdBySeminarIdAndClassId" resultType="java.math.BigInteger">
         SELECT student_id
         FROM attendance
-        WHERE seminar_id=#{seminarId,jdbcType=BIGINT} AND class_id=#{classId,jdbcType=BIGINT}
+        WHERE seminar_id = #{seminarId,jdbcType=BIGINT} AND class_id = #{classId,jdbcType=BIGINT}
     </select>
     <!--void deleteSeminarGroupByGroupId(@Param("seminarGroupId")BigInteger seminarGroupId)-->
     <!--throws IllegalArgumentException;-->
-    <delete id="deleteSeminarGroupByGroupId" >
+    <delete id="deleteSeminarGroupByGroupId">
         DELETE FROM seminar_group
         WHERE id = #{seminarGroupId,jdbcType=BIGINT}
     </delete>
     <!--void deleteSeminarGroupBySeminarId(@Param("seminarId")BigInteger seminarId)-->
     <!--throws IllegalArgumentException;-->
-    <delete id="deleteSeminarGroupBySeminarId" >
+    <delete id="deleteSeminarGroupBySeminarId">
         DELETE FROM seminar_group
         WHERE seminar_id = #{seminarId,jdbcType=BIGINT}
     </delete>
     <!--void deleteSeminarGroupMemberBySeminarGroupId(BigInteger seminarGroupId);-->
-    <delete id="deleteSeminarGroupMemberBySeminarGroupId" >
+    <delete id="deleteSeminarGroupMemberBySeminarGroupId">
         DELETE FROM seminar_group_member
         WHERE seminar_group_id = #{seminarGroupId}
     </delete>
 
-    <delete id="deleteSeminarGroupMemberByuId" >
+    <delete id="deleteSeminarGroupMemberByuId">
         DELETE FROM seminar_group_member
         WHERE seminar_group_id = #{groupId,jdbcType=BIGINT} AND student_id = #{userId,jdbcType=BIGINT}
     </delete>
     <!--SeminarGroup getSeminarGroupByGroupId(@Param("groupId")BigInteger groupId)-->
     <!--throws IllegalArgumentException,GroupNotFoundException;-->
-    <select id="getSeminarGroupByGroupId"  resultMap="SeminarGroup">
+    <select id="getSeminarGroupByGroupId" resultMap="SeminarGroup">
         SELECT *
         FROM seminar_group
-        WHERE id=#{groupId,jdbcType=BIGINT}
+        WHERE id = #{groupId,jdbcType=BIGINT}
     </select>
 
-    <select id="listSeminarGroupMemberByGroupId"  resultMap="SeminarGroupMember">
+    <select id="listSeminarGroupMemberByGroupId" resultMap="SeminarGroupMember">
         SELECT *
         FROM seminar_group_member
-        WHERE seminar_group_id=#{groupId,jdbcType=BIGINT}
+        WHERE seminar_group_id = #{groupId,jdbcType=BIGINT}
     </select>
     <!--SeminarGroup getSeminarGroupIdBySeminarIdAndUserId(@Param("seminarId")BigInteger seminarId, @Param("userId")BigInteger userId)-->
     <!--throws IllegalArgumentException,GroupNotFoundException;-->
-    <select id="getSeminarGroupIdBySeminarIdAndUserId"  resultType="java.math.BigInteger">
+    <select id="getSeminarGroupIdBySeminarIdAndUserId" resultType="java.math.BigInteger">
         SELECT seminar_group_id
         FROM seminar_group_member
         WHERE id=#{seminarId,jdbcType=BIGINT}
@@ -169,10 +170,10 @@
     </select>
     <!--BigInteger getSeminarGroupLeaderByGroupId(@Param("groupId") BigInteger groupId)-->
     <!--throws IllegalArgumentException,GroupNotFoundException;-->
-    <select id="getSeminarGroupLeaderByGroupId"  resultType="java.math.BigInteger">
+    <select id="getSeminarGroupLeaderByGroupId" resultType="java.math.BigInteger">
         SELECT leader_id
         FROM seminar_group
-        WHERE id=#{groupId,jdbcType=BIGINT}
+        WHERE id = #{groupId,jdbcType=BIGINT}
     </select>
     <!--BigInteger getSeminarGroupLeaderById(@Param("userId")BigInteger userId, @Param("seminarId")BigInteger seminarId)-->
 
@@ -181,8 +182,9 @@
     <!--BigInteger insertSeminarGroupBySeminarId(@Param("seminarId")BigInteger seminarId, @Param("seminarGroup")SeminarGroup seminarGroup)-->
     <!--throws IllegalArgumentException;-->
     <insert id="insertSeminarGroupBySeminarId" useGeneratedKeys="true" keyProperty="id" parameterType="SeminarGroup">
-        INSERT INTO seminar_group(seminar_id,report_grade,presentation_grade,final_grade,leader_id,class_id)
-        VALUES(#{seminar.id,jdbcType=BIGINT},#{reportGrade},#{presentationGrade},#{finalGrade},#{leader.id,jdbcType=BIGINT},#{classInfo.id,jdbcType=BIGINT})
+        INSERT INTO seminar_group (seminar_id, report_grade, presentation_grade, final_grade, leader_id, class_id)
+        VALUES (#{seminar.id,jdbcType=BIGINT}, #{reportGrade}, #{presentationGrade}, #{finalGrade},
+                #{leader.id,jdbcType=BIGINT}, #{classInfo.id,jdbcType=BIGINT})
     </insert>
 
     <insert id="insertSeminarGroupMemberByGroupId" parameterType="java.math.BigInteger">
@@ -194,32 +196,32 @@
     </insert>
     <!--List<SeminarGroup> listSeminarGroupBySeminarId(@Param("seminarId") BigInteger seminarId)-->
     <!--throws IllegalArgumentException,SeminarNotFoundException;-->
-    <select id="listSeminarGroupBySeminarId"  resultMap="SeminarGroup">
+    <select id="listSeminarGroupBySeminarId" resultMap="SeminarGroup">
         SELECT *
         FROM seminar_group
-        WHERE seminar_id=#{seminarId,jdbcType=BIGINT}
+        WHERE seminar_id = #{seminarId,jdbcType=BIGINT}
     </select>
-    <select id="getSeminarIdBySeminarId"  resultType="java.math.BigInteger">
+    <select id="getSeminarIdBySeminarId" resultType="java.math.BigInteger">
         SELECT id
         FROM seminar
-        WHERE id=#{seminarId,jdbcType=BIGINT}
+        WHERE id = #{seminarId,jdbcType=BIGINT}
     </select>
-    <insert id="insertSeminarGroupMemberById" >
-        INSERT INTO seminar_group_member(seminar_group_id, student_id)
-        VALUES(#{groupId},#{userId})
+    <insert id="insertSeminarGroupMemberById">
+        INSERT INTO seminar_group_member (seminar_group_id, student_id)
+        VALUES (#{groupId}, #{userId})
     </insert>
     <!--resultMap=seminarGroup-->
     <select id="getSeminarGroupById" resultMap="SeminarGroup">
         SELECT *
         FROM seminar_group
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
 
 
     <select id="getUserById" resultMap="User">
         SELECT *
         FROM user_info
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
 
     <select id="getSeminarGroupMemberByStudentIdAndSeminarGroupId" resultMap="SeminarGroupMember">
@@ -244,14 +246,14 @@
     <select id="getSeminarById" resultMap="Seminar">
         SELECT *
         FROM seminar
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
 
     <!--ResultMap = Topic-->
     <select id="getTopicById" resultMap="Topic">
         SELECT *
         FROM topic
-        WHERE id=#{id}
+        WHERE id = #{id}
     </select>
 
     <!--ResultMap = SeminarGroupTopicResult-->
@@ -262,17 +264,21 @@
     </select>
 
     <insert id="insertSeminarGroupTopicByTopicIdAndSeminarGroupId">
-        INSERT INTO seminar_group_topic(topic_id,seminar_group_id)
-        VALUES (#{topicId},#{seminarGroupId})
+        INSERT INTO seminar_group_topic (topic_id, seminar_group_id)
+        VALUES (#{topicId}, #{seminarGroupId})
     </insert>
 
     <update id="resignLeaderById">
         UPDATE
-        seminar_group
+            seminar_group
         SET
-        leader_id = null
+            leader_id = NULL
         WHERE
-        id = #{groupId}
+            id = #{groupId}
     </update>
 
+    <delete id="deleteTopic">
+        DELETE FROM seminar_group_topic
+        WHERE topic_id = #{topicId} AND seminar_group_id = #{groupId}
+    </delete>
 </mapper>

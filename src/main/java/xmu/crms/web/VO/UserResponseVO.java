@@ -9,9 +9,8 @@ public class UserResponseVO {
     private String name;
     private String number;
 
-    public UserResponseVO(User user) {
-        id = user.getId();
-        name = user.getName();
+    public UserResponseVO() {
+
     }
 
     public BigInteger getId() {

@@ -77,7 +77,7 @@ public interface GradeService {
      * @throws IllegalArgumentException topicId或userId或seminarId或groupId或grade格式错误
      * @author Huhui
      */
-    void insertGroupGradeByUserId(BigInteger topicId, BigInteger userId, BigInteger groupId, BigInteger grade)
+    void insertGroupGradeByUserId(BigInteger topicId, BigInteger userId, BigInteger groupId, Integer grade)
             throws IllegalArgumentException;
 
     /**

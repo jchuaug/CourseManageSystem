@@ -46,14 +46,12 @@ public class SeminarGroupServiceTest {
         seminarGroupService.deleteSeminarGroupMemberBySeminarGroupId(new BigInteger("1"));
     }
 
-    ;
 
     @Test
     public void testdeleteSeminarGroupMemberByuId() {
-        seminarGroupService.deleteSeminarGroupMemberByuId(new BigInteger("5"), new BigInteger("23"));
+        seminarGroupService.deleteSeminarGroupMemberById(new BigInteger("5"), new BigInteger("23"));
     }
 
-    ;
 
     /**
      * 将学生加入讨论课小组.
@@ -339,7 +337,6 @@ public class SeminarGroupServiceTest {
         }
     }
 
-    ;
 
 
     /**
