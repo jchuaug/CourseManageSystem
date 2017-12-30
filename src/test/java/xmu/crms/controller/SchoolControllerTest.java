@@ -1,4 +1,4 @@
-package xmu.crms.view;
+package xmu.crms.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -9,6 +9,7 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="description" column="description"/>
+        <result property="serial" column="serial"/>
         <result property="groupNumberLimit" column="group_number_limit"/>
         <result property="groupStudentLimit" column="group_student_limit"/>
         <association property="seminar" column="seminar_id" select="selectSeminarById"/>
@@ -66,7 +67,7 @@
         SELECT
             id,
             seminar_id,
-            report_garde,
+            report_grade,
             presentation_grade,
             final_grade,
             report,
@@ -137,16 +138,8 @@
     </select>
 
     <select id="getTopicById" parameterType="BigInteger" resultMap="topicResult">
-        SELECT
-            id,
-            name,
-            description,
-            group_number_limit,
-            group_student_limit,
-            seminar_id
-        FROM topic
+        <include refid="selectTopicSQL"/>
         WHERE id = #{id}
-
     </select>
 
     <update id="updateTopic" parameterType="Topic">
@@ -155,15 +148,17 @@
             name                = #{name},
             description         = #{description},
             group_number_limit  = #{groupNumberLimit},
+            serial              = #{serial},
             group_student_limit = #{groupStudentLimit}
         WHERE id = #{id}
     </update>
 
 
     <insert id="insertWithSeminarId">
-        INSERT INTO topic (name, description, group_number_limit, group_student_limit, seminar_id)
+        INSERT INTO topic ( serial, name, description, group_number_limit, group_student_limit, seminar_id)
         VALUES
-        (#{topic.name}, #{topic.description}, #{topic.groupNumberLimit}, #{topic.groupStudentLimit}, #{seminarId})
+        (#{topic.serial}, #{topic.name}, #{topic.description}, #{topic.groupNumberLimit}, #{topic.groupStudentLimit},
+        #{seminarId})
 
         <selectKey resultType="java.math.BigInteger" keyProperty="topic.id" order="AFTER">
             SELECT last_insert_id()
@@ -176,15 +171,19 @@
         WHERE id = #{id}
     </delete>
 
-    <select id="getTopicsBySeminarId" resultMap="topicResult">
+    <sql id="selectTopicSQL">
         SELECT
             id,
             name,
+            serial,
             description,
             group_number_limit,
             group_student_limit,
             seminar_id
         FROM topic
+    </sql>
+    <select id="getTopicsBySeminarId" resultMap="topicResult">
+        <include refid="selectTopicSQL"/>
         WHERE seminar_id = #{id}
     </select>
 

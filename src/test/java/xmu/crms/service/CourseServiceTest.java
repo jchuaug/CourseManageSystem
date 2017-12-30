@@ -17,6 +17,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
+import static xmu.crms.service.EntityTestMethods.testCourse;
 
 /**
  * @author caistrong
@@ -31,37 +32,30 @@ public class CourseServiceTest {
     public void listCourseByUserId() throws Exception {
         BigInteger userId = new BigInteger("1");
         List<Course> courseList = courseService.listCourseByUserId(userId);
+        Course course = courseList.get(0);
+        testCourse(course);
         assertNotNull(courseList);
     }
 
     @Test
-    public void insertCourseByUserId() throws Exception{
-        BigInteger userId = new BigInteger("1");
-        Course course = new Course();
-        course.setName("OOAD2");
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date startDate = format.parse("2017-09-10");
-        Date endDate = format.parse("2018-02-01");
-        course.setStartDate(startDate);
-        course.setEndDate(endDate);
-        User teacher = new User();
-        teacher.setId(userId);
-        course.setTeacher(teacher);
-        course.setDescription("xxx");
-        course.setReportPercentage(50);
-        course.setPresentationPercentage(50);
-        course.setFivePointPercentage(10);
-        course.setFourPointPercentage(30);
-        course.setThreePointPercentage(60);
-        BigInteger t = courseService.insertCourseByUserId(userId,course);
+    public void insertCourseByUserId() throws Exception {
+        final String testString = new Date().toString();
+        BigInteger userId = BigInteger.valueOf(1);
+        BigInteger courseId = BigInteger.valueOf(1);
 
-        assertNotNull(t);
+        Course course = courseService.getCourseByCourseId(courseId);
+        course.setDescription(testString);
+
+        BigInteger id = courseService.insertCourseByUserId(userId, course);
+        Course insertedCourse = courseService.getCourseByCourseId(id);
+        assertEquals(testString, insertedCourse.getDescription());
     }
 
     @Test
     public void getCourseByCourseId() throws Exception {
         BigInteger courseId = new BigInteger("1");
         Course course = courseService.getCourseByCourseId(courseId);
+        testCourse(course);
         assertNotNull(course);
     }
 
@@ -86,16 +80,16 @@ public class CourseServiceTest {
         course.setFivePointPercentage(10);
         course.setFourPointPercentage(30);
         course.setThreePointPercentage(60);
-        courseService.updateCourseByCourseId(courseId,course);
+        courseService.updateCourseByCourseId(courseId, course);
         //名称是否更新成功
-        assertEquals("OOAD4",courseService.getCourseByCourseId(courseId).getName());
+        assertEquals("OOAD4", courseService.getCourseByCourseId(courseId).getName());
     }
 
     @Test
     public void deleteCourseByCourseId() throws Exception {
         BigInteger courseId = new BigInteger("2");
         courseService.deleteCourseByCourseId(courseId);
-        assertEquals(null,courseService.getCourseByCourseId(courseId));
+        assertEquals(null, courseService.getCourseByCourseId(courseId));
     }
 
     @Test
@@ -104,24 +98,26 @@ public class CourseServiceTest {
         List<Course> courseList = courseService.listCourseByCourseName(courseName);
         assertNotNull(courseList);
     }
+
     @Test
     public void listClassByCourseName() throws Exception {
         String courseName = "课程1";
         List<ClassInfo> classList = courseService.listClassByCourseName(courseName);
         assertNotNull(classList);
     }
+
     @Test
-    public void listClassByTeacherName()throws Exception{
+    public void listClassByTeacherName() throws Exception {
         String teacherName = "邱明";
         List<ClassInfo> classInfoList = courseService.listClassByTeacherName(teacherName);
         assertNotNull(classInfoList);
     }
 
     @Test
-    public void listClassByName() throws Exception{
+    public void listClassByName() throws Exception {
         String courseName = "课程";
         String teacherName = "邱明";
-        List<ClassInfo> classInfoList = courseService.listClassByName(courseName,teacherName);
+        List<ClassInfo> classInfoList = courseService.listClassByName(courseName, teacherName);
         assertNotNull(classInfoList);
     }
 

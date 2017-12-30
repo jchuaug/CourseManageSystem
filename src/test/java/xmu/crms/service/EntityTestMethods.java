@@ -12,6 +12,7 @@ public class EntityTestMethods {
         assertNotNull(topic.getDescription());
         assertNotNull(topic.getGroupNumberLimit());
         assertNotNull(topic.getGroupStudentLimit());
+        assertNotNull(topic.getSerial());
         assertNotNull(topic.getSeminar());
         Seminar seminar = topic.getSeminar();
         testSeminar(seminar);
@@ -75,4 +76,5 @@ public class EntityTestMethods {
         assertNotNull(school.getProvince());
         assertNotNull(school.getCity());
     }
+
 }
