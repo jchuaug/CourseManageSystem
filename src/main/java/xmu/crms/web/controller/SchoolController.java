@@ -33,20 +33,6 @@ public class SchoolController {
     @ResponseBody
     public ResponseEntity getSchoolList(@PathParam("city") String city) {
         List<School> schools = schoolService.listSchoolByCity(city);
-//        String school = "[\n" +
-//                "  {\n" +
-//                "    \"id\": 32,\n" +
-//                "    \"name\": \"厦门大学\",\n" +
-//                "    \"province\": \"福建\",\n" +
-//                "    \"city\": \"厦门\"\n" +
-//                "  },\n" +
-//                "  {\n" +
-//                "    \"id\": 37,\n" +
-//                "    \"name\": \"厦门软件学院\",\n" +
-//                "    \"province\": \"福建\",\n" +
-//                "    \"city\": \"厦门\"\n" +
-//                "  }\n" +
-//                "]";
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(schools);
     }
 
