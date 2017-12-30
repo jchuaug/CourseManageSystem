@@ -16,7 +16,6 @@ public class SchoolServiceImpl implements SchoolService {
 
     @Override
     public List<School> listSchoolByCity(String city) {
-
         return schoolMapper.listSchoolByCity(city);
     }
 

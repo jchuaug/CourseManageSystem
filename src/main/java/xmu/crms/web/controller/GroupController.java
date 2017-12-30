@@ -23,6 +23,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author shin-jim
+ */
 @RestController
 public class GroupController {
 
@@ -205,10 +208,4 @@ public class GroupController {
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
-
-//    @PostMapping(value = "/group/{groupID}/topic")
-//    public void chooseToopic(@PathVariable Integer groupID, @RequestBody Topic topic) {
-//        boolean success = MockDb.chooseTopic(groupID, topic);
-//    }
 }
