@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.service.LoginService;
+import org.springframework.web.bind.annotation.RestController;
+import xmu.crms.service.UserService;
 import xmu.crms.utils.JWTUtil;
 import xmu.crms.web.VO.LoginResponseVO;
 
@@ -16,62 +18,66 @@ import xmu.crms.web.VO.LoginResponseVO;
  *
  * @author Jackey
  */
-@Controller
-@RequestMapping("/")
+
+@RestController
 public class UserController {
-    @Autowired
-    private LoginService loginService;
-    
+	@Autowired
+	private LoginService loginService;
+	@Autowired
+	private UserService userService;
 
-    /**
-     * 。手机号登陆
-     *
-     * @param phone
-     * @param password
-     * @return
-     * @throws UserNotFoundException
-     */
-    @PostMapping("/signin")
+	/**
+	 * 。手机号登陆
+	 *
+	 * @param phone
+	 * @param password
+	 * @return
+	 * @throws UserNotFoundException
+	 */
+	@PostMapping("/signin")
+	public LoginResponseVO login(@RequestParam("phone") String phone, @RequestParam("password") String password)
+			throws UserNotFoundException {
+		User user = loginService.signInPhone(new User(phone, password));
+		System.out.println("User:"+user);
+		LoginResponseVO responseVO = null;
+		try {
+			if (user == null) {
+				responseVO = new LoginResponseVO(401, "手机号密码错误");
+				throw new UserNotFoundException("用户不存在或者用户密码错误");
+			} else {
+				responseVO = new LoginResponseVO(200, "login success", user.getId(),
+						(user.getType() == 1 ? "teacher" : "student"), user.getName(), JWTUtil.sign(user));
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println(responseVO.toString());
 
-    public LoginResponseVO login(@RequestParam("phone") String phone, @RequestParam("password") String password)
-            throws UserNotFoundException {
-        User user = loginService.signInPhone(new User(phone, password));
-        LoginResponseVO responseVO = null;
-        try {
-            if (user == null) {
-                responseVO = new LoginResponseVO(401, "手机号密码错误");
-                throw new UserNotFoundException();
-            } else {
-                responseVO = new LoginResponseVO(200, "login success", user.getId(),
-                        (user.getType() == 1 ? "teacher" : "student"), user.getName(), JWTUtil.sign(user));
-            }
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
-        System.out.println(responseVO.toString());
-        return responseVO;
-    }
+		String jwtString = (String) responseVO.getJwt();
+		System.out.println("id=" + JWTUtil.getUserId(jwtString));
+		System.out.println("name=" + JWTUtil.getUsername(jwtString));
+		System.out.println("userType=" + JWTUtil.getUserType(jwtString));
+		return responseVO;
+	}
 
-    @PostMapping("/register")
-    public LoginResponseVO register(@RequestParam("phone") String phone, @RequestParam("password") String password) {
-        User user = loginService.signUpPhone(new User(phone, password));
+	@PostMapping("/register")
+	public LoginResponseVO register(@RequestParam("phone") String phone, @RequestParam("password") String password) {
+		User user = loginService.signUpPhone(new User(phone, password));
 
-        LoginResponseVO responseVO = null;
-        try {
-            if (user == null) {
-                responseVO = new LoginResponseVO(401, "手机号已被注册");
-                // throw new UserAlreadyExistException("手机号已被注册");
-            } else {
-                responseVO = new LoginResponseVO(200, "signup success", user.getId(), "unbinded", user.getName(),
-                        JWTUtil.sign(user));
-            }
-        } catch (Exception e) {
-        }
-        // ResponseEntity<LoginResponseVO>responseEntity=new
-        // ResponseEntity<LoginResponseVO>(body, , HttpStatus.OK);
-        return responseVO;
-    }
-    
-    
+		LoginResponseVO responseVO = null;
+		try {
+			if (user == null) {
+				responseVO = new LoginResponseVO(401, "手机号已被注册");
+				// throw new UserAlreadyExistException("手机号已被注册");
+			} else {
+				responseVO = new LoginResponseVO(200, "signup success", user.getId(), "unbinded", user.getName(),
+						JWTUtil.sign(user));
+			}
+		} catch (Exception e) {
+		}
+		// ResponseEntity<LoginResponseVO>responseEntity=new
+		// ResponseEntity<LoginResponseVO>(body, , HttpStatus.OK);
+		return responseVO;
+	}
 
 }

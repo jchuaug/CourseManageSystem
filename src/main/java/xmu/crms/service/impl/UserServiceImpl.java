@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import xmu.crms.entity.Attendance;
@@ -21,7 +22,7 @@ import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.mapper.UserMapper;
 import xmu.crms.service.CourseService;
 import xmu.crms.service.UserService;
-
+@Component
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
@@ -467,4 +468,24 @@ public class UserServiceImpl implements UserService {
 		return attendances;
 	}
 
+	/**
+	 * 通过手机号获取用户想信息
+	 * @param phone
+	 * @return
+	 */
+	@Override
+	public User getUserByUserPhone(String phone) {
+		User user=null;
+		try {
+			user=userMapper.getUserByUserPhone(phone);
+			if(user==null) {
+				throw new UserNotFoundException("User phone is not exit in the database");
+			}
+		} catch (UserNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("User:"+user);
+		return user;
+		
+	}
 }

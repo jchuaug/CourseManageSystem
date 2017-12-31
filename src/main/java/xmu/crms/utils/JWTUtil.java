@@ -22,11 +22,11 @@ public class JWTUtil {
      * @param secret 用户的密码
      * @return 是否正确
      */
-    public static boolean verify(String token, String username, String secret) {
+    public static boolean verify(String token, String phone, String secret) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             JWTVerifier verifier = JWT.require(algorithm)
-                    .withClaim("username", username)
+                    .withClaim("phone", phone)
                     .build();
             DecodedJWT jwt = verifier.verify(token);
             return true;
@@ -72,6 +72,18 @@ public class JWTUtil {
             return null;
         }
     }
+    /**
+     * 获得token中的信息无需secret解密也能获得
+     * @return token中包含的用户名
+     */
+    public static String getUserPhone(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            return jwt.getClaim("phone").asString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
 
     /**
      * 生成签名,5min后过期
@@ -88,6 +100,7 @@ public class JWTUtil {
                    .withClaim("id", user.getId().longValue())
                    .withClaim("type", user.getType()==1?"teacher":"student")
                    .withClaim("name", user.getName())
+                   .withClaim("phone", user.getPhone())
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {

@@ -1,20 +1,27 @@
 $(function() {
 	// 登录
 	$(".Login").click(function(e) {
-		postData={
-				phone:$(".UserNameField").val(),
-				password:$(".PasswordField").val()
-		}
+		var token = window.localStorage.getItem("jwt");
+		phone = $(".UserNameField").val();
+		password = $(".PasswordField").val();
 		$.ajax({
 			type : 'post',
 			url : '/signin',
+			data : {
+				'phone' : phone,
+				'password' : password
+			},
 			dataType : "json",
-			data : JSON.stringify(postData),
-			contentType : "application/json",
-			success : function(result, textStatus, xhr) {
-				if (xhr.status == 200) {
-					window.localStorage.setItem("jwt", result.jwt);
+			headers : {
+				"Authorization" : token
+			},
+			success : function(result) {
+				var msg = result.msg;
+				window.localStorage.setItem("jwt",result.jwt);
+				console.log(result.jwt);
+				if (result.code == 200) {
 					/* 登陆成功跳转 */
+					alert(result.type);
 					switch (result.type) {
 					case "teacher":
 						window.location.href = '/teacher/home';
@@ -27,7 +34,7 @@ $(function() {
 						break;
 					}
 				} else {
-					alert(xhr.msg);
+					alert(result.msg);
 					window.location.href = '/';
 				}
 

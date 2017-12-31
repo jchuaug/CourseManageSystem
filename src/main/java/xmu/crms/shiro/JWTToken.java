@@ -1,4 +1,4 @@
-package xmu.crms.utils;
+package xmu.crms.shiro;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
@@ -10,12 +10,14 @@ public class JWTToken implements AuthenticationToken {
     public JWTToken(String token) {
         this.token = token;
     }
+
     @Override
     public Object getPrincipal() {
-        return token;
+        return this.token;
     }
+
     @Override
     public Object getCredentials() {
-        return token;
+        return this.token;
     }
 }
