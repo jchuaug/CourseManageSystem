@@ -50,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
                 throw new CourseNotFoundException();
             }
             return courseList;
-        } catch (Exception e) {
+        } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
         return null;

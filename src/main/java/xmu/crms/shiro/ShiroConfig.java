@@ -43,7 +43,7 @@ public class ShiroConfig {
          * 自定义url规则 http://shiro.apache.org/web.html#urls-
 		 */
         Map<String, String> filterRuleMap = new HashMap<>();
-        filterRuleMap.put("/course/**", "jwt, roles[teacher]");
+        filterRuleMap.put("/course/**", "jwt");
         filterRuleMap.put("/me/**", "jwt");
 
         filterRuleMap.put("/static/css/**", "anon");
