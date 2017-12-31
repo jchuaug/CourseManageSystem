@@ -26,7 +26,7 @@ Page({
         console.log(e);
 
         const dataset = e.currentTarget.dataset;
-        console.log("dataset",dataset);
+        console.log("dataset", dataset);
 
         const targetUrl = utils.buildUrl({
             base: '../oneCourse/oneCourse',
