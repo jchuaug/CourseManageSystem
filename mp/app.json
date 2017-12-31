@@ -3,6 +3,7 @@
   "pages": [
     "pages/bind/bind",
     "pages/student/studentMain/studentMain",
+    "pages/student/teacherMain/teacherMain",
 
     "pages/student/oneCourse/courseInfo/courseInfo",
 

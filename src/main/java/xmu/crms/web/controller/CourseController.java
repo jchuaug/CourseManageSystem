@@ -5,10 +5,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Course;
-import xmu.crms.entity.Seminar;
-import xmu.crms.entity.User;
+import xmu.crms.entity.*;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
@@ -20,6 +17,7 @@ import xmu.crms.web.VO.*;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -375,6 +373,32 @@ public class CourseController {
         return new ResponseEntity<SeminarResponseVO>(seminarResponseVO2, new HttpHeaders(), HttpStatus.CREATED);
 
     }
+    @GetMapping("/{courseId}/seminar/current")
+    public String getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId){
+        return "hello";
+    }
 
+//    @GetMapping("/{courseId}/seminar/current")
+//    public ResponseEntity<List<SeminarResponseVO>> getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId){
+//
+//          try{
+//          List<Seminar> seminarList =  seminarService.listSeminarByCourseId(courseId);
+//          List<SeminarResponseVO> seminarResponseVOList = new ArrayList<>();
+//          for (int i=0;i<seminarList.size();i++){
+//              Seminar seminar = seminarList.get(i);
+//              Date end =seminar.getEndTime();
+//              Date start = seminar.getStartTime();
+//              //这里的true要判断当前时间是否在start和end之间
+//              if (true){
+//                  List<Topic> topicList = topicService.listTopicBySeminarId(seminar.getId());
+//                  seminarResponseVOList.add(ModelUtils.SeminarInfoToSeminarResponseVO(seminar,topicList,null));
+//              }
+//          }
+//          return new ResponseEntity<List<SeminarResponseVO>>(seminarResponseVOList, new HttpHeaders(), HttpStatus.OK);
+//      }catch (Exception e){
+//          e.printStackTrace();
+//      }
+//      return new ResponseEntity<List<SeminarResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+//    }
 
 }
