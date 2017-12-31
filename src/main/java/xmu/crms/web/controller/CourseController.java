@@ -54,7 +54,7 @@ public class CourseController {
 	private final String STUDENT = "student";
 
 	@GetMapping("/teacher")
-	@RequiresRoles("teacher")
+	@RequiresRoles("student")
 	public ResponseEntity<List<CourseResponseVO>> getAllCourse(@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());

@@ -47,6 +47,7 @@ public class ShiroConfig {
 		Map<String, String> filterRuleMap = new HashMap<>();
 		filterRuleMap.put("/course/**", "jwt, roles[teacher]");
 		filterRuleMap.put("/static/css/**", "anon");
+		filterRuleMap.put("/wechat/**", "anon");
 		filterRuleMap.put("/static/js/**", "anon");
 		filterRuleMap.put("/static/Img/**", "anon");
 		filterRuleMap.put("/templates/common/**", "anon");

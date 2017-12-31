@@ -12,7 +12,6 @@ public class SchoolRequestVO {
     private String city;
 
     public SchoolRequestVO(){
-        super();
     }
 
     public SchoolRequestVO(String name, String province, String city) {

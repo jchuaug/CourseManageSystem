@@ -1,13 +1,12 @@
 package xmu.crms.web.VO;
 
-import xmu.crms.entity.User;
-
 import java.math.BigInteger;
 
 public class UserResponseVO {
     private BigInteger id;
     private String name;
     private String number;
+    private Integer type;
 
     public UserResponseVO() {
 
@@ -37,4 +36,11 @@ public class UserResponseVO {
         this.number = number;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 }

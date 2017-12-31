@@ -1,21 +1,32 @@
 package xmu.crms.web.VO;
 
+import xmu.crms.entity.User;
+
 import java.math.BigInteger;
 
 public class LoginResponseVO {
-    private Integer code;// 状态码
+    private Integer statusCode;// 状态码
     private String msg;// 返回信息
     private BigInteger id;// 学号
     private String type;// 身份类型
     private String name;// 姓名
     private String jwt;// 返回的token
 
-    public Integer getCode() {
-        return code;
+    public LoginResponseVO(int i, String msg, User user, String jwt) {
+        this.statusCode = i;
+        this.msg = msg;
+        this.id = user.getId();
+        this.type = user.getType() == 1 ? "teacher" : "student";
+        this.name = user.getName();
+        this.jwt = jwt;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public Integer getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(Integer statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMsg() {
@@ -44,7 +55,7 @@ public class LoginResponseVO {
 
     @Override
     public String toString() {
-        return "LoginResponseVO [code=" + code + ", msg=" + msg + ", id=" + id + ", type=" + type + ", name=" + name
+        return "LoginResponseVO [statusCode=" + statusCode + ", msg=" + msg + ", id=" + id + ", type=" + type + ", name=" + name
                 + ", jwt=" + jwt + "]";
     }
 
@@ -64,9 +75,9 @@ public class LoginResponseVO {
         this.type = type;
     }
 
-    public LoginResponseVO(Integer code, String msg, BigInteger id, String type, String name, String jwt) {
+    public LoginResponseVO(Integer statusCode, String msg, BigInteger id, String type, String name, String jwt) {
         super();
-        this.code = code;
+        this.statusCode = statusCode;
         this.msg = msg;
         this.id = id;
         this.type = type;
@@ -74,11 +85,11 @@ public class LoginResponseVO {
         this.jwt = jwt;
     }
 
-    public LoginResponseVO(Integer code, String msg) {
+    public LoginResponseVO(Integer statusCode, String msg) {
         super();
-        this.code = code;
+        this.statusCode = statusCode;
         this.msg = msg;
     }
-    
+
 
 }

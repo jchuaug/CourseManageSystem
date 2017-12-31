@@ -1,0 +1,37 @@
+<!--pages/student/reviseStudentInfo/reviseStudentInfo.wxml-->
+
+<page>
+    <view class="user-card">
+        <!-- 背景图的view -->
+        <image class="image-bg" src="../../../../images/titleBackground.jpg"/>
+
+        <view class="avator">
+            <image class="user-pic" src="../../../../images/figureAvatar.png"
+                   bindtap="changeAvator"/>
+            <span class="text-center-horizontal text-less-obvious">点击头像修改</span>
+        </view>
+    </view>
+
+
+    <view class="user-info">
+        <view class="row">
+            <span class="key">姓名:</span>
+            <span class="value">{{user.name}}</span>
+        </view>
+        <view class="row">
+            <span class="key">学号:</span>
+            <span class="value">{{user.number}}</span>
+        </view>
+
+        <view class="row">
+            <span class="key">手机号:</span>
+            <span class="value">{{user.phone}}</span>
+        </view>
+        <view class="row">
+            <span class="key">学校:</span>
+            <span class="value">{{user.school.name}}</span>
+        </view>
+    </view>
+    <button class="bt-unbind" type="warn" catchtap="unbind">解绑</button>
+
+</page>

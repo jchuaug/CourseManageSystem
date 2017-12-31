@@ -5,336 +5,508 @@
 <mapper namespace="xmu.crms.mapper.UserMapper">
 
 
-	<resultMap id="UserResultMap" type="xmu.crms.entity.User">
-		<id property="id" column="id" javaType="java.math.BigInteger" />
-		<result property="phone" column="phone" javaType="java.lang.String" />
-		<result property="wechatId" column="wechat_id" javaType="java.lang.String" />
-		<result property="openid" column="openid" javaType="java.lang.String" />
-		<result property="avatar" column="avatar" javaType="java.lang.String" />
-		<result property="password" column="password" javaType="java.lang.String" />
-		<result property="name" column="name" javaType="java.lang.String" />
-		<result property="gender" column="gender" javaType="int" />
-		<result property="type" column="type" javaType="int" />
-		<result property="number" column="number" javaType="java.lang.String" />
-		<result property="education" column="education" javaType="int" />
-		<result property="title" column="title" javaType="int" />
-		<result property="email" column="email" javaType="java.lang.String" />
-		<association property="school" column="school_id"
-			javaType="xmu.crms.entity.School" select="getSchoolById">
-		</association>
-	</resultMap>
+    <resultMap id="UserResultMap" type="xmu.crms.entity.User">
+        <id property="id" column="id" javaType="java.math.BigInteger"/>
+        <result property="phone" column="phone" javaType="java.lang.String"/>
+        <result property="wechatId" column="wechat_id" javaType="java.lang.String"/>
+        <result property="openid" column="openid" javaType="java.lang.String"/>
+        <result property="avatar" column="avatar" javaType="java.lang.String"/>
+        <result property="password" column="password" javaType="java.lang.String"/>
+        <result property="name" column="name" javaType="java.lang.String"/>
+        <result property="gender" column="gender" javaType="int"/>
+        <result property="type" column="type" javaType="int"/>
+        <result property="number" column="number" javaType="java.lang.String"/>
+        <result property="education" column="education" javaType="int"/>
+        <result property="title" column="title" javaType="int"/>
+        <result property="email" column="email" javaType="java.lang.String"/>
+        <association property="school" column="school_id"
+                     javaType="xmu.crms.entity.School" select="getSchoolById">
+        </association>
+    </resultMap>
 
-	<resultMap id="CourseResultMap" type="xmu.crms.entity.Course">
-		<id property="id" column="id" />
-		<result property="name" column="name" />
-		<result property="startDate" column="start_date" />
-		<result property="endDate" column="end_date" />
-		<result property="description" column="description" />
-		<result property="reportPercentage" column="report_percentage" />
-		<result property="presentationPercentage" column="presentation_percentage" />
-		<result property="fivePointPercentage" column="five_point_percentage" />
-		<result property="fourPointPercentage" column="four_point_percentage" />
-		<result property="threePointPercentage" column="three_point_percentage" />
-		<association property="teacher" column="teacher_id"
-			javaType="xmu.crms.entity.User" select="getUserByUserId" />
-	</resultMap>
+    <resultMap id="CourseResultMap" type="xmu.crms.entity.Course">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="description" column="description"/>
+        <result property="reportPercentage" column="report_percentage"/>
+        <result property="presentationPercentage" column="presentation_percentage"/>
+        <result property="fivePointPercentage" column="five_point_percentage"/>
+        <result property="fourPointPercentage" column="four_point_percentage"/>
+        <result property="threePointPercentage" column="three_point_percentage"/>
+        <association property="teacher" column="teacher_id"
+                     javaType="xmu.crms.entity.User" select="getUserByUserId"/>
+    </resultMap>
 
-	<resultMap id="LocationResultMap" type="xmu.crms.entity.Location">
-		<id property="id" column="id" />
-		<result property="longitude" column="longitude" />
-		<result property="latitude" column="latitude" />
-		<result property="status" column="status" />
-	</resultMap>
+    <resultMap id="LocationResultMap" type="xmu.crms.entity.Location">
+        <id property="id" column="id"/>
+        <result property="longitude" column="longitude"/>
+        <result property="latitude" column="latitude"/>
+        <result property="status" column="status"/>
+    </resultMap>
 
-	<resultMap id="AttendanceResultMap" type="xmu.crms.entity.Attendance">
-		<id property="id" column="id" />
-		<result property="attendanceStatus" column="attendance_status" />
-		<association property="student" column="student_id"
-			javaType="xmu.crms.entity.User" select="getUserByUserId" />
-	</resultMap>
+    <resultMap id="AttendanceResultMap" type="xmu.crms.entity.Attendance">
+        <id property="id" column="id"/>
+        <result property="attendanceStatus" column="attendance_status"/>
+        <association property="student" column="student_id"
+                     javaType="xmu.crms.entity.User" select="getUserByUserId"/>
+    </resultMap>
 
-	<resultMap id="UserDetailResultMap" type="xmu.crms.entity.User">
-		<result property="phone" column="phone" />
-		<result property="password" column="password" />
-		<result property="type" column="type" />
-		<result property="openid" column="openid" />
-	</resultMap>
+    <resultMap id="UserDetailResultMap" type="xmu.crms.entity.User">
+        <result property="phone" column="phone"/>
+        <result property="password" column="password"/>
+        <result property="type" column="type"/>
+        <result property="openid" column="openid"/>
+    </resultMap>
 
-	<resultMap type="xmu.crms.entity.ClassInfo" id="ClassInfoResultMap">
-		<id column="id" property="id" />
-		<result column="name" property="name" />
-		<result column="site" property="site" />
-		<result column="class_time" property="classTime" />
-		<result column="report_percentage" property="reportPercentage" />
-		<result column="presentation_percentage" property="presentationPercentage" />
-		<result column="five_point_percentage" property="fivePointPercentage" />
-		<result column="four_point_percentage" property="fourPointPercentage" />
-		<result column="three_point_percentage" property="threePointPercentage" />
-		<association column="course_id" property="course"
-			select="getCourseByCourseId" />
-	</resultMap>
+    <resultMap type="xmu.crms.entity.ClassInfo" id="ClassInfoResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="site" property="site"/>
+        <result column="class_time" property="classTime"/>
+        <result column="report_percentage" property="reportPercentage"/>
+        <result column="presentation_percentage" property="presentationPercentage"/>
+        <result column="five_point_percentage" property="fivePointPercentage"/>
+        <result column="four_point_percentage" property="fourPointPercentage"/>
+        <result column="three_point_percentage" property="threePointPercentage"/>
+        <association column="course_id" property="course"
+                     select="getCourseByCourseId"/>
+    </resultMap>
 
-	<resultMap type="xmu.crms.entity.Seminar" id="SeminarResultMap">
-		<id column="id" property="id" />
-		<result column="name" property="name" />
-		<result column="description" property="description" />
-		<result column="is_fixed" property="fixed" />
-		<result column="start_time" property="startTime" />
-		<result column="end_time" property="endTime" />
-		<association column="course_id" property="course"
-			select="getCourseByCourseId"></association>
-	</resultMap>
-
-
-	<sql id="setCondition">
-		<set>
-			<if test="user.id != null and user.id != ''">id=#{user.id},</if>
-			<if test="user.phone != null and user.phone != ''">phone=#{user.phone},</if>
-			<if test="user.wechatId != null and user.wechatId != ''">wechat_id=#{user.wechatId},</if>
-			<if test="user.openid != null and user.openid != ''">openid=#{user.openid},</if>
-			<if test="user.avatar != null and user.avatar != ''">avatar=#{user.avatar},</if>
-			<if test="user.password != null and user.password != ''">password=#{user.password},</if>
-			<if test="user.name != null and user.name != ''">`name`=#{user.name},</if>
-			<if test="user.school.id != null">school_id=#{user.school.id},</if>
-			<if test="user.gender != null and user.gender != ''">gender=#{user.gender},</if>
-			<if test="user.type != null and user.type != ''">`type`=#{user.type},</if>
-			<if test="user.number != null and user.number != ''">`number`=#{user.number},</if>
-			<if test="user.education != null and user.education != ''">education=#{user.education},</if>
-			<if test="user.title != null and user.title != ''">title=#{user.title},</if>
-			<if test="user.email != null and user.email != ''">email=#{user.email},</if>
-		</set>
-	</sql>
-
-	<select id="getUserByUserId" parameterType="java.math.BigInteger"
-		resultMap="UserResultMap">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`, `number`, education, title, email
-		from user_info
-		where id = #{id}
-	</select>
-
-	<select id="getUserByUserPhone" parameterType="java.lang.String"
-		resultMap="UserResultMap">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`, `number`, education, title, email
-		from user_info
-		where phone = #{phone}
-	</select>
-
-	<select id="getUserByNumber" parameterType="java.lang.String"
-		resultMap="UserResultMap">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`, `number`, education, title, email
-		from user_info
-		where `number` = #{number}
-	</select>
-	<!-- 解绑只置空手机号 -->
-	<update id="unbindUserById" parameterType="java.math.BigInteger">
-		update user_info set
-		phone="" where id=#{id}
-	</update>
-
-	<select id="listUsersByName" parameterType="java.lang.String"
-		resultMap="UserResultMap">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`, `number`, education, title, email
-		from user_info
-		where `name` = #{name}
-	</select>
-
-	<select id="listUserByClassId" parameterType="java.math.BigInteger"
-		resultMap="UserResultMap">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id,
-		`name`, gender, `type`, `number`, education, title, email
-		from
-		user_info
-		where id in (select student_id from course_selection where
-		course_selection.class_id = #{classId})
-		<if test="numberBeginWith != null"> and number like CONCAT(#{numberBeginWith},'%')  </if>
-		<if test="nameBeginWith != null"> and name like CONCAT(#{nameBeginWith},'%')</if>
-	</select>
-
-	<update id="updateUserByUserId">
-		update user_info
-		<include refid="setCondition"></include>
-		where id = #{id}
-	</update>
-	<!-- 插入成功返回userid -->
-	<insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
-		insert into user_info(phone,
-		wechat_id, openid, avatar, password,
-		school_id, name, gender, `type`,
-		`number`, education, title, email)
-		values (#{phone}, #{wechatId},
-		#{openid},
-		#{avatar}, #{password},
-		#{school.id}, #{name},
-		#{gender},
-		#{type}, #{number}, #{education},
-		#{title}, #{email})
-	</insert>
-
-	<delete id="deleteUserByUserId" parameterType="java.math.BigInteger">
-		delete from
-		user_info
-		where id = #{id}
-	</delete>
-
-	<select id="getSchoolById" parameterType="java.math.BigInteger"
-		resultType="xmu.crms.entity.School">
-		select id, `name`, province, city from school where
-		id=#{id}
-	</select>
-
-	<select id="getSchoolByName" parameterType="java.lang.String"
-		resultType="xmu.crms.entity.School">
-		select id, `name`, province, city from school where name =
-		#{name}
-	</select>
-
-	<select id="getCourseByCourseId" resultMap="CourseResultMap">
-		select id, `name`,
-		start_date, end_date, teacher_id,
-		description,
-		report_percentage,
-		presentation_percentage,
-		five_point_percentage, four_point_percentage,
-		three_point_percentage
-		from course id=#{id}
-	</select>
-
-	<select id="listCourseByTeacherId" parameterType="java.math.BigInteger"
-		resultMap="CourseResultMap">
-		select id, `name`, start_date, end_date, teacher_id,
-		description,
-		report_percentage, presentation_percentage,
-		five_point_percentage, four_point_percentage, three_point_percentage
-		from course where teacher_id = #{id}
-	</select>
+    <resultMap type="xmu.crms.entity.Seminar" id="SeminarResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="is_fixed" property="fixed"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <association column="course_id" property="course"
+                     select="getCourseByCourseId"></association>
+    </resultMap>
 
 
-	<select id="listCoursesByStudentId" parameterType="java.math.BigInteger"
-		resultMap="CourseResultMap">
-		select course.id, course.name, course.start_date,
-		course.end_date,
-		course.teacher_id, course.description,
-		course.report_percentage,
-		course.presentation_percentage,
-		course.five_point_percentage, course.four_point_percentage,
-		course.three_point_percentage
-		from course,course_selection
-		cs,class_info class
-		where cs.student_id = #{id} and
-		cs.class_id=class.id and
-		course.id=class.course_id
-	</select>
-	<select id="getClassByClassId" parameterType="java.math.BigInteger"
-		resultMap="ClassInfoResultMap">
-		select
-		id,name,course_id,description,site,class_time,report_percentage,presentation_percentage,five_point_percentage,four_point_percentage,three_point_percentage
-		from class_info
-		where id=#{classId};
-	</select>
+    <sql id="setCondition">
+        <set>
+            <if test="user.id != null and user.id != ''">id=#{user.id},</if>
+            <if test="user.phone != null and user.phone != ''">phone=#{user.phone},</if>
+            <if test="user.wechatId != null and user.wechatId != ''">wechat_id=#{user.wechatId},</if>
+            <if test="user.openid != null and user.openid != ''">openid=#{user.openid},</if>
+            <if test="user.avatar != null and user.avatar != ''">avatar=#{user.avatar},</if>
+            <if test="user.password != null and user.password != ''">password=#{user.password},</if>
+            <if test="user.name != null and user.name != ''">`name`=#{user.name},</if>
+            <if test="user.school.id != null">school_id=#{user.school.id},</if>
+            <if test="user.gender != null and user.gender != ''">gender=#{user.gender},</if>
+            <if test="user.type != null and user.type != ''">`type`=#{user.type},</if>
+            <if test="user.number != null and user.number != ''">`number`=#{user.number},</if>
+            <if test="user.education != null and user.education != ''">education=#{user.education},</if>
+            <if test="user.title != null and user.title != ''">title=#{user.title},</if>
+            <if test="user.email != null and user.email != ''">email=#{user.email},</if>
+        </set>
+    </sql>
 
-	<select id="getLocationBySeminarIdAndClassId" resultMap="LocationResultMap">
-		select
-		id, longitude,
-		latitude, status
-		from location
-		where class_id = #{classId}
-		and
-		seminar_id = #{seminarId}
-	</select>
-	<!--插入成功返回签到编号 -->
-	<insert id="insertAttendanceById" parameterType="xmu.crms.entity.Attendance"
-		useGeneratedKeys="true" keyProperty="id">
-		insert into attendance(student_id, seminar_id, class_id,
-		attendance_status)
-		values (#{student.id}, #{seminar.id},
-		#{classInfo.id},
-		#{attendanceStatus})
+    <select id="getUserByUserId" parameterType="java.math.BigInteger"
+            resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE id = #{id}
+    </select>
 
-		<!-- <selectKey resultType="java.lang.Integer" keyProperty="attendance.id" 
-			order="AFTER"> select last_insert_id() </selectKey> -->
-	</insert>
+    <select id="getUserByUserPhone" parameterType="java.lang.String"
+            resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE phone = #{phone}
+    </select>
 
-	<select id="listAbsenceStudentById" resultMap="UserResultMap">
-		select id, phone,
-		wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`,
-		`number`, education, title, email
-		from user_info
-		where id in (
-		select
-		student_id from attendance
-		where seminar_id =#{seminarId} and class_id
-		= #{classId} and
-		attendance_status = 2) and type=0
-	</select>
+    <select id="getUserByNumber" parameterType="java.lang.String"
+            resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE `number` = #{number}
+    </select>
+    <!-- 解绑只置空手机号 -->
+    <update id="unbindUserById" parameterType="java.math.BigInteger">
+        UPDATE user_info
+        SET
+            phone = ""
+        WHERE id = #{id}
+    </update>
 
-	<select id="listAttendanceByClassIdAndSeminarId" resultMap="AttendanceResultMap">
-		select id, student_id,
-		attendance_status from attendance
-		where class_id
-		= #{classId} and
-		seminar_id = #{seminarId}
-	</select>
+    <select id="listUsersByName" parameterType="java.lang.String"
+            resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE `name` = #{name}
+    </select>
 
-	<select id="listPresentStudent" resultMap="UserResultMap">
-		select id, phone,
-		wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`,
-		`number`, education, title, email
-		from user_info
-		where id in (
-		select
-		student_id from attendance
-		where seminar_id =#{seminarId} and class_id
-		= #{classId} and
-		attendance_status = 0) and type=0
-	</select>
+    <select id="listUserByClassId" parameterType="java.math.BigInteger"
+            resultMap="UserResultMap">
+        select id, phone, wechat_id, openid, avatar, password,
+        school_id,
+        `name`, gender, `type`, `number`, education, title, email
+        from
+        user_info
+        where id in (select student_id from course_selection where
+        course_selection.class_id = #{classId})
+        <if test="numberBeginWith != null">and number like CONCAT(#{numberBeginWith},'%')</if>
+        <if test="nameBeginWith != null">and name like CONCAT(#{nameBeginWith},'%')</if>
+    </select>
 
-	<select id="listLateStudent" resultMap="UserResultMap">
-		select id, phone,
-		wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`,
-		`number`, education, title, email
-		from user_info
-		where id in (select
-		student_id from attendance
-		where seminar_id=#{seminarId} and
-		class_id=#{classId} and attendance_status=1 ) and type=0
-	</select>
+    <update id="updateUserByUserId">
+        update user_info
+        <include refid="setCondition"></include>
+        where id = #{id}
+    </update>
+    <!-- 插入成功返回userid -->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_info (phone,
+                               wechat_id, openid, avatar, password,
+                               school_id, name, gender, `type`,
+                               `number`, education, title, email)
+        VALUES (#{phone}, #{wechatId},
+                          #{openid},
+                          #{avatar}, #{password},
+                          #{school.id}, #{name},
+                          #{gender},
+                          #{type}, #{number}, #{education},
+                #{title}, #{email})
+    </insert>
 
-	<select id="getUserByPhone" parameterType="java.lang.String"
-		resultMap="UserResultMap">
-		select id, phone, wechat_id, openid, avatar, password,
-		school_id, `name`, gender, `type`, `number`, education, title, email
-		from user_info
-		where phone = #{phone}
-	</select>
-	<!-- 微信扫码登录 -->
-	<select id="getUserByOpenId" parameterType="java.lang.String"
-		resultMap="UserDetailResultMap">
-		select `id`, `phone`, `password`, `type`, `name`, `openid`
-		from user_info
-		where openid = #{openid}
-	</select>
+    <delete id="deleteUserByUserId" parameterType="java.math.BigInteger">
+        DELETE FROM
+            user_info
+        WHERE id = #{id}
+    </delete>
 
-	<select id="getSeminarBySeminarId" resultMap="SeminarResultMap">
-		SELECT * FROM
-		seminar WHERE id = #{seminarId}
-	</select>
+    <select id="getSchoolById" parameterType="java.math.BigInteger"
+            resultType="xmu.crms.entity.School">
+        SELECT
+            id,
+            `name`,
+            province,
+            city
+        FROM school
+        WHERE
+            id = #{id}
+    </select>
 
-	<select id="listCourseByTeacherName" parameterType="java.lang.String"
-		resultMap="CourseResultMap">
-		select id, `name`, start_date, end_date, teacher_id,
-		description,
-		report_percentage, presentation_percentage,
-		five_point_percentage, four_point_percentage, three_point_percentage
-		from course where teacher_id in (select id from user_info where
-		user_info.name=#{name} and user_info.type=1)
-	</select>
+    <select id="getSchoolByName" parameterType="java.lang.String"
+            resultType="xmu.crms.entity.School">
+        SELECT
+            id,
+            `name`,
+            province,
+            city
+        FROM school
+        WHERE name =
+              #{name}
+    </select>
+
+    <select id="getCourseByCourseId" resultMap="CourseResultMap">
+        SELECT
+            id,
+            `name`,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM course id=#{id}
+    </select>
+
+    <select id="listCourseByTeacherId" parameterType="java.math.BigInteger"
+            resultMap="CourseResultMap">
+        SELECT
+            id,
+            `name`,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM course
+        WHERE teacher_id = #{id}
+    </select>
+
+
+    <select id="listCoursesByStudentId" parameterType="java.math.BigInteger"
+            resultMap="CourseResultMap">
+        SELECT
+            course.id,
+            course.name,
+            course.start_date,
+            course.end_date,
+            course.teacher_id,
+            course.description,
+            course.report_percentage,
+            course.presentation_percentage,
+            course.five_point_percentage,
+            course.four_point_percentage,
+            course.three_point_percentage
+        FROM course, course_selection
+                     cs, class_info class
+        WHERE cs.student_id = #{id} AND
+              cs.class_id = class.id AND
+              course.id = class.course_id
+    </select>
+    <select id="getClassByClassId" parameterType="java.math.BigInteger"
+            resultMap="ClassInfoResultMap">
+        SELECT
+            id,
+            name,
+            course_id,
+            description,
+            site,
+            class_time,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM class_info
+        WHERE id = #{classId};
+    </select>
+
+    <select id="getLocationBySeminarIdAndClassId" resultMap="LocationResultMap">
+        SELECT
+            id,
+            longitude,
+            latitude,
+            status
+        FROM location
+        WHERE class_id = #{classId}
+              AND
+              seminar_id = #{seminarId}
+    </select>
+    <!--插入成功返回签到编号 -->
+    <insert id="insertAttendanceById" parameterType="xmu.crms.entity.Attendance"
+            useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO attendance(student_id, seminar_id, class_id,
+        attendance_status)
+        VALUES (#{student.id}, #{seminar.id},
+        #{classInfo.id},
+        #{attendanceStatus})
+
+        <!-- <selectKey resultType="java.lang.Integer" keyProperty="attendance.id"
+            order="AFTER"> select last_insert_id() </selectKey> -->
+    </insert>
+
+    <select id="listAbsenceStudentById" resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE id IN (
+            SELECT student_id
+            FROM attendance
+            WHERE seminar_id = #{seminarId} AND class_id
+                                                = #{classId} AND
+                  attendance_status = 2) AND type = 0
+    </select>
+
+    <select id="listAttendanceByClassIdAndSeminarId" resultMap="AttendanceResultMap">
+        SELECT
+            id,
+            student_id,
+            attendance_status
+        FROM attendance
+        WHERE class_id
+              = #{classId} AND
+              seminar_id = #{seminarId}
+    </select>
+
+    <select id="listPresentStudent" resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE id IN (
+            SELECT student_id
+            FROM attendance
+            WHERE seminar_id = #{seminarId} AND class_id
+                                                = #{classId} AND
+                  attendance_status = 0) AND type = 0
+    </select>
+
+    <select id="listLateStudent" resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE id IN (SELECT student_id
+                     FROM attendance
+                     WHERE seminar_id = #{seminarId} AND
+                           class_id = #{classId} AND attendance_status = 1) AND type = 0
+    </select>
+
+    <select id="getUserByPhone" parameterType="java.lang.String"
+            resultMap="UserResultMap">
+        SELECT
+            id,
+            phone,
+            wechat_id,
+            openid,
+            avatar,
+            password,
+            school_id,
+            `name`,
+            gender,
+            `type`,
+            `number`,
+            education,
+            title,
+            email
+        FROM user_info
+        WHERE phone = #{phone}
+    </select>
+    <!-- 微信扫码登录 -->
+    <select id="getUserByOpenId" parameterType="java.lang.String"
+            resultMap="UserDetailResultMap">
+        SELECT
+            `id`,
+            `phone`,
+            `password`,
+            `type`,
+            `name`,
+            `openid`
+        FROM user_info
+        WHERE openid = #{openid}
+    </select>
+
+    <select id="getSeminarBySeminarId" resultMap="SeminarResultMap">
+        SELECT *
+        FROM
+            seminar
+        WHERE id = #{seminarId}
+    </select>
+
+    <select id="listCourseByTeacherName" parameterType="java.lang.String"
+            resultMap="CourseResultMap">
+        SELECT
+            id,
+            `name`,
+            start_date,
+            end_date,
+            teacher_id,
+            description,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM course
+        WHERE teacher_id IN (SELECT id
+                             FROM user_info
+                             WHERE
+                                 user_info.name = #{name} AND user_info.type = 1)
+    </select>
+
+    <update id="bindOpenIdWithUser" parameterType="User">
+        UPDATE user_info
+        SET openid = #{openid},
+            name   = #{name}
+        WHERE number = #{number}
+    </update>
 
 </mapper>

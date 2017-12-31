@@ -1,0 +1,48 @@
+<page class="body">
+    <view class="head20">
+        <text class="FONT1">OOAD</text>
+    </view>
+    <view class="info">
+        <i class="fa fa-user "/>
+        <text class="FONT3">老师：邱明</text>
+    </view>
+
+    <view class="info">
+        <i class="fa fa-envelope "/>
+        <text class="FONT3">邮箱：qiuming@gmail.com</text>
+    </view>
+
+    <view class="info">
+        <i class="fa fa-asterisk "/>
+        <text class="FONT3">班级：</text>
+    </view>
+
+    <view class="info">
+        <i class="fa fa-clock-o "/>
+        <text class="FONT3">时间：</text>
+    </view>
+
+    <!--<view class="row-wrap" style="margin-top: 1rpx;width=100%;">-->
+    <!--<span class="FONT6" style="margin-top: 2rpx;float:left;margin-left:41%;">时间:</span>-->
+    <!--<picker bindchange="bindCasPickerChange" value="{{casIndex1}}" range="{{casArray}}"-->
+    <!--style="margin-left: 1%;width=100%;">-->
+    <!--<button class="FONT6" style="margin-top: 0rpx;margin-left: 5%;float:left;">{{casArray[casIndex]}}</button>-->
+    <!--</picker>-->
+    <!--</view>-->
+
+    <view class="info">
+        <i class="fa fa-map-marker"/>
+        <text class="FONT3">地点：</text>
+    </view>
+
+     <view class="info">
+        <i class="fa fa-users"/>
+        <text class="FONT3">班级人数：</text>
+    </view>
+
+    <view class="info">
+        <i class="fa fa-file-o"/>
+        <text class="FONT3">简介：asdfffffffffffaaaaaaaaaaaxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</text>
+    </view>
+</page>

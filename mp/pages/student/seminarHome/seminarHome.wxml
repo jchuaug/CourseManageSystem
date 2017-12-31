@@ -1,0 +1,23 @@
+<page class="page seminar">
+    <view class="head20">
+        <span class="FONT1">{{courseName}}</span>
+        <span class="FONT2">{{seminarId}}</span>
+    </view>
+
+    <view class='action-wrapper'>
+        <view class="wrapper">
+            <view class="action {{seminar.groupingMethod=='fixed'?'inactive':'active'}}" catchtap="{{seminar.groupingMethod=='fixed'?'':'callInRoll'}}">
+                <span>签到</span>
+            </view>
+            <view class="action active" catchtap="grouping">
+                <span>组队和选题</span>
+            </view>
+        </view>
+
+        <view class="wrapper ">
+            <view class="action action-score {{started?'active':'inactive'}}" catchtap="scoring">
+                <span>打分</span>
+            </view>
+        </view>
+    </view>
+</page>

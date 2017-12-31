@@ -1,0 +1,68 @@
+/* pages/teacher/rollCallList/rollCallList.wxss */
+page{
+  background: rgba(102, 204, 255, 0.5);
+}
+
+.info_banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 40rpx 0;
+}
+.blueBoardIcon{
+  width: 250rpx;
+  height: 250rpx;
+}
+.userIcon{
+  width: 100rpx;
+  height: 100rpx;
+}
+.class_info {
+  display: flex;
+  flex-direction: column;
+}
+
+.largefiy {
+  font-size: 220rpx;
+}
+.class_name {
+  font-size: 70rpx;
+  margin-bottom: 30rpx;
+}
+
+.class_num {
+  font-size: 32rpx;
+}
+.list{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40rpx;
+}
+.list_title{
+  background: #6cf;
+  width: 90%;
+  padding: 12rpx;
+  border-radius:10rpx; 
+  font-size: 32rpx;
+}
+.list_main{
+  display: flex;
+  width: 90%;
+  flex-wrap: wrap;
+}
+.list_item{
+  width: 50%;
+  display: flex;
+  border-radius: 18rpx;
+  background: #fff;
+  align-items: center;
+}
+.user_icon{
+  font-size: 100rpx;
+}
+.user_name{
+  font-size: 30rpx;
+  margin: 0 auto; 
+}

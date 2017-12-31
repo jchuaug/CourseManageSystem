@@ -1,0 +1,26 @@
+<!--pages/teacher/classManage/classManage.wxml-->
+<view class='banner'>
+    <text class='course_title'>{{seminar.courseName}}</text>
+    <text class='course_seminar'>{{seminar.name}}</text>
+</view>
+<view class='infobar'>
+
+<view>
+    <image src='/images/clock.png' class='clockAndGroupIcon'/>
+    <text>{{seminar.startTime + ' ~ ' +seminar.endTime}}</text>
+</view>
+<view>
+    <image src='/images/paperClip.png' class='clockAndGroupIcon'/>
+    <text>{{seminar.groupingMethod == "fixed"?"固定分组":"随机分组" }}</text>
+</view>
+</view>
+<view class='classes'>
+<block wx:for="{{seminar.classes}}">
+    <view class='single_class flex_column' bindtap='toStartCall' data-classid="{{item.id}}"
+          data-groupmethod="{{seminar.groupingMethod}}">
+        <image src="/images/class.png" class="classIcon"/>
+
+        <text>{{item.name}}</text>
+    </view>
+</block>
+</view>

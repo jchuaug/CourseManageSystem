@@ -1,0 +1,32 @@
+
+{
+  "pages": [
+    "pages/bind/bind",
+    "pages/student/studentMain/studentMain",
+
+    "pages/student/oneCourse/courseInfo/courseInfo",
+
+    "pages/teacher/rollStartCall/rollStartCall",
+    "pages/teacher/rollCallList/rollCallList",
+    "pages/teacher/reviseTeacherInfo/reviseTeacherInfo",
+    "pages/teacher/classManage/classManage",
+
+    "pages/teacher/groupInfo/groupInfo",
+
+    "pages/student/oneCourse/oneCourse",
+    "pages/student/studentMain/reviseStudentInfo/reviseStudentInfo",
+    "pages/student/seminarHome/seminarHome",
+    "pages/student/seminarHome/grade/grade",
+    "pages/student/seminarHome/group/chooseTopic/chooseTopic",
+    "pages/student/seminarHome/group/group",
+    "pages/student/seminarHome/rollCall/rollCall"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "课堂管理系统",
+    "navigationBarTextStyle": "black"
+  }
+
+
+}

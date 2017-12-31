@@ -1,0 +1,23 @@
+<page class="page">
+    <view class="head20">
+        <text class="FONT1">{{courseName}}</text>
+        <i class="fa fa-expand fa-2x i-expand" catchtap="viewCourseInfo"/>
+    </view>
+
+    <view wx:for="{{seminars}}" wx:for-item="seminar">
+        <view class="box {{seminar.active?'active':''}}" catchtap="{{seminar.active?'chooseSeminar':''}}"
+              data-seminar-id="{{seminar.id}}">
+            <text class="FONT12" data-seminar-id="{{seminar.id}}">{{seminar.name}}</text>
+            <text class="FONT2" style="margin-left: 60%;margin-top: 3%" data-seminar-id="{{seminar.id}}">
+                {{seminar.startTime+' ~ '+seminar.endTime}}
+            </text>
+            <text class="FONT2" style="margin-left: 60%;margin-top: 12%" data-seminar-id="{{seminar.id}}">
+                {{seminar.groupingMethod}}
+            </text>
+            <text class="FONT2" style="margin-left: 60%;margin-top: 21%" data-seminar-id="{{seminar.id}}">
+                成绩：
+                <!--todo get score from api-->
+            </text>
+        </view>
+    </view>
+</page>

@@ -1,0 +1,21 @@
+.box {
+    position: relative;
+    margin-left: 5%;
+    width: 90%;
+    background-color: #CCCCCC;
+    margin-top: 5%;
+    padding-bottom: 25%;
+    border-radius: 15px;
+}
+
+.i-expand {
+    position: absolute;
+    right: 0;
+    padding: 40rpx;
+    bottom: 0;
+    color: whitesmoke;
+}
+
+.active {
+    background-color: #66CCFF;
+}

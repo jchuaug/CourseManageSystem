@@ -1,0 +1,193 @@
+@charset "utf-8";
+/* CSS Document */
+/* 背景色 字体 */
+page {
+    background-color: rgba(102, 204, 255, 0.5);
+    font-family: "微软雅黑";
+}
+
+/* 左上角讨论课信息块 */
+.seminarblock {
+    height: 15%;
+    margin: 3% 7%;
+    font-size: 1.125rem;
+    position: relative;
+    float: left;
+}
+
+.seminarimg {
+    margin-top: 50%;
+}
+
+.seminarword {
+    display: table-row;
+
+}
+
+/* 白色字：分组信息 选题 */
+.whiteword {
+    color: #FFF;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 7%;
+    float: left;
+    width: 84%;
+}
+
+/* “辞职”按钮 */
+.btnquit {
+    background-color: #66ccff;
+    color: #FFF;
+    font-size: 0.875rem;
+    border-radius: 0.9375rem;
+    width: 100%;
+    height: 2.5rem;
+    border-style: none;
+
+}
+
+/* “成为队长”按钮 */
+.btnleader {
+    margin: auto;
+    background-color: #66ccff;
+    color: #FFF;
+    font-size: 1.5rem;
+    border-radius: 1.5rem;
+    width: 50%;
+    border-style: none;
+}
+
+/* 居中div */
+.middlediv {
+    text-align: center;
+}
+
+/* 个人信息块 */
+.block {
+    margin: 3% 7%;
+    border-radius: 0.9375rem;
+    background-color: #FFF;
+    font-size: 0.875rem;
+    float: left;
+    width: 85%;
+}
+
+.column0 {
+    float: left;
+    width: 35%
+}
+
+.column1 {
+    float: left;
+    width: 25%
+}
+
+.column2 {
+    float: left;
+    width: 45%
+}
+
+.column3 {
+    float: right;
+    width: 30%
+}
+
+.column4 {
+    float: left;
+    width: 70%
+}
+
+/* 靠右蓝色字 队长*/
+.rightblueword {
+    font-size: 1.5rem;
+    color: #66ccff;
+}
+
+/*居中灰色文字*/
+.midgreyword {
+    margin: auto;
+    color: #cccccc;
+    font-size: 0.875rem;
+}
+
+.panel-body {
+    background-color: #FFF;
+    border-radius: 0.9375rem;
+}
+
+image {
+    height: 3rem;
+    width: 3rem;
+}
+
+/*below is mine*/
+.btn-choose-topic {
+    margin: 30px;
+}
+
+.topic {
+    font-size: 1rem;
+    color: #111;
+    text-align: center;
+}
+
+
+.topic-view{
+    display: flex;
+  flex-direction: row;
+    justify-content: space-around;
+    height: 150rpx;
+  width: 90%;
+  margin: 40rpx auto 0 auto;
+  padding: 10rpx 0;
+    background-color: #ddd;
+
+  border-radius: 5rpx;
+}
+
+.active{
+  background-color: #66CDFF;
+}
+
+.flex-center{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+    flex-grow: 1;
+}
+
+.right{
+    flex-grow: 2;
+}
+
+.left-number{
+    font-size: 28rpx;
+}
+
+.i-expand{
+  flex-grow: 0.5;
+  padding: 20px 10px 20px 20px;
+  color:white;
+}
+
+.topic {
+  color: #fff;
+  font-size: 48rpx;
+  text-align: center;
+}
+
+.topicName {
+  color: #fff;
+  font-size: 28rpx;
+}
+
+.detail{
+  width: 90%;
+  margin: 0 auto 40rpx auto;
+   word-wrap: break-word;
+  background-color: #B6E7FE;
+  color: gray;
+  padding: 0 40rpx;
+  box-sizing: border-box;
+  /*white-space: ;*/
+}
