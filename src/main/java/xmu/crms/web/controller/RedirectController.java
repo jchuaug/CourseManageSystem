@@ -12,13 +12,11 @@ public class RedirectController {
 	}
 	
 	@RequestMapping("/teacher/home")
-	@RequiresRoles("teacher")
 	public String teacherHome() {
 		return "teacher/teacher_home";
 	}
 	
 	@RequestMapping("/student/home")
-	@RequiresRoles("student")
 	public String studentHome() {
 		return "student/student_home";
 	}

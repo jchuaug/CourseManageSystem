@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.SortingFocusTraversalPolicy;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -89,7 +90,8 @@ public class CourseController {
 	private final String TEACHER = "teacher";
 	private final String STUDENT = "student";
 
-	@GetMapping("")
+	@GetMapping("/teacher")
+	@RequiresRoles("teacher")
 	public ResponseEntity<List<CourseResponseVO>> getAllCourse(@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
