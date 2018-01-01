@@ -61,10 +61,12 @@ function load() {
 					document.getElementById("seminar_description").innerHTML = data.description;
 					var groupingMethod = document
 							.getElementById("groupingMethod");
-					if (data.groupMethod == "fixed") {
+					if (data.groupingMethod == "fixed") {
 						groupingMethod.innerHTML = "固定分组";
-					} else if (data.groupMethod == "random") {
+					} else if (data.groupingMethod == "random") {
 						groupingMethod.innerHTML = "随机分组";
+					}else{
+						groupingMethod.innerHTML = "未设置分组方式";
 					}
 					document.getElementById("startTime").innerHTML = data.startTime;
 					document.getElementById("endTime").innerHTML = data.endTime;

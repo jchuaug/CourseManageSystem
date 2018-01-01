@@ -71,10 +71,11 @@ function chooseTopic() {
 	$.ajax({
 		url : "/group/" + groupId + "/topic",
 		dataType : "json",
+		contentType : "application/json;charset=utf-8",
 		type : "post",
-		data : {
+		data : JSON.stringify({
 			"id" : document.getElementById("topic_id").innerHTML
-		},
+		}),
 		headers : {
 			"Authorization" : token
 		},
