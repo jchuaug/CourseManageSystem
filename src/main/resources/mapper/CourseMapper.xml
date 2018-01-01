@@ -77,7 +77,7 @@
     </select>
 
     <select id="listCourseIdByStudentId" resultMap="CourseResult">
-        SELECT id
+        SELECT class_id
         FROM course_selection
         WHERE student_id = #{id}
     </select>
@@ -126,7 +126,7 @@
             four_point_percentage,
             three_point_percentage
         FROM course
-        WHERE id = #{id,jdbcType=BIGINT}
+        WHERE id = #{id}
     </select>
 
     <update id="updateCourseByCourseId">

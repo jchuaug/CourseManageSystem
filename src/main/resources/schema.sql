@@ -156,6 +156,12 @@ CREATE TABLE `course_selection` (
 -- Records of course_selection
 -- ----------------------------
 INSERT INTO `course_selection` VALUES ('1', '2017-12-15 22:23:55', '2017-12-15 22:33:55', '1', '90');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '3');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '4');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '5');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '6');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '7');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '8');
 INSERT INTO `course_selection` VALUES ('2', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '1', '4');
 INSERT INTO `course_selection` VALUES ('3', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '1', '5');
 INSERT INTO `course_selection` VALUES ('4', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '1', '6');

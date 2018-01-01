@@ -14,6 +14,7 @@ import org.springframework.context.annotation.DependsOn;
 import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 @Configuration
 public class ShiroConfig {
@@ -42,10 +43,14 @@ public class ShiroConfig {
 		/*
          * 自定义url规则 http://shiro.apache.org/web.html#urls-
 		 */
-        Map<String, String> filterRuleMap = new HashMap<>();
-        filterRuleMap.put("/course/**", "jwt");
+        Map<String, String> filterRuleMap = new TreeMap<>();
+        //todo delete later
+        filterRuleMap.put("/**", "anon");
+        filterRuleMap.put("/course/**", "jwt,roles[student,teacher]");
+        filterRuleMap.put("/seminar/3/**", "anon");
+        filterRuleMap.put("/seminar/**", "jwt");
+        filterRuleMap.put("/me/course", "jwt,roles[teacher]");
         filterRuleMap.put("/me/**", "jwt");
-
         filterRuleMap.put("/static/css/**", "anon");
         filterRuleMap.put("/wechat/**", "anon");
         filterRuleMap.put("/static/js/**", "anon");

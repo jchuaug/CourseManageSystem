@@ -47,7 +47,7 @@ public class ClassController {
     private final String STUDENT = "student";
     private final String TEACHER = "teacher";
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<ClassResponseVO>> getAllClass(@RequestParam(required = false) String courseName,
                                                              @RequestParam(required = false) String courseTeacher, @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
