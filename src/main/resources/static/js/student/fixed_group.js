@@ -138,8 +138,7 @@ function addMember(student) {
 		url : "/class/" + classId + "/classgroup/add",
 		type : "put",
 		data : {
-			"groupId" : groupId,
-			"studentId" : studentId
+			"id":studentId
 		},
 		dataType : "json",
 		headers : {
@@ -147,8 +146,8 @@ function addMember(student) {
 		},
 
 		success : function(data) {
-			console.log("返回数据:" + data.id);
-
+			alter("添加成功");
+			//location.reload();
 		}
 
 	});
@@ -161,7 +160,9 @@ function deleteMember(student) {
 	$.ajax({
 		url : "/class/" + classId + "/classgroup/remove",
 		type : "put",
-		data : studentId,
+		data : {
+			"id":studentId
+		},
 		dataType : "json",
 		headers : {
 			"Authorization" : token
@@ -169,7 +170,7 @@ function deleteMember(student) {
 
 		success : function(data) {
 			alter("删除成功");
-
+			location.reload();
 		}
 
 	});
