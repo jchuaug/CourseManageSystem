@@ -115,11 +115,14 @@ public class ModelUtils {
         seminar2.setName(seminar.getName());
         seminar2.setDescription(seminar.getDescription());
         Boolean fixed = null;
-        if (seminar.getGroupingMethod().equals( "fixed")) {
-            fixed = true;
-        } else if (seminar.getGroupingMethod().equals("random")) {
-            fixed = false;
-        }
+        if (seminar.getGroupingMethod()!=null) {
+        	 if (seminar.getGroupingMethod().equals( "fixed")) {
+                 fixed = true;
+             } else if (seminar.getGroupingMethod().equals("random")) {
+                 fixed = false;
+             }
+		}
+       
         seminar2.setFixed(fixed);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dstr = seminar.getStartTime();

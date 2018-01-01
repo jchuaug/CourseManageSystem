@@ -24,7 +24,7 @@
 				/wechat/**=anon
 				/signin=anon
 				/course/** =roles["student,teacher"]
-				/** = anon
+				
 			</value>
 		</property>
 	</bean>
