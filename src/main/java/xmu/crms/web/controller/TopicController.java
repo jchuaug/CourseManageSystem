@@ -1,6 +1,8 @@
 package xmu.crms.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -10,13 +12,14 @@ import xmu.crms.entity.Topic;
 import xmu.crms.exception.TopicNotFoundException;
 import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.TopicService;
+import xmu.crms.utils.JWTUtil;
 import xmu.crms.web.VO.TopicGroupVO;
 import xmu.crms.web.VO.TopicResponseVO;
-
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * TopicController class
  *
@@ -28,97 +31,117 @@ import java.util.List;
 @RequestMapping("/topic/{topicID}")
 public class TopicController {
 
-    @Autowired
-    TopicService topicService;
+	@Autowired
+	TopicService topicService;
 
-    @Autowired
-    SeminarGroupService seminarGroupService;
+	@Autowired
+	SeminarGroupService seminarGroupService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity getTopicByID (@PathVariable BigInteger topicID) {
-        TopicResponseVO topicResponse = new TopicResponseVO();
-        // if topicId bad format response with 400
+	private final String TEACHER = "teacher";
+	private final String STUDENT = "student";
 
-        try {
-            Topic topic = topicService.getTopicByTopicId(topicID);
-            if (topic == null) {
-                return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-            }
-            topicResponse.setId(topic.getId());
-            topicResponse.setSerial(topic.getSerial());
-            topicResponse.setName(topic.getName());
-            topicResponse.setDescription(topic.getDescription());
-            topicResponse.setGroupLimit(topic.getGroupNumberLimit());
-            topicResponse.setGroupMemberLimit(topic.getGroupStudentLimit());
-           // topicResponse.setGroupLeft(topic.get); Service doesn't have groupLeft property
-        } catch (TopicNotFoundException e) {
-            e.printStackTrace();
-        }
+	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity getTopicByID(@PathVariable BigInteger topicID) {
+		TopicResponseVO topicResponse = new TopicResponseVO();
+		// if topicId bad format response with 400
 
-        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(topicResponse);
-    }
+		try {
+			Topic topic = topicService.getTopicByTopicId(topicID);
+			if (topic == null) {
+				return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+			}
+			topicResponse.setId(topic.getId());
+			topicResponse.setSerial(topic.getSerial());
+			topicResponse.setName(topic.getName());
+			topicResponse.setDescription(topic.getDescription());
+			topicResponse.setGroupLimit(topic.getGroupNumberLimit());
+			topicResponse.setGroupMemberLimit(topic.getGroupStudentLimit());
+			// topicResponse.setGroupLeft(topic.get); Service doesn't have groupLeft
+			// property
+		} catch (TopicNotFoundException e) {
+			e.printStackTrace();
+		}
 
-    @RequestMapping(method = RequestMethod.PUT)
-    @ResponseBody
-    public ResponseEntity updateTopicByID (@RequestBody TopicResponseVO requestBody, @PathVariable BigInteger topicID) {
-        // if insufficient permissions return 403
-        Topic topic = new Topic();
-        topic.setSerial(requestBody.getSerial());
-        topic.setName(requestBody.getName());
-        topic.setDescription(requestBody.getDescription());
-        topic.setGroupNumberLimit(requestBody.getGroupLimit());
-        topic.setGroupStudentLimit(requestBody.getGroupMemberLimit());
-        try {
-            topicService.updateTopicByTopicId(topicID, topic);
-            return ResponseEntity.status(204).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-        } catch (TopicNotFoundException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-        } catch(IllegalArgumentException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-        }
-    }
+		return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(topicResponse);
+	}
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    @ResponseBody
-    public ResponseEntity deleteTopicByID (@PathVariable BigInteger topicID) {
-        // if insufficient permissions return 403
+	@RequestMapping(method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity updateTopicByID(@RequestBody TopicResponseVO requestBody, @PathVariable BigInteger topicID,
+			@RequestHeader HttpHeaders headers) {
+		// if insufficient permissions return 403
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type = JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 
-        try {
-            topicService.deleteTopicByTopicId(topicID);
-            return ResponseEntity.status(204).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-        } catch (TopicNotFoundException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-        } catch(IllegalArgumentException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
-        }
-    }
+		Topic topic = new Topic();
+		topic.setSerial(requestBody.getSerial());
+		topic.setName(requestBody.getName());
+		topic.setDescription(requestBody.getDescription());
+		topic.setGroupNumberLimit(requestBody.getGroupLimit());
+		topic.setGroupStudentLimit(requestBody.getGroupMemberLimit());
+		try {
+			topicService.updateTopicByTopicId(topicID, topic);
+			return ResponseEntity.status(204).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+		} catch (TopicNotFoundException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+		}
+	}
 
-    @RequestMapping(value = "/group")
-    @ResponseBody
-    public ResponseEntity selectGroupsByTopicID (@PathVariable BigInteger topicID) {
-        try {
-            List<SeminarGroup> groups = seminarGroupService.listGroupByTopicId(topicID);
-            List<TopicGroupVO> groupVOS = new ArrayList<>();
-            for(SeminarGroup group:groups) {
-                TopicGroupVO temp = new TopicGroupVO();
-                temp.setId(group.getId());
-                temp.setName(group.getId().toString());
-                groupVOS.add(temp);
-            }
-            if(groupVOS.size() == 0 || groupVOS == null) {
-                return ResponseEntity.status(404).build();
-            }
-            return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(groupVOS);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(400).build();
-        }
-        // why not throw a notFound exception so I can use that to return 404
-    }
+	@RequestMapping(method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity deleteTopicByID(@PathVariable BigInteger topicID, @RequestHeader HttpHeaders headers) {
+
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type = JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
+
+		// if insufficient permissions return 403
+
+		try {
+			topicService.deleteTopicByTopicId(topicID);
+			return ResponseEntity.status(204).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+		} catch (TopicNotFoundException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(404).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(400).contentType(MediaType.APPLICATION_JSON_UTF8).body(null);
+		}
+	}
+
+	@RequestMapping(value = "/group")
+	@ResponseBody
+	public ResponseEntity selectGroupsByTopicID(@PathVariable BigInteger topicID) {
+		try {
+			List<SeminarGroup> groups = seminarGroupService.listGroupByTopicId(topicID);
+			List<TopicGroupVO> groupVOS = new ArrayList<>();
+			for (SeminarGroup group : groups) {
+				TopicGroupVO temp = new TopicGroupVO();
+				temp.setId(group.getId());
+				temp.setName(group.getId().toString());
+				groupVOS.add(temp);
+			}
+			if (groupVOS.size() == 0 || groupVOS == null) {
+				return ResponseEntity.status(404).build();
+			}
+			return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(groupVOS);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(400).build();
+		}
+		// why not throw a notFound exception so I can use that to return 404
+	}
 
 }

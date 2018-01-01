@@ -1,131 +1,69 @@
 ﻿<!DOCTYPE html>
 <html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>教师基本信息</title>
+    <link href="/css/common/HomePage.css" rel="stylesheet" type="text/css"/>
+    <script src ="/js/jquery-1.12.4.min.js"></script>
+    <script src ="/js/teacher_page.js"></script>
+    <script src="/js/common/jwt.js" ></script>
+</head>
+<body onload="return teainfo();">
+    	<div class="top">
+        	<div class="font">
+        		课堂管理系统
+        	</div>
+        	<div class="icon">
+        		<img src="/Img/home.png"><a href="/teacher/home">首页</a>
+                <img src="/Img/help.png"><a>帮助</a>
+                <img src="/Img/exit.png"><a href="#" onclick="logout();">退出</a>
+        	</div>
+        	<div class="clear"></div>
+    	</div>
+        <div class="body">
+            <div class="navigation">
+                <div class="title">导航</div>
+                <div class="line"></div>
+               <div class="courseIntroduction">
+                  <a class="guidefont" href="#" onclick="window.location.href='/teacher/personInfo'">基本信息</a>
+                  <a class="guidefont" href="#"  onclick="window.location.href='/teacher/courses'">课程信息</a>
+                  <a class="guidefont" href="#" onclick="window.location.href='/teacher/courses/create'">新建课程</a>
+                </div>
+            </div>
+            <div class="content">
+               <div class="title">基本信息</div>
+               <div class="line"></div>
+                <div class="imgarea"><img class="img" src="/Img/link.jpg"/></div>
+                 <div class="info">
+        <table class="table">
+        <tr class="itemName">
+        <td id="username"></td>
+        <td id="teaNum"></td>
+        </tr>
+        <tr class="itemName">
+        <td id="name"></td>
+        <td id="gender"></td>
+        </tr>
+        <tr class="itemName">
+        <td id="school"></td>
+        <td id="title"></td>
+        </tr>
+        <tr class="itemName">
+        <td id="email"></td>
+        <td id="phone"></td>
+        </tr>
+        </table>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="button">
+        <button onclick="window.location.href='/teacher/personInfo/alter'">修改</button>
+        </div>
+        </div>
+            </div>
+            <div class="clear"></div>
+        </div>
 
-	<head lang="en">
-		<meta charset="UTF-8" />
-		<title>教师基本信息</title>
-		<link href="../../css/common/HomePage.css" rel="stylesheet" type="text/css" />
-
-	</head>
-
-	<body>
-		<div class="top">
-			<div class="font">
-				课堂管理系统
-			</div>
-			<div class="icon">
-				<img src="../../Img/home.png" />首页
-				<img src="../../Img/help.png" />帮助
-				<img src="../../Img/exit.png" />退出
-			</div>
-			<div class="clear"></div>
-		</div>
-		<div class="body">
-			<div class="navigation">
-				<div class="title">导航</div>
-				<div class="line"></div>
-				<div class="courseIntroduction">
-					<a class="guidefont" href="#">基本信息</a>
-					<a class="guidefont" href="#">课程信息</a>
-					<a class="guidefont" href="#">新建课程</a>
-				</div>
-			</div>
-			<div class="content">
-
-				<div class="title">基本信息</div>
-				<div class="line"></div>
-				<div class="imgarea"><img class="img" src="../../Img/link.jpg" /></div>
-
-				<div class="info">
-					<table class="table">
-						<tr class="itemName">
-							<td>用户名：<span id="username">12345678978</span></td>
-							<td>教工号：<span id="stuffNum">12345678978</span></td>
-						</tr>
-						<tr class="itemName">
-							<td>姓名：<span id="name">12345678978</span></td>
-							<td>性别：<span id="gender">12345678978</span></td>
-						</tr>
-						<tr class="itemName">
-							<td>学校：<span id="school">12345678978</span></td>
-							<td>职称：<span id="title">12345678978</span></td>
-						</tr>
-						<tr class="itemName">
-							<td>E-mail：<span id="email">12345678978</span></td>
-							<td>联系方式：<span id="phone">12345678978</span></td>
-						</tr>
-					</table>
-					<br/>
-					<br/>
-					<br/>
-					<br/>
-					<div class="button">
-						<button onclick="alterInfo()">修改</button>
-					</div>
-				</div>
-			</div>
-
-			<div class="clear"></div>
-		</div>
-		<script type="text/javascript">
-			$(document).load(function() {
-				var token = localStorage.getItem("jwt");
-				$.ajax({
-					type: 'get',
-					url: '/me',
-					dataType: "json",
-					headers: {
-						"Authorization": token
-					},
-					success: function(r) {
-
-						$("#username").text() = r.phone;
-						$("#stuffNum").text() = r.number;
-						$("#name").text() = r.name;
-						$("#gender").text() = r.gender;
-						$("#school").text() = r.shool;
-						$("#title").text() = r.title;
-						$("#email").text() = r.email;
-						$("#phone").text() = r.phone;
-					}
-				});
-			});
-
-			function alterInfo() {
-				var token = localStorage.getItem("jwt");
-				$.ajax({
-					type: 'put',
-					url: '/me',
-					dataType: "json",
-					data: {
-						"number": $("#username").val(),
-						"name": $("#name").val(),
-						"gender": $("#gender").val();
-						"title": $("#title").val();
-						"email": $("#email").val();
-						"phone": $("#phone").val();
-					},
-					headers: {
-						"Authorization": token
-					},
-					success: function(r) {
-						if(r.status == 204) {
-							alert(r.msg);
-							$("#username").text() = r.phone;
-							$("#stuffNum").text() = r.number;
-							$("#name").text() = r.name;
-							$("#gender").text() = r.gender;
-							$("#school").text() = r.shool;
-							$("#title").text() = r.title;
-							$("#email").text() = r.email;
-							$("#phone").text() = r.phone;
-						} else {
-							alert(r.msg);
-						}
-					}
-				});
-			};
-		</script>
-	</body>
-
+</body>
 </html>

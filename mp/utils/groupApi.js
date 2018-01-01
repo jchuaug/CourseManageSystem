@@ -2,10 +2,6 @@ import cache from './localCache';
 import utils from './utils';
 
 function getGroupInfo(cb) {
-    // GET /seminar/{seminarId}/group?include={studentId}
-    // GET /group/{groupId}?embedTopics=true
-
-    // first get group id
     cb(cache.get('group'));
 }
 

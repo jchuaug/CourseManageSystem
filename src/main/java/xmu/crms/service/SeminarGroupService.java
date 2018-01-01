@@ -261,6 +261,7 @@ public interface SeminarGroupService {
      * @throws IllegalArgumentException GroupId、TopicId格式错误时抛出
      * @throws GroupNotFoundException   该小组不存在时抛出
      * @author heqi
+     * @throws TopicNotFoundException
      */
     BigInteger insertTopicByGroupId(BigInteger seminarGroupId, BigInteger topicId) throws
             IllegalArgumentException, GroupNotFoundException, TopicNotFoundException;
@@ -295,6 +296,11 @@ public interface SeminarGroupService {
     void resignLeaderById(BigInteger groupId, BigInteger userId) throws
             IllegalArgumentException, GroupNotFoundException, UserNotFoundException, InvalidOperationException;
 
+    /**
+     * d
+     * @param topicId d
+     * @param groupId d
+     */
     void deleteTopic(BigInteger topicId, BigInteger groupId);
 
     List<SeminarGroup> getOtherGroups(BigInteger groupId);

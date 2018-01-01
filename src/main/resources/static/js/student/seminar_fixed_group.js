@@ -99,9 +99,9 @@ function load() {
 }
 
 function uploadReport() {
-
+	//window.open ('page.html') ;
 }
-function tpGrade() {
+function toGrade() {
 	window.location.href = "/course/" + courseId + "/toGrade";
 }
 function toTopic(topic) {

@@ -83,8 +83,7 @@ public class ClassServiceImpl implements ClassService {
 		}
 		deleteClassSelectionByClassId(classId);
 		fixGroupService.deleteFixGroupByClassId(classId);
-		// 待定
-		// seminarGroupService.deleteSeminarGroupByClassId(classId);
+
 		int flag = classInfoMapper.deleteByPrimaryKey(classId);
 		if (flag == 0) {
 			throw new ClassesNotFoundException();

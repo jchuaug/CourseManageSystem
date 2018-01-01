@@ -61,7 +61,7 @@ public class CourseServiceImpl implements CourseService {
             throw new IllegalArgumentException("用户ID格式错误！");
         }
         course.getTeacher().setId(userId);
-//        Integer courseId = courseMapper.insertCourseByUserId(course);
+
         courseMapper.insertCourseByUserId(course);
 
         return course.getId();
