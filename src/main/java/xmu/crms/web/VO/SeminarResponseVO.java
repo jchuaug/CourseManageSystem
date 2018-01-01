@@ -11,7 +11,8 @@ public class SeminarResponseVO {
     private String startTime;
     private String endTime;
     private List<TopicResponseVO> topics;
-    
+	private List<ClassResponseVO> classes;
+
     private Integer grade;
     
     
@@ -62,6 +63,12 @@ public class SeminarResponseVO {
 	}
 	public void setTopics(List<TopicResponseVO> topics) {
 		this.topics = topics;
+	}
+	@Override
+	public String toString() {
+		return "SeminarResponseVO [id=" + id + ", name=" + name + ", description=" + description + ", groupingMethod="
+				+ groupingMethod + ", startTime=" + startTime + ", endTime=" + endTime + ", topics=" + topics
+				+ ", grade=" + grade + "]";
 	}
     
 	

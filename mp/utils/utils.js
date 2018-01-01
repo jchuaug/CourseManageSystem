@@ -35,7 +35,7 @@ function failToast(msg) {
 function requestWithId(args) {
     wx.request({
         url: constants.domain + args.url,
-        header: {'jwt': cache.get('jwt')},
+        header: {'Authorization': cache.get('jwt')},
         method: args.method ? args.method : 'get',
         data: args.data,
         success: args.success,

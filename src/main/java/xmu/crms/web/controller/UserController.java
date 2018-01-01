@@ -1,12 +1,12 @@
 package xmu.crms.web.controller;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.service.LoginService;
@@ -14,8 +14,11 @@ import xmu.crms.service.SchoolService;
 import xmu.crms.service.UserService;
 import xmu.crms.service.WeChatService;
 import xmu.crms.utils.JWTUtil;
+import xmu.crms.utils.ModelUtils;
 import xmu.crms.web.VO.LoginResponseVO;
 import xmu.crms.web.VO.WeChatLoginRequestVO;
+
+import java.math.BigInteger;
 
 /**
  * UserController
@@ -100,7 +103,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        LoginResponseVO responseVO = new LoginResponseVO(204, "login success", user, JWTUtil.sign(user));
+        LoginResponseVO responseVO = new LoginResponseVO(200, "login success", user, JWTUtil.sign(user));
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
     }
 
@@ -121,10 +124,23 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(404).build();
         }
-        LoginResponseVO responseVO = new LoginResponseVO(204, "login success", user, JWTUtil.sign(user));
+        if (user == null) {
+            return ResponseEntity.status(404).build();
+        }
+        LoginResponseVO responseVO = new LoginResponseVO(200, "login success", user, JWTUtil.sign(user));
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
-
     }
 
-
+    @GetMapping("/me")
+    public ResponseEntity getMe(@RequestHeader HttpHeaders headers) {
+        BigInteger userId = JWTUtil.getUserIdFromHeader(headers);
+        User user = null;
+        try {
+            user = userService.getUserByUserId(userId);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert user != null;
+        return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(ModelUtils.UserToUserResponseVO(user));
+    }
 }

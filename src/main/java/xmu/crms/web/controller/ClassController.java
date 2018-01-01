@@ -59,7 +59,7 @@ public class ClassController {
             classInfos = classService.listClassByUserId(userId);
             for (ClassInfo classInfo : classInfos) {
                 Integer numStudent = userService.listUserByClassId(classInfo.getId(), "", "").size();
-                classVOs.add(ModelUtils.ClassInfoToClassResponseVO(classInfo, numStudent));
+                classVOs.add(ModelUtils.classInfoToClassResponseVO(classInfo, numStudent));
             }
         } catch (UserNotFoundException | ClassesNotFoundException e) {
             e.printStackTrace();
@@ -82,7 +82,7 @@ public class ClassController {
         try {
             class1 = classService.getClassByClassId(classId);
             Integer numStudent = userService.listUserByClassId(classId, "", "").size();
-            classResponseVO = ModelUtils.ClassInfoToClassResponseVO(class1, numStudent);
+            classResponseVO = ModelUtils.classInfoToClassResponseVO(class1, numStudent);
         } catch (ClassesNotFoundException | UserNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<ClassResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);

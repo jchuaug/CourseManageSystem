@@ -50,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
                 throw new CourseNotFoundException();
             }
             return courseList;
-        } catch (Exception e) {
+        } catch (UserNotFoundException e) {
             e.printStackTrace();
         }
         return null;
@@ -162,6 +162,11 @@ public class CourseServiceImpl implements CourseService {
         classInfoList1.retainAll(classInfoList2);
 
         return classInfoList1;
+    }
+
+    @Override
+    public List<ClassInfo> listClassByCourseId(BigInteger id) {
+        return courseMapper.getClassesByCourseId(id);
     }
 
 //    这个函数标准组已经删除

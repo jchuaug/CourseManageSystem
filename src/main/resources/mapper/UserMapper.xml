@@ -151,21 +151,23 @@
             resultMap="UserResultMap">
         SELECT
             id,
+            gmt_create,
+            gmt_modified,
             phone,
             wechat_id,
             openid,
             avatar,
             password,
+            name,
             school_id,
-            `name`,
             gender,
-            `type`,
-            `number`,
+            type,
+            number,
             education,
             title,
             email
         FROM user_info
-        WHERE `number` = #{number}
+        WHERE number = #{number}
     </select>
     <!-- 解绑只置空手机号 -->
     <update id="unbindUserById" parameterType="java.math.BigInteger">

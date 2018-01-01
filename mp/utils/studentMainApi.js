@@ -21,9 +21,7 @@ function getInfo(cb) {
 
                         cache.set("courses", courses);
                     }
-
                     cacheCourses();
-
                     cb({'me': response.data, 'classes': res.data});
                 }
             });

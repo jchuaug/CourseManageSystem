@@ -20,7 +20,7 @@ Page({
      */
     onLoad: function (options) {
         // courseId
-        const courseID = options.courseId;
+        const courseID = options.courseId || 1;
         console.log(options);
 
         const that = this;

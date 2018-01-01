@@ -13,11 +13,18 @@ import java.util.List;
  * @date 2017/12/29
  */
 public class ModelUtils {
-    public static ClassResponseVO ClassInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
+    public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
         User teacher = classInfo.getCourse().getTeacher();
         Course course = classInfo.getCourse();
         ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), numStudent,
                 classInfo.getClassTime(), classInfo.getSite(), course.getName(), teacher.getName());
+        Proportion proportion=new Proportion();
+        proportion.setPresentation(classInfo.getPresentationPercentage());
+        proportion.setReport(classInfo.getReportPercentage());
+        proportion.setA(classInfo.getFivePointPercentage());
+        proportion.setB(classInfo.getFourPointPercentage());
+        proportion.setC(classInfo.getThreePointPercentage());
+        classVO.setProportions(proportion);
         return classVO;
 
     }
@@ -67,7 +74,10 @@ public class ModelUtils {
         responseVO.setId(seminar.getId());
         responseVO.setName(seminar.getName());
         responseVO.setDescription(seminar.getDescription());
-        responseVO.setGroupingMethod(seminar.getFixed() == true ? "fixed" : "random");
+        if (seminar.getFixed()!=null) {
+        	 responseVO.setGroupingMethod(seminar.getFixed() == true ? "fixed" : "random");
+		}
+       
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String time = sdf.format(seminar.getStartTime());
@@ -105,9 +115,9 @@ public class ModelUtils {
         seminar2.setName(seminar.getName());
         seminar2.setDescription(seminar.getDescription());
         Boolean fixed = null;
-        if (seminar.getGroupingMethod() == "fixed") {
+        if (seminar.getGroupingMethod().equals( "fixed")) {
             fixed = true;
-        } else if (seminar.getGroupingMethod() == "random") {
+        } else if (seminar.getGroupingMethod().equals("random")) {
             fixed = false;
         }
         seminar2.setFixed(fixed);
@@ -205,7 +215,7 @@ public class ModelUtils {
         CourseResponseVO courseResponseVO = new CourseResponseVO();
         courseResponseVO.setId(course.getId());
         courseResponseVO.setName(course.getName());
-
+        courseResponseVO.setDescription(course.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String time = sdf.format(course.getStartDate());
         courseResponseVO.setStartTime(time);
@@ -244,4 +254,37 @@ public class ModelUtils {
         course.setThreePointPercentage(proportions.getC());
         return course;
     }
+
+<<<<<<< HEAD
+	public static SeminarGradeResponseVO SeminarGroupToSeminarGradeResponseVO(SeminarGroup seminarGroup) {
+		if (seminarGroup==null) {
+			return null;
+		}
+		SeminarGradeResponseVO seminarGradeResponseVO=new SeminarGradeResponseVO();
+		seminarGradeResponseVO.setSeminarName(seminarGroup.getSeminar().getName());
+		seminarGradeResponseVO.setGroupName(seminarGroup.getId().toString());
+		seminarGradeResponseVO.setLeaderName(seminarGroup.getLeader().getName());
+		seminarGradeResponseVO.setPresentationGrade(seminarGroup.getPresentationGrade());
+		seminarGradeResponseVO.setReportGrade(seminarGroup.getReportGrade());
+		seminarGradeResponseVO.setGrade(seminarGroup.getFinalGrade());
+		return seminarGradeResponseVO;
+	}
+=======
+    public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo) {
+        ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), classInfo.getClassTime());
+        return classVO;
+    }
+
+    public static SeminarDetailResponseVO seminarInfoToSeminarDetailResponseVO(Seminar seminar) {
+        SeminarDetailResponseVO responseVO = new SeminarDetailResponseVO();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        responseVO.setEndTime(sdf.format(seminar.getEndTime()));
+        responseVO.setStartTime(sdf.format(seminar.getStartTime()));
+        responseVO.setId(seminar.getId());
+        responseVO.setName(seminar.getName());
+        responseVO.setCourse(seminar.getCourse().getName());
+        responseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
+        return responseVO;
+    }
+>>>>>>> d8358d507aff37e1855599efeefc0559cf8ef0c9
 }

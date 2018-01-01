@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Location;
 import xmu.crms.entity.Seminar;
 import xmu.crms.entity.SeminarGroup;
@@ -74,13 +75,13 @@ public class SeminarController {
 	@GetMapping("/{seminarId}")
 	public ResponseEntity<SeminarResponseVO> getSeminarByseminarId(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
-		
+
 		Seminar seminar1 = null;
 		SeminarResponseVO seminarResponseVO = null;
 		try {
 			seminar1 = seminarService.getSeminarBySeminarId(seminarId);
 			List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
-			seminarResponseVO = ModelUtils.SeminarInfoToSeminarResponseVO(seminar1, topics,null);
+			seminarResponseVO = ModelUtils.SeminarInfoToSeminarResponseVO(seminar1, topics, null);
 		} catch (SeminarNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<SeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
@@ -285,7 +286,7 @@ public class SeminarController {
 
 	@GetMapping("/{seminarId}/group")
 	public ResponseEntity<List<GroupResponseVO>> getGroup(@PathVariable("seminarId") BigInteger seminarId,
-			@RequestParam("classId") String classId, @RequestHeader HttpHeaders headers) {
+			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
 		new BigInteger(JWTUtil.getUserId(token).toString());
 		String typeString = JWTUtil.getUserType(token);
@@ -295,15 +296,12 @@ public class SeminarController {
 
 		List<GroupResponseVO> groupResponseVOs = new ArrayList<>();
 		try {
-			seminarService.getSeminarBySeminarId(seminarId);
 			List<SeminarGroup> groups = seminarGroupService.listSeminarGroupBySeminarId(seminarId);
 
 			for (SeminarGroup seminarGroup : groups) {
-				System.err.println(seminarGroup);
-				if (new BigInteger(classId.toString()).equals(seminarGroup.getClassInfo().getId())) {
-					List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
-					groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup, topics, null));
-				}
+				List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(seminarGroup.getId());
+				groupResponseVOs.add(ModelUtils.SeminarGroupToGroupResponseVO(seminarGroup, topics, null));
+
 			}
 
 		} catch (SeminarNotFoundException e) {
