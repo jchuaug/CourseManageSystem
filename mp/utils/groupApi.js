@@ -15,15 +15,6 @@ function getGroupInfo(cb) {
 
             cache.set('group', res.data);
             cb(res.data);
-
-            // then get group info
-            // utils.requestWithId({
-            //     url: `/group/${groupID}`,
-            //     success: function (res) {
-            //         cache.set('group', res.data);
-            //         cb(res.data);
-            //     }
-            // });
         }
     });
 }
@@ -39,16 +30,14 @@ function amILeader() {
 
 function becomeLeader(cb) {
     const group = cache.get('group');
-    const members = group.members;
     const myID = cache.get('userID');
-    const newMembers = members.filter(group => group.id != myID);
 
     const reqObj = {};
-    reqObj.leader = {'id': myID};
-    reqObj.members = newMembers;
+    reqObj.id = myID;
+    console.log(reqObj);
 
     utils.requestWithId({
-        url: `/group/${cache.get('groupID')}`,
+        url: `/group/${cache.get('groupID')}/assign`,
         data: reqObj,
         method: 'put',
         success: function (res) {
@@ -61,15 +50,12 @@ function becomeLeader(cb) {
 
 function quitLeader(cb) {
     const group = cache.get('group');
-    const members = group.members;
 
-    const newMembers = Object.assign([], members);
-    newMembers.push(group.leader);
 
     const reqObj = {};
-    reqObj.members = newMembers;
+    reqObj.id = cache.get('userID');
     utils.requestWithId({
-        url: `/group/${cache.get('groupID')}`,
+        url: `/group/${cache.get('groupID')}/resign`,
         data: reqObj,
         method: 'put',
         success: function (res) {

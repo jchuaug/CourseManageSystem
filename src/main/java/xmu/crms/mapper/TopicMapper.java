@@ -123,4 +123,5 @@ public interface TopicMapper {
      */
     int getSelectedGroupCount(@Param("topicId") BigInteger topicId, @Param("classId") BigInteger classId);
 
+    int getSelectedGroupCountByUserId(@Param("topicId") BigInteger topicId, @Param("userId") BigInteger userId);
 }

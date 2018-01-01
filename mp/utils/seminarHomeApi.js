@@ -6,7 +6,7 @@ function getSeminarInfo(seminarID, cb) {
     const seminar = cache.get('seminars')[seminarID];
     seminar.courseName = courseName;
 
-    cache.set('currentSeminarID',seminarID);
+    cache.set('currentSeminarID', seminarID);
 
     cb(seminar);
 }

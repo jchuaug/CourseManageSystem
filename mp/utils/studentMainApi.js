@@ -7,8 +7,8 @@ function getInfo(cb) {
     utils.requestWithId({
         url: '/me',
         success: function (response) {
-            console.log(response);
             cache.set('me', response.data);
+            cache.set('userID', response.data.id);
 
             utils.requestWithId({
                 url: '/class',
@@ -21,6 +21,7 @@ function getInfo(cb) {
 
                         cache.set("courses", courses);
                     }
+
                     cacheCourses();
                     cb({'me': response.data, 'classes': res.data});
                 }

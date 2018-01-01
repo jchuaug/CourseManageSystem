@@ -246,4 +246,15 @@
               AND A.topic_id = #{topicId}
               AND B.class_id = #{classId};
     </select>
+
+    <select id="getSelectedGroupCountByUserId" resultType="int">
+        SELECT count(DISTINCT A.id)
+        FROM seminar_group_topic A INNER JOIN seminar_group B
+            INNER JOIN course_selection C
+        WHERE
+            B.class_id = c.class_id
+            AND c.student_id = #{userId}
+            AND a.seminar_group_id = b.id
+            AND A.topic_id = #{topicId};
+    </select>
 </mapper>

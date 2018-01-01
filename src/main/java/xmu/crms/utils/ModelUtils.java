@@ -1,6 +1,8 @@
 package xmu.crms.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import xmu.crms.entity.*;
+import xmu.crms.service.TopicService;
 import xmu.crms.web.VO.*;
 
 import java.text.ParseException;
@@ -13,6 +15,7 @@ import java.util.List;
  * @date 2017/12/29
  */
 public class ModelUtils {
+
     public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
         User teacher = classInfo.getCourse().getTeacher();
         Course course = classInfo.getCourse();
@@ -42,6 +45,8 @@ public class ModelUtils {
         userResponseVO.setId(user.getId());
         userResponseVO.setName(user.getName());
         userResponseVO.setNumber(user.getNumber());
+        userResponseVO.setPhone(user.getPhone());
+        userResponseVO.setSchool(user.getSchool().getName());
         return userResponseVO;
     }
 

@@ -1,7 +1,5 @@
 package xmu.crms.web.controller;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -130,6 +128,16 @@ public class UserController {
         LoginResponseVO responseVO = new LoginResponseVO(200, "login success", user, JWTUtil.sign(user));
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
     }
+
+    @GetMapping(value = "/wechat/unbind")
+    public ResponseEntity unbindUser(@RequestHeader HttpHeaders headers) {
+        String token = headers.get("Authorization").get(0);
+        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+
+        userService.unBindWeChatUser(userId);
+
+    }
+
 
     @GetMapping("/me")
     public ResponseEntity getMe(@RequestHeader HttpHeaders headers) {

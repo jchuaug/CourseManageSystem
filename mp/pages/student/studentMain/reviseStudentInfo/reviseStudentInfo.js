@@ -11,12 +11,15 @@ Page({
     },
 
     unbind() {
-        wx.redirectTo({
-            url: '/pages/bind/bind'
+        api.unbind(function () {
+            wx.redirectTo({
+                url: '/pages/bind/bind'
+            });
         });
+
     },
 
-    changeAvator(){
+    changeAvator() {
         // todo add functionality
     }
 });

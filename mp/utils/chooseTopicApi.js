@@ -16,7 +16,7 @@ function getTopics(cb) {
 // ]
 
     utils.requestWithId({
-        url: `/seminar/${cache.get('seminarID')}/topic`,
+        url: `/seminar/${cache.get('currentSeminarID')}/topic`,
         success: function (res) {
             cb(res.data);
         }

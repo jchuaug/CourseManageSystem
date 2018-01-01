@@ -461,4 +461,9 @@ public class UserServiceImpl implements UserService {
     public void bindWeChatUser(User user) {
         userMapper.bindOpenIdWithUser(user);
     }
+
+    @Override
+    public void unBindWeChatUser(BigInteger userId) {
+        userMapper.deleteOpenId(userId);
+    }
 }

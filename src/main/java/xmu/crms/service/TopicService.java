@@ -133,4 +133,6 @@ public interface TopicService {
     void deleteTopicBySeminarId(BigInteger seminarId) throws IllegalArgumentException;
 
     int getSelectedGroupCount(@Param("classId") BigInteger classId, @Param("topicId") BigInteger topicId);
+
+    int getSelectedGroupCountByUserId(@Param("topicId") BigInteger id, @Param("userId") BigInteger userId);
 }

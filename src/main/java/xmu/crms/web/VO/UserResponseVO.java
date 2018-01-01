@@ -7,6 +7,8 @@ public class UserResponseVO {
     private String name;
     private String number;
     private Integer type;
+    private String phone;
+    private String school;
 
     public UserResponseVO() {
 
@@ -42,5 +44,21 @@ public class UserResponseVO {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getSchool() {
+        return school;
     }
 }
