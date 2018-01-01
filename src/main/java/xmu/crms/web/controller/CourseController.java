@@ -60,7 +60,7 @@ public class CourseController {
 	private final String STUDENT = "student";
 
 	@GetMapping("")
-	//@RequiresRoles("teacher")
+	@RequiresRoles("student")
 	public ResponseEntity<List<CourseResponseVO>> getAllCourse(@RequestHeader HttpHeaders headers) {
 		String token =headers.get("Authorization").get(0);
 		System.err.println(token);

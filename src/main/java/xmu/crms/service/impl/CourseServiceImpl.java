@@ -41,6 +41,7 @@ public class CourseServiceImpl implements CourseService {
             if (userService.getUserByUserId(userId).getType() == 1) {
                 courseList = courseMapper.listCourseByTeacherId(userId);
             } else {
+
                courseList = courseMapper.listCourseByStudentId(userId);
             }
             if (courseList == null) {

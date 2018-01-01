@@ -18,7 +18,7 @@ public class ModelUtils {
         Course course = classInfo.getCourse();
         ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), numStudent,
                 classInfo.getClassTime(), classInfo.getSite(), course.getName(), teacher.getName());
-        Proportion proportion=new Proportion();
+        Proportion proportion = new Proportion();
         proportion.setPresentation(classInfo.getPresentationPercentage());
         proportion.setReport(classInfo.getReportPercentage());
         proportion.setA(classInfo.getFivePointPercentage());
@@ -74,10 +74,10 @@ public class ModelUtils {
         responseVO.setId(seminar.getId());
         responseVO.setName(seminar.getName());
         responseVO.setDescription(seminar.getDescription());
-        if (seminar.getFixed()!=null) {
-        	 responseVO.setGroupingMethod(seminar.getFixed() == true ? "fixed" : "random");
-		}
-       
+        if (seminar.getFixed() != null) {
+            responseVO.setGroupingMethod(seminar.getFixed() == true ? "fixed" : "random");
+        }
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String time = sdf.format(seminar.getStartTime());
@@ -196,7 +196,9 @@ public class ModelUtils {
     public static GroupResponseVO SeminarGroupToGroupResponseVO(SeminarGroup seminarGroup,
                                                                 List<SeminarGroupTopic> topics, List<User> seminarGroupMembers) {
         GroupResponseVO groupResponseVO = new GroupResponseVO();
-        groupResponseVO.setLeader(ModelUtils.UserToUserResponseVO(seminarGroup.getLeader()));
+        if (seminarGroup.getLeader() != null) {
+            groupResponseVO.setLeader(ModelUtils.UserToUserResponseVO(seminarGroup.getLeader()));
+        }
         List<UserResponseVO> members = new ArrayList<>();
         if (seminarGroupMembers != null) {
             for (User seminarGroupMember : seminarGroupMembers) {
@@ -259,19 +261,19 @@ public class ModelUtils {
     }
 
 
-	public static SeminarGradeResponseVO SeminarGroupToSeminarGradeResponseVO(SeminarGroup seminarGroup) {
-		if (seminarGroup==null) {
-			return null;
-		}
-		SeminarGradeResponseVO seminarGradeResponseVO=new SeminarGradeResponseVO();
-		seminarGradeResponseVO.setSeminarName(seminarGroup.getSeminar().getName());
-		seminarGradeResponseVO.setGroupName(seminarGroup.getId().toString());
-		seminarGradeResponseVO.setLeaderName(seminarGroup.getLeader().getName());
-		seminarGradeResponseVO.setPresentationGrade(seminarGroup.getPresentationGrade());
-		seminarGradeResponseVO.setReportGrade(seminarGroup.getReportGrade());
-		seminarGradeResponseVO.setGrade(seminarGroup.getFinalGrade());
-		return seminarGradeResponseVO;
-	}
+    public static SeminarGradeResponseVO SeminarGroupToSeminarGradeResponseVO(SeminarGroup seminarGroup) {
+        if (seminarGroup == null) {
+            return null;
+        }
+        SeminarGradeResponseVO seminarGradeResponseVO = new SeminarGradeResponseVO();
+        seminarGradeResponseVO.setSeminarName(seminarGroup.getSeminar().getName());
+        seminarGradeResponseVO.setGroupName(seminarGroup.getId().toString());
+        seminarGradeResponseVO.setLeaderName(seminarGroup.getLeader().getName());
+        seminarGradeResponseVO.setPresentationGrade(seminarGroup.getPresentationGrade());
+        seminarGradeResponseVO.setReportGrade(seminarGroup.getReportGrade());
+        seminarGradeResponseVO.setGrade(seminarGroup.getFinalGrade());
+        return seminarGradeResponseVO;
+    }
 
     public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo) {
         ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), classInfo.getClassTime());
