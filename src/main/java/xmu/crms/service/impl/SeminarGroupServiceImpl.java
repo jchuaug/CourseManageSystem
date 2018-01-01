@@ -52,11 +52,8 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 
     @Override
     public SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId) throws IllegalArgumentException, GroupNotFoundException {
-        BigInteger groupId;
-        if ((groupId = seminarGroupMapper.getSeminarGroupIdBySeminarIdAndUserId(seminarId, userId)) == null) {
-            throw new GroupNotFoundException();
-        }
-        return seminarGroupMapper.getSeminarGroupByGroupId(groupId);
+
+        return seminarGroupMapper.getSeminarGroupByIds(seminarId,userId);
     }
 
     @Override

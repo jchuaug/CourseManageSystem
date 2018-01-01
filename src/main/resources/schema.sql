@@ -621,6 +621,18 @@ VALUES ('35', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NUL
 INSERT INTO `seminar_group`
 VALUES ('36', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '27');
 
+INSERT INTO seminar_group
+(seminar_id, class_id)
+VALUES (4, 1);
+
+INSERT INTO seminar_group
+(seminar_id, class_id)
+VALUES (4, 2);
+
+INSERT INTO seminar_group
+(seminar_id, class_id)
+VALUES (4, 3);
+
 -- ----------------------------
 -- Table structure for seminar_group_member
 -- ----------------------------
@@ -811,6 +823,12 @@ INSERT INTO `seminar_group_member` VALUES ('168', '2017-12-16 12:12:45', '2017-1
 INSERT INTO `seminar_group_member` VALUES ('169', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '36', '29');
 INSERT INTO `seminar_group_member` VALUES ('170', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '36', '30');
 
+INSERT INTO `seminar_group_member` VALUES ('171', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '37', '3');
+
+INSERT INTO `seminar_group_member` VALUES ('172', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '37', '4');
+
+INSERT INTO `seminar_group_member` VALUES ('173', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '37', '5');
+
 -- ----------------------------
 -- Table structure for seminar_group_topic
 -- ----------------------------
@@ -879,6 +897,8 @@ INSERT INTO `seminar_group_topic` VALUES ('45', '2017-12-16 12:13:03', '2017-12-
 INSERT INTO `seminar_group_topic` VALUES ('46', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '34', NULL);
 INSERT INTO `seminar_group_topic` VALUES ('47', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '35', NULL);
 INSERT INTO `seminar_group_topic` VALUES ('48', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '36', NULL);
+
+INSERT INTO `seminar_group_topic` VALUES ('49', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '1', '37', NULL);
 
 -- ----------------------------
 -- Table structure for student_score_group

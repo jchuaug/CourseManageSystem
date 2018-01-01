@@ -7,19 +7,23 @@ function getGroupInfo(cb) {
 
     // first get group id
     utils.requestWithId({
-        url: `/seminar/${cache.get('currentSeminarID')}/group?include=${cache.get('userID')}`,
+        url: `/seminar/${cache.get('currentSeminarID')}/group/my`,
         success: function (res) {
-            const groupID = res.data[0].id;
+            console.log('group', res);
+            const groupID = res.data.id;
             cache.set('groupID', groupID);
 
+            cache.set('group', res.data);
+            cb(res.data);
+
             // then get group info
-            utils.requestWithId({
-                url: `/group/${groupID}`,
-                success: function (res) {
-                    cache.set('group', res.data);
-                    cb(res.data);
-                }
-            });
+            // utils.requestWithId({
+            //     url: `/group/${groupID}`,
+            //     success: function (res) {
+            //         cache.set('group', res.data);
+            //         cb(res.data);
+            //     }
+            // });
         }
     });
 }
@@ -59,16 +63,16 @@ function quitLeader(cb) {
     const group = cache.get('group');
     const members = group.members;
 
-    const newMembers = Object.assign([],members);
+    const newMembers = Object.assign([], members);
     newMembers.push(group.leader);
 
     const reqObj = {};
     reqObj.members = newMembers;
     utils.requestWithId({
-        url:`/group/${cache.get('groupID')}`,
-        data:reqObj,
-        method:'put',
-        success:function (res) {
+        url: `/group/${cache.get('groupID')}`,
+        data: reqObj,
+        method: 'put',
+        success: function (res) {
             getGroupInfo(cb);
         }
     })
