@@ -16,6 +16,17 @@ public class CourseResponseVO {
 	private String endTime;
 	private String teacherName;
 	private String teacherEmail;
+	private String description;
+
+	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	public String getTeacherName() {
 		return teacherName;

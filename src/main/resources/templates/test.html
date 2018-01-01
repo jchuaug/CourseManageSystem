@@ -487,7 +487,7 @@
 			headers : {
 				"Authorization" : token
 			},
-			data :JSON.stringify( {
+			data : JSON.stringify({
 				"longitude" : 118.1132721,
 				"latitude" : 24.4307197,
 				"elevation" : 18.42
@@ -499,92 +499,367 @@
 		});
 	}
 
+	function getAllCourse() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
 
+	function addCourse() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "post",
+			headers : {
+				"Authorization" : token
+			},
+			data : JSON.stringify({
+				"name" : "OOAD",
+				"description" : "面向对象分析与设计",
+				"startTime" : "2017-09-20",
+				"endTime" : "2018-1-31",
+				"proportions" : {
+					"report" : 50,
+					"presentation" : 50,
+					"c" : 20,
+					"b" : 60,
+					"a" : 20
+				}
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function getCourseByCourseId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function updateCourse() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "put",
+			headers : {
+				"Authorization" : token
+			},
+			data : JSON.stringify({
+				"name" : "OOAD",
+				"description" : "面向对象分析与设计",
+				"startTime" : "2017-09-20",
+				"endTime" : "2018-1-1",
+				"proportions" : {
+					"report" : 70,
+					"presentation" : 30,
+					"c" : 20,
+					"b" : 60,
+					"a" : 20
+				}
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function deleteCourse() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course/1",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "delete",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function listClassByCourseId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course/1/class",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "get",
+			headers : {
+				"Authorization" : token
+			},
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+
+	function addClassByCourseId() {
+		var token = window.localStorage.getItem("jwt");
+		$.ajax({
+			url : "/course/1/class",
+			dataType : "json",
+			contentType : "application/json;charset=utf-8",
+			type : "post",
+			headers : {
+				"Authorization" : token
+			},
+
+			data : JSON.stringify({
+				"name" : "周三1-2节",
+				"site" : "海韵212",
+				"time" : "周三一二节",
+				"proportions" : {
+					"report" : 50,
+					"presentation" : 50,
+					"c" : 10,
+					"b" : 60,
+					"a" : 30
+				}
+			}),
+			success : function(data) {
+				document.getElementById("show").innerHTML = JSON
+						.stringify(data);
+			}
+		});
+	}
+	
+	function getSemianrByCourseId() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/course/1/seminar",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "get",
+            headers : {
+                "Authorization" : token
+            },
+/* 
+            data : {
+                "embedGrade" : true
+            }, */
+            success : function(data) {
+                document.getElementById("show").innerHTML = JSON
+                        .stringify(data);
+            }
+        });
+    }
+	
+	function addSeminarByCourseId() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/course/1/seminar",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "post",
+            headers : {
+                "Authorization" : token
+            },
+
+            data : JSON.stringify({
+            	  "name": "概要设计",
+            	  "description": "模型层与数据库设计",
+            	  "groupingMethod": "fixed",
+            	  "startTime": "2017-10-10",
+            	  "endTime": "2017-10-24"
+            	}), 
+            success : function(data) {
+                document.getElementById("show").innerHTML = JSON
+                        .stringify(data);
+            }
+        });
+    }
+	
+	function getCurrentSeminarByCourseId() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/course/1/seminar/current",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "get",
+            headers : {
+                "Authorization" : token
+            }, 
+            success : function(data) {
+                document.getElementById("show").innerHTML = JSON
+                        .stringify(data);
+            }
+        });
+    }
+	
+	function getGradeByCourseId() {
+        var token = window.localStorage.getItem("jwt");
+        $.ajax({
+            url : "/course/1/grade",
+            dataType : "json",
+            contentType : "application/json;charset=utf-8",
+            type : "get",
+            headers : {
+                "Authorization" : token
+            }, 
+            success : function(data) {
+                document.getElementById("show").innerHTML = JSON
+                        .stringify(data);
+            }
+        });
+    }
 </script>
 </head>
 
 <body>
 	<!-- <button onclick="getAllClassTest()">getAllClassTest</button> -->
-	<br>
-	<button onclick="getClass()">getClass</button>
-	<br>
-	<button onclick="updateClassTest()">updateClassTest</button>
+	<div>
+		ClassContrillerTest <br>
+		<button onclick="getClass()">getClass</button>
+		<br>
+		<button onclick="updateClassTest()">updateClassTest</button>
 
-	<br>
-	<button onclick="deleteClass()">deleteClass</button>
+		<br>
+		<button onclick="deleteClass()">deleteClass</button>
 
-	<br>
-	<button onclick="deleteSelectClass()">deleteSelectClass</button>
+		<br>
+		<button onclick="deleteSelectClass()">deleteSelectClass</button>
 
-	<br>
-	<button onclick="listStudentByNameAndId()">listStudentByNameAndId</button>
+		<br>
+		<button onclick="listStudentByNameAndId()">listStudentByNameAndId</button>
 
-	<br>
-	<button onclick="selectClass()">selectClass</button>
-
-
-	<br>
-	<button onclick="deleteSelectClass()">deleteSelectClass</button>
-
-	<br>
-	<button onclick="getClassGroup()">getClassGroup</button>
-
-	<br>
-	<button onclick="groupLeaderResign()">groupLeaderResign</button>
-
-	<br>
-	<button onclick="groupLeaderAssign()">groupLeaderAssign</button>
-
-	<br>
-	<button onclick="addStudentToGroup()">addStudentToGroup</button>
-
-	<br>
-	<button onclick="removeStudentFromGroup()">removeStudentFromGroup</button>
-
-	<br>
-	<button onclick="getSeminarByseminarId()">getSeminarByseminarId</button>
+		<br>
+		<button onclick="selectClass()">selectClass</button>
 
 
-	<br>
-	<button onclick="updateseminar()">updateseminar</button>
+		<br>
+		<button onclick="deleteSelectClass()">deleteSelectClass</button>
 
-	<br>
-	<button onclick="deleteSeminar()">deleteSeminar</button>
+		<br>
+		<button onclick="getClassGroup()">getClassGroup</button>
 
-	<br>
-	<button onclick="getMySeminar()">getMySeminar</button>
+		<br>
+		<button onclick="groupLeaderResign()">groupLeaderResign</button>
 
-	<br>
-	<button onclick="getSeminarDetail()">getSeminarDetail</button>
+		<br>
+		<button onclick="groupLeaderAssign()">groupLeaderAssign</button>
 
-	<br>
-	<button onclick="getSeminarTopicBySeminarId()">getSeminarTopicBySeminarId</button>
+		<br>
+		<button onclick="addStudentToGroup()">addStudentToGroup</button>
 
-	<br>
-	<button onclick="insertSeminarTopicBySeminarId()">insertSeminarTopicBySeminarId</button>
-
-	<br>
-	<button onclick="getGroup()">getGroup</button>
-
-	<br>
-	<button onclick="getMyGroup()">getMyGroup</button>
-
-	<br>
-	<button onclick="getAttendanceBySeminarIdAndClassId()">getAttendanceBySeminarIdAndClassId</button>
+		<br>
+		<button onclick="removeStudentFromGroup()">removeStudentFromGroup</button>
+	</div>
+	<div>
+		SeminarContrillerTest <br>
+		<button onclick="getSeminarByseminarId()">getSeminarByseminarId</button>
 
 
-	<br>
-	<button onclick="getPresentStudentBySeminarIdAndClassId()">getPresentStudentBySeminarIdAndClassId</button>
+		<br>
+		<button onclick="updateseminar()">updateseminar</button>
 
-	<br>
-	<button onclick="getLateStudentBySeminarIdAndClassId()">getLateStudentBySeminarIdAndClassId</button>
+		<br>
+		<button onclick="deleteSeminar()">deleteSeminar</button>
 
-	<br>
-	<button onclick="getAbsentStudentBySeminarIdAndClassId()">getAbsentStudentBySeminarIdAndClassId</button>
-	<br>
-	<button onclick="insertAttendanceBySeminarIdAndClassId()">insertAttendanceBySeminarIdAndClassId</button>
+		<br>
+		<button onclick="getMySeminar()">getMySeminar</button>
+
+		<br>
+		<button onclick="getSeminarDetail()">getSeminarDetail</button>
+
+		<br>
+		<button onclick="getSeminarTopicBySeminarId()">getSeminarTopicBySeminarId</button>
+
+		<br>
+		<button onclick="insertSeminarTopicBySeminarId()">insertSeminarTopicBySeminarId</button>
+
+		<br>
+		<button onclick="getGroup()">getGroup</button>
+
+		<br>
+		<button onclick="getMyGroup()">getMyGroup</button>
+
+		<br>
+		<button onclick="getAttendanceBySeminarIdAndClassId()">getAttendanceBySeminarIdAndClassId</button>
 
 
+		<br>
+		<button onclick="getPresentStudentBySeminarIdAndClassId()">getPresentStudentBySeminarIdAndClassId</button>
+
+		<br>
+		<button onclick="getLateStudentBySeminarIdAndClassId()">getLateStudentBySeminarIdAndClassId</button>
+
+		<br>
+		<button onclick="getAbsentStudentBySeminarIdAndClassId()">getAbsentStudentBySeminarIdAndClassId</button>
+		<br>
+		<button onclick="insertAttendanceBySeminarIdAndClassId()">insertAttendanceBySeminarIdAndClassId</button>
+
+	</div>
+	<div>
+		CourseControllerTest <br>
+		<button onclick="getAllCourse()">getAllCourse</button>
+		<br>
+
+		<button onclick="addCourse()">addCourse</button>
+		<br>
+
+		<button onclick="getCourseByCourseId()">getCourseByCourseId</button>
+		<br>
+
+		<button onclick="updateCourse()">updateCourse</button>
+		<br>
+
+		<button onclick="deleteCourse()">deleteCourse</button>
+		<br>
+
+		<button onclick="listClassByCourseId()">listClassByCourseId</button>
+		<br>
+
+		<button onclick="addClassByCourseId()">addClassByCourseId</button>
+		<br>
+		
+		<button onclick="getSemianrByCourseId()">getSemianrByCourseId</button>
+        <br>
+        
+        <button onclick="addSeminarByCourseId()">addSeminarByCourseId</button>
+        <br>
+        
+        <button onclick="getCurrentSeminarByCourseId()">getCurrentSeminarByCourseId</button>
+        <br>
+        
+        <button onclick="getGradeByCourseId()">getGradeByCourseId</button>
+        <br>
+
+
+	</div>
 
 	<p id="show"></p>
 </body>

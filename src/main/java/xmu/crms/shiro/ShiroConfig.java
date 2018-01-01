@@ -3,20 +3,16 @@ package xmu.crms.shiro;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
-import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-
-import javax.servlet.Filter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
+import org.springframework.context.annotation.ImportResource;
 
 @Configuration
+@ImportResource(locations = {"classpath:shiro-filter.xml"})
 public class ShiroConfig {
 
     @Bean(name = "securityManager")
@@ -28,50 +24,12 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    @Bean("shiroFilter")
-    public ShiroFilterFactoryBean factory(DefaultWebSecurityManager securityManager) {
-        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
-
-        // 添加自己的过滤器并且取名为jwt
-        Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put("jwt", new JWTFilter());
-        factoryBean.setFilters(filterMap);
-
-        factoryBean.setSecurityManager(securityManager);
-        factoryBean.setUnauthorizedUrl("/401");
-
-		/*
-         * 自定义url规则 http://shiro.apache.org/web.html#urls-
-		 */
-        Map<String, String> filterRuleMap = new TreeMap<>();
-        //todo delete later
-        filterRuleMap.put("/**", "anon");
-        filterRuleMap.put("/course/**", "jwt,roles[student,teacher]");
-        filterRuleMap.put("/seminar/3/**", "anon");
-        filterRuleMap.put("/seminar/**", "jwt");
-        filterRuleMap.put("/me/course", "jwt,roles[teacher]");
-        filterRuleMap.put("/me/**", "jwt");
-        filterRuleMap.put("/static/css/**", "anon");
-        filterRuleMap.put("/wechat/**", "anon");
-        filterRuleMap.put("/static/js/**", "anon");
-        filterRuleMap.put("/static/Img/**", "anon");
-        filterRuleMap.put("/templates/common/**", "anon");
-        filterRuleMap.put("/templates/teacher/**", "anon");
-        filterRuleMap.put("/templates/student/**", "anon");
-        filterRuleMap.put("/signin", "anon");
-        filterRuleMap.put("/**", "anon");
-        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
-
-        factoryBean.setLoginUrl("/signin");
-        factoryBean.setSuccessUrl("/");
-        factoryBean.setUnauthorizedUrl("/403");
-        return factoryBean;
-    }
 
     @Bean(name = "lifecycleBeanPostProcessor")
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
     }
+
 
     @Bean(name = "shiroRealm")
     @DependsOn("lifecycleBeanPostProcessor")

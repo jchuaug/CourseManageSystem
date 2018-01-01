@@ -56,9 +56,9 @@ function load() {
 		success: function(data) {
 			document.getElementById("seminar_name").innerHTML = data.name;
 			document.getElementById("seminar_description").innerHTML = data.description;
-			if(data.groupMethod == "fixed") {
+			if(data.groupingMethod == "fixed") {
 				document.getElementById("groupingMethod").innerHTML = "固定分组";
-			} else if(data.groupMethod == "random") {
+			} else if(data.groupingMethod == "random") {
 				document.getElementById("groupingMethod").innerHTML = "随机分组";
 			} else {
 				document.getElementById("groupingMethod").innerHTML = "未设置分组方式";
@@ -88,7 +88,7 @@ function load() {
 			}
 			var topic = document.createElement("div");
 			topic.setAttribute("class", "topicBlock");
-			topic.innerHTML = "<img class='addImg' src='/static/Img/smalladd.png' alt='添加' onclick='addTopic()' />";
+			topic.innerHTML = "<img class='addImg' src='/Img/smalladd.png' alt='添加' onclick='addTopic()' />";
 			topicList.appendChild(topic);
 		}
 

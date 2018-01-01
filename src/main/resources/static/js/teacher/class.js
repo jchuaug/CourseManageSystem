@@ -57,9 +57,9 @@ function load() {
 	 				document.getElementById("class_time").innerHTML=data.time;
 	 				document.getElementById("report_weight").innerHTML=data.proportions.report;
 	 				document.getElementById("present_weight").innerHTML=data.proportions.presentation;
-	 				document.getElementById("five").innerHTML=data.proportions.a;
-	 				document.getElementById("four").innerHTML=data.proportions.b;
-	 				document.getElementById("three").innerHTML=data.proportions.c;
+	 				document.getElementById("five").innerHTML=data.proportions.a+"%";
+	 				document.getElementById("four").innerHTML=data.proportions.b+"%";
+	 				document.getElementById("three").innerHTML=data.proportions.c+"%";
 	 			}
 	 		
 

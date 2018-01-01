@@ -92,6 +92,18 @@ public class JWTUtil {
             return null;
         }
     }
+    /**
+     * 获得token中的信息无需secret解密也能获得
+     * @return token中包含的openid
+     */
+    public static String getOpenId(String token) {
+    	try {
+    		DecodedJWT jwt = JWT.decode(token);
+    		return jwt.getClaim("openid").asString();
+    	} catch (JWTDecodeException e) {
+    		return null;
+    	}
+    }
 
     /**
      * 生成签名,5min后过期
@@ -106,10 +118,12 @@ public class JWTUtil {
             Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
             // 附带username信息
             return JWT.create()
-                    .withClaim("id", user.getId().longValue())
-                    .withClaim("type", user.getType() == 1 ? "teacher" : "student")
-                    .withClaim("name", user.getName())
-                    .withClaim("phone", user.getPhone())
+
+                   .withClaim("id", user.getId().longValue())
+                   .withClaim("type", user.getType()==1?"teacher":"student")
+                   .withClaim("name", user.getName())
+                   .withClaim("phone", user.getPhone())
+                   .withClaim("openid", user.getOpenid())
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {
