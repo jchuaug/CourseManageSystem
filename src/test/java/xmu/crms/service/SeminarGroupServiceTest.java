@@ -109,7 +109,7 @@ public class SeminarGroupServiceTest {
      */
     @Test
     public void testListSeminarGroupIdByStudentId() {
-        System.out.println(seminarGroupService.listSeminarGroupIdByStudentId(new BigInteger("31")));
+        System.out.println(seminarGroupService.listSeminarGroupByStudentId(new BigInteger("31")));
     }
 
     ;

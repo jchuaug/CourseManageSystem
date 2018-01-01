@@ -47,73 +47,73 @@ public interface TimerService {
 	 void scheduled();
 	 
 	 
-	 
+
 /**
  * 题外话：.
  * 不使用event表，下面是赖神的方法，有需要自取：
  * 自定义注解：
-+@Target({ElementType.METHOD}) 
-+@Retention(RetentionPolicy.RUNTIME) 
-+@Documented 
-+public @interface CrmsEvent { 
-+    String table(); 
-+    String timeColumn(); 
++@Target({ElementType.METHOD})
++@Retention(RetentionPolicy.RUNTIME)
++@Documented
++public @interface CrmsEvent {
++    String table();
++    String timeColumn();
 +    String[] whereColumns() default {};
-+    String[] paramColumns(); 
++    String[] paramColumns();
 +} 这个注解放在定时器方法上，注解的参数可以自己根据合适的来定义
 
 timerService:
-+    void insertEvent(Date time, String beanName, String methodName, HashMap<BigInteger, String> paramMap){ 
-+        Event e = new Event(time, beanName, methodName, paramMap); 
-+        //Insert entity to db  
-+    } 
-
-+    private ApplicationContext applicationContext; 
-+    private List<Method> eventCallbacks; 
-+    public TimerService(@Autowired final ApplicationContext applicationContext){ 
-+        this.applicationContext = applicationContext; 
-+        Object[] beans = Arrays.stream(applicationContext.getBeanDefinitionNames()).map(applicationContext::getBean).toArray(); 
-+        Class<?>[] beanTypes = Arrays.stream(beans).map(Object::getClass).distinct().toArray(Class<?>[]::new); 
-+        eventCallbacks = Arrays.stream(beanTypes) 
-+                                     .flatMap(clz -> Arrays.stream(clz.getDeclaredMethods())) 
-+                                     .filter(method -> method.getDeclaredAnnotation(CrmsEvent.class) != null) 
-+                                     .collect(Collectors.toList()); 
++    void insertEvent(Date time, String beanName, String methodName, HashMap<BigInteger, String> paramMap){
++        Event e = new Event(time, beanName, methodName, paramMap);
++        //Insert entity to db
 +    }
 
-+	@Scheduled(fixedRate = 1000 * 60 * 5) 
-+	 void scheduled(){ 
-+        for (Method callback : eventCallbacks) { 
-+            CrmsEvent event = callback.getDeclaredAnnotation(CrmsEvent.class); 
-+            String table = event.table(); 
-+            String timeColumn = event.timeColumn(); 
-+            String[] whereColumns = event.whereColumns(); 
-+            String[] paramColumns = event.whereColumns(); 
-+            List<Object[]> realParams = new ArrayList<>();// select paramColumns from table where timeColumn < NOW() + INTERVAL 5 MINUTE AND timeColumn > NOW() AND whereColumns 
-+            for (Object[] realParam : realParams) { 
++    private ApplicationContext applicationContext;
++    private List<Method> eventCallbacks;
++    public TimerService(@Autowired final ApplicationContext applicationContext){
++        this.applicationContext = applicationContext;
++        Object[] beans = Arrays.stream(applicationContext.getBeanDefinitionNames()).map(applicationContext::getBean).toArray();
++        Class<?>[] beanTypes = Arrays.stream(beans).map(Object::getClass).distinct().toArray(Class<?>[]::new);
++        eventCallbacks = Arrays.stream(beanTypes)
++                                     .flatMap(clz -> Arrays.stream(clz.getDeclaredMethods()))
++                                     .filter(method -> method.getDeclaredAnnotation(CrmsEvent.class) != null)
++                                     .collect(Collectors.toList());
++    }
+
++	@Scheduled(fixedRate = 1000 * 60 * 5)
++	 void scheduled(){
++        for (Method callback : eventCallbacks) {
++            CrmsEvent event = callback.getDeclaredAnnotation(CrmsEvent.class);
++            String table = event.table();
++            String timeColumn = event.timeColumn();
++            String[] whereColumns = event.whereColumns();
++            String[] paramColumns = event.whereColumns();
++            List<Object[]> realParams = new ArrayList<>();// select paramColumns from table where timeColumn < NOW() + INTERVAL 5 MINUTE AND timeColumn > NOW() AND whereColumns
++            for (Object[] realParam : realParams) {
 +                try {
-+                    callback.invoke(applicationContext.getBean(callback.getDeclaringClass()), realParam); 
-+                } catch (IllegalAccessException | InvocationTargetException e) { 
-+                    e.printStackTrace(); 
-+                } 
++                    callback.invoke(applicationContext.getBean(callback.getDeclaringClass()), realParam);
++                } catch (IllegalAccessException | InvocationTargetException e) {
++                    e.printStackTrace();
++                }
 +            }
-+        } 
-+ 
-+        //select * from event where time < NOW() 
-+        List<Event> events = new ArrayList<>(); 
-+        for (Event event : events) { 
-+            try { 
-+                Object bean = applicationContext.getBean(event.getBeanName()); 
-+                Method callback = BeanUtils.findMethod(bean.getClass(), event.getMethodName()); 
-+                callback.invoke(bean, event.getMap().values().toArray()); 
-+            } catch (IllegalAccessException | InvocationTargetException e) { 
-+                e.printStackTrace(); 
-+ 
-+            } 
-+            //delete from event where id = event.id 
-+        } 
++        }
++
++        //select * from event where time < NOW()
++        List<Event> events = new ArrayList<>();
++        for (Event event : events) {
++            try {
++                Object bean = applicationContext.getBean(event.getBeanName());
++                Method callback = BeanUtils.findMethod(bean.getClass(), event.getMethodName());
++                callback.invoke(bean, event.getMap().values().toArray());
++            } catch (IllegalAccessException | InvocationTargetException e) {
++                e.printStackTrace();
++
++            }
++            //delete from event where id = event.id
++        }
 +    }
  *
  */
-	 
+
 		
 }

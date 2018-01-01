@@ -2,11 +2,13 @@ package xmu.crms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.Seminar;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.mapper.SeminarMapper;
+import xmu.crms.service.FixGroupService;
 import xmu.crms.service.SeminarService;
 
 import java.math.BigInteger;
@@ -24,6 +26,8 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     SeminarMapper seminarMapper;
 
+    @Autowired
+    FixGroupService fixGroupService;
 
     @Override
     public List<Seminar> listSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
@@ -92,6 +96,10 @@ public class SeminarServiceImpl implements SeminarService {
         course.setId(courseId);
         seminar.setCourse(course);
         seminarMapper.insertSeminarByCourseId(seminar);
+        if (seminar.getFixed()) {
+            // insert into event table
+//            fixGroupService.fixedGroupToSeminarGroup(courseId);
+        }
         //todo
         return null;
     }

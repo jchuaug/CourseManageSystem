@@ -103,7 +103,7 @@ public interface SeminarGroupMapper {
      * @author: YellowPure
      * @date: 21:34 2017/12/22
      */
-    List<SeminarGroupMember> listSeminarGroupIdByStudentId(BigInteger studentId);
+    List<BigInteger> listSeminarGroupIdByStudentId(BigInteger studentId);
 
     List<BigInteger> listGroupIdByTopicId(BigInteger topicId);
     //throw

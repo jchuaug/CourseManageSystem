@@ -52,10 +52,20 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 
     @Override
     public SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId) throws IllegalArgumentException, GroupNotFoundException {
-        BigInteger groupId;
-        if ((groupId = seminarGroupMapper.getSeminarGroupIdBySeminarIdAndUserId(seminarId, userId)) == null) {
+        BigInteger groupId = null;
+
+        List<SeminarGroup> groups = listSeminarGroupByStudentId(seminarId);
+
+        for (SeminarGroup group : groups) {
+            if (Objects.equals(group.getSeminar().getId(), seminarId)) {
+                groupId = group.getId();
+            }
+        }
+
+        if (groupId == null) {
             throw new GroupNotFoundException();
         }
+
         return seminarGroupMapper.getSeminarGroupByGroupId(groupId);
     }
 
@@ -281,11 +291,11 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
 
 
     @Override
-    public List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) throws IllegalArgumentException {
-        List<SeminarGroupMember> seminarGroupMembers = seminarGroupMapper.listSeminarGroupIdByStudentId(userId);
+    public List<SeminarGroup> listSeminarGroupByStudentId(BigInteger userId) throws IllegalArgumentException {
+        List<BigInteger> ids = seminarGroupMapper.listSeminarGroupIdByStudentId(userId);
         List<SeminarGroup> seminarGroups = new ArrayList<>();
-        for (SeminarGroupMember seminarGroupMember : seminarGroupMembers) {
-            seminarGroups.add(seminarGroupMember.getSeminarGroup());
+        for (BigInteger id : ids) {
+            seminarGroups.add(seminarGroupMapper.getSeminarGroupById(id));
         }
         return seminarGroups;
     }

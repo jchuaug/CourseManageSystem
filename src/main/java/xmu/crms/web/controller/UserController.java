@@ -135,6 +135,7 @@ public class UserController {
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 
         userService.unBindWeChatUser(userId);
+        return ResponseEntity.ok().build();
 
     }
 
