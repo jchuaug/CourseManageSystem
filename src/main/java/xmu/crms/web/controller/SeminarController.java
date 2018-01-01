@@ -1,6 +1,7 @@
 package xmu.crms.web.controller;
 
 import java.math.BigInteger;
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,19 +94,13 @@ public class SeminarController {
 	@PutMapping("/{seminarId}")
 	public ResponseEntity<String> updateSeminar(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestBody SeminarResponseVO seminar, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (TEACHER.equals(typeString)) {
-			type = 1;
-		} else if (STUDENT.equals(typeString)) {
-			type = 0;
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-		JWTUtil.getUsername(token);
-		if (type == 0) {
-			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
-		}
+		
 		try {
 			Seminar forSeminar = seminarService.getSeminarBySeminarId(seminarId);
 			if (!(forSeminar.getCourse().getTeacher().getId().equals(userId))) {
@@ -126,19 +121,12 @@ public class SeminarController {
 	@DeleteMapping("/{seminarId}")
 	public ResponseEntity<String> deleteSeminar(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (TEACHER.equals(typeString)) {
-			type = 1;
-		} else if (STUDENT.equals(typeString)) {
-			type = 0;
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-		if (type == 0) {
-			return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
-		}
-
 		try {
 			Seminar seminarInfo1 = seminarService.getSeminarBySeminarId(seminarId);
 			User teacher = seminarInfo1.getCourse().getTeacher();
@@ -160,19 +148,14 @@ public class SeminarController {
 	public ResponseEntity<MySeminarResponseVO> getMySeminar(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
 
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (TEACHER.equals(typeString)) {
-			type = 1;
-		} else if (STUDENT.equals(typeString)) {
-			type = 0;
+		String type=JWTUtil.getUserType(token);
+		if (TEACHER.equals(type)) {
+			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-		JWTUtil.getUsername(token);
-		if (type == 1) {
-			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		}
+		
+		
 		MySeminarResponseVO mySeminarResponseVO = null;
 		try {
 			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
@@ -253,19 +236,15 @@ public class SeminarController {
 	@PostMapping("/{seminarId}/topic")
 	public ResponseEntity<BigInteger> insertSeminarTopicBySeminarId(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestBody TopicResponseVO topic, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (TEACHER.equals(typeString)) {
-			type = 1;
-		} else if (STUDENT.equals(typeString)) {
-			type = 0;
-		}
-		if (type == 0) {
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
 			return new ResponseEntity<BigInteger>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
-		JWTUtil.getUsername(token);
+		
+		
 		BigInteger topicId = null;
 		try {
 			Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
@@ -314,16 +293,10 @@ public class SeminarController {
 	@GetMapping("/{seminarId}/group/my")
 	public ResponseEntity<GroupResponseVO> getMyGroup(@PathVariable("seminarId") BigInteger seminarId,
 			@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-		String typeString = JWTUtil.getUserType(token);
-		Integer type = null;
-		if (TEACHER.equals(typeString)) {
-			type = 1;
-		} else if (STUDENT.equals(typeString)) {
-			type = 0;
-		}
-		if (type == 1) {
+		String type=JWTUtil.getUserType(token);
+		if (TEACHER.equals(type)) {
 			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
 

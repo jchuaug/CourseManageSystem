@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.JstlUtils;
+
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.Seminar;
@@ -63,10 +65,8 @@ public class CourseController {
 	//@RequiresRoles("student")
 	public ResponseEntity<List<CourseResponseVO>> getAllCourse(@RequestHeader HttpHeaders headers) {
 		String token =headers.get("Authorization").get(0);
-		System.err.println(token);
-		Long userid=JWTUtil.getUserId(token);
-		System.err.println(userid);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
 		
 		List<CourseResponseVO> courseResponseVOs = new ArrayList<>();
 
@@ -95,8 +95,12 @@ public class CourseController {
 	//@RequiresRoles("teacher")
 	public ResponseEntity<Course> addCourse(@RequestBody CourseRequestVO courseRequestVO,
 			@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<Course>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 
 		Course course = ModelUtils.CourseRequestVOToCourse(courseRequestVO);
 
@@ -135,9 +139,12 @@ public class CourseController {
 	//@RequiresRoles("teacher")
 	public ResponseEntity<String> updateCourse(@PathVariable("courseId") BigInteger courseId,
 			@RequestBody CourseRequestVO courseRequestVO, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 		Course course = ModelUtils.CourseRequestVOToCourse(courseRequestVO);
 
 		try {
@@ -164,8 +171,12 @@ public class CourseController {
 	//@RequiresRoles("teacher")
 	public ResponseEntity<String> deleteCourse(@PathVariable("courseId") BigInteger courseId,
 			@RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 
 		try {
 			Course course2 = courseService.getCourseByCourseId(courseId);
@@ -207,8 +218,12 @@ public class CourseController {
 	//@RequiresRoles("teacher")
 	public ResponseEntity<ClassResponseVO> addClassByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestBody ClassRequestVO classRequestVO, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<ClassResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 		
 		ClassResponseVO classResponseVO = null;
 		try {
@@ -282,8 +297,12 @@ public class CourseController {
 	//@RequiresRoles("teacher")
 	public ResponseEntity<SeminarResponseVO> addSeminarByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestBody SeminarResponseVO seminarResponseVO, @RequestHeader HttpHeaders headers) {
-		String token = headers.get("Authorization").get(0);
+		String token =headers.get("Authorization").get(0);
 		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<SeminarResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 		
 		SeminarResponseVO seminarResponseVO2 = null;
 		try {

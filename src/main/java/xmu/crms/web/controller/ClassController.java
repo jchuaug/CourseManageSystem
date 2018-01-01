@@ -1,5 +1,6 @@
 package xmu.crms.web.controller;
 
+import org.bouncycastle.jcajce.provider.symmetric.TEA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -95,19 +96,13 @@ public class ClassController {
     @PutMapping("/{classId}")
     public ResponseEntity<String> updateClass(@PathVariable("classId") BigInteger classId,
                                               @RequestBody ClassRequestVO classInfo, @RequestHeader HttpHeaders headers) {
-        String token = headers.get("Authorization").get(0);
-        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-        String typeString = JWTUtil.getUserType(token);
-        Integer type = null;
-        if (typeString.equals(TEACHER)) {
-            type = 1;
-        } else if (typeString.equals(STUDENT)) {
-            type = 0;
-        }
-        System.out.println(typeString);
-        if (type == 0) {
-            return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
-        }
+    	String token =headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
+		
         BigInteger classId2 = new BigInteger(classId.toString());
         try {
             ClassInfo classInfo1 = classService.getClassByClassId(classId2);
@@ -131,18 +126,12 @@ public class ClassController {
     @DeleteMapping("/{classId}")
     public ResponseEntity<String> deleteClass(@PathVariable("classId") BigInteger classId,
                                               @RequestHeader HttpHeaders headers) {
-        String token = headers.get("Authorization").get(0);
-        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-        String typeString = JWTUtil.getUserType(token);
-        Integer type = null;
-        if (typeString.equals(TEACHER)) {
-            type = 1;
-        } else if (typeString.equals(STUDENT)) {
-            type = 0;
-        }
-        if (type == 0) {
-            return new ResponseEntity<String>("权限不足", new HttpHeaders(), HttpStatus.FORBIDDEN);
-        }
+    	String token =headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (STUDENT.equals(type)) {
+			return new ResponseEntity<String>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 
         BigInteger classId2 = new BigInteger(classId.toString());
         try {
@@ -241,18 +230,12 @@ public class ClassController {
     @GetMapping("/{classId}/classgroup")
     public ResponseEntity<GroupResponseVO> getClassGroup(@PathVariable("classId") BigInteger classId,
                                                          @RequestHeader HttpHeaders headers) {
-        String token = headers.get("Authorization").get(0);
-        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-        String typeString = JWTUtil.getUserType(token);
-        Integer type = null;
-        if (TEACHER.equals(typeString)) {
-            type = 1;
-        } else if (STUDENT.equals(typeString)) {
-            type = 0;
-        }
-        if (type == 1) {
-            return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
-        }
+    	String token =headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type=JWTUtil.getUserType(token);
+		if (TEACHER.equals(type)) {
+			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
+		}
 
         FixGroup fixGroup = null;
         GroupResponseVO groupResponseVO = null;
@@ -395,9 +378,8 @@ public class ClassController {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 
-        System.err.println(sId);
-        System.err.println(classId);
-        System.err.println(userId);
+        
+        
      	
         try {
             FixGroup fixGroup = fixGroupService.getFixedGroupById(userId, classId);
