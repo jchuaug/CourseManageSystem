@@ -10,11 +10,13 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
-
+/**
+ * @author no one
+ */
 @Service
 public class WeChatServiceImpl implements WeChatService {
     private String url = "https://api.weixin.qq.com/sns/jscode2session?appid=wx6ab1e6c4ae4c17ef&secret=3404d5c3fcfd0c557378008628c7e0d6&grant_type=authorization_code";
-
+    String errorCode = "errorCode";
     @Override
     public String getOpenId(String code) {
         String reqUrl = url + "&js_code=" + code;
@@ -42,7 +44,7 @@ public class WeChatServiceImpl implements WeChatService {
             return "";
         }
 
-        if (auth.get("errcode") != null) {
+        if (auth.get(errorCode) != null) {
             throw new IllegalArgumentException("参数错误");
         }
 

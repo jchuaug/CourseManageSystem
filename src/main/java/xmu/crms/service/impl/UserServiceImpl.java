@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
-
+/**
+ * @author no one
+ */
 @Component
 @Service
 public class UserServiceImpl implements UserService {
@@ -40,10 +42,11 @@ public class UserServiceImpl implements UserService {
      * @author qinlingyun
      * @see SchoolService#getSchoolBySchoolId(BigInteger schoolId)
      */
+    private static Pattern pattern = Pattern.compile("[0-9]*");
     @Override
     public User getUserByUserId(BigInteger userId) throws IllegalArgumentException, UserNotFoundException {
         User user = null;
-        Pattern pattern = Pattern.compile("[0-9]*");
+
         try {
             if (!(pattern.matcher(userId.toString()).matches())) {
                 throw new IllegalArgumentException("UserService:illegal input");
@@ -345,6 +348,7 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException    未找到对应用户
      * @author LiuAiqi
      */
+    Integer thirty = 30;
     @Override
     public BigInteger insertAttendanceById(BigInteger classId, BigInteger seminarId, BigInteger userId,
                                            double longitude, double latitude)
@@ -360,15 +364,15 @@ public class UserServiceImpl implements UserService {
             Location location = userMapper.getLocationBySeminarIdAndClassId(seminarId, classId);
             System.out.println(location);
             Integer status = 2;
-            if (Math.abs(location.getLatitude() - latitude) > 30
-                    || Math.abs(location.getLongitude() - longitude) > 30) {
+            if (Math.abs(location.getLatitude() - latitude) > thirty
+                    || Math.abs(location.getLongitude() - longitude) > thirty) {
                 throw new InvalidOperationException("UserService:illegal location");
             }
             status = 0;
             Attendance attendance = new Attendance(userMapper.getUserByUserId(userId),
                     userMapper.getClassByClassId(classId), userMapper.getSeminarBySeminarId(seminarId), status);
             userMapper.insertAttendanceById(attendance);
-//			insertedRows = attendance.getId();
+
             if (insertedRows == null) {
                 throw new InvalidOperationException("no availiable return value");
             }
