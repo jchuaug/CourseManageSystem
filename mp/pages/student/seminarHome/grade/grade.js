@@ -39,7 +39,6 @@ Page({
 
     submit(e) {
         api.submitScore(this.data.groups, function (res) {
-
             if (res) {
                 utils.showSuccessToast();
 

@@ -201,11 +201,12 @@ public class GroupController {
         BigInteger groupId = BigInteger.valueOf(groupID);
         BigInteger studentId = BigInteger.valueOf(studentID);
 
-        grade.getPresentationGrades().forEach(score -> {
-            gradeService.insertGroupGradeByUserId(BigInteger.valueOf(score.getTopicId())
-                    , studentId, groupId, score.getGrade());
+        grade.getGroups().forEach(groupScore -> {
+            gradeService.insertGroupGradeByUserId(studentId, groupScore.getId(), groupScore.getScore());
         });
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+
 }

@@ -1,8 +1,6 @@
 package xmu.crms.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import xmu.crms.entity.*;
-import xmu.crms.service.TopicService;
 import xmu.crms.web.VO.*;
 
 import java.text.ParseException;
@@ -120,14 +118,14 @@ public class ModelUtils {
         seminar2.setName(seminar.getName());
         seminar2.setDescription(seminar.getDescription());
         Boolean fixed = null;
-        if (seminar.getGroupingMethod()!=null) {
-        	 if (seminar.getGroupingMethod().equals( "fixed")) {
-                 fixed = true;
-             } else if (seminar.getGroupingMethod().equals("random")) {
-                 fixed = false;
-             }
-		}
-       
+        if (seminar.getGroupingMethod() != null) {
+            if (seminar.getGroupingMethod().equals("fixed")) {
+                fixed = true;
+            } else if (seminar.getGroupingMethod().equals("random")) {
+                fixed = false;
+            }
+        }
+
         seminar2.setFixed(fixed);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dstr = seminar.getStartTime();
@@ -213,11 +211,15 @@ public class ModelUtils {
         groupResponseVO.setMembers(members);
         groupResponseVO.setId(seminarGroup.getId());
         groupResponseVO.setName(seminarGroup.getId().toString());
-        List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
-        for (SeminarGroupTopic seminarGroupTopic : topics) {
-            topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
+
+        if (topics != null) {
+            List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
+            for (SeminarGroupTopic seminarGroupTopic : topics) {
+                topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
+            }
+            groupResponseVO.setTopics(topicResponseVOs);
         }
-        groupResponseVO.setTopics(topicResponseVOs);
+
         return groupResponseVO;
     }
 

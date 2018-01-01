@@ -170,4 +170,5 @@ public interface SeminarGroupMapper {
 
     int deleteTopic(@Param("topicId") BigInteger topicId, @Param("groupId") BigInteger groupId);
 
+    List<SeminarGroup> getOtherGroups(BigInteger groupId);
 }

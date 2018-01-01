@@ -296,4 +296,6 @@ public interface SeminarGroupService {
             IllegalArgumentException, GroupNotFoundException, UserNotFoundException, InvalidOperationException;
 
     void deleteTopic(BigInteger topicId, BigInteger groupId);
+
+    List<SeminarGroup> getOtherGroups(BigInteger groupId);
 }

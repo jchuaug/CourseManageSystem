@@ -627,11 +627,11 @@ VALUES (4, 1);
 
 INSERT INTO seminar_group
 (seminar_id, class_id)
-VALUES (4, 2);
+VALUES (4, 1);
 
 INSERT INTO seminar_group
 (seminar_id, class_id)
-VALUES (4, 3);
+VALUES (4, 1);
 
 -- ----------------------------
 -- Table structure for seminar_group_member

@@ -117,4 +117,5 @@ public interface GradeService {
     void countGroupGradeBySeminarId(BigInteger seminarId) throws IllegalArgumentException;
 
 
+    void insertGroupGradeByUserId(BigInteger studentId, BigInteger id, Integer score);
 }

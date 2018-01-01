@@ -462,4 +462,15 @@ public class SeminarController {
         return new ResponseEntity<AttendanceResponseVO>(attendanceResponseVO, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/group/{groupId}/others")
+    public ResponseEntity getOtherGroups(@PathVariable BigInteger groupId) {
+        List<SeminarGroup> others = seminarGroupService.getOtherGroups(groupId);
+
+        List<GroupResponseVO> responseVOS = new ArrayList<>();
+        others.forEach(group -> {
+            responseVOS.add(ModelUtils.SeminarGroupToGroupResponseVO(group, null, null));
+        });
+
+        return ResponseEntity.ok().body(responseVOS);
+    }
 }

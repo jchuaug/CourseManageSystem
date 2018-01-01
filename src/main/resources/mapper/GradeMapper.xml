@@ -108,14 +108,18 @@
         WHERE seminar_group_topic_id = #{id}
     </select>
 
-    <update id="insertGroupPresentationGradeByUserId">
+    <insert id="insertGroupPresentationGradeByUserId">
+#         todo
+    </insert>
+
+
+    <update id="updateSeminarGroupPresentationScore">
         update seminar_group
         <set>
-            presentation_grade=#{grade}
+            presentation_grade=#{score}
         </set>
-        where id=#{id}
+        where id=#{groupId}
     </update>
-
     <update id="insertGroupTopicGradeByUserId">
         update seminar_group_topic
         <set>

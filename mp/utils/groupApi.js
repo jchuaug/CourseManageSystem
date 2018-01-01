@@ -6,17 +6,7 @@ function getGroupInfo(cb) {
     // GET /group/{groupId}?embedTopics=true
 
     // first get group id
-    utils.requestWithId({
-        url: `/seminar/${cache.get('currentSeminarID')}/group/my`,
-        success: function (res) {
-            console.log('group', res);
-            const groupID = res.data.id;
-            cache.set('groupID', groupID);
-
-            cache.set('group', res.data);
-            cb(res.data);
-        }
-    });
+    cb(cache.get('group'));
 }
 
 function amILeader() {

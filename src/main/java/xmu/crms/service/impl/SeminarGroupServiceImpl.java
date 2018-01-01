@@ -389,4 +389,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     public void deleteTopic(BigInteger topicId, BigInteger groupId) {
         seminarGroupMapper.deleteTopic(topicId, groupId);
     }
+
+    @Override
+    public List<SeminarGroup> getOtherGroups(BigInteger groupId) {
+        return seminarGroupMapper.getOtherGroups(groupId);
+    }
 }

@@ -23,8 +23,10 @@ public interface GradeMapper {
 
     List<Integer> listGradeBySeminarGroupTopicId(BigInteger id);
 
-    int insertGroupPresentationGradeByUserId(@Param("id") BigInteger id, @Param("grade") Integer grade);
 
     int insertGroupTopicGradeByUserId(@Param("id") BigInteger id, @Param("grade") Integer grade);
 
+    void insertGroupPresentationGradeByUserId(@Param("studentId") BigInteger studentId, @Param("groupId") BigInteger id, @Param("score") Integer score);
+
+    void updateSeminarGroupPresentationScore(@Param("groupId") BigInteger id, @Param("score") Integer pTopicGrade);
 }

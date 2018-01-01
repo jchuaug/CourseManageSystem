@@ -282,4 +282,18 @@
         DELETE FROM seminar_group_topic
         WHERE topic_id = #{topicId} AND seminar_group_id = #{groupId}
     </delete>
+
+    <select id="getOtherGroups" resultMap="SeminarGroup">
+        SELECT *
+        FROM seminar_group
+        WHERE seminar_id = (SELECT seminar_id
+                            FROM seminar_group
+                            WHERE id = #{id})
+              AND class_id = (SELECT class_id
+                              FROM seminar_group
+                              WHERE id = #{id})
+              AND id != #{id}
+
+
+    </select>
 </mapper>
