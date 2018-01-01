@@ -19,7 +19,7 @@ $(function() {
 				var msg = result.msg;
 				window.localStorage.setItem("jwt",result.jwt);
 				console.log(result.jwt);
-				if (result.code == 200) {
+				if (result.statusCode == 200) {
 					/* 登陆成功跳转 */
 					alert(result.type);
 					switch (result.type) {
