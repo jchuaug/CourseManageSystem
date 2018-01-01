@@ -1,99 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport"
-	content="width=device-width,
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width,
                                      initial-scale=1.0,
                                      maximum-scale=1.0,
-                                     user-scalable=no" />
-<title>ClassManage</title>
-<link href="../../css/common/RegisterPage.css" rel="stylesheet"
-	type="text/css" />
-<script type="text/javascript" src="../../js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="../../js/common/register.js"></script>
-</head>
+                                     user-scalable=no">
+		<title>ClassManage</title>
+		<link href="/css/common/RegisterPage.css" rel="stylesheet" type="text/css" />
+		<script src="/js/jquery-1.12.4.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/common/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/common/messages_zh.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/common/register.js"></script>
+		<script src="../../js/jwt.js"></script>
+	</head>
 
-<body>
-	<div class="titleBackground"></div>
-	<div class="title">课程管理系统</div>
-	<div class="icon">
-		<img src="../../Img/home.png" />首页 <img src="../../Img/help.png" />帮助
-		<img src="../../Img/exit.png" />退出
-	</div>
-	<div class="phoneNum">
-		手机号:<input id="phoneNum" type="text" name="phoneNum" />
-	</div>
-	<div class="password">
-		密码:<input id="password" type="text" name="password" />
-	</div>
-	<div class="name">
-		姓名:<input id="name" type="text" name="name" />
-	</div>
-	<div class="province">
-		省:<select id="provinceSelect" class="provinceSelect"></select>
-	</div>
-	<div class="city">
-		市:<select id="citySelect" class="citySelect"></select>
-	</div>
-	<div class="school">
-		学校:<select class="schoolSelect"></select>
-		<div class="createSchool">创建学校</div>
-	</div>
-	<div class="gender">性别:</div>
-	<div class="male">
-		男<input type="radio" value="男" name="gender" checked="checked" />
-	</div>
-	<div class="female">
-		女<input type="radio" value="女" name="gender" />
-	</div>
-	<div class="role">角色:</div>
-	<div class="student">
-		学生<input type="radio" value="学生" name="role" checked="checked" />
-	</div>
-	<div class="teacher">
-		教师<input type="radio" value="教师" name="role" />
-	</div>
-	<div class="stuffNum">
-		教工号:<input id="stuffNum" type="text" name="stuffNum" />
-	</div>
-	<div class="eMail">
-		邮箱:<input id="eMail" type="text" name="eMail" />
-	</div>
-	<div class="submit" onclick="registerSubmit()">注册</div>
-</body>
-<script type="text/javascript">
-	function registerSubmit() {
-		var phone = $("#phoneNum").val();
-		var password = $("#password").val();
-		var name = $("#name").val();
-		var stuffNum = $("#stuffNum").val();
-		var email = $("#eMail").val();
-		$.ajax({
-			type : 'post',
-			url : '/register',
-			data : {
-				"name" : name,
-				"phone" : phone,
-				"password" : password,
-				"stuffNum" : stuffNum,
-				"email" : email
-			},
-			dataType : "json",
-			headers : {
-				"Authorization" : "Bearer"
-			},
-			success : function(r) {
-				if (r.status == 200) {
-					alert(r.msg);
-					window.location.href = "/";
-				} else {
-					alert("r.msg");
-					window.location.href = "/register";
-				}
-			}
-		});
-	}
-</script>
+	<body onload="registerload()">
+		<div class="titleBackground"></div>
+		<div class="title">课程管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png">
+			<a href="/login">首页</a>
+			<img src="/Img/help.png">
+			<a>帮助</a>
+			<img src="/Img/exit.png">
+			<a href="/login">退出</a>
+		</div>
+		<form class="cmxform" id="signupForm" onsubmit="register()">
+			<div class="phoneNum">手机号:<input type="text" name="phoneNum" id="phone" /></div>
+			<div class="password">密码:<input type="text" name="password" id="password" /></div>
+			<div class="name">姓名:<input type="text" name="name" id="name" /></div>
+			<div class="province">省:
+				<select class="provinceSelect" id="pro" onclick="find_city()"></select>
+			</div>
+			<div class="city">市:
+				<select class="citySelect" id="city" onclick="find_school()"></select>
+			</div>
+			<div class="school">学校:
+				<select class="schoolSelect" id="school"></select>
+				<div class="createSchool" onclick="window.location.href='/teacher/school/create'">创建学校</div>
+			</div>
+			<div class="gender" id="gender">性别:</div>
+			<div class="male">
+				男<input type="radio" value="男" name="gender" checked="checked" />
+			</div>
+			<div class="female">
+				女<input type="radio" value="女" name="gender" />
+			</div>
+			</div>
+			<div class="role" id="type">角色:</div>
+			<div class="student">
+				学生<input type="radio" value="学生" name="role" checked="checked" onclick="form1.style.display='';form2.style.display='none';" />
+			</div>
+			<div class="teacher">
+				教师<input type="radio" value="教师" name="role" onclick="form1.style.display='none';form2.style.display='';" />
+			</div>
+			<div class="stuffNum" id="form1">学号:<input type="text" name="stuffNum" id="stuNum" /></div>
+			<div class="stuffNum" id="form2" style="display:none">教工号:<input type="text" name="stuffNum" id="teaNum" /></div>
+			<div class="eMail">邮箱:<input type="text" name="eMail" id="eMail" /></div>
+			<div class="submit" onclick="submitregister()">提交</div>
+		</form>
+	</body>
+
 </html>

@@ -24,7 +24,7 @@
 				/teacher/home=anon
 				/student/home=anon
 				/signin=anon
-				/course/** =roles["student,teacher"]
+				/course =roles["student,teacher"]
 
 			</value>
 		</property>

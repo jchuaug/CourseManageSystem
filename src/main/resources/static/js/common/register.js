@@ -1,31 +1,88 @@
-/*$(function() {
-    // setArea("top", "0");//页面加载时就现实数据库第一个数据，一定要加上
-	setArea("provinceSelect", "1");
-    $("#provinceSelect").change(function() {
-        // 当省级改变的时候，让市级和县级文本清空
-        $("#citySelect option").remove();
-         //获得省级的id
-        var region_id=$("#provinceSelect option:selected").attr("region_id");
-         //加载该省级的市级数据
-        setArea("citySelect", region_id);
-    });
+function registerload(){
+     $.ajax({
+    type:'get',
+    url: '/school/province',
+    dataType: "json",
+    contentType: "application/json;",
+    success: function (data,textStatus,xhr) {
+        if(xhr.status == 200){
+            var content = document.getElementById("pro");
+            var str = "";
+            for(i=0;i<data.length;i++){
+                str = str +"<option>"+data[i]+"</option>"
+            }
+            content.innerHTML = str;
+            }
+    },
+    statusCode: {
+        400: function () {
+            alert("错误的ID格式");
+        },
+        404: function () {
+            alert("加载初始信息失败");
+        }
+    }
 });
-//selectid:select标签的id，pid数据库省级县级的pid
-function setArea(selectid, region_id) {
-	    $.ajax({
-		url : "/resgiter/getArea/" + region_id,
-		type : "get",
-		cache : false,
-		success : function(res) {
-			//注意!!!这里必须使用eval(res)函数，否则获取到的json数据无法遍历,无话获取到数据
-			var arr = eval(res);
-			//遍历返回的json数据加载到select标签;
-			$.each(arr, function(key, val) {
-				$("#" + selectid).append(
-						" <option id='" + val.region_id + "'>" + val.region_name
-								+ "</option>");
-			});
-		}
-	});
-};
-*/
+
+}
+
+function find_city(){
+    $.ajax({
+        type: "get",
+        url: "/school/city?province="+$("#pro").find("option:selected").text(),
+        success: function(data) {
+            var content = document.getElementById("city");
+            var str = "";
+            for(i=0;i<data.length;i++){
+                str = str +"<option>"+data[i]+"</option>"
+            }
+            content.innerHTML = str;
+        }
+    });
+}
+
+function find_school(){
+       $.ajax({
+        type: "get",
+        url: "/school?city="+$("#city").find("option:selected").text(),
+        success: function(data) {
+            var content = document.getElementById("school");
+            var str = "";
+            for(i=0;i<data.length;i++){
+                str = str +"<option>"+data[i].name+"</option>"
+            }
+            content.innerHTML = str;
+        }
+    });
+}
+
+function submitregister(){
+ var ata = {
+    phone:$("#phone").val(),
+    password:$("#password").val(),
+    name:$("#name").val(),
+    school:$("#school").val(),
+    gender:$('.male > input:radio:checked').val(),
+    type:($('.student > input:radio:checked').val() == "学生")?0:1,
+    number:$("#number").val(),
+    email:$("#eMail").val()
+    }
+    $.ajax({
+        type:'post',
+        url: '/auth/register',
+        dataType: "json",
+        data: JSON.stringify(ata),
+        contentType: "application/json",
+        success: function (data,textStatus,xhr) {
+            if(xhr.status == 200){
+                alert("注册成功");
+                window.location.href="/login";
+            }
+        },
+        statusCode:{
+            401: function () {
+                alert("无法注册！");
+            }
+        }
+    });
+}
