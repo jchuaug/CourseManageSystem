@@ -39,12 +39,13 @@ public class MyRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         System.out.println("doGetAuthorizationInfo调用进行权限认证");
-        String phone = JWTUtil.getUserPhone(principals.toString());
-        System.out.println("phone" + phone);
+        System.out.println(principals);
+        User principalsUser=(User) principals.getPrimaryPrincipal();
+//        String phone = JWTUtil.getUserPhone(principals.toString());
         User user = null;
 
         try {
-            user = service.getUserByUserPhone(phone);
+            user = service.getUserByUserPhone(principalsUser.getPhone());
         } catch (Exception e) {
             e.printStackTrace();
         }

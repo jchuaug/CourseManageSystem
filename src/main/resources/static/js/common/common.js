@@ -16,10 +16,8 @@ $(function() {
 				"Authorization" : token
 			},
 			success : function(result) {
-				var msg = result.msg;
-				window.localStorage.setItem("jwt",result.jwt);
-				console.log(result.jwt);
 				if (result.statusCode == 200) {
+					window.localStorage.setItem("jwt",result.jwt);
 					/* 登陆成功跳转 */
 					alert(result.type);
 					switch (result.type) {
@@ -30,7 +28,7 @@ $(function() {
 						window.location.href = '/student/home';
 						break;
 					case "unbinded":
-						window.location.href = '/student/bind';
+						window.location.href = '/user/bind';
 						break;
 					}
 				} else {

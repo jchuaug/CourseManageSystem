@@ -17,13 +17,13 @@
 		</property>
 	<property name="filterChainDefinitions">
 			<value>
-				/**/*.* = anon
 				/signin = anon
 				/templates/*/**=anon
 				/static/*/**=anon
 				/wechat/**=anon
 				/signin=anon
 				/course/** =roles["student,teacher"]
+				/**=anon
 			</value>
 		</property>
 	</bean>

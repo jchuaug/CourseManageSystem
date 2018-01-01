@@ -18,31 +18,6 @@ function jumpcourse(cid) { //点击修改课程时，将课程id号存储在cook
 	window.location.href = '/teacher/course/' + cid + '/update'; //页面跳转
 }
 
-function jumpcoursedetail(cid) { //教师课程列表页面点击课程蓝框->跳转到某个具体课程页面时调用，用cookie存课程Id
-	updateCookie('courseDetail', cid);
-	window.location.href = '/teacher/course/' + cid;
-}
-
-function jumpclassdetail(cid) {
-	updateCookie('classDetail', cid);
-	window.location.href = '/teacher/course/' + getCookie('courseDetail') + '/class/' + cid; //进入班级详情页面
-}
-
-function jumpseminardetail(cid) {
-	// alert("hi");
-	updateCookie('seminarDetail', cid);
-	window.location.href = '/teacher/course/' + getCookie('seminarDetail') + '/seminar/' + cid; //进入讨论课详情页面
-}
-
-function jumptopic(cid) {
-	updateCookie('topicDetail', cid);
-	window.location.href = '/teacher/course/' + getCookie('courseDetail') + '/seminar/' + getCookie('seminarDetail') + '/topic/' + cid; //进入话题详情页面
-}
-
-function jumpreportdetail(rid) {
-	updateCookie('groupDetail', rid);
-	window.location.href = '/teacher/course/' + getCookie('courseDetail') + '/seminar/' + getCookie('seminarDetail') + '/score/score'; //进入评分页面
-}
 
 function courselist() {
 	$.ajax({
@@ -50,8 +25,8 @@ function courselist() {
 		url: '/course',
 		dataType: "json",
 		contentType: "application/json;",
-		success: function(data, textStatus, xhr) {
-			if(xhr.status == 200) {
+		success: function(data) {
+			if(true) {
 				var content = document.getElementById("coursecontent"); //获取外围容器
 				var str = "";
 				str += '<div class=\"title\">课程信息</div><hr class=\"line\"/>'
