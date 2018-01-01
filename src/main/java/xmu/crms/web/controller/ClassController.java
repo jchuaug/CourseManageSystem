@@ -47,7 +47,7 @@ public class ClassController {
     private final String STUDENT = "student";
     private final String TEACHER = "teacher";
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<List<ClassResponseVO>> getAllClass(@RequestParam(required = false) String courseName,
                                                              @RequestParam(required = false) String courseTeacher, @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
@@ -164,11 +164,21 @@ public class ClassController {
 
     // 未完成
     @GetMapping("/{classId}/student")
-    public ResponseEntity<List<UserResponseVO>> listStudentByNameAndId(@PathVariable("classId") BigInteger classId,
-                                                                       @RequestParam("numBeginWith") String numBeginWith, @RequestParam("nameBeginWith") String nameBeginWith) {
-        List<User> students = new ArrayList<>();
+    public ResponseEntity<List<UserResponseVO>> listStudentByNameAndId(@PathVariable("classId") BigInteger courseId,
+                                                                       @RequestParam("numBeginWith") String numBeginWith, @RequestParam("nameBeginWith") String nameBeginWith, @RequestHeader HttpHeaders headers) {
+    	String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		BigInteger classId=null;
+    	List<User> students = new ArrayList<>();
         List<UserResponseVO> studentVOs = new ArrayList<>();
         try {
+        	List<ClassInfo> classInfos=classService.listClassByUserId(userId);
+        	for (ClassInfo classInfo : classInfos) {
+				if (classInfo.getCourse().getId().equals(courseId)) {
+					classId=classInfo.getId();
+				}
+			}
+        	
             students = userService.listUserByClassId(classId, numBeginWith, nameBeginWith);
             for (User student : students) {
                 UserResponseVO userResponseVO = ModelUtils.UserToUserResponseVO(student);
@@ -339,20 +349,21 @@ public class ClassController {
 
     @PutMapping("/{classId}/classgroup/add")
     public ResponseEntity<String> addStudentToGroup(@PathVariable("classId") BigInteger classId,
-                                                    @RequestBody String sId, @RequestHeader HttpHeaders headers) {
+                                                    @RequestParam("id") String sId, @RequestHeader HttpHeaders headers) {
         BigInteger studentId = new BigInteger(sId);
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 
         try {
             if (fixGroupService.getFixedGroupById(studentId, classId) != null) {
+            	System.err.println(fixGroupService.getFixedGroupById(studentId, classId));
                 return new ResponseEntity<String>("待添加学生已经在小组里了", new HttpHeaders(), HttpStatus.CONFLICT);
             }
             FixGroup fixGroup = fixGroupService.getFixedGroupById(userId, classId);
             List<FixGroupMember> members = fixGroupService.listFixGroupByGroupId(fixGroup.getId());
             boolean flag = false;
             for (FixGroupMember fixGroupMember : members) {
-                if (fixGroupMember.getId().equals(userId)) {
+                if (fixGroupMember.getStudent().getId().equals(userId)) {
                     flag = true;
                 }
             }
@@ -378,17 +389,22 @@ public class ClassController {
 
     @PutMapping("/{classId}/classgroup/remove")
     public ResponseEntity<String> removeStudentFromGroup(@PathVariable("classId") BigInteger classId,
-                                                         @RequestBody String sId, @RequestHeader HttpHeaders headers) {
-        BigInteger studentId = new BigInteger(sId);
+                                                         @RequestParam("id") String sId, @RequestHeader HttpHeaders headers) {
+     
+    	BigInteger studentId = new BigInteger(sId);
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
 
+        System.err.println(sId);
+        System.err.println(classId);
+        System.err.println(userId);
+     	
         try {
             FixGroup fixGroup = fixGroupService.getFixedGroupById(userId, classId);
             List<FixGroupMember> members = fixGroupService.listFixGroupByGroupId(fixGroup.getId());
             boolean flag = false;
             for (FixGroupMember fixGroupMember : members) {
-                if (fixGroupMember.getId().equals(userId)) {
+                if (fixGroupMember.getStudent().getId().equals(userId)) {
                     flag = true;
                 }
             }

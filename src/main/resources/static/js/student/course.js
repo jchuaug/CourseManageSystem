@@ -55,7 +55,7 @@ function load() {
 				var newClass = document.createElement("a");
 				newClass.innerHTML = "<label class='blockFont'>" + data[i].name
 						+ "</label>";
-				if (data[i].groupMethod == "fixed") {
+				if (data[i].groupingMethod == "fixed") {
 					newClass.setAttribute("href", "/course/" + courseId
 							+ "/toSeminarFixed/" + data[i].id);
 				} else {

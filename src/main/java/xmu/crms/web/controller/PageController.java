@@ -123,5 +123,10 @@ public class PageController {
 	public String toGrade() {
 		return "student/grade";
 	}
+	
+	@RequestMapping(value = "/seminar/{seminarId}/group/{gtoupId}/report")
+	public String toReport() {
+		return "teacher/report";
+	}
 
 }

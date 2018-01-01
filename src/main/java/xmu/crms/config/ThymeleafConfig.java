@@ -16,10 +16,14 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
+/**
+ * @author: NoOne
+ */
 public class ThymeleafConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
   private ApplicationContext applicationContext;
 
+  @Override
   public void setApplicationContext(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
   }

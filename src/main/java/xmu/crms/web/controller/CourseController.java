@@ -60,7 +60,7 @@ public class CourseController {
 	private final String STUDENT = "student";
 
 	@GetMapping("")
-	@RequiresRoles("student")
+	//@RequiresRoles("student")
 	public ResponseEntity<List<CourseResponseVO>> getAllCourse(@RequestHeader HttpHeaders headers) {
 		String token =headers.get("Authorization").get(0);
 		System.err.println(token);
@@ -132,7 +132,7 @@ public class CourseController {
 	}
 
 	@PutMapping("/{courseId}")
-	@RequiresRoles("teacher")
+	//@RequiresRoles("teacher")
 	public ResponseEntity<String> updateCourse(@PathVariable("courseId") BigInteger courseId,
 			@RequestBody CourseRequestVO courseRequestVO, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
@@ -161,7 +161,7 @@ public class CourseController {
 	}
 
 	@DeleteMapping("/{courseId}")
-	@RequiresRoles("teacher")
+	//@RequiresRoles("teacher")
 	public ResponseEntity<String> deleteCourse(@PathVariable("courseId") BigInteger courseId,
 			@RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
@@ -204,7 +204,7 @@ public class CourseController {
 	}
 
 	@PostMapping("/{courseId}/class")
-	@RequiresRoles("teacher")
+	//@RequiresRoles("teacher")
 	public ResponseEntity<ClassResponseVO> addClassByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestBody ClassRequestVO classRequestVO, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
@@ -279,7 +279,7 @@ public class CourseController {
 	}
 	
 	@PostMapping("/{courseId}/seminar")
-	@RequiresRoles("teacher")
+	//@RequiresRoles("teacher")
 	public ResponseEntity<SeminarResponseVO> addSeminarByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestBody SeminarResponseVO seminarResponseVO, @RequestHeader HttpHeaders headers) {
 		String token = headers.get("Authorization").get(0);
@@ -296,6 +296,7 @@ public class CourseController {
 			}
 			Seminar forSeminar=new Seminar();
 			forSeminar.setCourse(course);
+			System.err.println(seminarResponseVO);
 			Seminar seminar = ModelUtils.SeminarResponseVOToSeminar(seminarResponseVO, forSeminar);
 			BigInteger id = seminarService.insertSeminarByCourseId(courseId, seminar);
 			seminarResponseVO2 = ModelUtils.SeminarInfoToSeminarResponseVO(seminar, null, null);
@@ -338,13 +339,24 @@ public class CourseController {
 	@GetMapping("/{courseId}/grade")
 	public ResponseEntity<List<SeminarGradeResponseVO>> getGradeByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestHeader HttpHeaders headers) {
+		String token = headers.get("Authorization").get(0);
+		BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+		String type = JWTUtil.getUserType(token);
+	
 		
 		List<SeminarGradeResponseVO> seminarGradeResponseVOs = new ArrayList<>();
 		try {
-			List<Seminar> seminars=seminarService.listSeminarByCourseId(courseId);
-			for (Seminar seminar : seminars) {
-				List<SeminarGroup> seminarGroups=seminarGroupService.listSeminarGroupBySeminarId(seminar.getId());
+			if (TEACHER.equals(type)) {
+				List<Seminar> seminars = seminarService.listSeminarByCourseId(courseId);
+				for (Seminar seminar : seminars) {
+					List<SeminarGroup> seminarGroups = seminarGroupService.listSeminarGroupBySeminarId(seminar.getId());
 
+					for (SeminarGroup seminarGroup : seminarGroups) {
+						seminarGradeResponseVOs.add(ModelUtils.SeminarGroupToSeminarGradeResponseVO(seminarGroup));
+					}
+				} 
+			}else if (STUDENT.equals(type)) {
+				List<SeminarGroup> seminarGroups = seminarGroupService.listSeminarGroupIdByStudentId(userId);
 				for (SeminarGroup seminarGroup : seminarGroups) {
 					seminarGradeResponseVOs.add(ModelUtils.SeminarGroupToSeminarGradeResponseVO(seminarGroup));
 				}
