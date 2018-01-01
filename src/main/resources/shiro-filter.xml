@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<!-- shiroFilter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" >
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/signin" />
+		<property name="unauthorizedUrl" value="/403" />
+		<property name="filters">
+			<map>			
+			<entry key="roles">  
+                    <bean  
+                        class="xmu.crms.shiro.JWTFilter" />  
+                </entry>  
+			</map>
+		</property>
+	<property name="filterChainDefinitions">
+			<value>
+				/**/*.* = anon
+				/signin = anon
+				/templates/*/**=anon
+				/static/*/**=anon
+				/wechat/**=anon
+				/signin=anon
+				/course/** =roles["student,teacher"]
+				/** = anon
+			</value>
+		</property>
+	</bean>
+
+
+</beans>
