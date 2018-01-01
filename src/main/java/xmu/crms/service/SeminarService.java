@@ -103,6 +103,7 @@ public interface SeminarService {
      * get current avaliable seminar
      *
      * @return list of seminar
+     * @param courseId
      */
-    List<Seminar> getCurrentSeminar();
+    Seminar getCurrentSeminar(BigInteger courseId);
 }

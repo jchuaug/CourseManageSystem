@@ -97,7 +97,7 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public List<Seminar> getCurrentSeminar() {
-        return seminarMapper.getCurrentSeminar();
+    public Seminar getCurrentSeminar(BigInteger courseId) {
+        return seminarMapper.getCurrentSeminar(courseId);
     }
 }

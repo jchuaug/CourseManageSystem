@@ -11,7 +11,8 @@ public class SeminarResponseVO {
     private String startTime;
     private String endTime;
     private List<TopicResponseVO> topics;
-    
+	private List<ClassResponseVO> classes;
+
     private Integer grade;
     
     

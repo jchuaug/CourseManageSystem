@@ -234,5 +234,6 @@
         FROM seminar
         WHERE current_timestamp > start_time
               AND end_time > current_timestamp
+              AND course_id = #{id}
     </select>
 </mapper>
