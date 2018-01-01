@@ -134,6 +134,7 @@ public interface FixGroupService {
      * @throws IllegalArgumentException        信息不合法，id格式错误
      * @author YeHongjie
      * @see FixGroupService #listFixGroupMemberByGroupId(BigInteger groupId)
+     * @throws FixGroupNotFoundException
      */
     public List<FixGroupMember> listFixGroupByGroupId(BigInteger groupId) throws
             IllegalArgumentException, FixGroupNotFoundException;

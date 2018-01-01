@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>教师基本信息</title>
+		<link href="/css/common/HomePage.css" rel="stylesheet" type="text/css" />
+		<script src="/js/jquery-1.12.4.min.js"></script>
+		<script src="/js/teacher_page.js"></script>
+		<script src="/js/common/jwt.js"></script>
+	</head>
+
+	<body onload="return getteainfo();">
+		<div class="top">
+			<div class="font">
+				课堂管理系统
+			</div>
+			<div class="icon">
+				<img src="/Img/home.png">
+				<a href="/teacher/home">首页</a>
+				<img src="/Img/help.png">
+				<a>帮助</a>
+				<img src="/Img/exit.png">
+				<a href="#" onclick="logout();">退出</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="body">
+			<div class="navigation">
+				<div class="title">导航</div>
+				<div class="line"></div>
+				<div class="courseIntroduction">
+					<a class="guidefont" href="#" onclick="window.location.href='/teacher/personInfo'">基本信息</a>
+					<a class="guidefont" href="#" onclick="window.location.href='/teacher/courses'">课程信息</a>
+					<a class="guidefont" href="#" onclick="window.location.href='/teacher/courses/create'">新建课程</a>
+				</div>
+			</div>
+			<div class="content">
+				<div class="title">基本信息</div>
+				<hr class="line" />
+				<div class="imgarea"><img class="img" src="/Img/link.jpg" /></div>
+				<div class="info">
+					<table class="table">
+						<tr class="itemName">
+							<td>用户名：<span id="username"></span></td>
+							<!-- <td id="teaNum">教工号：<input type="text" name="idnum"/></td> -->
+							<td>教工号：<span id="teaNum"></span></td>
+						</tr>
+						<tr class="itemName">
+							<td>姓名：<input type="text" name="name" id="name" /></td>
+							<td>性别：<input type="text" name="sex" id="gender" /></td>
+						</tr>
+						<tr class="itemName">
+							<td>学校：
+								<!-- <input type="text" name="school" id="school"/></td> --><span name="school" id="school"></span></td>
+							<td>职称：<input type="text" name="title" id="title" /></td>
+						</tr>
+						<tr class="itemName">
+							<td>E-mail：<input type="text" name="e-mail" id="eMail" /></td>
+							<!-- <td >联系方式：<input type="text" name="phone" id="phone"/></td> -->
+							<td>联系方式：<span id="phone"></span></td>
+						</tr>
+					</table>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<div>
+						<button class="button" onclick="return teainfomod();">提交</button>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</body>
+
+</html>

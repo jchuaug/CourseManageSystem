@@ -23,8 +23,7 @@
 				/static/*/**=anon
 				/wechat/**=anon
 				/signin=anon
-				/**=anon
-				
+				/course/** =roles["student,teacher"]
 			</value>
 		</property>
 	</bean>

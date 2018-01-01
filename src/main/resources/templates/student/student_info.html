@@ -3,18 +3,18 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>学生基本信息</title>
-    <link href="../../css/common/HomePage.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/common/HomePage.css" rel="stylesheet" type="text/css"/>
     
 </head>
-<body>
+<body onload="return stuinfo();">
     	<div class="top">
         	<div class="font">
         		课堂管理系统
         	</div>
         	<div class="icon">
-        		<img src="../../Img/home.png">首页
-        		<img src="../../Img/help.png">帮助
-        		<img src="../../Img/exit.png">退出
+                <img src="/Img/home.png"><a href="/student/home">首页</a>
+                <img src="/Img/help.png"><a>帮助</a>
+                <img src="/Img/exit.png"><a href="#" onclick="logout();">退出</a>
         	</div>
         	<div class="clear"></div>
     	</div>
@@ -22,34 +22,33 @@
             <div class="navigation">
                 <div class="title">导航</div>
                 <div class="line"></div>
-                <div class="courseIntroduction"><a class="guidefont" href="#">基本信息</a>
-                  <a class="guidefont" href="#">课程信息</a>
-                  <a class="guidefont" href="#">选择课程</a>
+                <div class="courseIntroduction"><a class="guidefont" href="/student/personInfo">基本信息</a>
+                  <a class="guidefont" href="/student/courses">课程信息</a>
+                  <a class="guidefont" href="/student/course/select">选择课程</a>
                 </div>
             </div>
             <div class="content">
             
                <div class="title">基本信息</div>
                <div class="line"></div>
-                <div class="imgarea"><img class="img" src="../../Img/link.jpg"/></div>
-                
+                <div class="imgarea"><img class="img" src="/Img/link.jpg"/></div>
                  <div class="info">
-        <table class="table">
+        <table class="table" >
         <tr class="itemName">
-        <td >用户名：<span>12345678978</span></td>
-        <td>学号：<span>12345678978</span></td>
+        <td id="username">用户名：<span></span></td>
+        <td id="stuffNum">学号：<span></span></td>
         </tr>
         <tr class="itemName">
-        <td>姓名：<span>12345678978</span></td>
-        <td>性别：<span>12345678978</span></td>
+        <td id="name">姓名：<span></span></td>
+        <td id="gender">性别：<span></span></td>
         </tr>
         <tr class="itemName">
-        <td>学校：<span>12345678978</span></td>
-        <td>学历：<span>12345678978</span></td>
+        <td id="school">学校：<span></span></td>
+        <td id="title">学历：<span></span></td>
         </tr>
         <tr class="itemName">
-        <td>E-mail：<span>12345678978</span></td>
-        <td>联系方式：<span>12345678978</span></td>
+        <td id="email">E-mail：<span></span></td>
+        <td id="phone">联系方式：<span></span></td>
         </tr>
         </table>
         <br/>
@@ -57,13 +56,17 @@
         <br/>
         <br/>
         <div class="button">
-        <button>修改</button>
+        <button onclick="window.location.href='/student/personInfo/alter'">修改</button>
         </div>
         </div>
-            </div>
-            
-           
+            </div>/student/personInfo/alter
             <div class="clear"></div>
         </div>
+    <!-- jquery.js-->
+    <script src ="/js/jquery-1.12.4.min.js"></script>
+    <!-- student.js -->
+    <script src ="/js/student/student_home.js"></script>
+    <!--jwt.js-->
+    <script src="/js/common/jwt.js"></script>
 </body>
 </html>

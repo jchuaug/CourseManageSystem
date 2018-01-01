@@ -243,7 +243,7 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     }
 
 
-    //todo delete method
+    /**todo delete method*/
     public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup) throws IllegalArgumentException {
         Seminar seminar = new Seminar();
         seminar.setId(seminarId);

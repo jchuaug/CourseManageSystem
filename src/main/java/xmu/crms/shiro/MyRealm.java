@@ -1,9 +1,6 @@
 package xmu.crms.shiro;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -70,13 +67,12 @@ public class MyRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
         System.out.println("doGetAuthenticationInfo进行登录认证");
         String token = (String) auth.getCredentials();
-        // 解密获得username，用于和数据库进行对比
+        // 解密获得phone，用于和数据库进行对比
         String phone = JWTUtil.getUserPhone(token);
         System.out.println("phone:" + phone);
         if (phone.isEmpty()) {
             throw new AuthenticationException("token invalid");
         }
-        System.out.println("test-----");
         User user = null;
         user = service.getUserByUserPhone(phone);
         System.out.println("user:" + user);
@@ -87,7 +83,8 @@ public class MyRealm extends AuthorizingRealm {
         if (!JWTUtil.verify(token, phone, user.getPassword())) {
             throw new AuthenticationException("Username or password error");
         }
-
-        return new SimpleAuthenticationInfo(token, token, "my_realm");
+        SimpleAccount account=new SimpleAccount(user,token,getName());
+//        return new SimpleAuthenticationInfo(token, token, "my_realm");
+        return account;
     }
 }

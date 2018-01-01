@@ -42,7 +42,7 @@ public class TimerServiceImpl implements TimerService {
      * @param paramList 方法参数
      * @throws JsonProcessingException 异常
      */
-    //todo change method to receive hashmap
+    /**todo change method to receive hashmap*/
     public void insertEvent(Date time, String beanName, String methodName, List<Object> paramList) throws JsonProcessingException {
         System.out.println(time.toString()+beanName+methodName+paramList.toString());
         timerServiceDao.insertEvent(time,beanName,methodName,paramList);

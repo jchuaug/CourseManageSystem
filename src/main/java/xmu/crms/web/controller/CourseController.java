@@ -116,7 +116,7 @@ public class CourseController {
 	}
 
 	@GetMapping("/{courseId}")
-	//@RequiresRoles("teacher")
+	@RequiresRoles("teacher")
 	public ResponseEntity<CourseResponseVO> getCourseByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestHeader HttpHeaders headers) {
 
