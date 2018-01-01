@@ -12,7 +12,8 @@
         <result property="serial" column="serial"/>
         <result property="groupNumberLimit" column="group_number_limit"/>
         <result property="groupStudentLimit" column="group_student_limit"/>
-        <association property="seminar" column="seminar_id" select="selectSeminarById"/>
+        <association property="seminar" column="seminar_id"
+                     select="selectSeminarById"/>
     </resultMap>
 
     <resultMap id="SeminarResult" type="Seminar">
@@ -36,14 +37,17 @@
         <result column="five_point_percentage" property="fivePointPercentage"/>
         <result column="four_point_percentage" property="fourPointPercentage"/>
         <result column="three_point_percentage" property="threePointPercentage"/>
-        <association column="teacher_id" property="teacher" select="selectUserByUserId"/>
+        <association column="teacher_id" property="teacher"
+                     select="selectUserByUserId"/>
     </resultMap>
 
     <resultMap id="seminarGroupTopicResult" type="SeminarGroupTopic">
         <id property="id" column="id"/>
         <result property="presentationGrade" column="presentation_grade"/>
-        <association property="topic" column="topic_id" javaType="Topic" select="getTopicById"/>
-        <association property="seminarGroup" column="seminar_group_id" select="getSeminarGroupById"/>
+        <association property="topic" column="topic_id" javaType="Topic"
+                     select="getTopicById"/>
+        <association property="seminarGroup" column="seminar_group_id"
+                     select="getSeminarGroupById"/>
     </resultMap>
 
     <resultMap type="User" id="UserResultMap">
@@ -60,7 +64,8 @@
         <result column="education" property="education"/>
         <result column="title" property="title"/>
         <result column="email" property="email"/>
-        <association column="school_id" property="school" select="selectSchoolBySchoolId"/>
+        <association column="school_id" property="school"
+                     select="selectSchoolBySchoolId"/>
     </resultMap>
 
     <select id="getSeminarGroupById" resultType="SeminarGroup">
@@ -87,7 +92,8 @@
             start_time,
             end_time
         FROM seminar
-        WHERE id = #{id}
+        WHERE id
+              = #{id}
     </select>
 
     <select id="selectCourse" resultMap="CourseResultMap">
@@ -145,22 +151,58 @@
     <update id="updateTopic" parameterType="Topic">
         UPDATE topic
         SET
-            name                = #{name},
+            name                =
+            #{name},
             description         = #{description},
-            group_number_limit  = #{groupNumberLimit},
+            group_number_limit  =
+            #{groupNumberLimit},
             serial              = #{serial},
-            group_student_limit = #{groupStudentLimit}
+            group_student_limit =
+            #{groupStudentLimit}
         WHERE id = #{id}
     </update>
 
 
     <insert id="insertWithSeminarId">
-        INSERT INTO topic ( serial, name, description, group_number_limit, group_student_limit, seminar_id)
+        INSERT INTO topic (
+        serial,
+        <if test="topic.name!= null">
+            name,
+        </if>
+        <if test="topic.description!= null">
+            description,
+        </if>
+        <if test="topic.groupNumberLimit != null">
+            group_number_limit,
+        </if>
+        <if test="topic.groupStudentLimit != null">
+            group_student_limit,
+        </if>
+        <if test="seminarId != null">
+            seminar_id
+        </if>
+        )
         VALUES
-        (#{topic.serial}, #{topic.name}, #{topic.description}, #{topic.groupNumberLimit}, #{topic.groupStudentLimit},
-        #{seminarId})
+        (#{topic.name},
+        <if test="topic.name != null">
+            #{topic.name},
+        </if>
+        <if test="topic.description!= null">
+            #{topic.description},
+        </if>
+        <if test="topic.groupNumberLimit != null">
+            #{topic.groupNumberLimit},
+        </if>
+        <if test="topic.groupStudentLimit != null">
+            #{topic.groupStudentLimit},
+        </if>
+        <if test="seminarId != null">
+            #{seminarId}
+        </if>
+        )
 
-        <selectKey resultType="java.math.BigInteger" keyProperty="topic.id" order="AFTER">
+        <selectKey resultType="java.math.BigInteger" keyProperty="topic.id"
+                   order="AFTER">
             SELECT last_insert_id()
         </selectKey>
     </insert>
@@ -188,7 +230,7 @@
     </select>
 
 
-    <!--seminar_group_topic table-->
+    <!--seminar_group_topic table -->
     <select id="getTopicInfoOfGroup" resultMap="seminarGroupTopicResult">
         SELECT
             id,
@@ -196,7 +238,8 @@
             seminar_group_id,
             presentation_grade
         FROM seminar_group_topic
-        WHERE topic_id = #{topicId} AND seminar_group_id = #{groupId}
+        WHERE
+            topic_id = #{topicId} AND seminar_group_id = #{groupId}
     </select>
 
     <select id="getChosenTopicByGroupId" resultMap="seminarGroupTopicResult">
@@ -221,17 +264,20 @@
 
     <delete id="deleteChosenTopicByGroupId">
         DELETE FROM seminar_group_topic
-        WHERE seminar_group_id = #{id}
+        WHERE seminar_group_id
+              = #{id}
     </delete>
 
     <delete id="deleteSeminarGroupTopic">
         DELETE FROM seminar_group_topic
-        WHERE topic_id = #{topicId} AND seminar_group_id = #{groupId}
+        WHERE topic_id =
+              #{topicId} AND seminar_group_id = #{groupId}
     </delete>
 
     <delete id="deleteAllSeminarGroupTopicsByTopicId">
         DELETE FROM seminar_group_topic
-        WHERE topic_id = #{topicId}
+        WHERE topic_id =
+              #{topicId}
     </delete>
 
     <delete id="deleteTopicsBySeminarId">
@@ -239,8 +285,9 @@
         WHERE seminar_id = #{id}
     </delete>
 
+
     <select id="getSelectedGroupCount" resultType="int">
-        SELECT COUNT(A.id)
+        SELECT COUNT(DISTINCT A.id)
         FROM seminar_group_topic A INNER JOIN seminar_group B
         WHERE A.seminar_group_id = B.id
               AND A.topic_id = #{topicId}

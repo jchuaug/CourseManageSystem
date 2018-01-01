@@ -9,6 +9,7 @@ function getCourseId() {
 
 function load() {
 	getCourse();
+	
 }
 function getCourse() {
 	var token = window.localStorage.getItem("jwt");
@@ -61,27 +62,21 @@ function submit() {
 	var name = $(" #seminar_name ").val();
 	var description = $(" #seminar_description ").val();
 	var groupingMethod = $("#groupingMethod option:selected").val();
+	if(groupingMethod=="随机分组"){
+		groupingMethod="random";
+	}else if(groupingMethod=="固定分组"){
+		groupingMethod="fixed";
+	}
 	var startTime = $(" #startTime ").val();
 	var endTime = $(" #endTime ").val();
-	var three = $(" #three ").val();
-	var four = $(" #four ").val();
-	var five = $(" #five ").val();
-	var report = $(" #report_weight ").val();
-	var presentation = $(" #present_weight").val();
+	
 
 	var data = {
 		"name" : name,
 		"description" : description,
-		"groupMethod" : groupingMethod,
+		"groupingMethod" : groupingMethod,
 		"startTime" : startTime,
-		"endTime" : endTime,
-		"proportions" : {
-			"c" : three,
-			"b" : four,
-			"a" : five,
-			"report" : report,
-			"presentation" : presentation
-		}
+		"endTime" : endTime
 	};
 	$.ajax({
 		url : "/course/" + courseId + "/seminar",

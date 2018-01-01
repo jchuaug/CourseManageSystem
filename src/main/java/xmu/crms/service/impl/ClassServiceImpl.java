@@ -10,6 +10,7 @@ import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Course;
 import xmu.crms.entity.CourseSelection;
 import xmu.crms.entity.Location;
+import xmu.crms.entity.Seminar;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
@@ -19,6 +20,7 @@ import xmu.crms.mapper.ClassInfoMapper;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.FixGroupService;
 import xmu.crms.service.SeminarGroupService;
+import xmu.crms.service.SeminarService;
 
 /**
  * 
@@ -33,6 +35,9 @@ public class ClassServiceImpl implements ClassService {
 
 	@Autowired
 	private SeminarGroupService seminarGroupService;
+	
+	@Autowired
+	private SeminarService seminarService;
 
 	@Autowired
 	private FixGroupService fixGroupService;
@@ -120,7 +125,8 @@ public class ClassServiceImpl implements ClassService {
 	@Override
 	public Location getCallStatusById(BigInteger classId, BigInteger seminarId) throws SeminarNotFoundException {
 		Location location = classInfoMapper.getCallStatusById(classId, seminarId);
-		if (location == null) {
+		Seminar seminar=seminarService.getSeminarBySeminarId(seminarId);
+		if (seminar == null) {
 			throw new SeminarNotFoundException();
 		}
 		return location;

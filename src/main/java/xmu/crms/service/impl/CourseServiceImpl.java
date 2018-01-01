@@ -41,10 +41,8 @@ public class CourseServiceImpl implements CourseService {
             if (userService.getUserByUserId(userId).getType() == 1) {
                 courseList = courseMapper.listCourseByTeacherId(userId);
             } else {
-                List<BigInteger> classIDs = courseMapper.listCourseIdByStudentId(userId);
-                for (int i = 0; i < classIDs.size(); i++) {
-                    courseList.add(courseMapper.getCourseByCourseId(classIDs.get(i)));
-                }
+
+               courseList = courseMapper.listCourseByStudentId(userId);
             }
             if (courseList == null) {
                 throw new CourseNotFoundException();

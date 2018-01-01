@@ -163,9 +163,9 @@
     <select id="getSeminarGroupIdBySeminarIdAndUserId" resultType="java.math.BigInteger">
         SELECT seminar_group_id
         FROM seminar_group_member
-        WHERE id=#{seminarId}
+        WHERE id=#{seminarId,jdbcType=BIGINT}
         <if test="userId != null">
-            AND student_id=#{userId}
+            AND student_id=#{userId,jdbcType=BIGINT}
         </if>
     </select>
     <!--BigInteger getSeminarGroupLeaderByGroupId(@Param("groupId") BigInteger groupId)-->
@@ -281,10 +281,4 @@
         DELETE FROM seminar_group_topic
         WHERE topic_id = #{topicId} AND seminar_group_id = #{groupId}
     </delete>
-
-    <select id="getSeminarGroupByIds" resultMap="SeminarGroup">
-        SELECT A.*
-        FROM seminar_group A, course_selection B
-        WHERE A.seminar_id = #{seminarId} AND B.class_id = a.class_id AND b.student_id = #{userId};
-    </select>
 </mapper>

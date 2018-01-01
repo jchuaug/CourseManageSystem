@@ -55,39 +55,50 @@ function load() {
 		},
 		success: function(data) {
 			/*
-			 * <tr>
-                    <td>A</td>
-                    <td>Bangalore</td>
-                    <td>xxx</td>
-                    <td>5</td>
-                    <td>已提交</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>
-                        <img src="/static/Img/view.png" alt="预览"/>
-                        <img src="/static/Img/download.png" alt="下载"/>
-                    </td>
-                </tr>
+			 * <tr> <td>A</td> <td>Bangalore</td> <td>xxx</td> <td>5</td>
+			 * <td>已提交</td> <td>5</td> <td>5</td> <td> <img
+			 * src="/static/Img/view.png" alt="预览"/> <img
+			 * src="/static/Img/download.png" alt="下载"/> </td> </tr>
 			 */
 			var groupList=document.getElementById("group_list");
 			for(var i = 0; i < data.length; i++) {
-				var group=document.createElement("tr");
+				$.ajax({
+					url: "/group/" + data[i].id,
+					dataType: "json",
+					type: "get",
+					contentType: "application/json;charset=utf-8",
+					dataType: "json",
+					headers : {
+						"Authorization" : token
+					},
+					success: function(data) {
+						
+						var group=document.createElement("tr");
+						
+						group.innerHTML=
+							"<td hidden='hidden'>"+data.id+"</td>"+
+							"<td>"+data.topics[0].name+"</td>"+
+							"<td>"+data.name+"</td>"+
+		                    "<td>"+data.leader.name+"</td>"+
+		                   /* "<td>"+data.grade.presentationGrade[0].grade+"</td>"+
+		                    "<td>已提交</td>"+
+		                   	"<td>"+data[i].grade.reportGrade+"</td>"+
+		                    "<td>"+data[i].grade.grade+"</td>"+*/
+		                    "<td>"+"</td>"+
+		                    "<td>已提交</td>"+
+		                   	"<td>"+"</td>"+
+		                    "<td>"+"</td>"+
+		                    "<td>"+
+		                        "<img onclick='toReport(this)' src='/Img/view.png' alt='预览'/>"+
+		                     	"<img src='/Img/download.png' alt='下载'/>"+
+		                    "</td>";
+		                   groupList.appendChild(group);
+					}
+
+				});
+					}
 				
-				group.innerHTML=
-					"<td hidden='hidden'>"+data[i].id+"</td>"+
-					"<td>"+data[i].topics[0].name+"</td>"+
-					"<td>"+data[i].name+"</td>"+
-                    "<td>"+data[i].leader.name+"</td>"+
-                    "<td>"+data[i].grade.presentationGrade[0].grade+"</td>"+
-                    "<td>已提交</td>"+
-                   	"<td>"+data[i].grade.reportGrade+"</td>"+
-                    "<td>"+data[i].grade.grade+"</td>"+
-                    "<td>"+
-                        "<img onclick='toReport(this)' src='/static/Img/view.png' alt='预览'/>"+
-                     	"<img src='/static/Img/download.png' alt='下载'/>"+
-                    "</td>";
-                   groupList.appendChild(group);
-			}
+			
 		}
 
 	});

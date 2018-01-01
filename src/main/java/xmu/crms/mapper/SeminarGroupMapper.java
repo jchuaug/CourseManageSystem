@@ -170,11 +170,4 @@ public interface SeminarGroupMapper {
 
     int deleteTopic(@Param("topicId") BigInteger topicId, @Param("groupId") BigInteger groupId);
 
-    /**
-     * get seminar group
-     * @param seminarId seminar id
-     * @param userId user id
-     * @return seminar group
-     */
-    SeminarGroup getSeminarGroupByIds(@Param("seminarId") BigInteger seminarId, @Param("userId") BigInteger userId);
 }

@@ -51,7 +51,7 @@ public class CourseController {
 	private final String STUDENT = "student";
 
 	@GetMapping("")
-	@RequiresRoles("student")
+	//@RequiresRoles("student")
 	public ResponseEntity<List<CourseResponseVO>> getAllCourse(@RequestHeader HttpHeaders headers) {
 		String token =headers.get("Authorization").get(0);
 		System.err.println(token);
@@ -103,6 +103,7 @@ public class CourseController {
 	}
 
 	@GetMapping("/{courseId}")
+	//@RequiresRoles("teacher")
 	public ResponseEntity<CourseResponseVO> getCourseByCourseId(@PathVariable("courseId") BigInteger courseId,
 			@RequestHeader HttpHeaders headers) {
 
@@ -286,6 +287,7 @@ public class CourseController {
 			}
 			Seminar forSeminar=new Seminar();
 			forSeminar.setCourse(course);
+			System.err.println(seminarResponseVO);
 			Seminar seminar = ModelUtils.SeminarResponseVOToSeminar(seminarResponseVO, forSeminar);
 			BigInteger id = seminarService.insertSeminarByCourseId(courseId, seminar);
 			seminarResponseVO2 = ModelUtils.SeminarInfoToSeminarResponseVO(seminar, null, null);

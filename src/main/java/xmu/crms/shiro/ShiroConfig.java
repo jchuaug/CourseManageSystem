@@ -10,9 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.ImportResource;
+import xmu.crms.shiro.MyRealm;
 
 @Configuration
-@ImportResource(locations = {"classpath:shiro-filter.xml"})
+@ImportResource(locations= {"classpath:shiro-filter.xml"})
 public class ShiroConfig {
 
     @Bean(name = "securityManager")
@@ -25,12 +26,12 @@ public class ShiroConfig {
     }
 
 
-    @Bean(name = "lifecycleBeanPostProcessor")
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
-    }
+	@Bean(name = "lifecycleBeanPostProcessor")
+	public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+		return new LifecycleBeanPostProcessor();
+	}
 
-
+  
     @Bean(name = "shiroRealm")
     @DependsOn("lifecycleBeanPostProcessor")
     public MyRealm shiroRealm() {

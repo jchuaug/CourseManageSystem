@@ -11,7 +11,7 @@ function getInfo(cb) {
             cache.set('userID', response.data.id);
 
             utils.requestWithId({
-                url: '/class',
+                url: '/course',
                 success: function (res) {
                     function cacheCourses() {
                         const courses = {};
