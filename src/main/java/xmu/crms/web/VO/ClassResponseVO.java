@@ -17,7 +17,6 @@ public class ClassResponseVO {
 
     private String courseTeacher;
 
-<<<<<<< HEAD
 	private Proportion proportions;
 
 
@@ -28,7 +27,6 @@ public class ClassResponseVO {
 	public void setProportions(Proportion proportions) {
 		this.proportions = proportions;
 	}
-=======
 
     public ClassResponseVO(BigInteger id, String name, Integer numStudent, String time, String site, String courseName,
                            String courseTeacher) {
@@ -41,7 +39,7 @@ public class ClassResponseVO {
         this.courseName = courseName;
         this.courseTeacher = courseTeacher;
     }
->>>>>>> d8358d507aff37e1855599efeefc0559cf8ef0c9
+
 
     public ClassResponseVO(BigInteger id, String name, String classTime) {
         this.id = id;

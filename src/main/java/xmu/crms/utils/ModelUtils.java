@@ -255,7 +255,7 @@ public class ModelUtils {
         return course;
     }
 
-<<<<<<< HEAD
+
 	public static SeminarGradeResponseVO SeminarGroupToSeminarGradeResponseVO(SeminarGroup seminarGroup) {
 		if (seminarGroup==null) {
 			return null;
@@ -269,7 +269,7 @@ public class ModelUtils {
 		seminarGradeResponseVO.setGrade(seminarGroup.getFinalGrade());
 		return seminarGradeResponseVO;
 	}
-=======
+
     public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo) {
         ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), classInfo.getClassTime());
         return classVO;
@@ -286,5 +286,5 @@ public class ModelUtils {
         responseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
         return responseVO;
     }
->>>>>>> d8358d507aff37e1855599efeefc0559cf8ef0c9
+
 }

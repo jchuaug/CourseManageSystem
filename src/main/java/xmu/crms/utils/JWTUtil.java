@@ -118,18 +118,12 @@ public class JWTUtil {
             Algorithm algorithm = Algorithm.HMAC256(user.getPassword());
             // 附带username信息
             return JWT.create()
-<<<<<<< HEAD
+
                    .withClaim("id", user.getId().longValue())
                    .withClaim("type", user.getType()==1?"teacher":"student")
                    .withClaim("name", user.getName())
                    .withClaim("phone", user.getPhone())
                    .withClaim("openid", user.getOpenid())
-=======
-                    .withClaim("id", user.getId().longValue())
-                    .withClaim("type", user.getType() == 1 ? "teacher" : "student")
-                    .withClaim("name", user.getName())
-                    .withClaim("phone", user.getPhone())
->>>>>>> 42b62faaca6383e5c2dc243d3af3fb89783b11ac
                     .withExpiresAt(date)
                     .sign(algorithm);
         } catch (UnsupportedEncodingException e) {
