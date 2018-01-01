@@ -15,6 +15,7 @@ function getInfo(cb) {
                 success: function (res) {
                     function cacheCourses() {
                         const courses = {};
+                        //todo restore
                         res.data.map(course => {
                             courses[course.id] = course;
                     });

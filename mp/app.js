@@ -23,7 +23,7 @@ App({
                             if (e.data.type === 'student') {
                                 targetUrl = "/pages/student/studentMain/studentMain";
                             } else {
-                                targetUrl = "/pages/teacher/classManage/classManage"
+                                targetUrl = "/pages/teacher/teacherMain/teacherMain"
                             }
 
                             wx.redirectTo({

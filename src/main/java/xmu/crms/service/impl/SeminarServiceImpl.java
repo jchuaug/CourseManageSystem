@@ -95,4 +95,9 @@ public class SeminarServiceImpl implements SeminarService {
         //todo
         return null;
     }
+
+    @Override
+    public List<Seminar> getCurrentSeminar() {
+        return seminarMapper.getCurrentSeminar();
+    }
 }

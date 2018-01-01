@@ -83,4 +83,6 @@ public interface SeminarMapper {
 	 * @return the course
 	 */
 	Course getCourseById(BigInteger courseId);
+
+	List<Seminar> getCurrentSeminar();
 }

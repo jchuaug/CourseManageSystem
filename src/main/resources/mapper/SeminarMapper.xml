@@ -227,4 +227,12 @@
         WHERE
             id = #{courseId}
     </select>
+
+
+    <select id="getCurrentSeminar" resultMap="SeminarMap">
+        SELECT *
+        FROM seminar
+        WHERE current_timestamp > start_time
+              AND end_time > current_timestamp
+    </select>
 </mapper>

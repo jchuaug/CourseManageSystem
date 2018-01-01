@@ -5,7 +5,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.entity.*;
+import xmu.crms.entity.ClassInfo;
+import xmu.crms.entity.Course;
+import xmu.crms.entity.Seminar;
+import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
@@ -17,7 +20,6 @@ import xmu.crms.web.VO.*;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -373,9 +375,11 @@ public class CourseController {
         return new ResponseEntity<SeminarResponseVO>(seminarResponseVO2, new HttpHeaders(), HttpStatus.CREATED);
 
     }
+
     @GetMapping("/{courseId}/seminar/current")
-    public String getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId){
-        return "hello";
+    public ResponseEntity getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
+        List<Seminar> seminars = seminarService.getCurrentSeminar();
+        return ResponseEntity.ok().body(seminars);
     }
 
 //    @GetMapping("/{courseId}/seminar/current")

@@ -12,9 +12,13 @@ function bindUser(args, cb) {
                     dataType: 'json',
                     data: {...args, 'code': res.code},
                     success(e) {
-                        console.log(e);
                         cache.set('user', e.data);  // it's a hack to keep track of current user
-                        cb(true);
+                        if (e.statusCode != '404') {
+                            cache.set('jwt',e.data.jwt);
+                            cb(true);
+                        } else {
+                            cb(false);
+                        }
                     },
                     complete(e) {
                         cb(false);

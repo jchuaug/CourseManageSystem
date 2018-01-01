@@ -103,7 +103,7 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        LoginResponseVO responseVO = new LoginResponseVO(204, "login success", user, JWTUtil.sign(user));
+        LoginResponseVO responseVO = new LoginResponseVO(200, "login success", user, JWTUtil.sign(user));
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
     }
 
@@ -124,13 +124,15 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(404).build();
         }
-        LoginResponseVO responseVO = new LoginResponseVO(204, "login success", user, JWTUtil.sign(user));
+        if (user == null) {
+            return ResponseEntity.status(404).build();
+        }
+        LoginResponseVO responseVO = new LoginResponseVO(200, "login success", user, JWTUtil.sign(user));
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
     }
 
     @GetMapping("/me")
     public ResponseEntity getMe(@RequestHeader HttpHeaders headers) {
-        Subject currentUser = SecurityUtils.getSubject();
         BigInteger userId = JWTUtil.getUserIdFromHeader(headers);
         User user = null;
         try {
