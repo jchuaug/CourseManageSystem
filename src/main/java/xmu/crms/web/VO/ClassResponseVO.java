@@ -17,8 +17,16 @@ public class ClassResponseVO {
 
 	private String courseTeacher;
 
-	
+	private Proportion proportions;
 
+
+	public Proportion getProportions() {
+		return proportions;
+	}
+
+	public void setProportions(Proportion proportions) {
+		this.proportions = proportions;
+	}
 
 	public ClassResponseVO(BigInteger id, String name, Integer numStudent, String time, String site, String courseName,
 			String courseTeacher) {
