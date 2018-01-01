@@ -128,5 +128,6 @@ public interface CourseService {
     List<ClassInfo> listClassByName(String courseName, String teacherName) throws
             UserNotFoundException, CourseNotFoundException;
 
+    List<ClassInfo> listClassByCourseId(BigInteger id);
 }
 

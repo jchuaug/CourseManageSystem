@@ -13,7 +13,7 @@ import java.util.List;
  * @date 2017/12/29
  */
 public class ModelUtils {
-    public static ClassResponseVO ClassInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
+    public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
         User teacher = classInfo.getCourse().getTeacher();
         Course course = classInfo.getCourse();
         ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), numStudent,
@@ -243,5 +243,22 @@ public class ModelUtils {
         course.setFourPointPercentage(proportions.getB());
         course.setThreePointPercentage(proportions.getC());
         return course;
+    }
+
+    public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo) {
+        ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), classInfo.getClassTime());
+        return classVO;
+    }
+
+    public static SeminarDetailResponseVO seminarInfoToSeminarDetailResponseVO(Seminar seminar) {
+        SeminarDetailResponseVO responseVO = new SeminarDetailResponseVO();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        responseVO.setEndTime(sdf.format(seminar.getEndTime()));
+        responseVO.setStartTime(sdf.format(seminar.getStartTime()));
+        responseVO.setId(seminar.getId());
+        responseVO.setName(seminar.getName());
+        responseVO.setCourse(seminar.getCourse().getName());
+        responseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
+        return responseVO;
     }
 }

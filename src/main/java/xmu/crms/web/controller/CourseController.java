@@ -3,10 +3,12 @@ package xmu.crms.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.entity.*;
+import xmu.crms.entity.ClassInfo;
+import xmu.crms.entity.Course;
+import xmu.crms.entity.Seminar;
+import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
@@ -237,7 +239,7 @@ public class CourseController {
         try {
             classInfos2 = classService.listClassByCourseId(courseId);
             for (ClassInfo classInfo : classInfos2) {
-                classInfos.add(ModelUtils.ClassInfoToClassResponseVO(classInfo, null));
+                classInfos.add(ModelUtils.classInfoToClassResponseVO(classInfo, null));
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -276,7 +278,7 @@ public class CourseController {
                 return new ResponseEntity<ClassResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
             }
             BigInteger id = classService.insertClassById(courseId, classInfo);
-            classResponseVO = ModelUtils.ClassInfoToClassResponseVO(classInfo, null);
+            classResponseVO = ModelUtils.classInfoToClassResponseVO(classInfo, null);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<ClassResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
         } catch (CourseNotFoundException e) {
@@ -375,16 +377,18 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}/seminar/current")
-    public ResponseEntity<List<SeminarResponseVO>> getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
+    public ResponseEntity getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
 
-        List<Seminar> seminars = seminarService.getCurrentSeminar();
-        List<SeminarResponseVO> seminarResponseVOList = new ArrayList<>();
-        for (int i=0;i<seminars.size();i++) {
-            Seminar seminar = seminars.get(i);
-            List<Topic> topicList = topicService.listTopicBySeminarId(seminar.getId());
-            seminarResponseVOList.add(ModelUtils.SeminarInfoToSeminarResponseVO(seminar, topicList, null));
-        }
-        return new ResponseEntity<List<SeminarResponseVO>>(seminarResponseVOList, new HttpHeaders(), HttpStatus.OK);
+        Seminar seminar = seminarService.getCurrentSeminar(courseId);
+        List<ClassInfo> classes = new ArrayList<>();
+        SeminarDetailResponseVO responseVO = ModelUtils.seminarInfoToSeminarDetailResponseVO(seminar);
+        responseVO.setClasses(new ArrayList<>());
+
+        classes = courseService.listClassByCourseId(seminar.getCourse().getId());
+
+        classes.stream().map(ModelUtils::classInfoToClassResponseVO).forEach(responseVO.getClasses()::add);
+
+        return ResponseEntity.ok(responseVO);
     }
 
 //    @GetMapping("/{courseId}/seminar/current")

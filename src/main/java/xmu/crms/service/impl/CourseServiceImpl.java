@@ -164,6 +164,11 @@ public class CourseServiceImpl implements CourseService {
         return classInfoList1;
     }
 
+    @Override
+    public List<ClassInfo> listClassByCourseId(BigInteger id) {
+        return courseMapper.getClassesByCourseId(id);
+    }
+
 //    这个函数标准组已经删除
 //    private List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, CourseNotFoundException, ClassNotFoundException {
 //        BigInteger courseId = this.listCourseByUserId(userId).get(0).getId();

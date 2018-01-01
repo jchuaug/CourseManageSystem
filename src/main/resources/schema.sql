@@ -511,7 +511,7 @@ INSERT INTO `seminar` (name, description, course_id, is_fixed, start_time, end_t
 VALUES ('讨论课1', '讨论课1说明', '1', '1', '2017-12-15', '2018-12-15');
 
 INSERT INTO `seminar` (name, description, course_id, is_fixed, start_time, end_time)
-VALUES ('讨论课1', '讨论课1说明', '2', '1', '2017-12-15', '2018-12-15');
+VALUES ('讨论课1', '讨论课1说明', '2', '0', '2017-12-15', '2018-12-15');
 
 INSERT INTO `seminar`
 VALUES ('2', '2017-12-15 22:27:02', '2018-12-15 22:27:02', '讨论课2', '讨论课2说明', '1', '1', '2017-12-15', '2017-12-23');

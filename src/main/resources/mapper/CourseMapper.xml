@@ -167,4 +167,23 @@
         WHERE name = #{name,jdbcType=VARCHAR}
     </select>
 
+    <select id="getClassesByCourseId" resultMap="ClassInfoResult">
+        SELECT
+            id,
+            gmt_create,
+            gmt_modified,
+            name,
+            course_id,
+            description,
+            site,
+            class_time,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM class_info
+        WHERE course_id = #{id}
+    </select>
+
 </mapper>
