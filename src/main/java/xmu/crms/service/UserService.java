@@ -207,8 +207,18 @@ public interface UserService {
     List<Course> listCourseByTeacherName(String teacherName) throws
             UserNotFoundException, IllegalArgumentException, CourseNotFoundException;
 
+    /**
+     * d
+     * @param phone
+     * @return d
+     */
     User getUserByUserPhone(String phone);
 
+    /**
+     * d
+     * @param code d
+     * @return d
+     */
     User getUserByWeChatCode(String code);
 
     /**
