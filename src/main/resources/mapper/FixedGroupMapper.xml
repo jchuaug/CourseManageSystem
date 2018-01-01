@@ -112,7 +112,7 @@
         fix_group.id,class_id,leader_id
         from fix_group_member, fix_group
         where
-        class_id=#{classId} and student_id=#{userId} limit 1
+        class_id=#{classId} and student_id=#{userId} and fix_group.id=fix_group_member.fix_group_id limit 1
     </select>
 
 

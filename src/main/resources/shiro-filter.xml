@@ -22,8 +22,8 @@
 				/templates/*/**=anon
 				/static/*/**=anon
 				/wechat/**=anon
-				/signin=anon<!-- 
-				/course/** =roles["student,teacher"] -->
+				/signin=anon
+				/**=anon
 				
 			</value>
 		</property>
