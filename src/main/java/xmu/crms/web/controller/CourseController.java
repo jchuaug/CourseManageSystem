@@ -3,12 +3,10 @@ package xmu.crms.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Course;
-import xmu.crms.entity.Seminar;
-import xmu.crms.entity.User;
+import xmu.crms.entity.*;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.GroupNotFoundException;
@@ -377,9 +375,16 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}/seminar/current")
-    public ResponseEntity getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
+    public ResponseEntity<List<SeminarResponseVO>> getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId) {
+
         List<Seminar> seminars = seminarService.getCurrentSeminar();
-        return ResponseEntity.ok().body(seminars);
+        List<SeminarResponseVO> seminarResponseVOList = new ArrayList<>();
+        for (int i=0;i<seminars.size();i++) {
+            Seminar seminar = seminars.get(i);
+            List<Topic> topicList = topicService.listTopicBySeminarId(seminar.getId());
+            seminarResponseVOList.add(ModelUtils.SeminarInfoToSeminarResponseVO(seminar, topicList, null));
+        }
+        return new ResponseEntity<List<SeminarResponseVO>>(seminarResponseVOList, new HttpHeaders(), HttpStatus.OK);
     }
 
 //    @GetMapping("/{courseId}/seminar/current")
