@@ -1,6 +1,6 @@
 <!--pages/teacher/classManage/classManage.wxml-->
 <view class='banner'>
-    <text class='course_title'>{{seminar.courseName}}</text>
+    <text class='course_title'>{{seminar.course}}</text>
     <text class='course_seminar'>{{seminar.name}}</text>
 </view>
 <view class='infobar'>

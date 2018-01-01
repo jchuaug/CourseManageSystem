@@ -99,8 +99,19 @@ const getCurrentSeminar = function (callback) {
     //  myrequest(url,callback)
 };
 
+const putLocation = function(data,callback){
+  utils.requestWithId({
+    // url: '/seminar/'+cache.get('currentSeminar').id+'/class/'+cache.get('currentClass').id+'/attendance/'+cache.get('userID'),
+    url: '/seminar/' + cache.get('currentSeminar').id + '/class/' + cache.get('currentClass').id + '/attendance/'+20170315,
+    method:'put',
+    data:data,
+    success:callback
+  })
+}
+
 export default {
     getClassByClassId,
     putCurClassCalling,
-    getCurrentSeminar
+    getCurrentSeminar,
+    putLocation
 }

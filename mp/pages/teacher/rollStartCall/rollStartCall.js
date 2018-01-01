@@ -1,5 +1,8 @@
 // pages/teacher/rollStartCall.js
 import api from '../../../utils/rollStartCallApi.js'
+import cache from "../../../utils/localCache";
+
+
 
 Page({
 
@@ -10,6 +13,10 @@ Page({
             status: "start",
             btnStatusText: "开始签到"
         },
+        locData:{
+          longtitude:null,
+          latitude:null
+        }
     },
 
     onLoad: function (options) {
@@ -50,6 +57,16 @@ Page({
 
     startCall: function () {
         const that = this;
+        wx.getLocation({
+          success: function(res) {
+            var loc= {}
+            loc.longtitude = res.longitude
+            loc.latitude = res.latitude
+            api.putLocation(loc,function(){
+              console.log("位置信息put成功")
+            })            
+          },
+        })
         api.putCurClassCalling({classID: this.data.classID, "calling": this.data.currentSeminar.id}, function (res) {
             that.setData({
                 call: {
