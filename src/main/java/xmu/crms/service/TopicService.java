@@ -139,4 +139,6 @@ public interface TopicService {
      * @return d
      */
     int getSelectedGroupCount(@Param("classId") BigInteger classId, @Param("topicId") BigInteger topicId);
+
+    int getSelectedGroupCountByUserId(@Param("topicId") BigInteger id, @Param("userId") BigInteger userId);
 }

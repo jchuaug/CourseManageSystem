@@ -129,6 +129,17 @@ public class UserController {
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
     }
 
+    @GetMapping(value = "/wechat/unbind")
+    public ResponseEntity unbindUser(@RequestHeader HttpHeaders headers) {
+        String token = headers.get("Authorization").get(0);
+        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+
+        userService.unBindWeChatUser(userId);
+        return ResponseEntity.ok().build();
+
+    }
+
+
     @GetMapping("/me")
     public ResponseEntity getMe(@RequestHeader HttpHeaders headers) {
         BigInteger userId = JWTUtil.getUserIdFromHeader(headers);

@@ -29,7 +29,7 @@
         </view>
         <view class="row">
             <span class="key">学校:</span>
-            <span class="value">{{user.school.name}}</span>
+            <span class="value">{{user.school}}</span>
         </view>
     </view>
     <button class="bt-unbind" type="warn" catchtap="unbind">解绑</button>

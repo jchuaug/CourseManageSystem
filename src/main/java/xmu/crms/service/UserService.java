@@ -227,4 +227,6 @@ public interface UserService {
      * @param user user
      */
     void bindWeChatUser(User user);
+
+    void unBindWeChatUser(BigInteger userId);
 }

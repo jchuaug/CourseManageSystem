@@ -10,14 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import xmu.crms.dao.TimerServiceDao;
 import xmu.crms.entity.Event;
-import xmu.crms.service.GradeService;
 import xmu.crms.service.TimerService;
 import xmu.crms.utils.SpringContextsUtil;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author YangYouran
@@ -36,16 +37,17 @@ public class TimerServiceImpl implements TimerService {
 
     /**
      * 向Event表插入数据
-     * @param time 事件的时间
-     * @param beanName 对象名
+     *
+     * @param time       事件的时间
+     * @param beanName   对象名
      * @param methodName 方法名
-     * @param paramList 方法参数
+     * @param paramList  方法参数
      * @throws JsonProcessingException 异常
      */
     /**todo change method to receive hashmap*/
     public void insertEvent(Date time, String beanName, String methodName, List<Object> paramList) throws JsonProcessingException {
-        System.out.println(time.toString()+beanName+methodName+paramList.toString());
-        timerServiceDao.insertEvent(time,beanName,methodName,paramList);
+        System.out.println(time.toString() + beanName + methodName + paramList.toString());
+        timerServiceDao.insertEvent(time, beanName, methodName, paramList);
     }
 
     @Override
@@ -55,6 +57,7 @@ public class TimerServiceImpl implements TimerService {
 
     /**
      * 更新Event表
+     *
      * @param eventId 事件的ID
      * @param newTime 需要修改的时间
      */
@@ -70,18 +73,18 @@ public class TimerServiceImpl implements TimerService {
      * 删除数据库中该记录
      */
     @Override
-    @Scheduled(fixedRate = 1000*60*10)
+    @Scheduled(fixedRate = 1000 * 60 * 10)
     public void scheduled() {
-        List<Event> eventList=timerServiceDao.selectEvent();
+        List<Event> eventList = timerServiceDao.selectEvent();
         System.out.println(eventList);
-        for (Event e:eventList) {
+        for (Event e : eventList) {
             ObjectMapper m = new ObjectMapper();
             m.enableDefaultTypingAsProperty(ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE, "type");
             try {
-                Object[] args= m.readValue(e.getParameter(), Object[].class);
-                Class[] argsClass=new Class[args.length];
+                Object[] args = m.readValue(e.getParameter(), Object[].class);
+                Class[] argsClass = new Class[args.length];
                 for (int i = 0; i < args.length; i++) {
-                    argsClass[i]=args[i].getClass();
+                    argsClass[i] = args[i].getClass();
                 }
                 Method method = ReflectionUtils.findMethod(springContextsUtil.getBean(e.getBeanName()).getClass(), e.getMethodName(), argsClass);
                 ReflectionUtils.invokeMethod(method, springContextsUtil.getBean(e.getBeanName()), args);

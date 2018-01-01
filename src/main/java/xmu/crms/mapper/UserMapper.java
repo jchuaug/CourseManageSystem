@@ -235,4 +235,6 @@ public interface UserMapper {
                                                          @Param("seminarId") BigInteger seminarId);
 
     void bindOpenIdWithUser(User user);
+
+    void deleteOpenId(BigInteger userId);
 }

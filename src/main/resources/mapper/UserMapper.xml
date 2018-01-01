@@ -82,7 +82,7 @@
         <result column="start_time" property="startTime"/>
         <result column="end_time" property="endTime"/>
         <association column="course_id" property="course"
-                     select="getCourseByCourseId"></association>
+                     select="getCourseByCourseId"/>
     </resultMap>
 
 
@@ -509,6 +509,9 @@
         SET openid = #{openid},
             name   = #{name}
         WHERE number = #{number}
+    </update>
+    <update id="deleteOpenId">
+
     </update>
 
 </mapper>

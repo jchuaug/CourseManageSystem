@@ -38,7 +38,7 @@ public interface GradeService {
     /**
      * 删除!.
      * semimarGroupService 中已存在该方法。
-     * 获取某学生所有的讨论课小组. List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId)
+     * 获取某学生所有的讨论课小组. List<SeminarGroup> listSeminarGroupByStudentId(BigInteger userId)
      */
     /**
      * 获取某学生所有讨论课的所有成绩
@@ -117,4 +117,5 @@ public interface GradeService {
     void countGroupGradeBySeminarId(BigInteger seminarId) throws IllegalArgumentException;
 
 
+    void insertGroupGradeByUserId(BigInteger studentId, BigInteger id, Integer score);
 }

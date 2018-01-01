@@ -16,7 +16,6 @@ App({
                         data: {"code": res.code},
                         success(e) {
                             console.log(e);
-                            cache.set('user', e.data);  // it's a hack to keep track of current user
                             cache.set('jwt', e.data.jwt);
 
                             let targetUrl = "";

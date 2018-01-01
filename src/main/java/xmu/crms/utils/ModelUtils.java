@@ -13,6 +13,7 @@ import java.util.List;
  * @date 2017/12/29
  */
 public class ModelUtils {
+
     public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
         User teacher = classInfo.getCourse().getTeacher();
         Course course = classInfo.getCourse();
@@ -42,6 +43,8 @@ public class ModelUtils {
         userResponseVO.setId(user.getId());
         userResponseVO.setName(user.getName());
         userResponseVO.setNumber(user.getNumber());
+        userResponseVO.setPhone(user.getPhone());
+        userResponseVO.setSchool(user.getSchool().getName());
         return userResponseVO;
     }
 
@@ -115,14 +118,14 @@ public class ModelUtils {
         seminar2.setName(seminar.getName());
         seminar2.setDescription(seminar.getDescription());
         Boolean fixed = null;
-        if (seminar.getGroupingMethod()!=null) {
-        	 if (seminar.getGroupingMethod().equals( "fixed")) {
-                 fixed = true;
-             } else if (seminar.getGroupingMethod().equals("random")) {
-                 fixed = false;
-             }
-		}
-       
+        if (seminar.getGroupingMethod() != null) {
+            if (seminar.getGroupingMethod().equals("fixed")) {
+                fixed = true;
+            } else if (seminar.getGroupingMethod().equals("random")) {
+                fixed = false;
+            }
+        }
+
         seminar2.setFixed(fixed);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String dstr = seminar.getStartTime();
@@ -208,11 +211,15 @@ public class ModelUtils {
         groupResponseVO.setMembers(members);
         groupResponseVO.setId(seminarGroup.getId());
         groupResponseVO.setName(seminarGroup.getId().toString());
-        List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
-        for (SeminarGroupTopic seminarGroupTopic : topics) {
-            topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
+
+        if (topics != null) {
+            List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
+            for (SeminarGroupTopic seminarGroupTopic : topics) {
+                topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
+            }
+            groupResponseVO.setTopics(topicResponseVOs);
         }
-        groupResponseVO.setTopics(topicResponseVOs);
+
         return groupResponseVO;
     }
 

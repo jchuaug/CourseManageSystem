@@ -15,7 +15,7 @@
                 <view class="topicName">{{item.name}}</view>
                 <view class="left-number">剩余 ： {{item.groupLeft}}/{{item.groupLimit}}</view>
             </view>
-            <view class="fa fa-arrows-alt fa-1x flex-center i-expand" bindtap="expand" id="{{item.id}}"/>
+            <view class="fa fa-arrows-alt fa-1x flex-center i-expand" catchtap="expand" id="{{item.id}}"/>
         </view>
         <view wx:if="{{opened[item.id]}}" class="detail">
             {{item.description}}

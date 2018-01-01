@@ -231,10 +231,11 @@
     </select>
 
     <!--ResultMap = SeminarGroupMemberResult-->
-    <select id="listSeminarGroupIdByStudentId" resultMap="SeminarGroupMember">
-        SELECT *
-        FROM seminar_group_member
-        WHERE student_id = #{studentId}
+    <select id="listSeminarGroupIdByStudentId" resultType="java.math.BigInteger">
+        SELECT DISTINCT A.id
+        FROM seminar_group A, seminar_group_member B
+        WHERE A.id = B.seminar_group_id
+              AND B.student_id = #{id}
     </select>
 
     <select id="listGroupIdByTopicId" resultType="java.math.BigInteger">
@@ -281,4 +282,18 @@
         DELETE FROM seminar_group_topic
         WHERE topic_id = #{topicId} AND seminar_group_id = #{groupId}
     </delete>
+
+    <select id="getOtherGroups" resultMap="SeminarGroup">
+        SELECT *
+        FROM seminar_group
+        WHERE seminar_id = (SELECT seminar_id
+                            FROM seminar_group
+                            WHERE id = #{id})
+              AND class_id = (SELECT class_id
+                              FROM seminar_group
+                              WHERE id = #{id})
+              AND id != #{id}
+
+
+    </select>
 </mapper>

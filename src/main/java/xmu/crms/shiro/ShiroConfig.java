@@ -12,7 +12,6 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.ImportResource;
 import xmu.crms.shiro.MyRealm;
 
-@Configuration
 @ImportResource(locations= {"classpath:shiro-filter.xml"})
 public class ShiroConfig {
 

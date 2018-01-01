@@ -177,4 +177,9 @@ public class TopicServiceImpl implements TopicService {
     public int getSelectedGroupCount(BigInteger classId, BigInteger topicId) {
         return topicMapper.getSelectedGroupCount(topicId, classId);
     }
+
+    @Override
+    public int getSelectedGroupCountByUserId(BigInteger topicId, BigInteger userId) {
+        return topicMapper.getSelectedGroupCountByUserId(topicId,userId);
+    }
 }

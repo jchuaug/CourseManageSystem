@@ -1,32 +1,21 @@
 package xmu.crms.web.controller;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.JstlUtils;
-
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Course;
-import xmu.crms.entity.Seminar;
-import xmu.crms.entity.SeminarGroup;
-import xmu.crms.entity.User;
-import xmu.crms.exception.ClassesNotFoundException;
-import xmu.crms.exception.CourseNotFoundException;
-import xmu.crms.exception.GroupNotFoundException;
-import xmu.crms.exception.SeminarNotFoundException;
-import xmu.crms.exception.UserNotFoundException;
+import xmu.crms.entity.*;
+import xmu.crms.exception.*;
 import xmu.crms.service.*;
 import xmu.crms.utils.JWTUtil;
 import xmu.crms.utils.ModelUtils;
 import xmu.crms.web.VO.*;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author yjj
@@ -375,7 +364,7 @@ public class CourseController {
 					}
 				} 
 			}else if (STUDENT.equals(type)) {
-				List<SeminarGroup> seminarGroups = seminarGroupService.listSeminarGroupIdByStudentId(userId);
+				List<SeminarGroup> seminarGroups = seminarGroupService.listSeminarGroupByStudentId(userId);
 				for (SeminarGroup seminarGroup : seminarGroups) {
 					seminarGradeResponseVOs.add(ModelUtils.SeminarGroupToSeminarGradeResponseVO(seminarGroup));
 				}

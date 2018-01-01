@@ -156,6 +156,12 @@ CREATE TABLE `course_selection` (
 -- Records of course_selection
 -- ----------------------------
 INSERT INTO `course_selection` VALUES ('1', '2017-12-15 22:23:55', '2017-12-15 22:33:55', '1', '90');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '3');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '4');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '5');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '6');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '7');
+INSERT INTO `course_selection` (class_id, student_id) VALUES ('1', '8');
 INSERT INTO `course_selection` VALUES ('2', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '1', '4');
 INSERT INTO `course_selection` VALUES ('3', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '1', '5');
 INSERT INTO `course_selection` VALUES ('4', '2017-12-15 22:23:55', '2017-12-15 22:23:55', '1', '6');
@@ -615,6 +621,18 @@ VALUES ('35', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NUL
 INSERT INTO `seminar_group`
 VALUES ('36', '2017-12-16 12:12:18', '2017-12-16 12:12:18', '3', NULL, NULL, NULL, '', '1', '27');
 
+INSERT INTO seminar_group
+(seminar_id, class_id)
+VALUES (4, 1);
+
+INSERT INTO seminar_group
+(seminar_id, class_id)
+VALUES (4, 1);
+
+INSERT INTO seminar_group
+(seminar_id, class_id)
+VALUES (4, 1);
+
 -- ----------------------------
 -- Table structure for seminar_group_member
 -- ----------------------------
@@ -805,6 +823,12 @@ INSERT INTO `seminar_group_member` VALUES ('168', '2017-12-16 12:12:45', '2017-1
 INSERT INTO `seminar_group_member` VALUES ('169', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '36', '29');
 INSERT INTO `seminar_group_member` VALUES ('170', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '36', '30');
 
+INSERT INTO `seminar_group_member` VALUES ('171', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '37', '3');
+
+INSERT INTO `seminar_group_member` VALUES ('172', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '37', '4');
+
+INSERT INTO `seminar_group_member` VALUES ('173', '2017-12-16 12:12:45', '2017-12-16 12:12:45', '37', '5');
+
 -- ----------------------------
 -- Table structure for seminar_group_topic
 -- ----------------------------
@@ -873,6 +897,12 @@ INSERT INTO `seminar_group_topic` VALUES ('45', '2017-12-16 12:13:03', '2017-12-
 INSERT INTO `seminar_group_topic` VALUES ('46', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '34', NULL);
 INSERT INTO `seminar_group_topic` VALUES ('47', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '35', NULL);
 INSERT INTO `seminar_group_topic` VALUES ('48', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '6', '36', NULL);
+
+INSERT INTO `seminar_group_topic` VALUES ('49', '2017-12-16 12:13:03', '2017-12-16 12:13:03', '1', '37', NULL);
+INSERT INTO `seminar_group_topic` (topic_id, seminar_group_id) VALUES ('7', '7');
+INSERT INTO `seminar_group_topic` (topic_id, seminar_group_id) VALUES ('7', '4');
+INSERT INTO `seminar_group_topic` (topic_id, seminar_group_id) VALUES ('7', '8');
+INSERT INTO `seminar_group_topic` (topic_id, seminar_group_id) VALUES ('7', '9');
 
 -- ----------------------------
 -- Table structure for student_score_group
@@ -1494,6 +1524,15 @@ INSERT INTO `topic` VALUES ('3', '2017-12-15 22:29:16', '2017-12-24 20:04:39', '
 INSERT INTO `topic` VALUES ('4', '2017-12-15 22:29:16', '2017-12-24 20:04:41', 'B', '话题4', '话题说明4', '6', '5', '2');
 INSERT INTO `topic` VALUES ('5', '2017-12-15 22:29:16', '2017-12-24 20:04:42', 'A', '话题5', '话题说明5', '3', '5', '3');
 INSERT INTO `topic` VALUES ('6', '2017-12-15 22:29:16', '2017-12-24 20:04:49', 'B', '话题6', '话题说明6', '3', '5', '3');
+
+INSERT INTO `topic` (serial, name, description, group_number_limit, group_student_limit, seminar_id)
+VALUES ('B', '话题4', '话题说明4', '6', '5', '4');
+
+INSERT INTO `topic` (serial, name, description, group_number_limit, group_student_limit, seminar_id)
+VALUES ('B', '话题5', '话题说明5', '6', '5', '4');
+
+INSERT INTO `topic` (serial, name, description, group_number_limit, group_student_limit, seminar_id)
+VALUES ('B', '话题6', '话题说明6', '6', '5', '4');
 
 -- ----------------------------
 -- Table structure for user_info

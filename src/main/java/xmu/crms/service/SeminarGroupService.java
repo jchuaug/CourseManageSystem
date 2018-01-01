@@ -64,7 +64,7 @@ public interface SeminarGroupService {
      * @throws IllegalArgumentException 信息不合法，id格式错误
      * @author qinlingyun
      */
-    List<SeminarGroup> listSeminarGroupIdByStudentId(BigInteger userId) throws
+    List<SeminarGroup> listSeminarGroupByStudentId(BigInteger userId) throws
             IllegalArgumentException;
 
 
@@ -302,4 +302,6 @@ public interface SeminarGroupService {
      * @param groupId d
      */
     void deleteTopic(BigInteger topicId, BigInteger groupId);
+
+    List<SeminarGroup> getOtherGroups(BigInteger groupId);
 }

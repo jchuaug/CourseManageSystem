@@ -1,18 +1,34 @@
+import utils from './utils';
+import cache from './localCache'
+
 function getPresentationGroups(cb) {
     //todo get seminar id and grouid from local cache
 //     GET /seminar/{seminarId}/group?gradeable={true}
 // 打分 PUT /group/{groupId}/grade/{studentId}
-    cb([{id: 0, name: 'A1', score: 0},
-        {id: 1, name: 'A2', score: 0},
-        {id: 2, name: 'A3', score: 0},
-        {id: 3, name: 'A4', score: 0},
-        {id: 4, name: 'A5', score: 0}]);
+
+    utils.requestWithId({
+        url: `/seminar/group/${cache.get('group').id}/others`,
+        success: function (res) {
+            cb(res.data);
+        }
+    });
+
 
 }
 
 function submitScore(groups, cb) {
-    //todo
-    cb(true);
+    utils.requestWithId({
+        url: `/group/${cache.get('group').id}/grade/presentation/${cache.get('userID')}`,
+        data: {'groups': groups},
+        method: 'put',
+        success: function (res) {
+            if (res.statusCode == '204') {
+                cb(true);
+            } else {
+                cb(false);
+            }
+        }
+    });
 }
 
 export default {getPresentationGroups, submitScore}

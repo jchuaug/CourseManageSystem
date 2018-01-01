@@ -100,10 +100,10 @@ public class GroupController {
     }
 
     @PutMapping(value = "/group/{groupID}/assign")
-    public ResponseEntity becomeLeader(@PathVariable Integer groupID, @RequestBody UserResponseVO user) {
+    public ResponseEntity becomeLeader(@PathVariable Integer groupID, @RequestBody UserRequestVO user) {
         BigInteger groupId = BigInteger.valueOf(groupID);
         try {
-            seminarGroupService.assignLeaderById(groupId, user.getId());
+            seminarGroupService.assignLeaderById(groupId, BigInteger.valueOf(user.getId()));
         } catch (GroupNotFoundException e) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } catch (UserNotFoundException e) {
@@ -201,11 +201,12 @@ public class GroupController {
         BigInteger groupId = BigInteger.valueOf(groupID);
         BigInteger studentId = BigInteger.valueOf(studentID);
 
-        grade.getPresentationGrades().forEach(score -> {
-            gradeService.insertGroupGradeByUserId(BigInteger.valueOf(score.getTopicId())
-                    , studentId, groupId, score.getGrade());
+        grade.getGroups().forEach(groupScore -> {
+            gradeService.insertGroupGradeByUserId(studentId, groupScore.getId(), groupScore.getScore());
         });
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+
 }
