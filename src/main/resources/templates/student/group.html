@@ -5,6 +5,7 @@
 		<meta charset="utf-8" />
 		<title></title>
 		<link rel="stylesheet" href="/css/content.css" />
+		<script src="/js/common/logout.js"></script>
 	</head>
 
 	<body>
@@ -16,9 +17,11 @@
             -->
 			<div class="top">
 				<h1>课堂管理系统
-					<a href=""><img src="/img/exit.png" />退出</a>
-					<a href="" ><img src="/img/help.png" />帮助</a>
-					<a href="" ><img src="/img/home.png" />首页 </a>
+					   <div class="icon">
+            <img src="/Img/home.png"><a href="/student/home">首页</a> <img
+                src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+                href="#" onclick="logout();">退出</a>
+        </div>
 				</h1>
 			</div>
 			<!--
@@ -51,7 +54,8 @@
 				<div class="content" id="seminar">
 
 					<div class="checkInfo" id="course_class">
-						<h2 class="title">讨论课 <a href=""><button class="main_box_right_btn">返回上一页</button></a></h2>
+						<h2 class="title">讨论课 </h2>
+						<div class="returnButton"><a onClick="back()">返回上一页</a></div>
 						<hr class="line" />
 						<div class="blockBody">
 							

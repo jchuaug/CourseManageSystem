@@ -1,101 +1,96 @@
 <!DOCTYPE html>
 <html>
 
-	<head lang="en">
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>班级信息</title>
-		<link rel="stylesheet" href="/css/teacher/content.css" />
-		<script src="/js/jquery-1.12.4.min.js"></script>
-		<script src="/js/teacher/class.js"></script>
-	</head>
+<head lang="en">
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>班级信息</title>
+<link rel="stylesheet" href="/css/teacher/content.css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/teacher/class.js"></script>
+<script src="/js/common/logout.js"></script>
+</head>
 
-	<body onload="load()">
-		<div class="top">
-			<div class="font">
-				课堂管理系统
-			</div>
-			<div class="icon">
-				<img src="/Img/home.png" />首页
-				<img src="/Img/help.png" />帮助
-				<img src="/Img/exit.png" />退出
-			</div>
-			<div class="clear"></div>
+<body onload="load()">
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/teacher/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
 		</div>
+		<div class="clear"></div>
+	</div>
 
-		<div class="body">
-			<div class="navigation">
-				<h2 id="course_name" class="courseName">面向对象分析与设计</h2>
-				<div class="line"></div>
-				<div class="courseIntroduction">
+	<div class="body">
+		<div class="navigation">
+			<h2 id="course_name" class="courseName">面向对象分析与设计</h2>
+			<div class="line"></div>
+			<div class="courseIntroduction">
 
-					<p id="course_description">
-
-					</p>
-				</div>
-
+				<p id="course_description"></p>
 			</div>
-			<div class="content">
-				<div class="block">
-					<div class="title">班级信息</div>
-					<div class="returnButton">返回上一页</div>
-					<div class="line"></div>
-					<div class="itemBody">
-						<div class="item">
-							<label class="itemName">班级名称：</label>
-							<label class="itemName" id="class_name">周三1-2节</label>
-						</div>
-						<div class="item">
-							<label class="itemName">上课地点：</label>
-							<label class="itemName" id="class_location">海韵212</label>
-						</div>
-						<div class="item">
-							<label class="itemName">上课时间：</label>
-							<label class="itemName" id="class_time">shijian </label>
 
-						</div>
-						<div class="item">
-							<label class="itemName">评分规则：</label>
-							<label class="itemName">讨论课分数占比</label>
-							<label class="itemName" id="present_weight">60%</label>
-							<label class="itemName">报告分数占比</label>
-							<label class="itemName" id="report_weight">40%</label>
+		</div>
+		<div class="content">
+			<div class="block">
+				<div class="title">班级信息</div>
+				<div class="returnButton"><a onClick="back()">返回上一页</a></div>
+				<div class="line"></div>
+				<div class="itemBody">
+					<div class="item">
+						<label class="itemName">班级名称：</label> <label class="itemName"
+							id="class_name">周三1-2节</label>
+					</div>
+					<div class="item">
+						<label class="itemName">上课地点：</label> <label class="itemName"
+							id="class_location">海韵212</label>
+					</div>
+					<div class="item">
+						<label class="itemName">上课时间：</label> <label class="itemName"
+							id="class_time">shijian </label>
 
-						</div>
-						<div class="item" style="margin-left: 25%">
-							<label class="smallItemName">5分占比</label>
-							<label class="itemName" id="five">30%</label>
-							<label class="smallItemName">4分占比</label>
-							<label class="itemName" id="four">40%</label>
-							<label class="smallItemName">3分占比</label>
-							<label class="itemName" id="three">30%</label>
-						</div>
-						<div class="item">
-							<label class="itemName">学生名单*:</label>
-							<a class="" download="" id="roster">下载名单</a>
-						</div>
-						<div class="item">
-							<button class="submit" onclick="updateClass()">修改</button>
-							<button class="reset" onclick="deleteClass()">删除班级</button>
-							<div class="clear"></div>
-						</div>
-						<div class="item">
-							<div class="clear"></div>
-						</div>
+					</div>
+					<div class="item">
+						<label class="itemName">评分规则：</label> <label class="itemName">讨论课分数占比</label>
+						<label class="itemName" id="present_weight">60%</label> <label
+							class="itemName">报告分数占比</label> <label class="itemName"
+							id="report_weight">40%</label>
+
+					</div>
+					<div class="item" style="margin-left: 25%">
+						<label class="smallItemName">5分占比</label> <label class="itemName"
+							id="five">30%</label> <label class="smallItemName">4分占比</label> <label
+							class="itemName" id="four">40%</label> <label
+							class="smallItemName">3分占比</label> <label class="itemName"
+							id="three">30%</label>
+					</div>
+					<div class="item">
+						<label class="itemName">学生名单*:</label> <a class="" download=""
+							id="roster">下载名单</a>
+					</div>
+					<div class="item">
+						<button class="submit" onclick="updateClass()">修改</button>
+						<button class="reset" onclick="deleteClass()">删除班级</button>
+						<div class="clear"></div>
+					</div>
+					<div class="item">
+						<div class="clear"></div>
 					</div>
 				</div>
-
 			</div>
 
-			<!--
+		</div>
+
+		<!--
             	作者：Mr_Jackey@aliyun.com
             	时间：2017-11-22
             	描述：底部栏
             -->
-			<div class="clear">
-			</div>
-		</div>
-	</body>
+		<div class="clear"></div>
+	</div>
+</body>
 
 </html>

@@ -1,69 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8"/>
-    <title>查看话题</title>
-    <link rel="stylesheet" href="/css/common/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/teacher/content.css"/>
-    <script src="/js/jquery-1.12.4.min.js"></script>
-    <script src="/js/teacher/topic.js"></script>
-  
+<meta charset="UTF-8" />
+<title>查看话题</title>
+<link rel="stylesheet" href="/css/common/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/teacher/content.css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/teacher/topic.js"></script>
+<script src="/js/common/logout.js"></script>
 </head>
 <body onload="load()">
-    
-        <div class="top">
-          <div class="font">
-            课堂管理系统
-          </div>
-          <div class="icon">
-            <img src="/Img/home.png"/>首页
-            <img src="/Img/help.png"/>帮助
-            <img src="/Img/exit.png"/>退出
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="body">
-            <div class="navigation">
-                <div class="courseName" id="course_name">OOAD</div>
-                <div class="line"></div>
-                <div class="courseIntroduction" id="course_description">ooad is xxx</div>
-            </div>
-            <div class="content">
-                <div class="block">
-                    <div class="title">查看话题</div>
-                    <div class="returnButton">返回上一页</div>
-                    <div class="line"></div>
-                    <div class="itemBody">
-                        <div class="item">
-                          <label class="itemName">题   目 :</label>
-                          <label class="itemName" id="topic_name"></label>
-                        </div>
-                        <div class="item" style="height:40%;">
-                          <label class="itemName">说   明 :</label>
-                           <label class="itemName" id="topic_description"></label>
-                        </div>
-                        <div class="item">
-                          <label class="itemName">组数限制: </label>
-                           <label class="itemName" id="group_limit"></label>
-                        </div>
-                        <div class="item">
-                          <label class="itemName">组内人数上限: </label>
-                          <label class="itemName" id="members_limit"></label>
-                     
-                        </div>
-                        <div class="item">
-                          <label class="itemName">已选小组: </label>
-                        	
-                        </div>
-                        <div class="item">
-                          <button class="submit" onclick="updateTopic()">修 改</button>
-                          <button class="reset" onclick="deleteTopic()">删除话题</button>
-                          <div class="clear"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
+
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/teacher/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="body">
+		<div class="navigation">
+			<div class="courseName" id="course_name">OOAD</div>
+			<div class="line"></div>
+			<div class="courseIntroduction" id="course_description">ooad is
+				xxx</div>
+		</div>
+		<div class="content">
+			<div class="block">
+				<div class="title">查看话题</div>
+				<div class="returnButton"><a onClick="back()">返回上一页</a></div>
+				<div class="line"></div>
+				<div class="itemBody">
+					<div class="item">
+						<label class="itemName">题 目 :</label> <label class="itemName"
+							id="topic_name"></label>
+					</div>
+					<div class="item" style="height: 40%;">
+						<label class="itemName">说 明 :</label> <label class="itemName"
+							id="topic_description"></label>
+					</div>
+					<div class="item">
+						<label class="itemName">组数限制: </label> <label class="itemName"
+							id="group_limit"></label>
+					</div>
+					<div class="item">
+						<label class="itemName">组内人数上限: </label> <label class="itemName"
+							id="members_limit"></label>
+
+					</div>
+					<div class="item">
+						<label class="itemName">已选小组: </label>
+
+					</div>
+					<div class="item">
+						<button class="submit" onclick="updateTopic()">修 改</button>
+						<button class="reset" onclick="deleteTopic()">删除话题</button>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
 </body>
 </html>

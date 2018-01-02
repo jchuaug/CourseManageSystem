@@ -58,16 +58,9 @@ public class SchoolController {
 
     @GetMapping(value = "/city")
     @ResponseBody
-    public ResponseEntity getCity(@RequestBody SchoolRequestVO req) {
+    public ResponseEntity getCity(@PathParam("province") String province) {
         List<String> citys;
-        citys = schoolService.listCity(req.getProvince());
-//        String city = "[\n" +
-//                "  \"北京\",\n" +
-//                "  \"天津\",\n" +
-//                "  \"河北省\",\n" +
-//                "  \"……\",\n" +
-//                "  \"澳门特别行政区\"\n" +
-//                "]";
+        citys = schoolService.listCity(province);
         return ResponseEntity.status(200).contentType(MediaType.APPLICATION_JSON_UTF8).body(citys);
     }
 }

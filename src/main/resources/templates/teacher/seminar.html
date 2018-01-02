@@ -1,74 +1,71 @@
 <!DOCTYPE html>
 <html>
 
-	<head lang="en">
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>学生查看讨论课（随机）</title>
-		<link href="/css/teacher/content.css" rel="stylesheet" type="text/css" />
-		<script src="/js/jquery-1.12.4.min.js"></script>
-		<script src="/js/teacher/seminar.js"></script>
-	</head>
+<head lang="en">
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>学生查看讨论课（随机）</title>
+<link href="/css/teacher/content.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/teacher/seminar.js"></script>
+<script src="/js/common/logout.js"></script>
+</head>
 
-	<body onload="load()">
+<body onload="load()">
 
-		<div class="top">
-			<div class="font">
-				课堂管理系统
-			</div>
-			<div class="icon">
-				<img src="/Img/home.png" />首页
-				<img src="/Img/help.png" />帮助
-				<img src="/Img/exit.png" />退出
-			</div>
-			<div class="clear"></div>
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/teacher/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
 		</div>
-		<div class="body">
-			<div class="navigation">
-				<div class="courseName" id="course_name">OOAD</div>
+		<div class="clear"></div>
+	</div>
+	<div class="body">
+		<div class="navigation">
+			<div class="courseName" id="course_name">OOAD</div>
+			<div class="line"></div>
+			<div class="courseIntroduction" id="course_description">ooad is
+				xxx</div>
+		</div>
+		<div class="content">
+			<div class="block">
+				<div class="title">讨论课</div>
+				<div class="returnButton"><a onClick="back()">返回上一页</a></div>
 				<div class="line"></div>
-				<div class="courseIntroduction" id="course_description">ooad is xxx</div>
+				<div class="itemBody">
+
+					<div class="item">
+						<label class="itemName">讨论课名称：</label> <label class="itemName"
+							id="seminar_name">讨论课1</label><br /> <label class="itemName">讨论课说明：</label>
+						<label class="itemName" id="seminar_description">第一章练习</label><br />
+						<label class="itemName">分组方式：</label> <label class="itemName"
+							id="groupingMethod">随机分组</label><br /> <label class="itemName">开始时间：</label>
+						<label class="itemName" id="startTime">2017</label><br /> <label
+							class="itemName">结束时间：</label> <label class="itemName"
+							id="endTime">2017</label><br />
+						<button class="leftButton" onclick="grade()">评分</button>
+						<button class="middleButton" onclick="updateSeminar()">修改</button>
+						<button class="rightButton" onclick="deleteSeminar()">删除讨论课</button>
+					</div>
+
+				</div>
 			</div>
-			<div class="content">
-				<div class="block">
-					<div class="title">讨论课</div>
-					<div class="returnButton">返回上一页</div>
+			<div class="block">
+
+				<div class="seminarInfo">
+					<div class="title">话题</div>
 					<div class="line"></div>
-					<div class="itemBody">
+					<div class="topicBlockBody" id="topic_list"></div>
 
-						<div class="item">
-							<label class="itemName">讨论课名称：</label>
-							<label class="itemName" id="seminar_name">讨论课1</label><br/>
-							<label class="itemName">讨论课说明：</label>
-							<label class="itemName" id="seminar_description">第一章练习</label><br/>
-							<label class="itemName">分组方式：</label>
-							<label class="itemName" id="groupingMethod">随机分组</label><br/>
-							<label class="itemName">开始时间：</label>
-							<label class="itemName" id="startTime">2017</label><br/>
-							<label class="itemName">结束时间：</label>
-							<label class="itemName" id="endTime">2017</label><br/>
-							<button class="leftButton" onclick="grade()">评分</button>
-							<button class="middleButton" onclick="updateSeminar()">修改</button>
-							<button class="rightButton" onclick="deleteSeminar()">删除讨论课</button>
-						</div>
-
-					</div>
-				</div>
-				<div class="block">
-
-					<div class="seminarInfo">
-						<div class="title">话题</div>
-						<div class="line"></div>
-						<div class="topicBlockBody" id="topic_list">
-						
-						</div>
-
-					</div>
 				</div>
 			</div>
-			<div class="clear"></div>
 		</div>
-	</body>
+		<div class="clear"></div>
+	</div>
+</body>
 
 </html>

@@ -9,8 +9,35 @@ public class UserResponseVO {
     private Integer type;
     private String phone;
     private String school;
+    private String email;
+    private String gender;
+    private String title;
 
-    public UserResponseVO() {
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public UserResponseVO() {
 
     }
 

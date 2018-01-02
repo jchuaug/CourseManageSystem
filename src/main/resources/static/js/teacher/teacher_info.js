@@ -36,7 +36,7 @@ function teainfo() {
 				$("#name").html('姓名：' + '<span>' + data.name + '</span>');
 				$("#gender").html('性别：' + '<span>' + data.gender + '</span>');
 				$("#school").html(
-						'学校：' + '<span>' + data.school.name + '</span>');
+						'学校：' + '<span>' + data.school + '</span>');
 				$("#title").html('职称：' + '<span>' + data.title + '</span>');
 				$("#email").html('邮箱：' + '<span>' + data.email + '</span>');
 				$("#phone").html('联系方式：' + '<span>' + data.phone + '</span>');

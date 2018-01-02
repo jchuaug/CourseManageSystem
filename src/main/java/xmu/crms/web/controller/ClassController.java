@@ -58,7 +58,9 @@ public class ClassController {
         List<ClassInfo> classInfos = null;
         try {
             classInfos = classService.listClassByUserId(userId);
+  
             for (ClassInfo classInfo : classInfos) {
+       
                 Integer numStudent = userService.listUserByClassId(classInfo.getId(), "", "").size();
                 classVOs.add(ModelUtils.classInfoToClassResponseVO(classInfo, numStudent));
             }

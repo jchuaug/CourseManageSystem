@@ -1,83 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8"/>
-	<meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>学生查看讨论课（随机）</title>
-    <link href="/css/student/content.css" rel="stylesheet" type="text/css"/>
-    <script src="/js/jquery-1.12.4.min.js"></script>
-    <script src="/js/student/seminar_random_group.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>学生查看讨论课（随机）</title>
+<link href="/css/student/content.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/student/seminar_random_group.js"></script>
+<script src="/js/common/logout.js"></script>
 </head>
 <body onload="load()">
-    
-        <div class="top">
-          <div class="font">
-            课堂管理系统
-          </div>
-          <div class="icon">
-            <img src="/Img/home.png"/>首页
-            <img src="/Img/help.png"/>帮助
-            <img src="/Img/exit.png"/>退出
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="body">
-            <div class="navigation">
-                <div class="courseName" id="course_name">OOAD</div>
-                <div class="line"></div>
-                <div class="courseIntroduction" id="course_description">ooad is xxx</div>
-            </div>
-            <div class="content">
-                <div class="block">
-                    <div class="title" id="seminar_name">讨论课1</div>
-                    <div class="returnButton">返回上一页</div>
-                    <div class="line"></div>
-                    <div class="itemBody">
-                        <div class="item">
-                          <label class="itemName" id="seminar_description">本节讨论课的主要内容针对第一二章</label>
-						  <div class="line"></div>
-                        </div>
-                        <div class="item">
-                          <label class="itemName">分组方式：</label>
-						  <label class="itemName" id="groupingMethod">固定分组</label><br/>
-                          <label class="itemName">开始时间：</label>
-						  <label class="itemName" id="startTime">11/10/2017</label><br/>
-						  <label class="itemName">结束时间：</label>
-						  <label class="itemName" id="endTime">11/10/2017</label>
-						  <div class="item"></div>
-						  <div class="line"></div>
-						</div>
-						<div class="item"></div>
-						<div class="item" id="group">
-                          <label class="itemName">选择话题：</label>
-						  <label class="itemName" id="topic_name">A</label><br/>
-                          <label class="itemName">组号：</label>
-						  <label class="itemName" id="group_name">1-A-1</label><br/>
-                          <label class="itemName">组长：</label>
-						  <label class="itemName" id="leader">XXX</label><br/>
-                          <label class="itemName" id="members">组员：</label>
-                        
-                        </div>
-					</div>
-                </div>
-				 <div class="block">
-                    <div class="title">话题</div>
-                    <div class="line"></div>
-					<div class="blockBody" id="topic_list">
-                        
-					</div>
-                    <div class="item">
-                        <button class="uploadbutton" onclick="uploadReport()">上传报告</button>
-				    </div>
+
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/student/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="body">
+		<div class="navigation">
+			<div class="courseName" id="course_name">OOAD</div>
+			<div class="line"></div>
+			<div class="courseIntroduction" id="course_description">ooad is
+				xxx</div>
+		</div>
+		<div class="content">
+			<div class="block">
+				<div class="title" id="seminar_name">讨论课1</div>
+				<div class="returnButton"><a onClick="back()">返回上一页</a></div>
+				<div class="line"></div>
+				<div class="itemBody">
 					<div class="item">
-                        <button class="viewscorebutton" onclick="tpGrade()">查看分数</button>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="clear"></div>
-        </div>
+						<label class="itemName" id="seminar_description">本节讨论课的主要内容针对第一二章</label>
+						<div class="line"></div>
+					</div>
+					<div class="item">
+						<label class="itemName">分组方式：</label> <label class="itemName"
+							id="groupingMethod">固定分组</label><br /> <label class="itemName">开始时间：</label>
+						<label class="itemName" id="startTime">11/10/2017</label><br /> <label
+							class="itemName">结束时间：</label> <label class="itemName"
+							id="endTime">11/10/2017</label>
+						<div class="item"></div>
+						<div class="line"></div>
+					</div>
+					<div class="item"></div>
+					<div class="item" id="group">
+						<label class="itemName">选择话题：</label> <label class="itemName"
+							id="topic_name">A</label><br /> <label class="itemName">组号：</label>
+						<label class="itemName" id="group_name">1-A-1</label><br /> <label
+							class="itemName">组长：</label> <label class="itemName" id="leader">XXX</label><br />
+						<label class="itemName" id="members">组员：</label>
+
+					</div>
+				</div>
+			</div>
+			<div class="block">
+				<div class="title">话题</div>
+				<div class="line"></div>
+				<div class="blockBody" id="topic_list"></div>
+				<div class="item">
+					<button class="uploadbutton" onclick="uploadReport()">上传报告</button>
+				</div>
+				<div class="item">
+					<button class="viewscorebutton" onclick="tpGrade()">查看分数</button>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
 </body>
 </html>
