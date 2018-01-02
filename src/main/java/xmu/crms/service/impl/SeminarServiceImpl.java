@@ -2,16 +2,16 @@ package xmu.crms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xmu.crms.entity.ClassInfo;
-import xmu.crms.entity.Course;
-import xmu.crms.entity.Seminar;
+import xmu.crms.entity.*;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.mapper.SeminarMapper;
 import xmu.crms.service.FixGroupService;
 import xmu.crms.service.SeminarService;
+import xmu.crms.service.TopicService;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +28,9 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Autowired
     FixGroupService fixGroupService;
+
+    @Autowired
+    TopicService topicService;
 
     @Override
     public List<Seminar> listSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
@@ -111,5 +114,28 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Override
     public void RandomGrouping(BigInteger seminarId, BigInteger classId) {
+        List<User> users = seminarMapper.getAllAttendanceStudent(seminarId, classId);
+        List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
+        List<List<User>> groups = new ArrayList<>();
+        List<Topic> topicSelect = new ArrayList<>();
+        int topicIndex = 0;
+
+        List<User> group = null;
+        for (int i = 0; i != users.size(); ++i) {
+            if (i % 3 == 0) {
+                group = new ArrayList<>();
+                groups.add(group);
+                topicSelect.add(topics.get(topicIndex % topics.size()));
+            }
+
+            assert group != null;
+            group.add(users.get(i));
+        }
+
+        groups.forEach(oneGroup -> {
+            SeminarGroup seminarGroup = new SeminarGroup();
+            seminarGroup.setClassInfo(new ClassInfo((classId)));
+
+        });
     }
 }
