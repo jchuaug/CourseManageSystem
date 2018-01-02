@@ -1,69 +1,69 @@
 ﻿<!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="UTF-8">
-    <title>教师基本信息</title>
-    <link href="/css/common/HomePage.css" rel="stylesheet" type="text/css"/>
-    <script src ="/js/jquery-1.12.4.min.js"></script>
-    <script src ="/js/teacher_page.js"></script>
-    <script src="/js/common/jwt.js" ></script>
+<meta charset="UTF-8">
+<title>教师基本信息</title>
+<link href="/css/common/HomePage.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/teacher/teacher_info.js"></script>
+<script src="/js/common/jwt.js"></script>
 </head>
 <body onload="return teainfo();">
-    	<div class="top">
-        	<div class="font">
-        		课堂管理系统
-        	</div>
-        	<div class="icon">
-        		<img src="/Img/home.png"><a href="/teacher/home">首页</a>
-                <img src="/Img/help.png"><a>帮助</a>
-                <img src="/Img/exit.png"><a href="#" onclick="logout();">退出</a>
-        	</div>
-        	<div class="clear"></div>
-    	</div>
-        <div class="body">
-            <div class="navigation">
-                <div class="title">导航</div>
-                <div class="line"></div>
-               <div class="courseIntroduction">
-                  <a class="guidefont" href="#" onclick="window.location.href='/teacher/personInfo'">基本信息</a>
-                  <a class="guidefont" href="#"  onclick="window.location.href='/teacher/courses'">课程信息</a>
-                  <a class="guidefont" href="#" onclick="window.location.href='/teacher/courses/create'">新建课程</a>
-                </div>
-            </div>
-            <div class="content">
-               <div class="title">基本信息</div>
-               <div class="line"></div>
-                <div class="imgarea"><img class="img" src="/Img/link.jpg"/></div>
-                 <div class="info">
-        <table class="table">
-        <tr class="itemName">
-        <td id="username"></td>
-        <td id="teaNum"></td>
-        </tr>
-        <tr class="itemName">
-        <td id="name"></td>
-        <td id="gender"></td>
-        </tr>
-        <tr class="itemName">
-        <td id="school"></td>
-        <td id="title"></td>
-        </tr>
-        <tr class="itemName">
-        <td id="email"></td>
-        <td id="phone"></td>
-        </tr>
-        </table>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <div class="button">
-        <button onclick="window.location.href='/teacher/personInfo/alter'">修改</button>
-        </div>
-        </div>
-            </div>
-            <div class="clear"></div>
-        </div>
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/teacher/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="body">
+		<div class="navigation">
+			<div class="title">导航</div>
+			<div class="line"></div>
+			<div class="courseIntroduction">
+				<a class="guidefont" href="#"
+					onclick="window.location.href='/teacher/personInfo'">基本信息</a> <a
+					class="guidefont" href="#"
+					onclick="window.location.href='/teacher/courses'">课程信息</a> <a
+					class="guidefont" href="#"
+					onclick="window.location.href='/teacher/courses/create'">新建课程</a>
+			</div>
+		</div>
+		<div class="content">
+			<div class="title">基本信息</div>
+			<div class="line"></div>
+			<div class="imgarea">
+				<img class="img" src="/Img/link.jpg" />
+			</div>
+			<div class="info">
+				<table class="table">
+					<tr class="itemName">
+						<td id="username"></td>
+						<td id="teaNum"></td>
+					</tr>
+					<tr class="itemName">
+						<td id="name"></td>
+						<td id="gender"></td>
+					</tr>
+					<tr class="itemName">
+						<td id="school"></td>
+						<td id="title"></td>
+					</tr>
+					<tr class="itemName">
+						<td id="email"></td>
+						<td id="phone"></td>
+					</tr>
+				</table>
+				<br /> <br /> <br /> <br />
+				<div class="button">
+					<button onclick="window.location.href='/teacher/personInfo/alter'">修改</button>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
 
 </body>
 </html>

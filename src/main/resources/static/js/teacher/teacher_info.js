@@ -1,55 +1,77 @@
+function updateCookie(name, value) {
+	document.cookie = name + '=' + value;
+}
+
+function getCookie(name) {
+	var arr = document.cookie
+			.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+	if (arr != null)
+		return unescape(arr[2]);
+	return null;
+};
+
+function logout() {
+	if (localStorage.jwt) {
+		localStorage.removeItem("jwt");
+		window.location.href = '/';
+	} else {
+		window.location.href = '/';
+	}
+}
+
 function teainfo() {
 	$.ajax({
-		type: 'get',
-		url: '/me',
-		dataType: "json",
-		contentType: "application/json;",
-		success: function(data, textStatus, xhr) {
+		type : 'get',
+		url : '/me',
+		dataType : "json",
+		contentType : "application/json;",
+		success : function(data, textStatus, xhr) {
 			// console.log(xhr.status);
-			if(xhr.status == 200) {
+			if (xhr.status == 200) {
 				var Gender;
 				var Title;
-				updateCookie('username', data.id); //store username in cookie
+				updateCookie('username', data.id); // store username in cookie
 				$("#username").html('用户名：' + '<span>' + data.id + '</span>');
 				$("#teaNum").html('教工号：' + '<span>' + data.number + '</span>');
 				$("#name").html('姓名：' + '<span>' + data.name + '</span>');
 				$("#gender").html('性别：' + '<span>' + data.gender + '</span>');
-				$("#school").html('学校：' + '<span>' + data.school.name + '</span>');
+				$("#school").html(
+						'学校：' + '<span>' + data.school.name + '</span>');
 				$("#title").html('职称：' + '<span>' + data.title + '</span>');
 				$("#email").html('邮箱：' + '<span>' + data.email + '</span>');
 				$("#phone").html('联系方式：' + '<span>' + data.phone + '</span>');
 			}
 		},
-		statusCode: {
-			401: function() {
+		statusCode : {
+			401 : function() {
 				alert("未登录!");
-				window.location.href = "/login";
+				window.location.href = "/";
 			},
-			403: function() {
+			403 : function() {
 				alert("未登录!");
-				window.location.href = "/login";
+				window.location.href = "/";
 			}
 		}
 	});
 }
 
 function logout() {
-	if(localStorage.jwt) {
+	if (localStorage.jwt) {
 		localStorage.removeItem("jwt");
-		window.location.href = '/login';
+		window.location.href = '/';
 	} else {
-		window.location.href = '/login';
+		window.location.href = '/';
 	}
 }
 
-function getteainfo() { //get techer information
+function getteainfo() { // get techer information
 	$.ajax({
-		type: 'get',
-		url: '/me',
-		dataType: "json",
-		contentType: "application/json;",
-		success: function(data, textStatus, xhr) {
-			if(xhr.status == 200) {
+		type : 'get',
+		url : '/me',
+		dataType : "json",
+		contentType : "application/json;",
+		success : function(data, textStatus, xhr) {
+			if (xhr.status == 200) {
 				$("#username").html(data.id);
 				$("#teaNum").html(data.number);
 				$("input[name='name']").val(data.name);
@@ -62,14 +84,14 @@ function getteainfo() { //get techer information
 				$("#phone").html(data.phone);
 			}
 		},
-		statusCode: {
-			401: function() {
+		statusCode : {
+			401 : function() {
 				alert("未登录!");
-				window.location.href = "/login";
+				window.location.href = "/";
 			},
-			403: function() {
+			403 : function() {
 				alert("未登录!");
-				window.location.href = "/login";
+				window.location.href = "/";
 			}
 		}
 	});
@@ -77,29 +99,29 @@ function getteainfo() { //get techer information
 
 function teainfomod() {
 	var ata = {
-		name: $("#name").val(),
-		number: $("#idnum").val(),
-		email: $("#eMail").val(),
-		gender: $("#gender").val(),
-		title: $("#title").val(),
-		avatar: "/avatar/3486.png",
-		// school:$("#school").val(),
-		// phone:$("#phone").val()
+		name : $("#name").val(),
+		number : $("#idnum").val(),
+		email : $("#eMail").val(),
+		gender : $("#gender").val(),
+		title : $("#title").val(),
+		avatar : "/avatar/3486.png",
+	// school:$("#school").val(),
+	// phone:$("#phone").val()
 	}
 	$.ajax({
-		type: 'put',
-		url: '/me',
-		dataType: "json",
-		contentType: "application/json;",
-		data: JSON.stringify(ata),
-		success: function(data, textStatus, xhr) {
-			if(xhr.status == 204) {
+		type : 'put',
+		url : '/me',
+		dataType : "json",
+		contentType : "application/json;",
+		data : JSON.stringify(ata),
+		success : function(data, textStatus, xhr) {
+			if (xhr.status == 204) {
 				alert("修改成功!");
 				window.location.href = '/teacher/home';
 			}
 		},
-		statusCode: {
-			400: function() {
+		statusCode : {
+			400 : function() {
 				alert("信息不合法");
 			}
 		}
