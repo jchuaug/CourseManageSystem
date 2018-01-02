@@ -27,18 +27,12 @@ function registerload() {
 }
 
 function find_city() {
-	var province=$("#pro").find("option:selected").text();
-	alert(province);
-	var ata = {
-		province : $("#pro").find("option:selected").text()
-
-	}
+	// var province=$("#pro").find("option:selected").text();
+	// alert(province);
 	$.ajax({
 		type : "get",
-		url : "/school/city",
-		dataType : "json",
-		contentType : "application/json;",
-		data : JSON.stringify(ata),
+		url : "/school/city?province="
+				+ $("#pro").find("option:selected").text(),
 		success : function(data) {
 			var content = document.getElementById("city");
 			var str = "";
@@ -53,7 +47,7 @@ function find_city() {
 function find_school() {
 	$.ajax({
 		type : "get",
-		url : "/school/city?" + $("#city").find("option:selected").text(),
+		url : "/school?city=" + $("#city").find("option:selected").text(),
 		success : function(data) {
 			var content = document.getElementById("school");
 			var str = "";
@@ -70,22 +64,21 @@ function submitregister() {
 		phone : $("#phone").val(),
 		password : $("#password").val(),
 		name : $("#name").val(),
-		school : $("#school").val(),
-		gender : $('.male > input:radio:checked').val(),
+		gender : ($('.male > input:radio:checked').val() == '男') ? 1 : 0,
 		type : ($('.student > input:radio:checked').val() == "学生") ? 0 : 1,
 		number : $("#number").val(),
 		email : $("#eMail").val()
 	}
 	$.ajax({
 		type : 'post',
-		url : '/auth/register',
+		url : '/register',
 		dataType : "json",
 		data : JSON.stringify(ata),
 		contentType : "application/json",
 		success : function(data, textStatus, xhr) {
 			if (xhr.status == 200) {
-				alert("注册成功");
-				window.location.href = "/login";
+				alert("注册成功,立即登录");
+				window.location.href = "/";
 			}
 		},
 		statusCode : {

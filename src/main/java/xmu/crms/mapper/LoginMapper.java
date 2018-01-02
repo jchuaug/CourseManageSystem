@@ -3,6 +3,7 @@ package xmu.crms.mapper;
 import java.math.BigInteger;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
@@ -27,10 +28,15 @@ public interface LoginMapper {
 	 * 手机号注册.
 	 * <p>
 	 * 手机号注册 (.Net使用),User中只有phone和password，userId是注册后才有并且在数据库自增<br>
+	 * @param email 
+	 * @param number 
+	 * @param type 
+	 * @param gender 
+	 * @param name 
 	 * 
 	 * @return user 该用户Id
 	 */
-	Integer signUpPhone(String phone, String password);
+	Integer signUpPhone(@Param("user")User user);
 
 	/**
 	 * 用户解绑.
