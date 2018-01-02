@@ -26,6 +26,7 @@ import java.util.List;
 @RequestMapping("/course")
 public class CourseController {
 
+
 	@Autowired
 	private SeminarService seminarService;
 
@@ -319,30 +320,36 @@ public class CourseController {
 	}
 
 	@GetMapping("/{courseId}/seminar/current")
-	public ResponseEntity<MySeminarResponseVO> getCurrentSeminarByCourseId(
-			@PathVariable("courseId") BigInteger courseId, @RequestHeader HttpHeaders headers) {
+  public ResponseEntity getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId,
+                                                      @RequestHeader HttpHeaders headers) {
+        String token = headers.get("Authorization").get(0);
+        String type = JWTUtil.getUserType(token);
+        SeminarDetailResponseVO response = null;
+        try {
+            Seminar seminar = seminarService.getCurrentSeminar(courseId);
+            response = ModelUtils.SeminarToSeminarDetailResponseVO(seminar);
+            if (response == null) {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).build();
+        }
 
-		MySeminarResponseVO mySeminarResponseVO = null;
-		try {
-			List<Seminar> seminars = seminarService.listSeminarByCourseId(courseId);
-			for (Seminar seminar : seminars) {
-				Date now = new Date();
-				if (now.before(seminar.getEndTime()) && now.after(seminar.getStartTime())) {
-					mySeminarResponseVO = ModelUtils.SeminarToMySeminarResponseVO(seminar, null, null);
-				}
-			}
-			if (mySeminarResponseVO == null) {
-				return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-			}
-		} catch (IllegalArgumentException e) {
-			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
-		} catch (CourseNotFoundException e) {
-			e.printStackTrace();
-			return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<MySeminarResponseVO>(mySeminarResponseVO, new HttpHeaders(), HttpStatus.OK);
+        if (type.equals(TEACHER)) {
+            response.setClasses(new ArrayList<>());
 
-	}
+            try {
+                List<ClassInfo> classes = classService.listClassByCourseId(courseId);
+                for (ClassInfo classInfo : classes) {
+                    response.getClasses().add(ModelUtils.classInfoToClassResponseVO(classInfo));
+                }
+            } catch (CourseNotFoundException e) {
+            }
+
+
+        }
+        return ResponseEntity.ok().body(response);
+    }
 
 	@GetMapping("/{courseId}/grade")
 	public ResponseEntity<List<SeminarGradeResponseVO>> getGradeByCourseId(

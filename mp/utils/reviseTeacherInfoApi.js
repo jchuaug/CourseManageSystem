@@ -1,15 +1,21 @@
+import cache from './localCache'
+import utils from './utils'
+
 function aboutMe(cb) {
     //todo you know what to do
-    cb({
-        "id": 2222,
-        "number": "2432015220XXXX",
-        "name": "XXX",
-        "phone": "xxxxxx",
-        "email": "xxxxx@xx.com",
-        "gender": "男",
-        "school": "厦门大学",
-        "avatar": "/avatar/3486.png"
-    });
+    cb(cache.get('me'));
 }
 
-export default {aboutMe};
+function unbind(cb) {
+    utils.requestWithId({
+        url: `/wechat/unbind`,
+        success: function () {
+            cb(true)
+        },
+        fail: function () {
+            cb(false)
+        }
+    })
+}
+
+export default {aboutMe, unbind};

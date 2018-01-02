@@ -32,7 +32,9 @@
 		<div class="content">
 			<div class="block">
 				<div class="title" id="seminar_name">讨论课1</div>
-				<div class="returnButton"><a onClick="back()">返回上一页</a></div>
+				<div class="returnButton">
+					<a onClick="back()">返回上一页</a>
+				</div>
 				<div class="line"></div>
 				<div class="itemBody">
 					<div class="item">
@@ -63,9 +65,18 @@
 				<div class="title">话题</div>
 				<div class="line"></div>
 				<div class="blockBody" id="topic_list"></div>
-				<div class="item">
-					<button class="uploadbutton" onclick="uploadReport()">上传报告</button>
+				<div>
+					<form method="POST" enctype="multipart/form-data"
+						action="/upload/avatar">
+						<p>
+							文件：<input type="file" name="file" />
+						</p>
+						<p>
+							<button>上传报告</button>
+						</p>
+					</form>
 				</div>
+
 				<div class="item">
 					<button class="viewscorebutton" onclick="tpGrade()">查看分数</button>
 					<div class="clear"></div>

@@ -9,7 +9,7 @@ function aboutMe(cb) {
 
 function unbind(cb) {
     utils.requestWithId({
-        url: ``,
+        url: `/wechat/unbind`,
         success: cb
     })
 

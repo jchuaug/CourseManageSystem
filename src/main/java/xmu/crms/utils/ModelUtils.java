@@ -185,6 +185,7 @@ public class ModelUtils {
         seminarDetailResponseVO.setEndTime(time);
         seminarDetailResponseVO.setTeacherName(teacher.getName());
         seminarDetailResponseVO.setTeacherEmail(teacher.getEmail());
+        seminarDetailResponseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
         return seminarDetailResponseVO;
     }
 
@@ -304,4 +305,11 @@ public class ModelUtils {
         return responseVO;
     }
 
+    public static LocationResponseVO locationToResponseVO(Location location) {
+        LocationResponseVO responseVO = new LocationResponseVO();
+        responseVO.setLatitude(String.valueOf(location.getLatitude()));
+        responseVO.setLongitude(String.valueOf(location.getLongitude()));
+        responseVO.setStatus(location.getStatus());
+        return responseVO;
+    }
 }

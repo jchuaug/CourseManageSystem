@@ -511,7 +511,9 @@
         WHERE number = #{number}
     </update>
     <update id="deleteOpenId">
-
+        UPDATE user_info
+        SET openid = NULL
+        WHERE id = #{id}
     </update>
 
 </mapper>

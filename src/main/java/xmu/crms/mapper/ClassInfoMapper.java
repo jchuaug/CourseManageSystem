@@ -107,7 +107,7 @@ public interface ClassInfoMapper {
 	 * @param location 地点信息
 	 * @return 插入条数
 	 */
-	int insetLocation(Location location);
+	int insertLocation(Location location);
 
 	/**
 	 * 根据学生id查询所选所有班级，返回班级信息列表

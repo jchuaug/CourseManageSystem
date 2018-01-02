@@ -440,27 +440,41 @@ public class SeminarController {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
-        if (TEACHER.equals(typeString)) {
-        } else if (STUDENT.equals(typeString)) {
-        }
+
         if (!userId.equals(studentId)) {
             return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
         }
         AttendanceResponseVO attendanceResponseVO = new AttendanceResponseVO();
 
-        try {
-            userService.insertAttendanceById(classId, seminarId, userId, attendance.getLongitude(),
-                    attendance.getLatitude());
+        assert typeString != null;
+        if (typeString.equals(STUDENT)) {
+            try {
+                userService.insertAttendanceById(classId, seminarId, userId, attendance.getLongitude(),
+                        attendance.getLatitude());
 
-        } catch (UserNotFoundException | ClassesNotFoundException | SeminarNotFoundException e) {
-            e.printStackTrace();
-            return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            return new ResponseEntity<AttendanceResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            } catch (UserNotFoundException | ClassesNotFoundException | SeminarNotFoundException e) {
+                e.printStackTrace();
+                return ResponseEntity.notFound().build();
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                return ResponseEntity.status(400).build();
+            }
+        } else {
+            Location location = new Location();
+            location.setSeminar(new Seminar(seminarId));
+            location.setLatitude(attendance.getLatitude());
+            location.setLongitude(attendance.getLongitude());
+            //todo status code wrong?
+            location.setStatus(0);
+            location.setClassInfo(new ClassInfo(classId));
+            try {
+                classService.callInRollById(location);
+            } catch (SeminarNotFoundException | ClassesNotFoundException e) {
+                return ResponseEntity.notFound().build();
+            }
         }
 
-        return new ResponseEntity<AttendanceResponseVO>(attendanceResponseVO, new HttpHeaders(), HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/group/{groupId}/others")
@@ -473,5 +487,30 @@ public class SeminarController {
         });
 
         return ResponseEntity.ok().body(responseVOS);
+    }
+
+    /**
+     * status: 0 calling, 1 finished, -1 waiting
+     *
+     * @param seminarId seminarId
+     * @param classId   class id
+     * @return location vo
+     */
+    @GetMapping(value = "/{seminarId}/class/{classId}/location")
+    public ResponseEntity getClassLocation(@PathVariable Integer seminarId, @PathVariable Integer classId) {
+        Location location = null;
+        try {
+            location = classService.getCallStatusById(BigInteger.valueOf(classId), BigInteger.valueOf(seminarId));
+        } catch (SeminarNotFoundException e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
+        }
+
+        if (location == null) {
+            location = new Location();
+            location.setStatus(-1);
+        }
+
+        return ResponseEntity.ok().body(ModelUtils.locationToResponseVO(location));
     }
 }

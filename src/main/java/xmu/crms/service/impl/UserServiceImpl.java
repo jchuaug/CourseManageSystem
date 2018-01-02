@@ -348,7 +348,7 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException    未找到对应用户
      * @author LiuAiqi
      */
-    Integer thirty = 30;
+    Integer positionShift = 30;
     @Override
     public BigInteger insertAttendanceById(BigInteger classId, BigInteger seminarId, BigInteger userId,
                                            double longitude, double latitude)
@@ -364,8 +364,8 @@ public class UserServiceImpl implements UserService {
             Location location = userMapper.getLocationBySeminarIdAndClassId(seminarId, classId);
             System.out.println(location);
             Integer status = 2;
-            if (Math.abs(location.getLatitude() - latitude) > thirty
-                    || Math.abs(location.getLongitude() - longitude) > thirty) {
+            if (Math.abs(location.getLatitude() - latitude) > positionShift
+                    || Math.abs(location.getLongitude() - longitude) > positionShift) {
                 throw new InvalidOperationException("UserService:illegal location");
             }
             status = 0;

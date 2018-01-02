@@ -352,7 +352,7 @@
             seminar_id = #{seminarId}
         LIMIT 1
     </select>
-    <insert id="insetLocation" useGeneratedKeys="true" keyProperty="id"
+    <insert id="insertLocation" useGeneratedKeys="true" keyProperty="id"
             parameterType="xmu.crms.entity.Location">
         INSERT INTO
             location
