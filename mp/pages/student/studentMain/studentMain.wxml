@@ -6,7 +6,7 @@
         <image class="img1" src="../../../images/figureAvatar.png"
                bindtap="goRevise"/>
         <view class="FONT4" style="position:absolute; z-index:2; top:10px">姓名：{{me.name}}</view>
-        <view class="FONT4" style="position:absolute; z-index:2; top:40px">学号：{{me.id}}</view>
+        <view class="FONT4" style="position:absolute; z-index:2; top:40px">学号：{{me.number}}</view>
     </view>
 
     <scroll-view scroll-y style="height:880rpx">

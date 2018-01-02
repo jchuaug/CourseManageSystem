@@ -216,9 +216,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     }
 
     @Override
-    public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, BigInteger classId, SeminarGroup seminarGroup) throws IllegalArgumentException {
-        // todo implement
-        return null;
+    public BigInteger insertSeminarGroup(SeminarGroup seminarGroup) throws IllegalArgumentException {
+        seminarGroupMapper.insertSeminarGroupBySeminarId(seminarGroup);
+        return seminarGroup.getId();
     }
 
     @Override
@@ -253,7 +253,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     }
 
 
-    /**todo delete method*/
+    /**
+     * todo delete method
+     */
     public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup) throws IllegalArgumentException {
         Seminar seminar = new Seminar();
         seminar.setId(seminarId);

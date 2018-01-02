@@ -8,6 +8,7 @@ import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
 import xmu.crms.mapper.SeminarMapper;
 import xmu.crms.service.FixGroupService;
+import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.SeminarService;
 import xmu.crms.service.TopicService;
 
@@ -26,6 +27,9 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Autowired
     SeminarMapper seminarMapper;
+
+    @Autowired
+    SeminarGroupService seminarGroupService;
 
     @Autowired
     FixGroupService fixGroupService;
@@ -115,7 +119,7 @@ public class SeminarServiceImpl implements SeminarService {
     }
 
     @Override
-    public void RandomGrouping(BigInteger seminarId, BigInteger classId) {
+    public void randomGrouping(BigInteger seminarId, BigInteger classId) {
         List<User> users = seminarMapper.getAllAttendanceStudent(seminarId, classId);
         List<Topic> topics = topicService.listTopicBySeminarId(seminarId);
         List<List<User>> groups = new ArrayList<>();
@@ -128,6 +132,7 @@ public class SeminarServiceImpl implements SeminarService {
                 group = new ArrayList<>();
                 groups.add(group);
                 topicSelect.add(topics.get(topicIndex % topics.size()));
+                topicIndex += 1;
             }
 
             assert group != null;
@@ -137,7 +142,8 @@ public class SeminarServiceImpl implements SeminarService {
         groups.forEach(oneGroup -> {
             SeminarGroup seminarGroup = new SeminarGroup();
             seminarGroup.setClassInfo(new ClassInfo((classId)));
-
+            seminarGroup.setSeminar(new Seminar(seminarId));
+            BigInteger insertedId = seminarGroupService.insertSeminarGroup(seminarGroup);
         });
     }
 }
