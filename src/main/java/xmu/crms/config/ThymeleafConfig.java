@@ -14,11 +14,15 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-
-@Configuration
 /**
- * @author: NoOne
+ * 
+* <p>Title: ThymeleafConfig.java<／p>
+* <p>Description: <／p>
+* <p>Copyright: Copyright (c) 2018<／p>
+ * @author Jackey
+ * @date 2018年1月3日
  */
+@Configuration
 public class ThymeleafConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
   private ApplicationContext applicationContext;

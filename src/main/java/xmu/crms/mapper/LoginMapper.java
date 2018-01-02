@@ -9,7 +9,14 @@ import xmu.crms.entity.User;
 import xmu.crms.exception.UserNotFoundException;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.CourseService;
-
+/**
+ * 
+* <p>Title: LoginMapper.java<／p>
+* <p>Description: <／p>
+* <p>Copyright: Copyright (c) 2018<／p>
+ * @author Jackey
+ * @date 2018年1月3日
+ */
 @Mapper
 public interface LoginMapper {
 

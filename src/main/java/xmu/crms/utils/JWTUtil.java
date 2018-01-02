@@ -11,7 +11,14 @@ import xmu.crms.entity.User;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Date;
-
+/**
+ * 
+* <p>Title: JWTUtil.java<／p>
+* <p>Description: <／p>
+* <p>Copyright: Copyright (c) 2018<／p>
+ * @author Jackey
+ * @date 2018年1月3日
+ */
 public class JWTUtil {
 
     // 过期时间5分钟
