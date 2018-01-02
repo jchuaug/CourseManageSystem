@@ -237,8 +237,11 @@
               AND course_id = #{id}
     </select>
 
-    <select id="getAllAttendanceStudent" resultMap="TeacherResult">
-        SELECT * FROM cms.attendance
+    <resultMap id="attendanceUserMapper" type="User">
+        <id column="student_id" property="id"/>
+    </resultMap>
+    <select id="getAllAttendanceStudent" resultMap="attendanceUserMapper">
+        SELECT * FROM attendance
         WHERE seminar_id = #{seminarId}
         AND class_id = #{classId}
     </select>

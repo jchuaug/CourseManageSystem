@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import xmu.crms.entity.*;
-import xmu.crms.exception.CourseNotFoundException;
-import xmu.crms.exception.SeminarNotFoundException;
+import xmu.crms.exception.*;
 import xmu.crms.mapper.SeminarMapper;
 import xmu.crms.service.FixGroupService;
 import xmu.crms.service.SeminarGroupService;
@@ -144,6 +143,20 @@ public class SeminarServiceImpl implements SeminarService {
             seminarGroup.setClassInfo(new ClassInfo((classId)));
             seminarGroup.setSeminar(new Seminar(seminarId));
             BigInteger insertedId = seminarGroupService.insertSeminarGroup(seminarGroup);
+
+            for (User user : oneGroup) {
+                try {
+                    seminarGroupService.insertSeminarGroupMemberById(user.getId(), insertedId);
+                } catch (GroupNotFoundException | UserNotFoundException | InvalidOperationException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            try {
+                seminarGroupService.insertTopicByGroupId(insertedId, topics.get(groups.indexOf(oneGroup)).getId());
+            } catch (GroupNotFoundException | TopicNotFoundException e) {
+                e.printStackTrace();
+            }
         });
     }
 }

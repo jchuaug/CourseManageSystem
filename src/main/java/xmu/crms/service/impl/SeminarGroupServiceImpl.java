@@ -54,7 +54,7 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     public SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId) throws IllegalArgumentException, GroupNotFoundException {
         BigInteger groupId = null;
 
-        List<SeminarGroup> groups = listSeminarGroupByStudentId(seminarId);
+        List<SeminarGroup> groups = listSeminarGroupByStudentId(userId);
 
         for (SeminarGroup group : groups) {
             if (Objects.equals(group.getSeminar().getId(), seminarId)) {

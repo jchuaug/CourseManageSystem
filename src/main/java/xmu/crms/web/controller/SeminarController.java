@@ -465,8 +465,8 @@ public class SeminarController {
             //todo status code wrong?
 
             if (attendance.getStatus() == 2) {
-                classService.endRollCall(seminarId, classId);
                 seminarService.randomGrouping(seminarId,classId);
+                classService.endRollCall(seminarId, classId);
                 return ResponseEntity.ok().build();
             }
             location.setStatus(attendance.getStatus());
