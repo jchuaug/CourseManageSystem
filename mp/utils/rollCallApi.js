@@ -14,7 +14,7 @@ function callInRoll(cb) {
   
   console.log(cache.get("classId"));
      utils.requestWithId({
-       url:'/class/'+cache.get("classId")+'/attendance/'+cache.get("userID"),
+       url: '/seminar/' + cache.get("currentSeminarId")+'/class/'+cache.get("classId")+'/attendance/'+cache.get("userID"),
        method:'put',
        data:{
          seminarId: cache.get("currentSeminarId"),
