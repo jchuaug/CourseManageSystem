@@ -11,9 +11,37 @@ public class GroupResponseVO {
     private List<UserResponseVO> members;
     private List<TopicResponseVO> topics;
     private String report;
+    
+    private Integer presentationGrade;
+    private Integer reportGrade;
+    private Integer grade;
 
 
-    public String getName() {
+    public Integer getPresentationGrade() {
+		return presentationGrade;
+	}
+
+	public void setPresentationGrade(Integer presentationGrade) {
+		this.presentationGrade = presentationGrade;
+	}
+
+	public Integer getReportGrade() {
+		return reportGrade;
+	}
+
+	public void setReportGrade(Integer reportGrade) {
+		this.reportGrade = reportGrade;
+	}
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+
+	public String getName() {
         return name;
     }
 

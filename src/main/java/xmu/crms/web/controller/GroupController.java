@@ -69,6 +69,9 @@ public class GroupController {
             group.setMembers(membersResponse);
             group.setTopics(topicResponses);
             group.setReport(seminarGroup.getReport());
+            group.setPresentationGrade(seminarGroup.getPresentationGrade());
+            group.setReportGrade(seminarGroup.getReportGrade());
+            group.setGrade(seminarGroup.getFinalGrade());
 
         } catch (GroupNotFoundException e) {
             return new ResponseEntity<GroupResponseVO>(null, null, HttpStatus.NOT_FOUND);
@@ -180,7 +183,7 @@ public class GroupController {
             responseVO.setPresentationGrade(presentationGrades);
         } catch (GroupNotFoundException ignore) {
         }
-        return new ResponseEntity<>(responseVO, null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(responseVO, null, HttpStatus.OK);
     }
 
     @PutMapping(value = "/group/{groupID}/grade/report")

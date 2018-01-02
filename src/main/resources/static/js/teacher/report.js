@@ -48,6 +48,26 @@ function load() {
 		}
 
 	});
+	
+	$.ajax({
+		url: "/group/" + groupId+"/grade",
+		dataType: "json",
+		type: "get",
+		contentType: "application/json;charset=utf-8",
+		dataType: "json",
+		headers : {
+			"Authorization" : token
+		},
+		success: function(data) {
+			if(data.reportGrade!=null){
+				document.getElementById("grade_value").value=data.reportGrade;
+			}else{
+				document.getElementById("grade_value").value="未评分";
+			}
+			
+		}
+
+	});
 
 
 }
@@ -56,10 +76,11 @@ function submit() {
 	var token = window.localStorage.getItem("jwt");
 	var grade=document.getElementById("grade_value").value;
 	$.ajax({
-		url: "/group/" + groupId+"/grade",
+		url: "/group/" + groupId+"/grade/report",
 		dataType: "json",
 		type: "put",
-		data:{"grade":grade},
+		contentType: "application/json;charset=utf-8",
+		data:JSON.stringify({"reportGrade":grade}),
 		headers : {
 			"Authorization" : token
 		},

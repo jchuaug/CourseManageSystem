@@ -50,6 +50,9 @@ public class ModelUtils {
 	}
 
 	public static UserResponseVO UserToUserResponseVO(User user) {
+		if (user==null) {
+			return null;
+		}
 		UserResponseVO userResponseVO = new UserResponseVO();
 		userResponseVO.setId(user.getId());
 		userResponseVO.setName(user.getName());
