@@ -1,10 +1,13 @@
 package xmu.crms.web.VO;
 
+import java.math.BigInteger;
+
 public class AttendanceRequestVO {
 	private double longitude;
 	private double latitude;
 	private double elevation;
 	private int status;
+	private BigInteger seminarId;
 
 
 	public int getStatus() {
@@ -40,4 +43,11 @@ public class AttendanceRequestVO {
 		this.elevation = elevation;
 	}
 
+	public BigInteger getSeminarId() {
+		return seminarId;
+	}
+
+	public void setSeminarId(BigInteger seminarId) {
+		this.seminarId = seminarId;
+	}
 }

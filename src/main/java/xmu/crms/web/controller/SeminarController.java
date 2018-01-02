@@ -326,9 +326,7 @@ public class SeminarController {
         String token = headers.get("Authorization").get(0);
         new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
-        if (TEACHER.equals(typeString)) {
-        } else if (STUDENT.equals(typeString)) {
-        }
+
         AttendanceResponseVO attendanceResponseVO = null;
         try {
             Integer numPresent = userService.listPresentStudent(seminarId, classId).size();
@@ -465,8 +463,8 @@ public class SeminarController {
             location.setLatitude(attendance.getLatitude());
             location.setLongitude(attendance.getLongitude());
             //todo status code wrong?
-            if (attendance.getStatus()==2)
-            location.setStatus(attendance.getStatus());
+            if (attendance.getStatus() == 2)
+                location.setStatus(attendance.getStatus());
             location.setClassInfo(new ClassInfo(classId));
             try {
                 classService.callInRollById(location);
