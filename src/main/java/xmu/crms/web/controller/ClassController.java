@@ -217,16 +217,15 @@ public class ClassController {
     }
 
     @PostMapping("/{classId}/student")
-    public ResponseEntity<String> selectClass(@PathVariable("classId") BigInteger classId, @RequestBody ClassRequestVO classRequestVO,
+    public ResponseEntity<String> selectClass(@PathVariable("classId") BigInteger classId, 
                                               @RequestHeader HttpHeaders headers) {
         
-    	BigInteger studentId = classRequestVO.getId();
         String token = headers.get("Authorization").get(0);
-        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+        BigInteger studentId = new BigInteger(JWTUtil.getUserId(token).toString());
         
 
         try {
-            List<ClassInfo> classInfos = classService.listClassByUserId(userId);
+            List<ClassInfo> classInfos = classService.listClassByUserId(studentId);
             for (ClassInfo classInfo : classInfos) {
                 if (classInfo.getId().equals(classId)) {
                     return new ResponseEntity<String>("已选过该课程", new HttpHeaders(), HttpStatus.CONFLICT);

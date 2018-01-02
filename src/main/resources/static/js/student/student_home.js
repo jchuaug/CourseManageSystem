@@ -481,7 +481,6 @@ function selectclass(id) { // StudentCourseHome dropclass();
 		type : 'post',
 		url : '/class/' + id + '/student',
 		contentType : "application/json;charset=utf-8",
-		data : JSON.stringify({"id":id}),
 		headers : {
 			"Authorization" : token
 		},
