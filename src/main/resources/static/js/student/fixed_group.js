@@ -146,8 +146,8 @@ function addMember(student) {
 		},
 
 		success : function(data) {
-			alter("添加成功");
-			//location.reload();
+			alert("添加成功");
+			window.location.reload();
 		}
 
 	});
@@ -169,8 +169,8 @@ function deleteMember(student) {
 		},
 
 		success : function(data) {
-			alter("删除成功");
-			location.reload();
+			alert("删除成功");
+			window.location.reload();
 		}
 
 	});

@@ -369,7 +369,7 @@ public class ClassController {
 
         }
 
-        return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
     }
 
     @PutMapping("/{classId}/classgroup/remove")
@@ -408,7 +408,7 @@ public class ClassController {
             return new ResponseEntity<String>("未找到班级", new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<String>("成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
     }
 
 }
