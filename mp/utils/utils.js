@@ -33,8 +33,10 @@ function failToast(msg) {
 }
 
 function requestWithId(args) {
+    const url = constants.domain + args.url;
+    console.log(url);
     wx.request({
-        url: constants.domain + args.url,
+        url: url,
         header: {'Authorization': cache.get('jwt')},
         method: args.method ? args.method : 'get',
         data: args.data,

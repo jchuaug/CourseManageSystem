@@ -30,7 +30,7 @@ Page({
 
         const targetUrl = utils.buildUrl({
             base: '../oneCourse/oneCourse',
-            courseId: dataset.courseId
+            classId: dataset.courseId
         });
 
         wx.navigateTo({

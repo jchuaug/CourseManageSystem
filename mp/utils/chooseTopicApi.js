@@ -20,14 +20,15 @@ function chooseTopic(id, cb) {
         method: 'post',
         success: function (res) {
             //update seminar info
+
             utils.requestWithId({
                 url: `/seminar/${cache.get('currentSeminarID')}/group/my`,
                 success: function (res) {
                     cache.set('group', res.data);
+                    cb(true);
                 }
             });
 
-            cb(true);
         },
         fail: function (res) {
             console.error(res);

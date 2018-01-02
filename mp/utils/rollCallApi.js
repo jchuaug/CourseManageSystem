@@ -1,3 +1,4 @@
+import cache from './localCache';
 function getSeminarInfoById(id, cb) {
     // todo replace fake data
     // todo get page state: if called in roll
@@ -8,9 +9,8 @@ function callInRoll(args, cb) {
     // todo replace fake data
 
     // todo PUT /class/{classId}/attendance/{studentId}
-    cb({
-        state: true
-    });   
+    const seminarId = cache.get('currentSeminarID');
+    // const
 }
 
 export default {getSeminarInfoById, callInRoll}

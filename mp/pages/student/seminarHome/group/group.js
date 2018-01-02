@@ -56,7 +56,6 @@ Page({
 
     quitLeader() {
         const that = this;
-
         api.quitLeader(function (res) {
             if (res) {
                 that.setData({

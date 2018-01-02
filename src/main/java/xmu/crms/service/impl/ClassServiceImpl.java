@@ -23,186 +23,189 @@ import xmu.crms.service.SeminarGroupService;
 import xmu.crms.service.SeminarService;
 
 /**
- * 
  * @author yjj
  * @version 2.00
- *
  */
 @Service
 public class ClassServiceImpl implements ClassService {
-	@Autowired
-	private ClassInfoMapper classInfoMapper;
+    @Autowired
+    private ClassInfoMapper classInfoMapper;
 
-	@Autowired
-	private SeminarGroupService seminarGroupService;
-	
-	@Autowired
-	private SeminarService seminarService;
+    @Autowired
+    private SeminarGroupService seminarGroupService;
 
-	@Autowired
-	private FixGroupService fixGroupService;
+    @Autowired
+    private SeminarService seminarService;
 
-	@Override
-	public void deleteClassSelectionByClassId(BigInteger classId) {
-		classInfoMapper.deleteClassSelectionByClassId(classId);
-	}
+    @Autowired
+    private FixGroupService fixGroupService;
 
-	@Override
-	public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
-		if (courseId==null) {
-			return classInfoMapper.listAllClass();
-		}
-		if (classInfoMapper.selectCourseByCourseId(courseId) == null) {
-			throw new CourseNotFoundException();
-		}
-		List<ClassInfo> classList = classInfoMapper.listClassByCourseId(courseId);
-		return classList;
-	}
+    @Override
+    public void deleteClassSelectionByClassId(BigInteger classId) {
+        classInfoMapper.deleteClassSelectionByClassId(classId);
+    }
 
-	@Override
-	public ClassInfo getClassByClassId(BigInteger classId) throws ClassesNotFoundException {
-		ClassInfo classInfo = classInfoMapper.selectClassByClassId(classId);
-		if (classInfo == null) {
-			throw new ClassesNotFoundException();
-		}
-		return classInfo;
-	}
+    @Override
+    public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
+        if (courseId == null) {
+            return classInfoMapper.listAllClass();
+        }
+        if (classInfoMapper.selectCourseByCourseId(courseId) == null) {
+            throw new CourseNotFoundException();
+        }
+        List<ClassInfo> classList = classInfoMapper.listClassByCourseId(courseId);
+        return classList;
+    }
 
-	@Override
-	public void updateClassByClassId(BigInteger classId, ClassInfo classInfo) throws ClassesNotFoundException {
-		ClassInfo classFound = classInfoMapper.selectClassByClassId(classId);
-		if (classFound == null) {
-			throw new ClassesNotFoundException();
-		}
-		classInfo.setId(classId);
-		classInfoMapper.updateByPrimaryKeySelective(classInfo);
-	}
+    @Override
+    public ClassInfo getClassByClassId(BigInteger classId) throws ClassesNotFoundException {
+        ClassInfo classInfo = classInfoMapper.selectClassByClassId(classId);
+        if (classInfo == null) {
+            throw new ClassesNotFoundException();
+        }
+        return classInfo;
+    }
 
-	@Override
-	public void deleteClassByClassId(BigInteger classId) throws ClassesNotFoundException {
-		ClassInfo classFound = classInfoMapper.selectClassByClassId(classId);
-		if (classFound == null) {
-			throw new ClassesNotFoundException();
-		}
-		deleteClassSelectionByClassId(classId);
-		fixGroupService.deleteFixGroupByClassId(classId);
+    @Override
+    public void updateClassByClassId(BigInteger classId, ClassInfo classInfo) throws ClassesNotFoundException {
+        ClassInfo classFound = classInfoMapper.selectClassByClassId(classId);
+        if (classFound == null) {
+            throw new ClassesNotFoundException();
+        }
+        classInfo.setId(classId);
+        classInfoMapper.updateByPrimaryKeySelective(classInfo);
+    }
 
-		int flag = classInfoMapper.deleteByPrimaryKey(classId);
-		if (flag == 0) {
-			throw new ClassesNotFoundException();
-		}
-	}
+    @Override
+    public void deleteClassByClassId(BigInteger classId) throws ClassesNotFoundException {
+        ClassInfo classFound = classInfoMapper.selectClassByClassId(classId);
+        if (classFound == null) {
+            throw new ClassesNotFoundException();
+        }
+        deleteClassSelectionByClassId(classId);
+        fixGroupService.deleteFixGroupByClassId(classId);
 
-	@Override
-	public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
-			throws UserNotFoundException, ClassesNotFoundException {
-		ClassInfo classInfo = classInfoMapper.selectClassByClassId(classId);
-		if (classInfo == null) {
-			throw new ClassesNotFoundException();
-		}
-		User student = classInfoMapper.selectUserByUserId(userId);
-		if (student == null) {
-			throw new UserNotFoundException();
-		}
-		CourseSelection courseSelection = new CourseSelection();
-		courseSelection.setClassInfo(classInfo);
-		courseSelection.setStudent(student);
-		classInfoMapper.insertCourseSelectionById(courseSelection);
+        int flag = classInfoMapper.deleteByPrimaryKey(classId);
+        if (flag == 0) {
+            throw new ClassesNotFoundException();
+        }
+    }
 
-		return courseSelection.getId();
-	}
+    @Override
+    public BigInteger insertCourseSelectionById(BigInteger userId, BigInteger classId)
+            throws UserNotFoundException, ClassesNotFoundException {
+        ClassInfo classInfo = classInfoMapper.selectClassByClassId(classId);
+        if (classInfo == null) {
+            throw new ClassesNotFoundException();
+        }
+        User student = classInfoMapper.selectUserByUserId(userId);
+        if (student == null) {
+            throw new UserNotFoundException();
+        }
+        CourseSelection courseSelection = new CourseSelection();
+        courseSelection.setClassInfo(classInfo);
+        courseSelection.setStudent(student);
+        classInfoMapper.insertCourseSelectionById(courseSelection);
 
-	@Override
-	public void deleteCourseSelectionById(BigInteger userId, BigInteger classId)
-			throws UserNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectUserByUserId(userId) == null) {
-			throw new UserNotFoundException();
-		}
-		if (classInfoMapper.selectClassByClassId(classId) == null) {
-			throw new ClassesNotFoundException();
-		}
-		classInfoMapper.deleteCourseSelectionById(userId, classId);
-	}
+        return courseSelection.getId();
+    }
 
-	@Override
-	public Location getCallStatusById(BigInteger classId, BigInteger seminarId) throws SeminarNotFoundException {
-		Location location = classInfoMapper.getCallStatusById(classId, seminarId);
-		Seminar seminar=seminarService.getSeminarBySeminarId(seminarId);
-		if (seminar == null) {
-			throw new SeminarNotFoundException();
-		}
-		return location;
-	}
+    @Override
+    public void deleteCourseSelectionById(BigInteger userId, BigInteger classId)
+            throws UserNotFoundException, ClassesNotFoundException {
+        if (classInfoMapper.selectUserByUserId(userId) == null) {
+            throw new UserNotFoundException();
+        }
+        if (classInfoMapper.selectClassByClassId(classId) == null) {
+            throw new ClassesNotFoundException();
+        }
+        classInfoMapper.deleteCourseSelectionById(userId, classId);
+    }
 
-	@Override
-	public BigInteger insertClassById(BigInteger courseId, ClassInfo classInfo) throws CourseNotFoundException {
-		Course course = classInfoMapper.selectCourseByCourseId(courseId);
-		if (course == null) {
-			throw new CourseNotFoundException();
-		}
-		if (classInfo.getCourse() == null) {
-			classInfo.setCourse(course);
-		}
-		classInfoMapper.insertSelective(classInfo);
-		return classInfo.getId();
-	}
+    @Override
+    public Location getCallStatusById(BigInteger classId, BigInteger seminarId) throws SeminarNotFoundException {
+        Location location = classInfoMapper.getCallStatusById(classId, seminarId);
+        Seminar seminar = seminarService.getSeminarBySeminarId(seminarId);
+        if (seminar == null) {
+            throw new SeminarNotFoundException();
+        }
+        return location;
+    }
 
-	@Override
-	public void deleteClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
-		Course course = classInfoMapper.selectCourseByCourseId(courseId);
-		if (course == null) {
-			throw new CourseNotFoundException();
-		}
-		List<ClassInfo> classInfos = listClassByCourseId(courseId);
-		for (ClassInfo classInfo : classInfos) {
-			deleteClassSelectionByClassId(classInfo.getId());
-			try {
-				fixGroupService.deleteFixGroupByClassId(classInfo.getId());
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (ClassesNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		classInfoMapper.deleteClassByCourseId(courseId);
-	}
+    @Override
+    public BigInteger insertClassById(BigInteger courseId, ClassInfo classInfo) throws CourseNotFoundException {
+        Course course = classInfoMapper.selectCourseByCourseId(courseId);
+        if (course == null) {
+            throw new CourseNotFoundException();
+        }
+        if (classInfo.getCourse() == null) {
+            classInfo.setCourse(course);
+        }
+        classInfoMapper.insertSelective(classInfo);
+        return classInfo.getId();
+    }
 
-	@Override
-	public BigInteger callInRollById(Location location) throws SeminarNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectClassByClassId(location.getClassInfo().getId()) == null) {
-			throw new ClassesNotFoundException();
-		}
-		if (classInfoMapper.selectSeminarBySeminarId(location.getSeminar().getId()) == null) {
-			throw new SeminarNotFoundException();
-		}
-		classInfoMapper.insertLocation(location);
-		return location.getId();
-	}
+    @Override
+    public void deleteClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
+        Course course = classInfoMapper.selectCourseByCourseId(courseId);
+        if (course == null) {
+            throw new CourseNotFoundException();
+        }
+        List<ClassInfo> classInfos = listClassByCourseId(courseId);
+        for (ClassInfo classInfo : classInfos) {
+            deleteClassSelectionByClassId(classInfo.getId());
+            try {
+                fixGroupService.deleteFixGroupByClassId(classInfo.getId());
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (ClassesNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        classInfoMapper.deleteClassByCourseId(courseId);
+    }
 
-	@Override
-	public void endCallRollById(BigInteger seminarId, BigInteger classId)
-			throws SeminarNotFoundException, ClassesNotFoundException {
-		if (classInfoMapper.selectClassByClassId(classId) == null) {
-			throw new ClassesNotFoundException();
-		}
-		if (classInfoMapper.selectSeminarBySeminarId(seminarId) == null) {
-			throw new SeminarNotFoundException();
-		}
-		classInfoMapper.endCallRollLocation(seminarId, classId);
+    @Override
+    public BigInteger callInRollById(Location location) throws SeminarNotFoundException, ClassesNotFoundException {
+        if (classInfoMapper.selectClassByClassId(location.getClassInfo().getId()) == null) {
+            throw new ClassesNotFoundException();
+        }
+        if (classInfoMapper.selectSeminarBySeminarId(location.getSeminar().getId()) == null) {
+            throw new SeminarNotFoundException();
+        }
+        classInfoMapper.insertLocation(location);
+        return location.getId();
+    }
 
-	}
+    @Override
+    public void endCallRollById(BigInteger seminarId, BigInteger classId)
+            throws SeminarNotFoundException, ClassesNotFoundException {
+        if (classInfoMapper.selectClassByClassId(classId) == null) {
+            throw new ClassesNotFoundException();
+        }
+        if (classInfoMapper.selectSeminarBySeminarId(seminarId) == null) {
+            throw new SeminarNotFoundException();
+        }
+        classInfoMapper.endCallRollLocation(seminarId, classId);
 
-	@Override
-	public List<ClassInfo> listClassByUserId(BigInteger userId)
-			throws IllegalArgumentException, ClassesNotFoundException {
-		if (userId == null) {
-			throw new IllegalArgumentException();
-		}
-		List<ClassInfo> list = classInfoMapper.listClassByUserId(userId);
-		if (list == null) {
-			throw new ClassesNotFoundException();
-		}
-		return list;
-	}
+    }
+
+    @Override
+    public List<ClassInfo> listClassByUserId(BigInteger userId)
+            throws IllegalArgumentException, ClassesNotFoundException {
+        if (userId == null) {
+            throw new IllegalArgumentException();
+        }
+        List<ClassInfo> list = classInfoMapper.listClassByUserId(userId);
+        if (list == null) {
+            throw new ClassesNotFoundException();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Seminar> listSeminarsByClassId(BigInteger classId) {
+        return classInfoMapper.listSeminarsByClassId(classId);
+    }
 
 }
