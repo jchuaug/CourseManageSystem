@@ -66,7 +66,7 @@ function submitregister() {
 		name : $("#name").val(),
 		gender : ($('.male > input:radio:checked').val() == '男') ? 1 : 0,
 		type : ($('.student > input:radio:checked').val() == "学生") ? 0 : 1,
-		number : $("#number").val(),
+		number : ($('.student > input:radio:checked').val() == "学生") ? $("#stuNum").val() : $("#teaNum").val(),
 		email : $("#eMail").val()
 	}
 	$.ajax({
