@@ -105,8 +105,6 @@ function load() {
 
 
 	
-	function()  { $('.pdf').media({width:450, height:350{}); }); 
-	   $('.btn').click(function(){ $(".pdf").show(); }); }
 }
 
 function updateSeminar() {
@@ -114,7 +112,7 @@ function updateSeminar() {
 }
 
 function download() {
-	window.location.href = "/file/report.doc";
+	window.location.href = "/file/report.pdf";
 }
 
 function toReport(viewNode){
