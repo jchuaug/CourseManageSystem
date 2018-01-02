@@ -208,4 +208,10 @@ public class ClassServiceImpl implements ClassService {
         return classInfoMapper.listSeminarsByClassId(classId);
     }
 
+    @Override
+    public void endRollCall(BigInteger seminarId, BigInteger classId) {
+        classInfoMapper.changeStatusById(seminarId,classId);
+
+    }
+
 }

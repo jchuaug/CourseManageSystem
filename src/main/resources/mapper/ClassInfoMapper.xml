@@ -411,4 +411,12 @@
         WHERE s.course_id = c.course_id
               AND c.id = #{id}
     </select>
+
+    <update id="changeStatusById">
+        UPDATE location
+        SET status = 2
+        WHERE seminar_id = #{seminarId}
+              AND class_id = #{classId}
+
+    </update>
 </mapper>

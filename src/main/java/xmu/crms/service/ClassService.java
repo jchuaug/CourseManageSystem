@@ -192,4 +192,6 @@ public interface ClassService {
     List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, ClassesNotFoundException;
 
     List<Seminar> listSeminarsByClassId(BigInteger classId);
+
+    void endRollCall(BigInteger seminarId, BigInteger classId);
 }
