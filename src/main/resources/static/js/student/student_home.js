@@ -23,8 +23,8 @@ function stuinfo() { // StudentHomePage showstuinfo
 				success : function(data, status, xhr) {
 					if (xhr.status == 200) {
 						document.cookie = 'username=' + data.id; // store
-																	// username
-																	// in cookie
+						// username
+						// in cookie
 						$("#username").html(
 								'用户名：' + '<span>' + data.id + '</span>');
 						$("#stuffNum").html(
@@ -33,10 +33,8 @@ function stuinfo() { // StudentHomePage showstuinfo
 								'姓名：' + '<span>' + data.name + '</span>');
 						$("#gender").html(
 								'性别：' + '<span>' + data.gender + '</span>');
-						$("#school")
-								.html(
-										'学校：' + '<span>' + data.school
-												+ '</span>');
+						$("#school").html(
+								'学校：' + '<span>' + data.school + '</span>');
 						$("#title").html(
 								'学历：' + '<span>' + data.title + '</span>');
 						$("#email").html(
@@ -127,50 +125,24 @@ function jumpCourse(id) {
 	window.location.href = "/student/course/" + courseid;
 }
 /*
-function classinfo() { // StudentCourse_List showclassinfo
-	$
-			.ajax({
-				type : 'get',
-				url : '/course/student',
-				dataType : "json",
-				contentType : "application/json;",
-				success : function(data, status, xhr) {
-					if (xhr.status == 200) {
-						var content = document.getElementById("classcontent");
-						var str = "";
-						str += '<div class="title">课程信息</div><hr class="line"/>'
-						for (var i = 0; i < data.length; i++) {
-							str += '<div class="main_box_right_content" ><h3 class="classtitle"><span id="course">'
-									+ data[i].courseName
-									+ '</span><button id="'
-									+ data[i].classId
-									+ '" onclick="dropclass(this.id)">退选课程</button></h3><div class="divideline"></div><div  class="classinfo" onclick="jumpCourse(this.id)" id="'
-									+ data[i].classId
-									+ ';'
-									+ data[i].courseId
-									+ '"><table class="table"><tr><td class="tabletext">班级：<span id="name">'
-									+ data[i].className
-									+ '</span></td><td class="tabletext" id="site">课程地点：'
-									+ data[i].site
-									+ '</td></tr><tr><td class="tabletext" id="teacher">教师：'
-									+ data[i].courseTeacher
-									+ '</td><td class="tabletext"></td></tr></table></div></div>';
-						}
-						content.innerHTML = str;
-					}
-				},
-				statusCode : {
-					401 : function() {
-						alert("classinfo查询失败！");
-					}
-				},
-				statusCode : {
-					404 : function() {
-						alert("查找不到班级！");
-					}
-				}
-			});
-}*/
+ * function classinfo() { // StudentCourse_List showclassinfo $ .ajax({ type :
+ * 'get', url : '/course/student', dataType : "json", contentType :
+ * "application/json;", success : function(data, status, xhr) { if (xhr.status ==
+ * 200) { var content = document.getElementById("classcontent"); var str = "";
+ * str += '<div class="title">课程信息</div><hr class="line"/>' for (var i = 0;
+ * i < data.length; i++) { str += '<div class="main_box_right_content" ><h3 class="classtitle"><span
+ * id="course">' + data[i].courseName + '</span><button id="' +
+ * data[i].classId + '" onclick="dropclass(this.id)">退选课程</button></h3><div
+ * class="divideline"></div><div class="classinfo"
+ * onclick="jumpCourse(this.id)" id="' + data[i].classId + ';' +
+ * data[i].courseId + '"><table class="table"><tr><td class="tabletext">班级：<span
+ * id="name">' + data[i].className + '</span></td><td class="tabletext" id="site">课程地点：' +
+ * data[i].site + '</td></tr><tr><td class="tabletext" id="teacher">教师：' +
+ * data[i].courseTeacher + '</td><td class="tabletext"></td></tr></table></div></div>'; }
+ * content.innerHTML = str; } }, statusCode : { 401 : function() {
+ * alert("classinfo查询失败！"); } }, statusCode : { 404 : function() {
+ * alert("查找不到班级！"); } } }); }
+ */
 
 function dropclass(id) { // StudentCourseHome dropclass();
 	$.ajax({
@@ -274,8 +246,8 @@ function stuinfo() { // StudentHomePage showstuinfo
 				success : function(data, status, xhr) {
 					if (xhr.status == 200) {
 						document.cookie = 'username=' + data.id; // store
-																	// username
-																	// in cookie
+						// username
+						// in cookie
 						$("#username").html(
 								'用户名：' + '<span>' + data.id + '</span>');
 						$("#stuffNum").html(
@@ -379,31 +351,6 @@ function jumpCourse(id) {
 	window.location.href = "/studentToCourse/" + courseid;
 }
 
-// function getcourseid(name){//StudentCourse_List store course id
-// $.ajax({
-// type:'get',
-// url: '/course',
-// dataType: "json",
-// contentType: "application/json;",
-// async:false,
-// success: function (data,status,xhr) {
-// if(xhr.status == 200){
-// for(var i=0;i<data.length;i++){
-// if(data[i].name == name){
-// courseid = data[i].id;
-// }
-// }
-// return courseid;
-// }
-// },
-// statusCode: {
-// 401: function () {
-// alert("courseid查询失败！");
-// }
-// }
-// });
-// }
-
 function classinfo() { // StudentCourse_List showclassinfo
 	$
 			.ajax({
@@ -449,12 +396,11 @@ function classinfo() { // StudentCourse_List showclassinfo
 			});
 }
 
-
 function classlist() { // StudentCourse_List showclassinfo
 	$
 			.ajax({
 				type : 'get',
-				url : "class?courseName=*&teacherName=*",
+				url : "/class/list",
 				dataType : "json",
 				contentType : "application/json;",
 				success : function(data, status, xhr) {
@@ -466,9 +412,9 @@ function classlist() { // StudentCourse_List showclassinfo
 							str += '<div class="main_box_right_content" ><h3 class="classtitle"><span id="course">'
 									+ data[i].courseName
 									+ '</span><button id="'
-									+ data[i].classId
-									+ '" onclick="dropclass(this.id)">退选课程</button></h3><div class="divideline"></div><div  class="classinfo" onclick="jumpCourse(this.id)" id="'
-									+ data[i].classId
+									+ data[i].id
+									+ '" onclick="selectclass(this.id)">选择课程</button></h3><div class="divideline"></div><div  class="classinfo" onclick="jumpCourse(this.id)" id="'
+									+ data[i].id
 									+ ';'
 									+ data[i].courseId
 									+ '"><table class="table"><tr><td class="tabletext">班级：<span id="name">'
@@ -496,9 +442,49 @@ function classlist() { // StudentCourse_List showclassinfo
 }
 
 function dropclass(id) { // StudentCourseHome dropclass();
+	
 	$.ajax({
 		type : 'delete',
 		url : '/class/' + id + '/student/' + getCookie("username"),
+		error : function() {
+			alert("请登录学生账户");
+		},
+		success : function(data, status, xhr) {
+			if (xhr.status == 204) {
+				alert("成功");
+				window.location.href = "/student/courses";
+			}
+		},
+		statusCode : {
+			400 : function() {
+				alert("错误的ID格式");
+				window.location.href = "/student/courses";
+			}
+		},
+		statusCode : {
+			403 : function() {
+				alert("学生无法为他人退课");
+				window.location.href = "/student/courses";
+			}
+		},
+		statusCode : {
+			404 : function() {
+				alert("不存在这个选课或不存在这个学生、班级");
+				window.location.href = "/student/courses";
+			}
+		}
+	});
+}
+function selectclass(id) { // StudentCourseHome dropclass();
+	var token = window.localStorage.getItem("jwt");
+	$.ajax({
+		type : 'post',
+		url : '/class/' + id + '/student',
+		contentType : "application/json;charset=utf-8",
+		data : JSON.stringify({"id":id}),
+		headers : {
+			"Authorization" : token
+		},
 		error : function() {
 			alert("请登录学生账户");
 		},

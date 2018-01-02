@@ -150,4 +150,6 @@ public interface ClassInfoMapper {
 	 * @return 插入条数
 	 */
 	int insertCourseSelectionById(CourseSelection courseSelection);
+
+	List<ClassInfo> listAllClass();
 }

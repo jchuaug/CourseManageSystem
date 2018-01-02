@@ -11,6 +11,7 @@ import xmu.crms.entity.FixGroup;
 import xmu.crms.entity.FixGroupMember;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
+import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.FixGroupNotFoundException;
 import xmu.crms.exception.InvalidOperationException;
 import xmu.crms.exception.UserNotFoundException;
@@ -58,7 +59,7 @@ public class ClassController {
         List<ClassInfo> classInfos = null;
         try {
             classInfos = classService.listClassByUserId(userId);
-  
+            
             for (ClassInfo classInfo : classInfos) {
        
                 Integer numStudent = userService.listUserByClassId(classInfo.getId(), "", "").size();
@@ -71,6 +72,35 @@ public class ClassController {
             e.printStackTrace();
             return new ResponseEntity<List<ClassResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
         }
+
+        return new ResponseEntity<List<ClassResponseVO>>(classVOs, new HttpHeaders(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/list")
+    public ResponseEntity<List<ClassResponseVO>> getAllClass(@RequestHeader HttpHeaders headers) {
+        String token = headers.get("Authorization").get(0);
+        BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
+
+        List<ClassResponseVO> classVOs = new ArrayList<>();
+        List<ClassInfo> classInfos = null;
+        try {
+            classInfos = classService.listClassByCourseId(null);
+            
+            for (ClassInfo classInfo : classInfos) {
+       
+                Integer numStudent = userService.listUserByClassId(classInfo.getId(), "", "").size();
+                classVOs.add(ModelUtils.classInfoToClassResponseVO(classInfo, numStudent));
+            }
+        } catch (UserNotFoundException | ClassesNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<ClassResponseVO>>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<ClassResponseVO>>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+        } catch (CourseNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         return new ResponseEntity<List<ClassResponseVO>>(classVOs, new HttpHeaders(), HttpStatus.OK);
     }
@@ -187,14 +217,13 @@ public class ClassController {
     }
 
     @PostMapping("/{classId}/student")
-    public ResponseEntity<String> selectClass(@PathVariable("classId") BigInteger classId, @RequestBody String id,
+    public ResponseEntity<String> selectClass(@PathVariable("classId") BigInteger classId, @RequestBody ClassRequestVO classRequestVO,
                                               @RequestHeader HttpHeaders headers) {
-        BigInteger studentId = new BigInteger(id);
+        
+    	BigInteger studentId = classRequestVO.getId();
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-        if (!userId.equals(studentId)) {
-            return new ResponseEntity<String>("非本人操作", new HttpHeaders(), HttpStatus.FORBIDDEN);
-        }
+        
 
         try {
             List<ClassInfo> classInfos = classService.listClassByUserId(userId);
@@ -203,13 +232,15 @@ public class ClassController {
                     return new ResponseEntity<String>("已选过该课程", new HttpHeaders(), HttpStatus.CONFLICT);
                 }
             }
+            System.err.println(studentId);
+            System.err.println(classId);
             classService.insertCourseSelectionById(studentId, classId);
 
         } catch (ClassesNotFoundException | UserNotFoundException e) {
             e.printStackTrace();
             return new ResponseEntity<String>("找不到课程或学生", new HttpHeaders(), HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<String>("选课成功", new HttpHeaders(), HttpStatus.CREATED);
+        return new ResponseEntity<String>("选课成功", new HttpHeaders(), HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{classId}/student/{studentId}")

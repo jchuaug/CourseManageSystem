@@ -388,4 +388,20 @@
             AND
             class_info.id = course_selection.class_id
     </select>
+    
+     <select id="listAllClass" resultMap="BaseResultMap">
+        SELECT
+            id,
+            name,
+            course_id,
+            description,
+            site,
+            class_time,
+            report_percentage,
+            presentation_percentage,
+            five_point_percentage,
+            four_point_percentage,
+            three_point_percentage
+        FROM class_info
+    </select>
 </mapper>

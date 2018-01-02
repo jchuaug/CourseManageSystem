@@ -49,6 +49,9 @@ public class ClassServiceImpl implements ClassService {
 
 	@Override
 	public List<ClassInfo> listClassByCourseId(BigInteger courseId) throws CourseNotFoundException {
+		if (courseId==null) {
+			return classInfoMapper.listAllClass();
+		}
 		if (classInfoMapper.selectCourseByCourseId(courseId) == null) {
 			throw new CourseNotFoundException();
 		}
