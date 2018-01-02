@@ -45,6 +45,8 @@ public class ModelUtils {
         userResponseVO.setNumber(user.getNumber());
         userResponseVO.setPhone(user.getPhone());
         userResponseVO.setSchool(user.getSchool().getName());
+        userResponseVO.setEmail(user.getEmail());
+        userResponseVO.setGender(user.getGender()==1?"女":"男");
         return userResponseVO;
     }
 

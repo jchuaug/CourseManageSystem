@@ -35,7 +35,7 @@ function stuinfo() { // StudentHomePage showstuinfo
 								'性别：' + '<span>' + data.gender + '</span>');
 						$("#school")
 								.html(
-										'学校：' + '<span>' + data.school.name
+										'学校：' + '<span>' + data.school
 												+ '</span>');
 						$("#title").html(
 								'学历：' + '<span>' + data.title + '</span>');
