@@ -34,8 +34,6 @@ Page({
             classId: dataset.courseId
         });
         cache.set('classId', dataset.courseId);
-
-
         wx.navigateTo({
             url: targetUrl
         });

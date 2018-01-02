@@ -236,4 +236,10 @@
               AND end_time > current_timestamp
               AND course_id = #{id}
     </select>
+
+    <select id="getAllAttendanceStudent" resultMap="TeacherResult">
+        SELECT * FROM cms.attendance
+        WHERE seminar_id = #{seminarId}
+        AND class_id = #{classId}
+    </select>
 </mapper>
