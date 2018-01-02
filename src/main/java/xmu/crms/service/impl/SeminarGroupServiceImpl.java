@@ -54,7 +54,7 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     public SeminarGroup getSeminarGroupById(BigInteger seminarId, BigInteger userId) throws IllegalArgumentException, GroupNotFoundException {
         BigInteger groupId = null;
 
-        List<SeminarGroup> groups = listSeminarGroupByStudentId(seminarId);
+        List<SeminarGroup> groups = listSeminarGroupByStudentId(userId);
 
         for (SeminarGroup group : groups) {
             if (Objects.equals(group.getSeminar().getId(), seminarId)) {
@@ -216,9 +216,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     }
 
     @Override
-    public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, BigInteger classId, SeminarGroup seminarGroup) throws IllegalArgumentException {
-        // todo implement
-        return null;
+    public BigInteger insertSeminarGroup(SeminarGroup seminarGroup) throws IllegalArgumentException {
+        seminarGroupMapper.insertSeminarGroupBySeminarId(seminarGroup);
+        return seminarGroup.getId();
     }
 
     @Override
@@ -253,7 +253,9 @@ public class SeminarGroupServiceImpl implements SeminarGroupService {
     }
 
 
-    /**todo delete method*/
+    /**
+     * todo delete method
+     */
     public BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, SeminarGroup seminarGroup) throws IllegalArgumentException {
         Seminar seminar = new Seminar();
         seminar.setId(seminarId);

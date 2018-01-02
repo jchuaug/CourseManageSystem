@@ -1,5 +1,6 @@
 // pages/student/courseHome/courseHome.js
 import api from '../../../../utils/rollCallApi';
+import utils from '../../../../utils/utils';
 
 
 Page({
@@ -23,10 +24,16 @@ Page({
     iAmHere() {
         const that = this;
         api.callInRoll(function (res) {
-           console.log("签到后返回",res);
             that.setData({
                 state: res.state
             });
+
+
+            utils.showSuccessToast();
+
+            setTimeout(function () {
+                wx.navigateBack();
+            }, 2000);
         });
     }
 });

@@ -179,7 +179,7 @@
 
     <!--throws IllegalArgumentException;-->
 
-    <!--BigInteger insertSeminarGroupBySeminarId(@Param("seminarId")BigInteger seminarId, @Param("seminarGroup")SeminarGroup seminarGroup)-->
+    <!--BigInteger insertSeminarGroup(@Param("seminarId")BigInteger seminarId, @Param("seminarGroup")SeminarGroup seminarGroup)-->
     <!--throws IllegalArgumentException;-->
     <insert id="insertSeminarGroupBySeminarId" useGeneratedKeys="true" keyProperty="id" parameterType="SeminarGroup">
         INSERT INTO seminar_group (seminar_id, report_grade, presentation_grade, final_grade, leader_id, class_id)

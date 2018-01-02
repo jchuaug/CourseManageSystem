@@ -108,5 +108,5 @@ public interface SeminarService {
     Seminar getCurrentSeminar(BigInteger courseId);
 
 
-    void RandomGrouping(BigInteger seminarId, BigInteger classId);
+    void randomGrouping(BigInteger seminarId, BigInteger classId);
 }

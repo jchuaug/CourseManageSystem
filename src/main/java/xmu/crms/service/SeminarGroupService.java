@@ -120,8 +120,7 @@ public interface SeminarGroupService {
      * @author YeHongjie
      * @see SeminarGroupService #insertSeminarGroupMemberByGroupId(BigInteger groupId,SeminarGroupMember SeminarGroupMember)
      */
-    BigInteger insertSeminarGroupBySeminarId(BigInteger seminarId, BigInteger classId,
-                                             SeminarGroup seminarGroup) throws IllegalArgumentException;
+    BigInteger insertSeminarGroup(SeminarGroup seminarGroup) throws IllegalArgumentException;
 
     /**
      * 创建小组成员信息.
@@ -260,8 +259,8 @@ public interface SeminarGroupService {
      * @return BigInteger 返回seminarGroupTopicId
      * @throws IllegalArgumentException GroupId、TopicId格式错误时抛出
      * @throws GroupNotFoundException   该小组不存在时抛出
-     * @author heqi
      * @throws TopicNotFoundException
+     * @author heqi
      */
     BigInteger insertTopicByGroupId(BigInteger seminarGroupId, BigInteger topicId) throws
             IllegalArgumentException, GroupNotFoundException, TopicNotFoundException;
@@ -298,6 +297,7 @@ public interface SeminarGroupService {
 
     /**
      * d
+     *
      * @param topicId d
      * @param groupId d
      */

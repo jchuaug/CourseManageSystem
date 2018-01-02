@@ -464,6 +464,7 @@ public class SeminarController {
             // todo status code wrong?
 
             if (attendance.getStatus() == 2) {
+                seminarService.randomGrouping(seminarId,classId);
                 classService.endRollCall(seminarId, classId);
                 return ResponseEntity.ok().build();
             }

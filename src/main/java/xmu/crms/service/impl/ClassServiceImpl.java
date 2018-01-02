@@ -211,7 +211,6 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public void endRollCall(BigInteger seminarId, BigInteger classId) {
         classInfoMapper.changeStatusById(seminarId,classId);
-
     }
 
 }
