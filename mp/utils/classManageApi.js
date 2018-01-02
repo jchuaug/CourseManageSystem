@@ -6,8 +6,9 @@ function getInfo(courseID, cb) {
     utils.requestWithId({
         url: `/course/${courseID}/seminar/current`,
         success: function (res) {
+            debugger;
 
-            console.log('class manage',res)
+            console.log('class manage',res);
             const seminar = res.data;
             cache.set('currentSeminar',seminar);
             cb(seminar);
