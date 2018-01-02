@@ -22,7 +22,8 @@ Page({
 
     iAmHere() {
         const that = this;
-        api.callInRoll(null, function (res) {
+        api.callInRoll(function (res) {
+           console.log("签到后返回",res);
             that.setData({
                 state: res.state
             });

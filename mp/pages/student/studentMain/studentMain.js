@@ -6,7 +6,7 @@ Page({
     onLoad() {
         const that = this;
         api.getInfo(function (res) {
-            console.log(res);
+            console.log("classes",res);
             that.setData({
                 me: res.me,
                 classes: res.classes

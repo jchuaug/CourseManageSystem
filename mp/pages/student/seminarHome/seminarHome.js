@@ -2,6 +2,8 @@
 import api from '../../../utils/seminarHomeApi';
 import utils from '../../../utils/utils';
 
+import op from "../../../utils/localCache";
+
 
 Page({
     data: {},
@@ -13,7 +15,7 @@ Page({
          *   seminarId: 1
          * }
          */
-
+        op.set('currentSeminarId',options.seminarId)
 
         const that = this;
         api.getSeminarInfo(options.seminarId, function (seminar) {

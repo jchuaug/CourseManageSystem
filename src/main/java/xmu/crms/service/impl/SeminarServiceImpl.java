@@ -2,6 +2,7 @@ package xmu.crms.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import xmu.crms.entity.*;
 import xmu.crms.exception.CourseNotFoundException;
 import xmu.crms.exception.SeminarNotFoundException;
@@ -31,6 +32,7 @@ public class SeminarServiceImpl implements SeminarService {
 
     @Autowired
     TopicService topicService;
+
 
     @Override
     public List<Seminar> listSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
