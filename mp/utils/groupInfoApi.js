@@ -3,9 +3,9 @@ import cache from './localCache';
 
 function getGroups(callback) {
   // todo 真实环境中这里得去注释
-  // let seminarId = cache.get('currentSeminar').id 
+  let seminarId = cache.get('currentSeminar').id 
   //当前的seminarId为4 没有group信息
-  let seminarId = 1
+  // let seminarId = 1
   let classId = cache.get('currentClass').id 
   utils.requestWithId({
     url: `/seminar/${seminarId}/group`,

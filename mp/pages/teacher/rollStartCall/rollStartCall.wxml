@@ -11,7 +11,7 @@
     <view class='roll'>
         <view class='roll_info'>
             <image src='/images/users.png' class='usersIcon'/>
-            <text class='roll_info_text'>已签到学生0/{{currentClass.numStudent}}</text>
+            <text class='roll_info_text'>已签到学生{{currentClass.present}}/{{currentClass.numStudent}}</text>
 
             <button wx:if="{{call.status=='calling'}}" class='blue_button' bindtap='checkCall'
                     data-classid="{{classid}}" data-cursemid="{{currentSeminarId}}" data-callstatus="{{call.status}}">

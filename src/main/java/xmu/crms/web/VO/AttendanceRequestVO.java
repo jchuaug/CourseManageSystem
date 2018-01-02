@@ -4,6 +4,17 @@ public class AttendanceRequestVO {
 	private double longitude;
 	private double latitude;
 	private double elevation;
+	private int status;
+
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
 
 	public double getLongitude() {
 		return longitude;
