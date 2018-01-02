@@ -35,7 +35,7 @@ public class RedirectController {
 	}
 	@RequestMapping("/student/personInfo/alter")
 	public String studentInfoAlter() {
-		return "student/student_info";
+		return "student/student_info_update";
 	}
 	@RequestMapping("/student/courses")
 	public String studentCourse() {
