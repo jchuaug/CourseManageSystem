@@ -229,10 +229,13 @@ public class ModelUtils {
         courseResponseVO.setName(course.getName());
         courseResponseVO.setDescription(course.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String time = sdf.format(course.getStartDate());
-        courseResponseVO.setStartTime(time);
-        time = sdf.format(course.getEndDate());
-        courseResponseVO.setEndTime(time);
+        
+        if(course.getStartDate()!=null&&course.getEndDate()!=null) {
+        	String time = sdf.format(course.getStartDate());
+        	courseResponseVO.setStartTime(time);
+            time = sdf.format(course.getEndDate());
+            courseResponseVO.setEndTime(time);
+        }
         courseResponseVO.setNumClass(numClass);
         courseResponseVO.setNumStudent(numStudent);
         if (course.getTeacher() != null) {

@@ -56,7 +56,7 @@ public class SchoolController {
     }
 
 
-    @PostMapping(value = "/province/city")
+    @GetMapping(value = "/city")
     @ResponseBody
     public ResponseEntity getCity(@RequestBody SchoolRequestVO req) {
         List<String> citys;

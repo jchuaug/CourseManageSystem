@@ -101,7 +101,7 @@ public class CourseController {
 			e.printStackTrace();
 			return new ResponseEntity<Course>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<Course>(course, new HttpHeaders(), HttpStatus.OK);
+		return new ResponseEntity<Course>(course, new HttpHeaders(), HttpStatus.CREATED);
 	}
 
 	@GetMapping("/{courseId}")
