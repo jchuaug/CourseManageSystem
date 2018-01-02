@@ -203,12 +203,7 @@ public class UserServiceImpl implements UserService {
                 throw new ClassesNotFoundException("UserService:No available class was found");
             }
             users = userMapper.listPresentStudent(seminarId, classId);
-            if (users.isEmpty()) {
-                throw new UserNotFoundException("UserService:No available user was found");
-            }
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        } catch (SeminarNotFoundException e) {
+        }catch (SeminarNotFoundException e) {
             e.printStackTrace();
         } catch (ClassesNotFoundException e) {
             e.printStackTrace();

@@ -25,9 +25,11 @@ Page({
         const that = this;
 
         function refreshData(){
+          
           api.getCallingStatus(function(res){
             that.setData({
-              'currentClass.present':res.numPresent
+              'currentClass.present':res.numPresent,
+              'currentClass.numStudent':res.numStudent
             })
           })
         }

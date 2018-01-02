@@ -463,8 +463,11 @@ public class SeminarController {
             location.setLatitude(attendance.getLatitude());
             location.setLongitude(attendance.getLongitude());
             //todo status code wrong?
-            if (attendance.getStatus() == 2)
-                location.setStatus(attendance.getStatus());
+
+            if (attendance.getStatus()==2){
+
+            }
+            location.setStatus(attendance.getStatus());
             location.setClassInfo(new ClassInfo(classId));
             try {
                 classService.callInRollById(location);

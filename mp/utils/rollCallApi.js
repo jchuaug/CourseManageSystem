@@ -24,6 +24,7 @@ function callInRoll(cb) {
         success: cb
     })
     console.log(cache.get("currentSeminarId"));
+
 }
 
 export default {getSeminarInfoById, callInRoll}
