@@ -1,70 +1,70 @@
 <!DOCTYPE html>
 <html>
 
-	<head lang="en">
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>学生上传固定分组</title>
-		<link href="/css/student/content.css" rel="stylesheet" type="text/css" />
-		<script src="/js/jquery-1.12.4.min.js"></script>
-		<script src="/js/student/fixed_group.js"></script>
-	</head>
+<head lang="en">
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<title>学生上传固定分组</title>
+<link href="/css/student/content.css" rel="stylesheet" type="text/css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/student/fixed_group.js"></script>
+<script src="/js/common/logout.js"></script>
+</head>
 
-	<body onload="load()">
+<body onload="load()">
 
-		<div class="top">
-			<div class="font">
-				课堂管理系统
-			</div>
-			<div class="icon">
-				<img src="/Img/home.png" />首页
-				<img src="/Img/help.png" />帮助
-				<img src="/Img/exit.png" />退出
-			</div>
-			<div class="clear"></div>
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/student/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
 		</div>
-		<div class="body">
-			<div class="navigation">
-				<div class="courseName" id="course_name">OOAD</div>
+		<div class="clear"></div>
+	</div>
+	<div class="body">
+		<div class="navigation">
+			<div class="courseName" id="course_name">OOAD</div>
+			<div class="line"></div>
+			<div class="courseIntroduction" id="course_description">ooad is
+				xxx</div>
+		</div>
+		<div class="content">
+			<div class="block">
+				<div class="title">固定分组</div>
+				<div class="returnButton">返回上一页</div>
 				<div class="line"></div>
-				<div class="courseIntroduction" id="course_description">ooad is xxx</div>
-			</div>
-			<div class="content">
+				<div class="itemBody">
+					<div class="item">
+						<table id="group_table" class="studenttable">
+
+
+						</table>
+					</div>
+				</div>
 				<div class="block">
-					<div class="title">固定分组</div>
-					<div class="returnButton">返回上一页</div>
+					<div class="title">添加队员</div>
 					<div class="line"></div>
 					<div class="itemBody">
 						<div class="item">
-							<table id="group_table" class="studenttable" >
-								
+							<label class="itemName">学号：</label> <input type="text"
+								id="student_number" /> <label class="itemName">姓名：</label> <input
+								type="text" id="student_name" />
+							<div class="returnButton" onclick="getStudents()">查询</div>
+						</div>
+						<div class="item">
+							<table class="studenttable" id="student_list_table">
 
 							</table>
 						</div>
 					</div>
-					<div class="block">
-						<div class="title">添加队员</div>
-						<div class="line"></div>
-						<div class="itemBody">
-							<div class="item">
-								<label class="itemName">学号：</label>
-								<input type="text" id="student_number" />
-								<label class="itemName">姓名：</label>
-								<input type="text" id="student_name" />
-								<div class="returnButton" onclick="getStudents()">查询</div>
-							</div>
-							<div class="item">
-								<table class="studenttable" id="student_list_table">
-							
-								</table>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
-			<div class="clear"></div>
 		</div>
-	</body>
+		<div class="clear"></div>
+	</div>
+</body>
 
 </html>

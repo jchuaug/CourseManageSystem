@@ -1,86 +1,84 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8"/>
-		<title>创建讨论课</title>
-		<link rel="stylesheet" href="/css/common/bootstrap.min.css"/>
-		<link rel="stylesheet" href="/css/teacher/content.css"/>
-		<script src="/js/jquery-1.12.4.min.js"></script>
-		<script src="/js/teacher/add_seminar.js"></script>
-	</head>
+<head>
+<meta charset="UTF-8" />
+<title>创建讨论课</title>
+<link rel="stylesheet" href="/css/common/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/teacher/content.css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/teacher/add_seminar.js"></script>
+<script src="/js/common/logout.js"></script>
+</head>
 
-	<body onload="load()">
-			<!--
+<body onload="load()">
+	<!--
             	作者：Mr_Jackey@aliyun.com
             	时间：2017-11-22
             	描述：顶部标题栏
             -->
-			<div class="top">
-				<div class="font">课堂管理系统
-			</div>
-			<div class="icon">
-				<a href=""><img src="/img/home.png" />首页 </a>
-				<a href=""><img src="/img/help.png" />帮助</a>
-				<a href=""><img src="/img/exit.png" />退出</a>
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/teacher/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
+		</div>
+		<div class="clear"></div>
+	</div>
 
-			</div>
-			<div class="clear"></div>
-			</div>
-			
-			<div class="body">
-				
-				<div class="navigation">
-					<h2 class="courseName" id="course_name"></h2>
-					<div class="line"></div>
-					<div class="courseIntroduction" >
+	<div class="body">
 
-						<p id="course_description">
-						</p>
-					</div>
+		<div class="navigation">
+			<h2 class="courseName" id="course_name"></h2>
+			<div class="line"></div>
+			<div class="courseIntroduction">
 
+				<p id="course_description"></p>
+			</div>
+
+		</div>
+
+		<div class="content">
+			<div class="title">创建讨论课</div>
+			<div class="returnButton">返回上一页</div>
+			<div class="line"></div>
+			<div class="itemBody">
+				<div class="item">
+					<label class="itemName">讨论课名称：</label> <input class="bigInput"
+						id="seminar_name" value="讨论课代号" />
 				</div>
-				
-				<div class="content">
-					<div class="title">创建讨论课</div>
-                    <div class="returnButton">返回上一页</div>
-                    <div class="line"></div>
-					<div class="itemBody">
-							<div class="item">
-								<label class="itemName">讨论课名称：</label>
-								<input class="bigInput" id="seminar_name" value="讨论课代号"/>
-							</div>
-							<div class="item">
-								<label class="itemName">讨论课说明：</label>
-								<textarea type="text" class="textStyle" id="seminar_description"></textarea>
-							</div>
-							<div class="item">
-								<label class="itemName">分组方式：</label>
-								<select class="bigSelect" id="groupingMethod">
-									<option>随机分组</option>
-									<option>固定分组</option>
-								</select>
-							</div>
-							<div class="item">
-								<label class="itemName">开始时间：</label>
-								<input type="date" class="timeStyle" id="startTime"/>
-								<label class="itemName" style="margin-left: 15%">结束时间：</label>
-								<input type="date" class="timeStyle" id="endTime"/>
-							</div>
-							
-							<div>
-								<button class="submit" onclick="submit()">提交</button>
-								<button class="reset" onclick="resetForm()">重置</button>
-							</div>
-					</div>
-
+				<div class="item">
+					<label class="itemName">讨论课说明：</label>
+					<textarea type="text" class="textStyle" id="seminar_description"></textarea>
+				</div>
+				<div class="item">
+					<label class="itemName">分组方式：</label> <select class="bigSelect"
+						id="groupingMethod">
+						<option>随机分组</option>
+						<option>固定分组</option>
+					</select>
+				</div>
+				<div class="item">
+					<label class="itemName">开始时间：</label> <input type="date"
+						class="timeStyle" id="startTime" /> <label class="itemName"
+						style="margin-left: 15%">结束时间：</label> <input type="date"
+						class="timeStyle" id="endTime" />
 				</div>
 
+				<div>
+					<button class="submit" onclick="submit()">提交</button>
+					<button class="reset" onclick="resetForm()">重置</button>
+				</div>
 			</div>
 
-			
-			<div class="clear"></div>
+		</div>
 
-	</body>
+	</div>
+
+
+	<div class="clear"></div>
+
+</body>
 
 </html>

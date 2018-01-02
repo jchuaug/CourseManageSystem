@@ -1,124 +1,118 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8"/>
-		<title>创建班级</title>
-		<link rel="stylesheet" href="/css/common/bootstrap.min.css"/>
- 		<link rel="stylesheet" href="/css/teacher/content.css"/>
-		<script src="/js/jquery-1.12.4.min.js"></script>
-		<script src="/js/teacher/add_class.js"></script>
-	</head>
+<head>
+<meta charset="UTF-8" />
+<title>创建班级</title>
+<link rel="stylesheet" href="/css/common/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/teacher/content.css" />
+<script src="/js/jquery-1.12.4.min.js"></script>
+<script src="/js/teacher/add_class.js"></script>
+<script src="/js/common/logout.js"></script>
+</head>
 
-	<body onload="load()">
-		<div class="top">
-			<div class="font">课堂管理系统
-			</div>
-			<div class="icon">
-				<a href=""><img src="/img/home.png" />首页 </a>
-				<a href=""><img src="/img/help.png" />帮助</a>
-				<a href=""><img src="/img/exit.png" />退出</a>
-
-			</div>
-			<div class="clear"></div>
+<body onload="load()">
+	<div class="top">
+		<div class="font">课堂管理系统</div>
+		<div class="icon">
+			<img src="/Img/home.png"><a href="/teacher/home">首页</a> <img
+				src="/Img/help.png"><a>帮助</a> <img src="/Img/exit.png"><a
+				href="#" onclick="logout();">退出</a>
 		</div>
+		<div class="clear"></div>
+	</div>
 
-		<div class="body">
+	<div class="body">
 
-			<div class="navigation">
-				<h2 id="course_name" class="courseName"></h2>
-				<div class="line"></div>
-				<div class="courseIntroduction">
+		<div class="navigation">
+			<h2 id="course_name" class="courseName"></h2>
+			<div class="line"></div>
+			<div class="courseIntroduction">
 
-					<p id="course_description">
-
-					</p>
-				</div>
-
+				<p id="course_description"></p>
 			</div>
-			<div class="content">
-				<div class="block">
-					<div class="title">创建班级</div>
-					<div class="returnButton">返回上一页</div>
-					<div class="line"></div>
-					<div class="itemBody">
-						<div class="item">
-							<label class="itemName">班级名称：</label>
-							<input class="bigInput" id="class_name" />
-						</div>
-						<div class="item">
-							<label class="itemName">班级代号: </label>
-							<input type="text" name="classNickname" class="bigInput"/>
-						</div>
-						<div class="item">
-							<label class="itemName">上课地点：</label>
-							<input class="bigInput" id="class_location" />
-						</div>
-						<div class="item" style="height: auto;">
-							<label class="itemName">上课时间：</label>
-							<div id="class_time_list" style="display: inline;">
-								<div id="class_time" style="display: inline;">
-									<select class="smallSelect" id="week">
-										<option>每周</option>
-										<option>单周</option>
-										<option>双周</option>
-									</select>
-									<select class="smallSelect" id="day">
-										<option>周一</option>
-										<option>周二</option>
-										<option>周三</option>
-										<option>周四</option>
-										<option>周五</option>
-										<option>周六</option>
-										<option>周日</option>
-									</select>
-									<select class="smallSelect" id="time">
-										<option>12节</option>
-										<option>34节</option>
-										<option>56节</option>
-										<option>78节</option>
-										<option>910节</option>
-										<option>1112节</option>
-									</select>
-								</div>
-							</div>
-							<div style="display: inline;">
-								<button id="add_button" type="button" onclick="addClassTime()"><img src="/img/add.png" alt="图片未加载" width="15" height="15"/></button>
-							</div>
-						</div>
-						<div class="item">
-							<label class="ItemName">评分规则：</label>
-							<label class="ItemName">讨论课分数占比</label>
-							<input type="text" class="smallInput" id="presentation" />
-							<label class="ItemName">报告分数占比</label>
-							<input type="text" class="smallInput" id="report" />
-						</div>
-						<div class="item" style="margin-left: 18%">
-							<label class="itemName">5分占比</label>
-							<input class="smallInput" id="five" />
-							<label class="itemName">4分占比</label>
-							<input class="smallInput" id="four" />
-							<label class="itemName">3分占比</label>
-							<input class="smallInput" id="three" />
-						</div>
-						<div class="item">
-							<label class="itemName">导入学生名单:</label>
-							<input type="file" style="background-color: #D4EEF2" id="file_upload"/>
-						</div>
 
-						<div class="item">
-							<button class="submit" onclick="submit()">提交</button>
-							<button class="reset" onclick="reset()">重置</button>
-							<div class="clear"></div>
+		</div>
+		<div class="content">
+			<div class="block">
+				<div class="title">创建班级</div>
+				<div class="returnButton">返回上一页</div>
+				<div class="line"></div>
+				<div class="itemBody">
+					<div class="item">
+						<label class="itemName">班级名称：</label> <input class="bigInput"
+							id="class_name" />
+					</div>
+					<div class="item">
+						<label class="itemName">班级代号: </label> <input type="text"
+							name="classNickname" class="bigInput" />
+					</div>
+					<div class="item">
+						<label class="itemName">上课地点：</label> <input class="bigInput"
+							id="class_location" />
+					</div>
+					<div class="item" style="height: auto;">
+						<label class="itemName">上课时间：</label>
+						<div id="class_time_list" style="display: inline;">
+							<div id="class_time" style="display: inline;">
+								<select class="smallSelect" id="week">
+									<option>每周</option>
+									<option>单周</option>
+									<option>双周</option>
+								</select> <select class="smallSelect" id="day">
+									<option>周一</option>
+									<option>周二</option>
+									<option>周三</option>
+									<option>周四</option>
+									<option>周五</option>
+									<option>周六</option>
+									<option>周日</option>
+								</select> <select class="smallSelect" id="time">
+									<option>12节</option>
+									<option>34节</option>
+									<option>56节</option>
+									<option>78节</option>
+									<option>910节</option>
+									<option>1112节</option>
+								</select>
+							</div>
 						</div>
+						<div style="display: inline;">
+							<button id="add_button" type="button" onclick="addClassTime()">
+								<img src="/img/add.png" alt="图片未加载" width="15" height="15" />
+							</button>
+						</div>
+					</div>
+					<div class="item">
+						<label class="ItemName">评分规则：</label> <label class="ItemName">讨论课分数占比</label>
+						<input type="text" class="smallInput" id="presentation" /> <label
+							class="ItemName">报告分数占比</label> <input type="text"
+							class="smallInput" id="report" />
+					</div>
+					<div class="item" style="margin-left: 18%">
+						<label class="itemName">5分占比</label> <input class="smallInput"
+							id="five" /> <label class="itemName">4分占比</label> <input
+							class="smallInput" id="four" /> <label class="itemName">3分占比</label>
+						<input class="smallInput" id="three" />
+					</div>
+					<div class="item">
+						<label class="itemName">导入学生名单:</label> <input type="file"
+							style="background-color: #D4EEF2" id="file_upload" />
+					</div>
+
+					<div class="item">
+						<button class="submit" onclick="submit()">提交</button>
+						<button class="reset" onclick="reset()">重置</button>
+						<div class="clear"></div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 
-		<div class="clear"></div>
+	</div>
 
-	</body>
+	<div class="clear"></div>
+
+</body>
 
 </html>
