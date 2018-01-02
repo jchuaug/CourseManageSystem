@@ -24,6 +24,16 @@ Page({
 
         const that = this;
 
+        function refreshData(){
+          api.getCallingStatus(function(res){
+            that.setData({
+              'currentClass.present':res.numPresent
+            })
+          })
+        }
+
+        setInterval(refreshData,3000)
+
         api.getClassByClassId(classID, function (value) {
             console.log("class ", value);
             that.setData({
@@ -82,10 +92,11 @@ Page({
         const that = this;
         wx.getLocation({
             success: function (res) {
-                const loc = {};
-                loc.longtitude = res.longitude;
-                loc.latitude = res.latitude;
-                api.putLocation(loc, function () {
+                const attendance = {};
+                attendance.longtitude = res.longitude;
+                attendance.latitude = res.latitude;
+                attendance.status = 0;
+                api.putLocation(attendance, function () {
                     console.log("位置信息put成功");
                     that.setData({
                         call: {
@@ -98,7 +109,6 @@ Page({
                         title: '开始点名',
                         duration: 800
                     });
-
                 })
             },
         });
@@ -111,6 +121,10 @@ Page({
 //callback hell想办法用promise或者async来解决这个问题
     endCall: function () {
         const that = this;
+        let attendance = {status:2}
+        api.putLocation(attendance,function(){
+          console.log("结束点名的信息已经传送");
+        })
         wx.showModal({
             title: '提示',
             content: '确定要结束点名',

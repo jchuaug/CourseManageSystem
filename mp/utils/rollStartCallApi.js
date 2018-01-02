@@ -61,10 +61,33 @@ const getClassStatus = function (cb) {
 
 };
 
+function getCallingStatus(cb) {
+  Promise.all([getInfo('attendance'), getInfo('attendance/present')]).then(res => {
+    const result = res[0];
+    result.present = res[1];
+    cb(result);
+  });
+}
+
+function getInfo(url) {
+  const classID = cache.get('currentClass').id;
+  const seminarID = cache.get('currentSeminar').id;
+
+  return new Promise(resolve => {
+    utils.requestWithId({
+      url: `/seminar/${seminarID}/class/${classID}/${url}`,
+      success: function (res) {
+        resolve(res.data);
+      }
+    });
+  })
+}
+
 export default {
     getClassByClassId,
     putCurClassCalling,
     getCurrentSeminar,
     putLocation,
-    getClassStatus
+    getClassStatus,
+    getCallingStatus
 }

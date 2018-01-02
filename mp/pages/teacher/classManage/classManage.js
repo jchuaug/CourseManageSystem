@@ -8,8 +8,6 @@ import op from "../../../utils/localCache";
 //这里先在data里虚拟一个course_id
 
 Page({
-
-
     /**
      * 页面的初始数据
      */

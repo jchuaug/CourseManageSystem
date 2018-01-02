@@ -10,7 +10,7 @@
 
     <view class='input_group section'>
         <view class='label'>{{userType=='student'?'学号':'教工号'}}:</view>
-        <input placeholder="输入" id='number' bindinput='textInput'/>
+        <input type="text" placeholder="输入" id='number' bindinput='textInput' value='24320152202712'/>
     </view>
 
     <view class='input_group section'>
