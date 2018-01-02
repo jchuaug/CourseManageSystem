@@ -92,6 +92,8 @@ public class CourseController {
 		if (STUDENT.equals(type)) {
 			return new ResponseEntity<Course>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
+		
+		System.err.println(courseRequestVO);
 
 		Course course = ModelUtils.CourseRequestVOToCourse(courseRequestVO);
 

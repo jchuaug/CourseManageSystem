@@ -11,6 +11,12 @@ public class CourseRequestVO {
 
 	private Proportion proportions;
 
+	@Override
+	public String toString() {
+		return "CourseRequestVO [id=" + id + ", name=" + name + ", description=" + description + ", startTime="
+				+ startTime + ", endTime=" + endTime + ", proportions=" + proportions + "]";
+	}
+
 	public BigInteger getId() {
 		return id;
 	}
