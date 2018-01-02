@@ -8,4 +8,8 @@ function logout() {
 	}
 }
 
+function back() {
+	history.back(-1);
+}
+
 
