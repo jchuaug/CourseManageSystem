@@ -12,7 +12,7 @@ Page({
 
     unbind() {
         api.unbind(function () {
-            wx.redirectTo({
+            wx.reLaunch({
                 url: '/pages/bind/bind'
             });
         });

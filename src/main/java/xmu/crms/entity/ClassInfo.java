@@ -35,6 +35,10 @@ public class ClassInfo {
 		this.threePointPercentage = threePointPercentage;
 	}
 
+	public ClassInfo(BigInteger classId) {
+	    this.id = classId;
+	}
+
 	public BigInteger getId() {
 		return id;
 	}
@@ -124,8 +128,6 @@ public class ClassInfo {
 	}
 
 	public ClassInfo() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

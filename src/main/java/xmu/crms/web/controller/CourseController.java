@@ -319,21 +319,35 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}/seminar/current")
-    public ResponseEntity<MySeminarResponseVO> getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId,
-                                                                           @RequestHeader HttpHeaders headers) {
-
-        MySeminarResponseVO mySeminarResponseVO = null;
+    public ResponseEntity getCurrentSeminarByCourseId(@PathVariable("courseId") BigInteger courseId,
+                                                      @RequestHeader HttpHeaders headers) {
+        String token = headers.get("Authorization").get(0);
+        String type = JWTUtil.getUserType(token);
+        SeminarDetailResponseVO response = null;
         try {
             Seminar seminar = seminarService.getCurrentSeminar(courseId);
-            mySeminarResponseVO = ModelUtils.SeminarToMySeminarResponseVO(seminar, null, null);
-            if (mySeminarResponseVO == null) {
-                return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+            response = ModelUtils.SeminarToSeminarDetailResponseVO(seminar);
+            if (response == null) {
+                return ResponseEntity.notFound().build();
             }
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<MySeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(400).build();
         }
-        return ResponseEntity.ok().body(mySeminarResponseVO);
 
+        if (type.equals(TEACHER)) {
+            response.setClasses(new ArrayList<>());
+
+            try {
+                List<ClassInfo> classes = classService.listClassByCourseId(courseId);
+                for (ClassInfo classInfo : classes) {
+                    response.getClasses().add(ModelUtils.classInfoToClassResponseVO(classInfo));
+                }
+            } catch (CourseNotFoundException e) {
+            }
+
+
+        }
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping("/{courseId}/grade")

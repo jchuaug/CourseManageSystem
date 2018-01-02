@@ -172,7 +172,7 @@ public class ClassServiceImpl implements ClassService {
 		if (classInfoMapper.selectSeminarBySeminarId(location.getSeminar().getId()) == null) {
 			throw new SeminarNotFoundException();
 		}
-		classInfoMapper.insetLocation(location);
+		classInfoMapper.insertLocation(location);
 		return location.getId();
 	}
 
