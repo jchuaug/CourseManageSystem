@@ -341,14 +341,14 @@ function stuinfomod() { // StudentInfoModifyPage updatestuinfo
 // --------------------------------StudentCourse_List-----------------------------------
 var courseid = '';
 
-function jumpCourse(id) {
+
+function jumpClass(id) {
 	var info = id;
 	var arr = info.split(";");
+	console.log(info);
 	var classid = arr[0];
-	var courseid = arr[0];
-	updateCookie('classcurrent', classid);
-	updateCookie('coursecurrent', courseid);
-	window.location.href = "/studentToCourse/" + courseid;
+	var courseid = arr[1];
+	window.location.href = "/studentToCourse/" + courseid+"/class/"+classid;
 }
 
 function classinfo() { // StudentCourse_List showclassinfo
@@ -368,7 +368,7 @@ function classinfo() { // StudentCourse_List showclassinfo
 									+ data[i].courseName
 									+ '</span><button id="'
 									+ data[i].id
-									+ '" onclick="dropclass(this.id)">退选课程</button></h3><div class="divideline"></div><div  class="classinfo" onclick="jumpCourse(this.id)" id="'
+									+ '" onclick="dropclass(this.id)">退选课程</button></h3><div class="divideline"></div><div  class="classinfo" onclick="jumpClass(this.id)" id="'
 									+ data[i].id
 									+ ';'
 									+ data[i].courseId
@@ -413,7 +413,7 @@ function classlist() { // StudentCourse_List showclassinfo
 									+ data[i].courseName
 									+ '</span><button id="'
 									+ data[i].id
-									+ '" onclick="selectclass(this.id)">选择课程</button></h3><div class="divideline"></div><div  class="classinfo" onclick="jumpCourse(this.id)" id="'
+									+ '" onclick="selectclass(this.id)">选择课程</button></h3><div class="divideline"></div><div  class="classinfo"  id="'
 									+ data[i].id
 									+ ';'
 									+ data[i].courseId

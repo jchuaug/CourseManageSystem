@@ -1,8 +1,13 @@
-var courseId = getCourseId();
-function getCourseId() {
+var courseId;
+var classId;
+
+getId();
+function getId() {
 	var url = location.href;
-	var index = url.indexOf("studentToCourse/");
-	return url.substring(index + 16);
+	var index1 = url.indexOf("studentToCourse/");
+	var index2 = url.indexOf("class/");
+	courseId= url.substring(index1 + 16,index2-1);
+	classId= url.substring(index2+6);
 }
 
 function getCourse() {
@@ -69,7 +74,6 @@ function load() {
 
 	});
 
-	var classId = "1";
 	document.getElementById("fixedGroup").setAttribute("href",
 			"/course/" + courseId + "/toFixedGroup/" + classId);
 

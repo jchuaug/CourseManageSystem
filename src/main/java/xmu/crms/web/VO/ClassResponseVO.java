@@ -4,6 +4,8 @@ import java.math.BigInteger;
 
 public class ClassResponseVO {
     private BigInteger id;
+    
+    private BigInteger courseId;
 
     private String name;
 
@@ -19,6 +21,14 @@ public class ClassResponseVO {
 
 	private Proportion proportions;
 
+
+	public BigInteger getCourseId() {
+		return courseId;
+	}
+
+	public void setCourseId(BigInteger courseId) {
+		this.courseId = courseId;
+	}
 
 	public Proportion getProportions() {
 		return proportions;

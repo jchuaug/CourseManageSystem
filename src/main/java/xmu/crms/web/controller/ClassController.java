@@ -268,8 +268,13 @@ public class ClassController {
 
 		try {
 			fixGroup = fixGroupService.getFixedGroupById(studentId, classId);
-			List<FixGroupMember> students = fixGroupService.listFixGroupByGroupId(fixGroup.getId());
-			groupResponseVO = ModelUtils.FixGroupToGroupResponseVO(fixGroup, students);
+			if (fixGroup!=null) {
+				List<FixGroupMember> students = fixGroupService.listFixGroupByGroupId(fixGroup.getId());
+				groupResponseVO = ModelUtils.FixGroupToGroupResponseVO(fixGroup, students);
+			}else {
+				return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+			}
+			
 		} catch (ClassesNotFoundException | FixGroupNotFoundException | UserNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<GroupResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);

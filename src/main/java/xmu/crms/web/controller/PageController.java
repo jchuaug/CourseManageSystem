@@ -18,7 +18,7 @@ public class PageController {
 	}
 
 	
-	@RequestMapping("/studentToCourse/{courseId}")
+	@RequestMapping("/studentToCourse/{courseId}/class/{classId}")
 	public String studentToCourse() {
 		return "student/course";
 	}

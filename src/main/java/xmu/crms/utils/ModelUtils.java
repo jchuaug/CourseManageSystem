@@ -17,12 +17,14 @@ public class ModelUtils {
 	public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
 		ClassResponseVO classVO = new ClassResponseVO();
 		classVO.setId(classInfo.getId());
+		
 		classVO.setName(classInfo.getName());
 		classVO.setNumStudent(numStudent);
 		classVO.setTime(classInfo.getClassTime());
 		classVO.setSite(classInfo.getSite());
 		Course course = classInfo.getCourse();
 		if (course != null) {
+			classVO.setCourseId(course.getId());
 			classVO.setCourseName(course.getName());
 			User teacher = classInfo.getCourse().getTeacher();
 			classVO.setCourseTeacher(teacher.getName());

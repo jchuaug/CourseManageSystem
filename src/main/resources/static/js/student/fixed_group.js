@@ -79,6 +79,12 @@ function load() {
 							newMember.setAttribute("class", "alt");
 						studentTable.appendChild(newMember);
 					}
+				},
+
+				statusCode : {
+					404 : function() {
+						 document.getElementById("group_table").innerHTML="未加入固定分组";
+					}
 				}
 			});
 
