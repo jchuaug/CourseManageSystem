@@ -14,314 +14,326 @@ import java.util.List;
  */
 public class ModelUtils {
 
-	public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
-		ClassResponseVO classVO = new ClassResponseVO();
-		classVO.setId(classInfo.getId());
-		
-		classVO.setName(classInfo.getName());
-		classVO.setNumStudent(numStudent);
-		classVO.setTime(classInfo.getClassTime());
-		classVO.setSite(classInfo.getSite());
-		Course course = classInfo.getCourse();
-		if (course != null) {
-			classVO.setCourseId(course.getId());
-			classVO.setCourseName(course.getName());
-			User teacher = classInfo.getCourse().getTeacher();
-			classVO.setCourseTeacher(teacher.getName());
+    public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo, Integer numStudent) {
+        ClassResponseVO classVO = new ClassResponseVO();
+        classVO.setId(classInfo.getId());
 
-		}
-		Proportion proportion = new Proportion();
-		proportion.setPresentation(classInfo.getPresentationPercentage());
-		proportion.setReport(classInfo.getReportPercentage());
-		proportion.setA(classInfo.getFivePointPercentage());
-		proportion.setB(classInfo.getFourPointPercentage());
-		proportion.setC(classInfo.getThreePointPercentage());
-		classVO.setProportions(proportion);
-		return classVO;
+        classVO.setName(classInfo.getName());
+        classVO.setNumStudent(numStudent);
+        classVO.setTime(classInfo.getClassTime());
+        classVO.setSite(classInfo.getSite());
+        Course course = classInfo.getCourse();
+        if (course != null) {
+            classVO.setCourseId(course.getId());
+            classVO.setCourseName(course.getName());
+            User teacher = classInfo.getCourse().getTeacher();
+            classVO.setCourseTeacher(teacher.getName());
 
-	}
+        }
+        Proportion proportion = new Proportion();
+        proportion.setPresentation(classInfo.getPresentationPercentage());
+        proportion.setReport(classInfo.getReportPercentage());
+        proportion.setA(classInfo.getFivePointPercentage());
+        proportion.setB(classInfo.getFourPointPercentage());
+        proportion.setC(classInfo.getThreePointPercentage());
+        classVO.setProportions(proportion);
+        return classVO;
 
-	public static ClassInfo ClassRequestVOToClassInfo(ClassRequestVO classRequestVO) {
-		Proportion proportion = classRequestVO.getProportions();
-		ClassInfo classInfo = new ClassInfo(classRequestVO.getId(), classRequestVO.getName(), null,
-				classRequestVO.getSite(), classRequestVO.getTime(), null, proportion.getReport(),
-				proportion.getPresentation(), proportion.getA(), proportion.getB(), proportion.getC());
-		return classInfo;
-	}
+    }
 
-	public static UserResponseVO UserToUserResponseVO(User user) {
-		if (user==null) {
-			return null;
-		}
-		UserResponseVO userResponseVO = new UserResponseVO();
-		userResponseVO.setId(user.getId());
-		userResponseVO.setName(user.getName());
-		userResponseVO.setNumber(user.getNumber());
-		userResponseVO.setPhone(user.getPhone());
-		userResponseVO.setSchool(user.getSchool().getName());
-		userResponseVO.setEmail(user.getEmail());
-		userResponseVO.setGender(user.getGender() == 1 ? "女" : "男");
-		return userResponseVO;
-	}
+    public static ClassInfo ClassRequestVOToClassInfo(ClassRequestVO classRequestVO) {
+        Proportion proportion = classRequestVO.getProportions();
+        ClassInfo classInfo = new ClassInfo(classRequestVO.getId(), classRequestVO.getName(), null,
+                classRequestVO.getSite(), classRequestVO.getTime(), null, proportion.getReport(),
+                proportion.getPresentation(), proportion.getA(), proportion.getB(), proportion.getC());
+        return classInfo;
+    }
 
-	public static UserResponseVO UserToLeader(User user) {
-		if (user == null) {
-			return null;
-		}
-		UserResponseVO userResponseVO = new UserResponseVO();
-		userResponseVO.setId(user.getId());
-		userResponseVO.setName(user.getName());
-		return userResponseVO;
-	}
+    public static UserResponseVO UserToUserResponseVO(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserResponseVO userResponseVO = new UserResponseVO();
+        userResponseVO.setId(user.getId());
+        userResponseVO.setName(user.getName());
+        userResponseVO.setNumber(user.getNumber());
+        userResponseVO.setPhone(user.getPhone());
+        userResponseVO.setSchool("厦门大学");
+        userResponseVO.setEmail(user.getEmail());
+        userResponseVO.setGender(user.getGender() == 1 ? "女" : "男");
+        return userResponseVO;
+    }
 
-	public static GroupResponseVO FixGroupToGroupResponseVO(FixGroup fixGroup, List<FixGroupMember> students) {
-		GroupResponseVO groupResponseVO = new GroupResponseVO();
-		groupResponseVO.setLeader(UserToUserResponseVO(fixGroup.getLeader()));
-		List<UserResponseVO> studentVOs = new ArrayList<>();
-		for (FixGroupMember fixGroupMember : students) {
-			User student = fixGroupMember.getStudent();
-			if (!(student.getId().equals(fixGroup.getLeader().getId()))) {
-				studentVOs.add(ModelUtils.UserToUserResponseVO(student));
-			}
-		}
-		groupResponseVO.setMembers(studentVOs);
-		return groupResponseVO;
-	}
+    public static UserResponseVO UserToLeader(User user) {
+        if (user == null) {
+            return null;
+        }
+        UserResponseVO userResponseVO = new UserResponseVO();
+        userResponseVO.setId(user.getId());
+        userResponseVO.setName(user.getName());
+        return userResponseVO;
+    }
 
-	public static SeminarResponseVO SeminarInfoToSeminarResponseVO(Seminar seminar, List<Topic> topics, Integer grade) {
-		SeminarResponseVO responseVO = new SeminarResponseVO();
-		responseVO.setId(seminar.getId());
-		responseVO.setName(seminar.getName());
-		responseVO.setDescription(seminar.getDescription());
-		if (seminar.getFixed() != null) {
-			responseVO.setGroupingMethod(seminar.getFixed() == true ? "fixed" : "random");
-		}
+    public static GroupResponseVO FixGroupToGroupResponseVO(FixGroup fixGroup, List<FixGroupMember> students) {
+        GroupResponseVO groupResponseVO = new GroupResponseVO();
+        groupResponseVO.setLeader(UserToUserResponseVO(fixGroup.getLeader()));
+        List<UserResponseVO> studentVOs = new ArrayList<>();
+        for (FixGroupMember fixGroupMember : students) {
+            User student = fixGroupMember.getStudent();
+            if (!(student.getId().equals(fixGroup.getLeader().getId()))) {
+                studentVOs.add(ModelUtils.UserToUserResponseVO(student));
+            }
+        }
+        groupResponseVO.setMembers(studentVOs);
+        return groupResponseVO;
+    }
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String time = sdf.format(seminar.getStartTime());
-		responseVO.setStartTime(time);
-		time = sdf.format(seminar.getEndTime());
-		responseVO.setEndTime(time);
-		List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
-		if (topics != null) {
-			for (Topic topic : topics) {
-				TopicResponseVO topicResponseVO = TopicToTopicResponseVO(topic, null);
-				topicResponseVOs.add(topicResponseVO);
-			}
-		}
-		if (grade != null) {
-			responseVO.setGrade(grade);
-		}
-		responseVO.setTopics(topicResponseVOs);
-		return responseVO;
-	}
+    public static SeminarResponseVO SeminarInfoToSeminarResponseVO(Seminar seminar, List<Topic> topics, Integer grade) {
+        SeminarResponseVO responseVO = new SeminarResponseVO();
+        responseVO.setId(seminar.getId());
+        responseVO.setName(seminar.getName());
+        responseVO.setDescription(seminar.getDescription());
+        if (seminar.getFixed() != null) {
+            responseVO.setGroupingMethod(seminar.getFixed() == true ? "fixed" : "random");
+        }
 
-	public static TopicResponseVO TopicToTopicResponseVO(Topic topic, Integer groupLeft) {
-		TopicResponseVO topicResponseVO = new TopicResponseVO();
-		topicResponseVO.setId(topic.getId());
-		topicResponseVO.setName(topic.getName());
-		topicResponseVO.setDescription(topic.getDescription());
-		topicResponseVO.setGroupMemberLimit(topic.getGroupStudentLimit());
-		topicResponseVO.setGroupLimit(topic.getGroupNumberLimit());
-		topicResponseVO.setGroupLeft(groupLeft);
-		return topicResponseVO;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String time = sdf.format(seminar.getStartTime());
+        responseVO.setStartTime(time);
+        time = sdf.format(seminar.getEndTime());
+        responseVO.setEndTime(time);
+        List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
+        if (topics != null) {
+            for (Topic topic : topics) {
+                TopicResponseVO topicResponseVO = TopicToTopicResponseVO(topic, null);
+                topicResponseVOs.add(topicResponseVO);
+            }
+        }
+        if (grade != null) {
+            responseVO.setGrade(grade);
+        }
+        responseVO.setTopics(topicResponseVOs);
+        return responseVO;
+    }
 
-	public static Seminar SeminarResponseVOToSeminar(SeminarResponseVO seminar, Seminar forSeminar) {
-		Seminar seminar2 = new Seminar();
-		seminar2.setId(seminar.getId());
-		seminar2.setName(seminar.getName());
-		seminar2.setDescription(seminar.getDescription());
-		Boolean fixed = null;
-		if (seminar.getGroupingMethod() != null) {
-			if (seminar.getGroupingMethod().equals("fixed")) {
-				fixed = true;
-			} else if (seminar.getGroupingMethod().equals("random")) {
-				fixed = false;
-			}
-		}
+    public static TopicResponseVO TopicToTopicResponseVO(Topic topic, Integer groupLeft) {
+        TopicResponseVO topicResponseVO = new TopicResponseVO();
+        topicResponseVO.setId(topic.getId());
+        topicResponseVO.setName(topic.getName());
+        topicResponseVO.setDescription(topic.getDescription());
+        topicResponseVO.setGroupMemberLimit(topic.getGroupStudentLimit());
+        topicResponseVO.setGroupLimit(topic.getGroupNumberLimit());
+        topicResponseVO.setGroupLeft(groupLeft);
+        return topicResponseVO;
+    }
 
-		seminar2.setFixed(fixed);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String dstr = seminar.getStartTime();
-		try {
-			java.util.Date date = sdf.parse(dstr);
-			seminar2.setStartTime(date);
-			dstr = seminar.getEndTime();
-			date = sdf.parse(dstr);
-			seminar2.setEndTime(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		if (forSeminar != null) {
-			seminar2.setCourse(forSeminar.getCourse());
-		}
+    public static Seminar SeminarResponseVOToSeminar(SeminarResponseVO seminar, Seminar forSeminar) {
+        Seminar seminar2 = new Seminar();
+        seminar2.setId(seminar.getId());
+        seminar2.setName(seminar.getName());
+        seminar2.setDescription(seminar.getDescription());
+        Boolean fixed = null;
+        if (seminar.getGroupingMethod() != null) {
+            if (seminar.getGroupingMethod().equals("fixed")) {
+                fixed = true;
+            } else if (seminar.getGroupingMethod().equals("random")) {
+                fixed = false;
+            }
+        }
 
-		return seminar2;
-	}
+        seminar2.setFixed(fixed);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dstr = seminar.getStartTime();
+        try {
+            java.util.Date date = sdf.parse(dstr);
+            seminar2.setStartTime(date);
+            dstr = seminar.getEndTime();
+            date = sdf.parse(dstr);
+            seminar2.setEndTime(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (forSeminar != null) {
+            seminar2.setCourse(forSeminar.getCourse());
+        }
 
-	public static MySeminarResponseVO SeminarToMySeminarResponseVO(Seminar seminar, Boolean isLeader,
-			Boolean areTopicsSeletced) {
-		MySeminarResponseVO mySeminarResponseVO = new MySeminarResponseVO();
-		mySeminarResponseVO.setId(seminar.getId());
-		mySeminarResponseVO.setName(seminar.getName());
-		String groupingMethod = null;
-		if (seminar.getFixed() == null) {
-			groupingMethod = null;
-		} else if (seminar.getFixed() == true) {
-			groupingMethod = "fixed";
-		} else if (seminar.getFixed() == false) {
-			groupingMethod = "random";
-		}
-		mySeminarResponseVO.setGroupingMethod(groupingMethod);
-		mySeminarResponseVO.setCourseName(seminar.getCourse().getName());
+        return seminar2;
+    }
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String time = sdf.format(seminar.getStartTime());
-		mySeminarResponseVO.setStartTime(time);
-		time = sdf.format(seminar.getEndTime());
-		mySeminarResponseVO.setEndTime(time);
-		mySeminarResponseVO.setIsLeader(isLeader);
-		mySeminarResponseVO.setAreTopicsSeletced(areTopicsSeletced);
-		return mySeminarResponseVO;
-	}
+    public static MySeminarResponseVO SeminarToMySeminarResponseVO(Seminar seminar, Boolean isLeader,
+                                                                   Boolean areTopicsSeletced) {
+        MySeminarResponseVO mySeminarResponseVO = new MySeminarResponseVO();
+        mySeminarResponseVO.setId(seminar.getId());
+        mySeminarResponseVO.setName(seminar.getName());
+        String groupingMethod = null;
+        if (seminar.getFixed() == null) {
+            groupingMethod = null;
+        } else if (seminar.getFixed() == true) {
+            groupingMethod = "fixed";
+        } else if (seminar.getFixed() == false) {
+            groupingMethod = "random";
+        }
+        mySeminarResponseVO.setGroupingMethod(groupingMethod);
+        mySeminarResponseVO.setCourseName(seminar.getCourse().getName());
 
-	public static SeminarDetailResponseVO SeminarToSeminarDetailResponseVO(Seminar seminar) {
-		User teacher = seminar.getCourse().getTeacher();
-		SeminarDetailResponseVO seminarDetailResponseVO = new SeminarDetailResponseVO();
-		seminarDetailResponseVO.setId(seminar.getId());
-		seminarDetailResponseVO.setName(seminar.getName());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String time = sdf.format(seminar.getStartTime());
-		seminarDetailResponseVO.setStartTime(time);
-		time = sdf.format(seminar.getEndTime());
-		seminarDetailResponseVO.setEndTime(time);
-		seminarDetailResponseVO.setTeacherName(teacher.getName());
-		seminarDetailResponseVO.setTeacherEmail(teacher.getEmail());
-		seminarDetailResponseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
-		return seminarDetailResponseVO;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String time = sdf.format(seminar.getStartTime());
+        mySeminarResponseVO.setStartTime(time);
+        time = sdf.format(seminar.getEndTime());
+        mySeminarResponseVO.setEndTime(time);
+        mySeminarResponseVO.setIsLeader(isLeader);
+        mySeminarResponseVO.setAreTopicsSeletced(areTopicsSeletced);
+        return mySeminarResponseVO;
+    }
 
-	public static Topic TopicResponseVOToTopic(TopicResponseVO topic) {
-		Topic topic2 = new Topic();
-		topic2.setName(topic.getName());
-		topic2.setDescription(topic.getDescription());
-		topic2.setGroupNumberLimit(topic.getGroupLimit());
-		topic2.setGroupStudentLimit(topic.getGroupMemberLimit());
-		topic2.setSerial(topic.getSerial());
-		return topic2;
-	}
+    public static SeminarDetailResponseVO SeminarToSeminarDetailResponseVO(Seminar seminar) {
+        User teacher = seminar.getCourse().getTeacher();
+        SeminarDetailResponseVO seminarDetailResponseVO = new SeminarDetailResponseVO();
+        seminarDetailResponseVO.setId(seminar.getId());
+        seminarDetailResponseVO.setName(seminar.getName());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String time = sdf.format(seminar.getStartTime());
+        seminarDetailResponseVO.setStartTime(time);
+        time = sdf.format(seminar.getEndTime());
+        seminarDetailResponseVO.setEndTime(time);
+        seminarDetailResponseVO.setTeacherName(teacher.getName());
+        seminarDetailResponseVO.setTeacherEmail(teacher.getEmail());
+        seminarDetailResponseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
+        return seminarDetailResponseVO;
+    }
 
-	public static GroupResponseVO SeminarGroupToGroupResponseVO(SeminarGroup seminarGroup,
-			List<SeminarGroupTopic> topics, List<User> seminarGroupMembers) {
-		GroupResponseVO groupResponseVO = new GroupResponseVO();
-		if (seminarGroup.getLeader() != null) {
-			groupResponseVO.setLeader(ModelUtils.UserToUserResponseVO(seminarGroup.getLeader()));
-		}
-		List<UserResponseVO> members = new ArrayList<>();
-		if (seminarGroupMembers != null) {
-			for (User seminarGroupMember : seminarGroupMembers) {
-				members.add(UserToUserResponseVO(seminarGroupMember));
-			}
-		}
-		groupResponseVO.setMembers(members);
-		groupResponseVO.setId(seminarGroup.getId());
-		groupResponseVO.setName(seminarGroup.getId().toString());
+    public static Topic TopicResponseVOToTopic(TopicResponseVO topic) {
+        Topic topic2 = new Topic();
+        topic2.setName(topic.getName());
+        topic2.setDescription(topic.getDescription());
+        topic2.setGroupNumberLimit(topic.getGroupLimit());
+        topic2.setGroupStudentLimit(topic.getGroupMemberLimit());
+        topic2.setSerial(topic.getSerial());
+        return topic2;
+    }
 
-		if (topics != null) {
-			List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
-			for (SeminarGroupTopic seminarGroupTopic : topics) {
-				topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
-			}
-			groupResponseVO.setTopics(topicResponseVOs);
-		}
+    public static GroupResponseVO SeminarGroupToGroupResponseVO(SeminarGroup seminarGroup,
+                                                                List<SeminarGroupTopic> topics, List<User> seminarGroupMembers) {
+        GroupResponseVO groupResponseVO = new GroupResponseVO();
+        if (seminarGroup.getLeader() != null) {
+            groupResponseVO.setLeader(ModelUtils.UserToUserResponseVO(seminarGroup.getLeader()));
+        }
+        List<UserResponseVO> members = new ArrayList<>();
+        if (seminarGroupMembers != null) {
+            for (User seminarGroupMember : seminarGroupMembers) {
+                members.add(UserToUserResponseVO(seminarGroupMember));
+            }
+        }
+        groupResponseVO.setMembers(members);
+        groupResponseVO.setId(seminarGroup.getId());
+        groupResponseVO.setName(seminarGroup.getId().toString());
 
-		return groupResponseVO;
-	}
+        if (topics != null) {
+            List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
+            for (SeminarGroupTopic seminarGroupTopic : topics) {
+                topicResponseVOs.add(TopicToTopicResponseVO(seminarGroupTopic.getTopic(), null));
+            }
+            groupResponseVO.setTopics(topicResponseVOs);
+        }
 
-	public static CourseResponseVO CourseToCourseResponseVO(Course course, Integer numClass, Integer numStudent) {
-		CourseResponseVO courseResponseVO = new CourseResponseVO();
-		courseResponseVO.setId(course.getId());
-		courseResponseVO.setName(course.getName());
-		courseResponseVO.setDescription(course.getDescription());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return groupResponseVO;
+    }
 
-		if (course.getStartDate() != null && course.getEndDate() != null) {
-			String time = sdf.format(course.getStartDate());
-			courseResponseVO.setStartTime(time);
-			time = sdf.format(course.getEndDate());
-			courseResponseVO.setEndTime(time);
-		}
-		courseResponseVO.setNumClass(numClass);
-		courseResponseVO.setNumStudent(numStudent);
-		if (course.getTeacher() != null) {
-			courseResponseVO.setTeacherEmail(course.getTeacher().getEmail());
-			courseResponseVO.setTeacherName(course.getTeacher().getName());
-		}
-		return courseResponseVO;
-	}
+    public static CourseResponseVO CourseToCourseResponseVO(Course course, Integer numClass, Integer numStudent) {
+        CourseResponseVO courseResponseVO = new CourseResponseVO();
+        courseResponseVO.setId(course.getId());
+        courseResponseVO.setName(course.getName());
+        courseResponseVO.setDescription(course.getDescription());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-	public static Course CourseRequestVOToCourse(CourseRequestVO courseRequestVO) {
-		Course course = new Course();
-		course.setName(courseRequestVO.getName());
-		course.setDescription(courseRequestVO.getDescription());
+        if (course.getStartDate() != null && course.getEndDate() != null) {
+            String time = sdf.format(course.getStartDate());
+            courseResponseVO.setStartTime(time);
+            time = sdf.format(course.getEndDate());
+            courseResponseVO.setEndTime(time);
+        }
+        courseResponseVO.setNumClass(numClass);
+        courseResponseVO.setNumStudent(numStudent);
+        if (course.getTeacher() != null) {
+            courseResponseVO.setTeacherEmail(course.getTeacher().getEmail());
+            courseResponseVO.setTeacherName(course.getTeacher().getName());
+        }
+        return courseResponseVO;
+    }
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String dstr = courseRequestVO.getStartTime();
-		java.util.Date date;
-		try {
-			date = sdf.parse(dstr);
-			course.setStartDate(date);
-			date = sdf.parse(courseRequestVO.getEndTime());
-			course.setEndDate(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		Proportion proportions = courseRequestVO.getProportions();
-		course.setReportPercentage(proportions.getReport());
-		course.setPresentationPercentage(proportions.getPresentation());
-		course.setFivePointPercentage(proportions.getA());
-		course.setFourPointPercentage(proportions.getB());
-		course.setThreePointPercentage(proportions.getC());
-		return course;
-	}
+    public static Course CourseRequestVOToCourse(CourseRequestVO courseRequestVO) {
+        Course course = new Course();
+        course.setName(courseRequestVO.getName());
+        course.setDescription(courseRequestVO.getDescription());
 
-	public static SeminarGradeResponseVO SeminarGroupToSeminarGradeResponseVO(SeminarGroup seminarGroup) {
-		if (seminarGroup == null) {
-			return null;
-		}
-		SeminarGradeResponseVO seminarGradeResponseVO = new SeminarGradeResponseVO();
-		seminarGradeResponseVO.setSeminarName(seminarGroup.getSeminar().getName());
-		seminarGradeResponseVO.setGroupName(seminarGroup.getId().toString());
-		seminarGradeResponseVO.setLeaderName(seminarGroup.getLeader().getName());
-		seminarGradeResponseVO.setPresentationGrade(seminarGroup.getPresentationGrade());
-		seminarGradeResponseVO.setReportGrade(seminarGroup.getReportGrade());
-		seminarGradeResponseVO.setGrade(seminarGroup.getFinalGrade());
-		return seminarGradeResponseVO;
-	}
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String dstr = courseRequestVO.getStartTime();
+        java.util.Date date;
+        try {
+            date = sdf.parse(dstr);
+            course.setStartDate(date);
+            date = sdf.parse(courseRequestVO.getEndTime());
+            course.setEndDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Proportion proportions = courseRequestVO.getProportions();
+        course.setReportPercentage(proportions.getReport());
+        course.setPresentationPercentage(proportions.getPresentation());
+        course.setFivePointPercentage(proportions.getA());
+        course.setFourPointPercentage(proportions.getB());
+        course.setThreePointPercentage(proportions.getC());
+        return course;
+    }
 
-	public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo) {
-		ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), classInfo.getClassTime());
-		return classVO;
-	}
+    public static SeminarGradeResponseVO SeminarGroupToSeminarGradeResponseVO(SeminarGroup seminarGroup) {
+        if (seminarGroup == null) {
+            return null;
+        }
+        SeminarGradeResponseVO seminarGradeResponseVO = new SeminarGradeResponseVO();
+        seminarGradeResponseVO.setSeminarName(seminarGroup.getSeminar().getName());
+        seminarGradeResponseVO.setGroupName(seminarGroup.getId().toString());
+        seminarGradeResponseVO.setLeaderName(seminarGroup.getLeader().getName());
+        seminarGradeResponseVO.setPresentationGrade(seminarGroup.getPresentationGrade());
+        seminarGradeResponseVO.setReportGrade(seminarGroup.getReportGrade());
+        seminarGradeResponseVO.setGrade(seminarGroup.getFinalGrade());
+        return seminarGradeResponseVO;
+    }
 
-	public static SeminarDetailResponseVO seminarInfoToSeminarDetailResponseVO(Seminar seminar) {
-		SeminarDetailResponseVO responseVO = new SeminarDetailResponseVO();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		responseVO.setEndTime(sdf.format(seminar.getEndTime()));
-		responseVO.setStartTime(sdf.format(seminar.getStartTime()));
-		responseVO.setId(seminar.getId());
-		responseVO.setName(seminar.getName());
-		responseVO.setCourse(seminar.getCourse().getName());
-		responseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
-		return responseVO;
-	}
+    public static ClassResponseVO classInfoToClassResponseVO(ClassInfo classInfo) {
+        ClassResponseVO classVO = new ClassResponseVO(classInfo.getId(), classInfo.getName(), classInfo.getClassTime());
+        return classVO;
+    }
 
-	public static LocationResponseVO locationToResponseVO(Location location) {
-		LocationResponseVO responseVO = new LocationResponseVO();
-		responseVO.setLatitude(String.valueOf(location.getLatitude()));
-		responseVO.setLongitude(String.valueOf(location.getLongitude()));
-		responseVO.setStatus(location.getStatus());
-		return responseVO;
-	}
+    public static SeminarDetailResponseVO seminarInfoToSeminarDetailResponseVO(Seminar seminar) {
+        SeminarDetailResponseVO responseVO = new SeminarDetailResponseVO();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        responseVO.setEndTime(sdf.format(seminar.getEndTime()));
+        responseVO.setStartTime(sdf.format(seminar.getStartTime()));
+        responseVO.setId(seminar.getId());
+        responseVO.setName(seminar.getName());
+        responseVO.setCourse(seminar.getCourse().getName());
+        responseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
+        return responseVO;
+    }
+
+    public static LocationResponseVO locationToResponseVO(Location location) {
+        LocationResponseVO responseVO = new LocationResponseVO();
+        responseVO.setLatitude(String.valueOf(location.getLatitude()));
+        responseVO.setLongitude(String.valueOf(location.getLongitude()));
+        responseVO.setStatus(location.getStatus());
+        return responseVO;
+    }
+
+    public static SeminarResponseVO SeminarInfoToSeminarResponseVO(Seminar seminar) {
+        SeminarResponseVO responseVO = new SeminarResponseVO();
+        responseVO.setStartTime(String.valueOf(seminar.getStartTime()));
+        responseVO.setEndTime(String.valueOf(seminar.getEndTime()));
+
+        responseVO.setGroupingMethod(seminar.getFixed() ? "fixed" : "random");
+        responseVO.setId(seminar.getId());
+        responseVO.setDescription(seminar.getDescription());
+        responseVO.setName(seminar.getName());
+        return responseVO;
+    }
 }

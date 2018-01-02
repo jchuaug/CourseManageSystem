@@ -5,6 +5,7 @@ import java.util.List;
 
 import xmu.crms.entity.ClassInfo;
 import xmu.crms.entity.Location;
+import xmu.crms.entity.Seminar;
 import xmu.crms.entity.User;
 import xmu.crms.exception.ClassesNotFoundException;
 import xmu.crms.exception.CourseNotFoundException;
@@ -189,4 +190,6 @@ public interface ClassService {
      * @see ClassService #getClassByClassId(BigInteger classId)
      */
     List<ClassInfo> listClassByUserId(BigInteger userId) throws IllegalArgumentException, ClassesNotFoundException;
+
+    List<Seminar> listSeminarsByClassId(BigInteger classId);
 }

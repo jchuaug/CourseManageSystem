@@ -101,6 +101,7 @@ function submit() {
 				}),
 		success : function(data) {
 			alert("成功修改");
+			window.location.href = "/course/"+courseId+"/toSeminar/"+seminarId;
 		}
 	});
 }

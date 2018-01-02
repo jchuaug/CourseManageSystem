@@ -89,6 +89,7 @@ function submit() {
 		},
 		success : function(data) {
 			alert("添加成功");
+			window.location.href = "/teacherToCourse/"+courseId;
 		}
 
 	});

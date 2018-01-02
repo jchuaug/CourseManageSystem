@@ -9,7 +9,7 @@ function getInfo(cb) {
         success: function (response) {
             console.log(response);
             cache.set('me', response.data);
-
+            debugger;
             utils.requestWithId({
                 url: '/course',
                 success: function (res) {

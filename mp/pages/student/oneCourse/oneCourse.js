@@ -7,10 +7,11 @@ Page({
     data: {},
 
     onLoad: function (options) {
+        console.log('=====');
         console.log(options);
         const that = this;
 
-        api.getSeminarInfoByCourseId({id: options.courseId}, function (res) {
+        api.getSeminarInfoByCourseId({id: options.classId}, function (res) {
             const seminars = res.seminars;
             seminars.map(seminar=>{
                 seminar.active = that.isSeminarStarted(seminar);
@@ -19,7 +20,7 @@ Page({
             console.log(seminars);
 
             that.setData({
-                courseId: options.courseId,
+                courseId: options.classId,
                 courseName: res.courseName,
                 seminars: seminars
             });

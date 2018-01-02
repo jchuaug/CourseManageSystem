@@ -27,10 +27,15 @@ function becomeLeader(cb) {
         data: reqObj,
         method: 'put',
         success: function (res) {
-            getGroupInfo(cb);
+            utils.requestWithId({
+                url: `/seminar/${cache.get("currentSeminarID")}/group/my`,
+                success: function (res) {
+                    cache.set('group', res.data);
+                    cb(res.data)
+                }
+            });
         }
     });
-    cb(true);
 }
 
 
@@ -45,7 +50,13 @@ function quitLeader(cb) {
         data: reqObj,
         method: 'put',
         success: function (res) {
-            getGroupInfo(cb);
+            utils.requestWithId({
+                url: `/seminar/${cache.get("currentSeminarID")}/group/my`,
+                success: function (res) {
+                    cache.set('group', res.data);
+                    cb(res.data)
+                }
+            });
         }
     })
 }

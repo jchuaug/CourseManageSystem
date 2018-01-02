@@ -1,4 +1,4 @@
-import api from "../../../utils/studentMainApi";
+import api from "../../../utils/teacherMainApi";
 import utils from "../../../utils/utils";
 // pages/teacher/teacherMain/teacherMain.js
 Page({

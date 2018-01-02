@@ -24,6 +24,7 @@ Page({
         const that = this;
 
         api.getInfo(courseID, function (res) {
+            console.log("class manage", res);
             res.startTime = that.getShortDate(res.startTime);
             res.endTime = that.getShortDate(res.endTime);
             that.setData({

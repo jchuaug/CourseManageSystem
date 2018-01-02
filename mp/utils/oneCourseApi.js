@@ -3,7 +3,7 @@ import cache from './localCache';
 
 function getSeminarInfoByCourseId(args, cb) {
     utils.requestWithId({
-        url: `/course/${args.id}/seminar`,
+        url: `/class/${args.id}/seminar`,
         success: function (res) {
             cacheSeminars(res.data);
             cache.set('currentCourseID', args.id);

@@ -152,4 +152,6 @@ public interface ClassInfoMapper {
 	int insertCourseSelectionById(CourseSelection courseSelection);
 
 	List<ClassInfo> listAllClass();
+
+    List<Seminar> listSeminarsByClassId(BigInteger classId);
 }

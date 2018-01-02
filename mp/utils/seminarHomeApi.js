@@ -11,6 +11,7 @@ function getSeminarInfo(seminarID, cb) {
 
     // get and cache group info
     // first get group id
+
     utils.requestWithId({
         url: `/seminar/${seminarID}/group/my`,
         success: function (res) {

@@ -35,7 +35,7 @@ Page({
         setInterval(refreshData,3000)
 
         api.getClassByClassId(classID, function (value) {
-            console.log(value);
+            console.log("class ", value);
             that.setData({
                 classID: classID,
                 currentClass: value
