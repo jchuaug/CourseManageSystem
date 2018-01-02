@@ -14,7 +14,14 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * 
+* <p>Title: JWTFilter.java<／p>
+* <p>Description: <／p>
+* <p>Copyright: Copyright (c) 2018<／p>
+ * @author Jackey
+ * @date 2018年1月3日
+ */
 public class JWTFilter extends AuthenticationFilter {
 	private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 

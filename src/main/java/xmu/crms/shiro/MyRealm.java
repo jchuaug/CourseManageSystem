@@ -9,7 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import xmu.crms.entity.User;
 import xmu.crms.service.UserService;
 import xmu.crms.utils.JWTUtil;
-
+/**
+ * 
+* <p>Title: MyRealm.java<／p>
+* <p>Description: <／p>
+* <p>Copyright: Copyright (c) 2018<／p>
+ * @author Jackey
+ * @date 2018年1月3日
+ */
 public class MyRealm extends AuthorizingRealm {
     @Autowired
     UserService service;
