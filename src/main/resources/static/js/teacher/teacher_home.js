@@ -18,8 +18,14 @@ function jumpcourse(cid) { //点击修改课程时，将课程id号存储在cook
 	window.location.href = '/teacher/course/' + cid + '/update'; //页面跳转
 }
 
+function jumpcoursedetail(cid) { //点击修改课程时，将课程id号存储在cookie中
+	updateCookie('courseCurrent', cid);
+	window.location.href = '/teacherToCourse/' + cid; //页面跳转
+}
+
 
 function courselist() {
+	
 	$.ajax({
 		type: 'get',
 		url: '/course',
