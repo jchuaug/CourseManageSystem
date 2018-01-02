@@ -1,4 +1,5 @@
 import api from "../../../utils/studentMainApi";
+import cache from '../../../utils/localCache';
 import utils from "../../../utils/utils";
 // pages/student/studentMain/studentMain.js
 Page({
@@ -32,6 +33,8 @@ Page({
             base: '../oneCourse/oneCourse',
             classId: dataset.courseId
         });
+        cache.set('classId', dataset.courseId);
+
 
         wx.navigateTo({
             url: targetUrl

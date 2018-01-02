@@ -25,7 +25,7 @@ Page({
         const that = this;
 
         api.getClassByClassId(classID, function (value) {
-            console.log(value);
+            console.log("class ", value);
             that.setData({
                 classID: classID,
                 currentClass: value

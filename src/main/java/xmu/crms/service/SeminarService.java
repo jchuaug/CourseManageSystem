@@ -102,8 +102,11 @@ public interface SeminarService {
     /**
      * get current avaliable seminar
      *
-     * @return list of seminar
      * @param courseId
+     * @return list of seminar
      */
     Seminar getCurrentSeminar(BigInteger courseId);
+
+
+    void RandomGrouping(BigInteger seminarId, BigInteger classId);
 }

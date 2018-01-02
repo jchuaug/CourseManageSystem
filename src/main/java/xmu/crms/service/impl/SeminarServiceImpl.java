@@ -29,6 +29,9 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     FixGroupService fixGroupService;
 
+    @Autowired
+    Attendan
+
     @Override
     public List<Seminar> listSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
         if (seminarMapper.getCourseById(courseId) == null) {
@@ -107,5 +110,9 @@ public class SeminarServiceImpl implements SeminarService {
     @Override
     public Seminar getCurrentSeminar(BigInteger courseId) {
         return seminarMapper.getCurrentSeminar(courseId);
+    }
+
+    @Override
+    public void RandomGrouping(BigInteger seminarId, BigInteger classId) {
     }
 }
