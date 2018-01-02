@@ -29,7 +29,7 @@ public class SchoolController {
     SchoolService schoolService;
 
 
-    @GetMapping(value = "/{city}")
+    @GetMapping
     @ResponseBody
     public ResponseEntity getSchoolList(@PathParam("city") String city) {
         List<School> schools = schoolService.listSchoolByCity(city);

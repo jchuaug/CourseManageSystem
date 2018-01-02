@@ -20,6 +20,18 @@ public class User {
 	private Integer title;
 	private String email;
 
+	public User(String phone, String password, String name,  Integer gender, Integer type, String number,
+			String email) {
+		super();
+		this.phone = phone;
+		this.password = password;
+		this.name = name;
+		this.gender = gender;
+		this.type = type;
+		this.number = number;
+		this.email = email;
+	}
+
 	public User() {
 		super();
 		// TODO Auto-generated constructor stub

@@ -14,6 +14,7 @@ import xmu.crms.mapper.UserMapper;
 import xmu.crms.service.ClassService;
 import xmu.crms.service.CourseService;
 import xmu.crms.service.LoginService;
+import xmu.crms.utils.MD5Utils;
 
 /**
  * LoginServiceImpl实现
@@ -95,7 +96,7 @@ public class LoginServiceImpl implements LoginService {
                 throw new Exception("LoginService:手机号已被注册");
             }
             userResult = userMapper
-                    .getUserByUserId(BigInteger.valueOf(loginMapper.signUpPhone(user.getPhone(), user.getPassword())));
+                    .getUserByUserId(BigInteger.valueOf(loginMapper.signUpPhone(user)));
             if (userResult == null) {
                 throw new Exception("LoginService:注册失败");
             }
