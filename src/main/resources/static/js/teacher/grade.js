@@ -90,7 +90,7 @@ function load() {
 		                    "<td>"+"</td>"+
 		                    "<td>"+
 		                        "<img onclick='toReport(this)' src='/Img/view.png' alt='预览'/>"+
-		                     	"<img src='/Img/download.png' alt='下载'/>"+
+		                     	"<img onclick='download()' src='/Img/download.png' alt='下载'/>"+
 		                    "</td>";
 		                   groupList.appendChild(group);
 					}
@@ -104,10 +104,17 @@ function load() {
 	});
 
 
+	
+	function()  { $('.pdf').media({width:450, height:350{}); }); 
+	   $('.btn').click(function(){ $(".pdf").show(); }); }
 }
 
 function updateSeminar() {
 	window.location.href = "/course/" + courseId + "/updateSeminar/" + seminarId;
+}
+
+function download() {
+	window.location.href = "/file/report.doc";
 }
 
 function toReport(viewNode){
