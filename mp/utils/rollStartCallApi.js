@@ -83,11 +83,23 @@ function getInfo(url) {
   })
 }
 
+function getLocationStatus(cb){
+  const classId = cache.get('currentClass').id;
+  const seminarId = cache.get('currentSeminar').id;
+
+   utils.requestWithId({
+     url: `/seminar/${seminarId}/class/${classId}/location`,
+     success:cb
+   })
+}
+
+
 export default {
     getClassByClassId,
     putCurClassCalling,
     getCurrentSeminar,
     putLocation,
     getClassStatus,
-    getCallingStatus
+    getCallingStatus,
+    getLocationStatus
 }
