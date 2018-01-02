@@ -24,14 +24,31 @@ Page({
 
         const that = this;
 
+        
+
+
         function refreshData(){
           
           api.getCallingStatus(function(res){
+            console.log(res)
             that.setData({
               'currentClass.present':res.numPresent,
-              'currentClass.numStudent':res.numStudent
+              'currentClass.numStudent':res.numStudent,
             })
           })
+
+          api.getLocationStatus(function(res){
+            console.log('后台签到状态',res.data.status)
+            if (res.data.status == 2) {
+              that.setData({
+                call: {
+                  status: "end",
+                  btnStatusText: "签到名单"
+                }
+              })
+            }
+          })
+
         }
 
         setInterval(refreshData,3000)
