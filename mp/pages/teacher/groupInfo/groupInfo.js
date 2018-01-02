@@ -8,7 +8,7 @@ Page({
      */
     data: {
         groupMethod: '',
-        groups: '世界很大',
+        groups: [],
         latesArr: null
     },
 
@@ -28,7 +28,7 @@ Page({
                     if (res.leader) {
                         res.members.unshift(res.leader);
                     }
-                    resolve(res);
+                    resolve(res); 
                 });
             });
         }
