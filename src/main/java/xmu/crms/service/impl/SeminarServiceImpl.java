@@ -29,9 +29,6 @@ public class SeminarServiceImpl implements SeminarService {
     @Autowired
     FixGroupService fixGroupService;
 
-    @Autowired
-    Attendan
-
     @Override
     public List<Seminar> listSeminarByCourseId(BigInteger courseId) throws IllegalArgumentException, CourseNotFoundException {
         if (seminarMapper.getCourseById(courseId) == null) {
