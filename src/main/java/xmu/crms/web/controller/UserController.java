@@ -12,6 +12,7 @@ import xmu.crms.service.SchoolService;
 import xmu.crms.service.UserService;
 import xmu.crms.service.WeChatService;
 import xmu.crms.utils.JWTUtil;
+import xmu.crms.utils.MD5Utils;
 import xmu.crms.utils.ModelUtils;
 import xmu.crms.web.VO.LoginResponseVO;
 import xmu.crms.web.VO.WeChatLoginRequestVO;
@@ -47,7 +48,7 @@ public class UserController {
     @PostMapping("/signin")
     public LoginResponseVO login(@RequestParam("phone") String phone, @RequestParam("password") String password)
             throws UserNotFoundException {
-        User user = loginService.signInPhone(new User(phone, password));
+        User user = loginService.signInPhone(new User(phone, MD5Utils.getMD5(password)));
         System.out.println("User:" + user);
         LoginResponseVO responseVO = null;
         try {
@@ -73,7 +74,7 @@ public class UserController {
 
     @PostMapping("/register")
     public LoginResponseVO register(@RequestParam("phone") String phone, @RequestParam("password") String password) {
-        User user = loginService.signUpPhone(new User(phone, password));
+        User user = loginService.signUpPhone(new User(phone, MD5Utils.getMD5(password)));
 
         LoginResponseVO responseVO = null;
         try {

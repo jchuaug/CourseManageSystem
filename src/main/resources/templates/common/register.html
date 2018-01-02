@@ -13,7 +13,6 @@
 		<script src="/js/common/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/common/messages_zh.js" type="text/javascript" charset="utf-8"></script>
 		<script src="/js/common/register.js"></script>
-		<script src="../../js/jwt.js"></script>
 	</head>
 
 	<body onload="registerload()">
@@ -25,7 +24,7 @@
 			<img src="/Img/help.png">
 			<a>帮助</a>
 			<img src="/Img/exit.png">
-			<a href="/login">退出</a>
+			<a onclick="logout()">退出</a>
 		</div>
 		<form class="cmxform" id="signupForm" onsubmit="register()">
 			<div class="phoneNum">手机号:<input type="text" name="phoneNum" id="phone" /></div>

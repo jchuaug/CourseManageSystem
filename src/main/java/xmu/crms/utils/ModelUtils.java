@@ -45,6 +45,8 @@ public class ModelUtils {
         userResponseVO.setNumber(user.getNumber());
         userResponseVO.setPhone(user.getPhone());
         userResponseVO.setSchool(user.getSchool().getName());
+        userResponseVO.setEmail(user.getEmail());
+        userResponseVO.setGender(user.getGender()==1?"女":"男");
         return userResponseVO;
     }
 
@@ -230,10 +232,13 @@ public class ModelUtils {
         courseResponseVO.setName(course.getName());
         courseResponseVO.setDescription(course.getDescription());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String time = sdf.format(course.getStartDate());
-        courseResponseVO.setStartTime(time);
-        time = sdf.format(course.getEndDate());
-        courseResponseVO.setEndTime(time);
+        
+        if(course.getStartDate()!=null&&course.getEndDate()!=null) {
+        	String time = sdf.format(course.getStartDate());
+        	courseResponseVO.setStartTime(time);
+            time = sdf.format(course.getEndDate());
+            courseResponseVO.setEndTime(time);
+        }
         courseResponseVO.setNumClass(numClass);
         courseResponseVO.setNumStudent(numStudent);
         if (course.getTeacher() != null) {
