@@ -93,7 +93,6 @@ public class CourseController {
 			return new ResponseEntity<Course>(null, new HttpHeaders(), HttpStatus.FORBIDDEN);
 		}
 		
-		System.err.println(courseRequestVO);
 
 		Course course = ModelUtils.CourseRequestVOToCourse(courseRequestVO);
 

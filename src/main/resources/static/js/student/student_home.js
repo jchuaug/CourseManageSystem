@@ -418,7 +418,7 @@ function classlist() { // StudentCourse_List showclassinfo
 									+ ';'
 									+ data[i].courseId
 									+ '"><table class="table"><tr><td class="tabletext">班级：<span id="name">'
-									+ data[i].className
+									+ data[i].name
 									+ '</span></td><td class="tabletext" id="site">课程地点：'
 									+ data[i].site
 									+ '</td></tr><tr><td class="tabletext" id="teacher">教师：'

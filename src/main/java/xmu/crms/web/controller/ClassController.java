@@ -85,11 +85,9 @@ public class ClassController {
 		List<ClassInfo> classInfos = null;
 		try {
 			classInfos = classService.listClassByCourseId(null);
-			System.err.println(classInfos);
 			for (ClassInfo classInfo : classInfos) {
 
 				if (classInfo != null) {
-					
 					classVOs.add(ModelUtils.classInfoToClassResponseVO(classInfo, null));
 				}
 			}
