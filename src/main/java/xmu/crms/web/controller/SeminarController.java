@@ -1,6 +1,5 @@
 package xmu.crms.web.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -48,7 +47,7 @@ public class SeminarController {
 
     @GetMapping("/{seminarId}")
     public ResponseEntity<SeminarResponseVO> getSeminarByseminarId(@PathVariable("seminarId") BigInteger seminarId,
-                                                                   @RequestHeader HttpHeaders headers) {
+            @RequestHeader HttpHeaders headers) {
 
         Seminar seminar1 = null;
         SeminarResponseVO seminarResponseVO = null;
@@ -66,7 +65,7 @@ public class SeminarController {
 
     @PutMapping("/{seminarId}")
     public ResponseEntity<String> updateSeminar(@PathVariable("seminarId") BigInteger seminarId,
-                                                @RequestBody SeminarResponseVO seminar, @RequestHeader HttpHeaders headers) {
+            @RequestBody SeminarResponseVO seminar, @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
@@ -99,7 +98,7 @@ public class SeminarController {
 
     @DeleteMapping("/{seminarId}")
     public ResponseEntity<String> deleteSeminar(@PathVariable("seminarId") BigInteger seminarId,
-                                                @RequestHeader HttpHeaders headers) {
+            @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
@@ -132,7 +131,7 @@ public class SeminarController {
 
     @GetMapping("/{seminarId}/my")
     public ResponseEntity<MySeminarResponseVO> getMySeminar(@PathVariable("seminarId") BigInteger seminarId,
-                                                            @RequestHeader HttpHeaders headers) {
+            @RequestHeader HttpHeaders headers) {
 
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
@@ -174,7 +173,7 @@ public class SeminarController {
 
     @GetMapping("/{seminarId}/detail")
     public ResponseEntity<SeminarDetailResponseVO> getSeminarDetail(@PathVariable("seminarId") BigInteger seminarId,
-                                                                    @RequestHeader HttpHeaders headers) {
+            @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
@@ -198,7 +197,8 @@ public class SeminarController {
     }
 
     @GetMapping("/{seminarId}/topic")
-    public ResponseEntity<List<TopicResponseVO>> getSeminarTopicBySeminarId(@PathVariable("seminarId") BigInteger seminarId, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<List<TopicResponseVO>> getSeminarTopicBySeminarId(
+            @PathVariable("seminarId") BigInteger seminarId, @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
         List<TopicResponseVO> topicResponseVOs = new ArrayList<>();
@@ -224,7 +224,7 @@ public class SeminarController {
     // wait TopicSeivce add serial 的相关操作
     @PostMapping("/{seminarId}/topic")
     public ResponseEntity<BigInteger> insertSeminarTopicBySeminarId(@PathVariable("seminarId") BigInteger seminarId,
-                                                                    @RequestBody TopicResponseVO topic, @RequestHeader HttpHeaders headers) {
+            @RequestBody TopicResponseVO topic, @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
@@ -258,7 +258,7 @@ public class SeminarController {
 
     @GetMapping("/{seminarId}/group")
     public ResponseEntity<List<GroupResponseVO>> getGroup(@PathVariable("seminarId") BigInteger seminarId,
-                                                          @RequestHeader HttpHeaders headers) {
+            @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
@@ -285,7 +285,7 @@ public class SeminarController {
 
     @GetMapping("/{seminarId}/group/my")
     public ResponseEntity<GroupResponseVO> getMyGroup(@PathVariable("seminarId") BigInteger seminarId,
-                                                      @RequestHeader HttpHeaders headers) {
+            @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
         String typeString = JWTUtil.getUserType(token);
@@ -307,7 +307,6 @@ public class SeminarController {
             List<SeminarGroupTopic> topics = topicService.listSeminarGroupTopicByGroupId(group.getId());
             List<User> members = seminarGroupService.listSeminarGroupMemberByGroupId(group.getId());
             groupResponseVO = ModelUtils.SeminarGroupToGroupResponseVO(group, topics, members);
-
 
         } catch (SeminarNotFoundException | GroupNotFoundException e) {
             e.printStackTrace();
@@ -462,7 +461,7 @@ public class SeminarController {
             location.setSeminar(new Seminar(seminarId));
             location.setLatitude(attendance.getLatitude());
             location.setLongitude(attendance.getLongitude());
-            //todo status code wrong?
+            // todo status code wrong?
 
             if (attendance.getStatus() == 2) {
                 seminarService.randomGrouping(seminarId,classId);
@@ -496,8 +495,10 @@ public class SeminarController {
     /**
      * status: 0 calling, 1 finished, -1 waiting
      *
-     * @param seminarId seminarId
-     * @param classId   class id
+     * @param seminarId
+     *            seminarId
+     * @param classId
+     *            class id
      * @return location vo
      */
     @GetMapping(value = "/{seminarId}/class/{classId}/location")

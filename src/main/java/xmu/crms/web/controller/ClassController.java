@@ -172,21 +172,15 @@ public class ClassController {
 
     // 未完成
     @GetMapping("/{classId}/student")
-    public ResponseEntity<List<UserResponseVO>> listStudentByNameAndId(@PathVariable("classId") BigInteger courseId,
+    public ResponseEntity<List<UserResponseVO>> listStudentByNameAndId(@PathVariable("classId") BigInteger classId,
                                                                        @RequestParam("numBeginWith") String numBeginWith, @RequestParam("nameBeginWith") String nameBeginWith,
                                                                        @RequestHeader HttpHeaders headers) {
         String token = headers.get("Authorization").get(0);
         BigInteger userId = new BigInteger(JWTUtil.getUserId(token).toString());
-        BigInteger classId = null;
+        
         List<User> students = new ArrayList<>();
         List<UserResponseVO> studentVOs = new ArrayList<>();
         try {
-            List<ClassInfo> classInfos = classService.listClassByUserId(userId);
-            for (ClassInfo classInfo : classInfos) {
-                if (classInfo.getCourse().getId().equals(courseId)) {
-                    classId = classInfo.getId();
-                }
-            }
 
             students = userService.listUserByClassId(classId, numBeginWith, nameBeginWith);
             for (User student : students) {
@@ -367,6 +361,11 @@ public class ClassController {
                 return new ResponseEntity<String>("待添加学生已经在小组里了", new HttpHeaders(), HttpStatus.CONFLICT);
             }
             FixGroup fixGroup = fixGroupService.getFixedGroupById(userId, classId);
+            System.err.println(fixGroup);
+            if (fixGroup==null) {
+				fixGroupService.insertFixGroupByClassId(classId, userId);
+				fixGroup = fixGroupService.getFixedGroupById(userId, classId);
+			}
             List<FixGroupMember> members = fixGroupService.listFixGroupByGroupId(fixGroup.getId());
             boolean flag = false;
             for (FixGroupMember fixGroupMember : members) {

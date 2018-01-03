@@ -106,5 +106,5 @@ function toGrade() {
 }
 function toTopic(topic) {
 	var topicId = topic.firstChild.innerHTML;
-	window.location.href = "/course/" + courseId + "/topicFixed/" + topicId;
+	window.location.href = "/course/" + courseId +"/seminar/"+seminarId +"/topicFixed/" + topicId;
 }

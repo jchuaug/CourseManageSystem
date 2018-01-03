@@ -84,7 +84,7 @@
     <update id="updateGroupByGroupId">
         update seminar_group
         <set>
-            final_grade=#{grade}
+            report_grade=#{grade}
         </set>
         where id=#{seminarGroupId}
     </update>

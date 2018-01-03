@@ -59,6 +59,12 @@ public class FixedGroupServiceImpl implements FixGroupService {
         fixGroup.setClassInfo(classInfo);
 
         fixedGroupMapper.insertFixGroup(fixGroup);
+        try {
+			insertStudentIntoGroup(userId, fixGroup.getId());
+		} catch (FixGroupNotFoundException | InvalidOperationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         return fixGroup.getId();
     }
 
@@ -218,6 +224,7 @@ public class FixedGroupServiceImpl implements FixGroupService {
             throw new IllegalArgumentException();
         }
         FixGroup fixGroup = fixedGroupMapper.getFixGroupByFixGroupId(fixedGroupId);
+        System.err.println(fixGroup );
         if (fixGroup == null) {
             throw new FixGroupNotFoundException();
         }
@@ -227,12 +234,12 @@ public class FixedGroupServiceImpl implements FixGroupService {
         SeminarGroup seminarGroup = new SeminarGroup();
         seminarGroup.setLeader(fixGroup.getLeader());
         seminarGroup.setClassInfo(fixGroup.getClassInfo());
-        seminarGroup.setClassInfo(fixGroup.getClassInfo());
         seminarGroup.setSeminar(new Seminar(seminarId));
         BigInteger seminarGroupId = seminarGroupService.insertSeminarGroup(seminarGroup);
         List<FixGroupMember> members = listFixGroupByGroupId(fixedGroupId);
         for (FixGroupMember fixGroupMember : members) {
             try {
+            	System.err.println(fixGroupMember);
                 seminarGroupService.insertSeminarGroupMemberById(fixGroupMember.getStudent().getId(), seminarGroupId);
             } catch (GroupNotFoundException | UserNotFoundException | InvalidOperationException e) {
                 e.printStackTrace();

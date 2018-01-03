@@ -1,12 +1,16 @@
 var courseId;
+var seminarId;
 var topicId;
 getId();
 function getId() {
 	var url = location.href;
 	var index1 = url.indexOf("course/");
-	var index2 = url.indexOf("topicFixed/");
+	var index2 = url.indexOf("seminar/");
+	var index3 = url.indexOf("topicFixed/");
 	courseId = url.substring(index1 + 7, index2 - 1);
-	topicId = url.substring(index2 + 11);
+	seminarId = url.substring(index2 + 8, index3 - 1);
+	topicId = url.substring(index3 + 11);
+	console.log(courseId + " " + seminarId + " " + topicId);
 }
 
 function getCourse() {
@@ -67,22 +71,36 @@ function load() {
 
 function chooseTopic() {
 	var token = window.localStorage.getItem("jwt");
-	var groupId = 1;
 	$.ajax({
-		url : "/group/" + groupId + "/topic",
+		url : "/seminar/" + seminarId + "/group/my",
 		dataType : "json",
 		contentType : "application/json;charset=utf-8",
-		type : "post",
-		data : JSON.stringify({
-			"id" : document.getElementById("topic_id").innerHTML
-		}),
+		type : "get",
 		headers : {
 			"Authorization" : token
 		},
 		success : function(data) {
-			alert("选择话题成功");
+			var groupId = data.id;
+			$.ajax({
+				url : "/group/" + groupId + "/topic",
+				dataType : "json",
+				contentType : "application/json;charset=utf-8",
+				type : "post",
+				headers : {
+					"Authorization" : token
+				},
+				data : JSON.stringify({
+					id : topicId
+				}),
+				statusCode : {
+					201 : function() { // statuscode unknown
+						alert("选择话题成功");
+						back();
+					}
+				}
+
+			});
 		}
 
 	});
 }
-
