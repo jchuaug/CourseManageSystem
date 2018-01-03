@@ -76,14 +76,14 @@ function submitregister() {
 		data : JSON.stringify(ata),
 		contentType : "application/json",
 		success : function(data, textStatus, xhr) {
-			if (xhr.status == 200) {
+			if (data.statusCode == 200) {
 				alert("注册成功,立即登录");
 				window.location.href = "/";
 			}
-		},
-		statusCode : {
-			401 : function() {
-				alert("无法注册！");
+			
+			else {
+				alert("注册失败!!"+data.msg);
+				window.location.href = "/register";
 			}
 		}
 	});

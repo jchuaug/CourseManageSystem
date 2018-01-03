@@ -56,6 +56,7 @@ public class UserController {
         LoginResponseVO responseVO = null;
         if (user == null) {
             responseVO = new LoginResponseVO(401, "手机号密码错误");
+            System.out.println("401"+responseVO);
             return ResponseEntity.status(401).contentType(MediaType.APPLICATION_JSON_UTF8).body(responseVO);
         } else {
             responseVO = new LoginResponseVO(200, "login success", user.getId(),
@@ -84,6 +85,7 @@ public class UserController {
         }
         // ResponseEntity<LoginResponseVO>responseEntity=new
         // ResponseEntity<LoginResponseVO>(body, , HttpStatus.OK);
+        System.out.println("register:"+responseVO);
         return responseVO;
     }
 

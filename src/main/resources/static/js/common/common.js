@@ -16,6 +16,7 @@ $(function() {
 				"Authorization" : token
 			},
 			success : function(result) {
+				alert(result.statusCode);
 				if (result.statusCode == 200) {
 					window.localStorage.setItem("jwt",result.jwt);
 					/* 登陆成功跳转 */
@@ -31,11 +32,10 @@ $(function() {
 						window.location.href = '/user/bind';
 						break;
 					}
-				} else {
-					alert(result.msg);
-					window.location.href = '/';
-				}
+				} 
 
+			},error:function(){
+				alert("登陆失败，账号或密码错误");
 			}
 		});
 	});

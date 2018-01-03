@@ -22,7 +22,11 @@
 				/static/*/**=anon
 				/wechat/**=anon
 				/signin=anon
-				/course/** =roles["student,teacher"]
+				/course/** =authc
+				/teacher/home=authc,roles[teacher]
+				/student/home=authc,roles[student]
+				/teacher/courses=authc,roles[teacher]
+				/student/courses=authc,roles[student]
 				/**=authc
 			</value>
 		</property>

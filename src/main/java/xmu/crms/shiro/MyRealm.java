@@ -28,10 +28,6 @@ public class MyRealm extends AuthorizingRealm {
 	 * 
 	 */
 
-    /**
-     * 大坑！，必须重写此方法，不然Shiro会报错
-     */
-
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;

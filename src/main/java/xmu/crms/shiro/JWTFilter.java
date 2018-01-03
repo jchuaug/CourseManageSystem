@@ -2,6 +2,7 @@ package xmu.crms.shiro;
 
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticationFilter;
+import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Jackey
  * @date 2018年1月3日
  */
-public class JWTFilter extends AuthenticationFilter {
+public class JWTFilter extends BasicHttpAuthenticationFilter {
 	private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 
 	@Autowired
@@ -54,7 +55,7 @@ public class JWTFilter extends AuthenticationFilter {
 		}
 	}
 
-	 @Override    
+	/* @Override    
 	    protected boolean isAccessAllowed(ServletRequest req, ServletResponse resp, Object mappedValue) {    
 	        Subject subject = getSubject(req, resp);    
 	        String[] rolesArray = (String[]) mappedValue;    
@@ -69,7 +70,7 @@ public class JWTFilter extends AuthenticationFilter {
 	        }    
 	    
 	        return false;    
-	    }    
+	    }    */
 	/**
 	 * 对跨域提供支持
 	 */

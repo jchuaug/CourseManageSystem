@@ -1,5 +1,6 @@
 package xmu.crms.web.controller;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 /**
@@ -25,6 +26,7 @@ public class RedirectController {
 	 * student page
 	 * @return
 	 */
+	@RequiresRoles("student")
 	@RequestMapping("/student/home")
 	public String studentHome() {
 		return "student/student_home";
@@ -49,7 +51,7 @@ public class RedirectController {
 	 * teacher page
 	 * @return
 	 */
-	
+	@RequiresRoles("teacher")
 	@RequestMapping("/teacher/home")
 	public String teacherHome() {
 		return "teacher/teacher_home";

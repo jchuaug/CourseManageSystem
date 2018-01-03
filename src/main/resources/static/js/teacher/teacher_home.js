@@ -49,7 +49,7 @@ function courselist() {
 						'</tr><tr><td class=\"tabletext\" id=\"startTime\">开始时间：' + data[i].startTime + '</td><td class=\"tabletext\" id=\"endTime\">结束时间:' + data[i].endTime +
 						'</td></tr></table></div></div>'
 				}
-				str += '<div class=\"main_box_right_content\"  onclick=\"window.location.href=\'/teacher/courses/create\'\"><img class=\"addcourse\" src=\"/img/add.png\" ></div>'
+				str += '<div class=\"main_box_right_content\"  onclick=\"window.location.href=\'/teacher/courses/create\'\"><img class=\"addcourse\" src=\"/Img/add.png\" ></div>'
 				content.innerHTML = str;
 			}
 		},
