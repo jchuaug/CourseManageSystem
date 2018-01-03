@@ -18,10 +18,9 @@ function getSeminarInfo(seminarID, cb) {
             const groupID = res.data.id;
             cache.set('groupID', groupID);
             cache.set('group', res.data);
+            cb(seminar);
         }
     });
-
-    cb(seminar);
 }
 
 export default {getSeminarInfo}

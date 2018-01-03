@@ -25,7 +25,7 @@
         </span>
         <view class="column2">
             <span class="seminarword">{{leader.name}}</span>
-            <span class='seminarword'>{{leader.id}}</span>
+            <span class='seminarword'>{{leader.number}}</span>
         </view>
         <span class="column3 rightblueword">队长</span>
     </view>
@@ -38,7 +38,7 @@
             </span>
             <view class="column2">
                 <span class="seminarword">{{item.name}}</span>
-                <span class='seminarword'>{{item.id}}</span>
+                <span class='seminarword'>{{item.number}}</span>
             </view>
         </view>
     </block>
