@@ -104,12 +104,8 @@ public class SeminarServiceImpl implements SeminarService {
         course.setId(courseId);
         seminar.setCourse(course);
         seminarMapper.insertSeminarByCourseId(seminar);
-        if (seminar.getFixed()) {
-            // insert into event table
-//            fixGroupService.fixedGroupToSeminarGroup(courseId);
-        }
-        //todo
-        return null;
+       
+        return seminar.getId();
     }
 
     @Override

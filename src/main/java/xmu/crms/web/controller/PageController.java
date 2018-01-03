@@ -109,7 +109,7 @@ public class PageController {
 
 	
 
-	@RequestMapping(value = "/course/{courseId}/topicFixed/{topicId}")
+	@RequestMapping(value = "/course/{courseId}/seminar/{seminarId}/topicFixed/{topicId}")
 	public String studentToTopicFixed() {
 		return "student/topic_fixed";
 	}

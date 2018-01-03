@@ -32,6 +32,9 @@ public class CourseController {
 
 	@Autowired
 	private SeminarGroupService seminarGroupService;
+	
+	@Autowired
+	private FixGroupService fixGroupService;
 
 	@Autowired
 	private UserService userService;
@@ -310,11 +313,33 @@ public class CourseController {
 			Seminar seminar = ModelUtils.SeminarResponseVOToSeminar(seminarResponseVO, forSeminar);
 			BigInteger id = seminarService.insertSeminarByCourseId(courseId, seminar);
 			seminarResponseVO2 = ModelUtils.SeminarInfoToSeminarResponseVO(seminar, null, null);
+			System.err.println("id="+id);
+			if (seminar.getFixed()==true) {
+				List<ClassInfo> classInfos=classService.listClassByCourseId(courseId);
+				System.err.println(classInfos);
+				for (ClassInfo classInfo : classInfos) {
+					List<FixGroup> fixGroups=fixGroupService.listFixGroupByClassId(classInfo.getId());
+					System.err.println(fixGroups);
+					for (FixGroup fixGroup : fixGroups) {
+						fixGroupService.fixedGroupToSeminarGroup(id, fixGroup.getId());
+						System.err.println(classInfo+" "+fixGroup);
+					}
+				}
+			}
 		} catch (IllegalArgumentException e) {
 			return new ResponseEntity<SeminarResponseVO>(null, new HttpHeaders(), HttpStatus.BAD_REQUEST);
 		} catch (CourseNotFoundException e) {
 			e.printStackTrace();
 			return new ResponseEntity<SeminarResponseVO>(null, new HttpHeaders(), HttpStatus.NOT_FOUND);
+		} catch (ClassesNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FixGroupNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SeminarNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return new ResponseEntity<SeminarResponseVO>(seminarResponseVO2, new HttpHeaders(), HttpStatus.CREATED);
 

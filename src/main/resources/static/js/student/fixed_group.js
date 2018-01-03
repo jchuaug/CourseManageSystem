@@ -9,6 +9,7 @@ function getId() {
 	var index2 = url.indexOf("toFixedGroup/");
 	courseId = url.substring(index1 + 7, index2 - 1);
 	classId = url.substring(index2 + 13);
+	console.log(courseId+" "+classId+"  "+groupId);
 }
 
 function getCourse() {
